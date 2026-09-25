@@ -1,6 +1,8 @@
 {
   "name": "Seapee Bajaj — Editorial & SEO Strategist",
-  "description": "Portfolio of Seapee Bajaj: 9+ years in content, SEO, editorial workflows, and market research. Clear, credible, search-optimized content.",
+  "description": "I help B2B and research-driven brands turn technical knowledge and market data into clear content that ranks and converts. With 9+ years of editorial and SEO experience, I write content that shows up in search, builds trust with your audience, and moves the right readers toward a decision.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

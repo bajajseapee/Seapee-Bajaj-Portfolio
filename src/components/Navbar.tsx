@@ -23,6 +23,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onWorkTogether, activeSection })
     { name: 'Services', href: '#services', id: 'services' },
     { name: 'Selected Work', href: '#selected-work', id: 'selected-work' },
     { name: 'Process', href: '#process', id: 'process' },
+    { name: 'Awards', href: '#awards', id: 'awards' },
     { name: 'Published Work', href: '#published-work', id: 'published-work' },
     { name: 'Contact', href: '#contact', id: 'contact' },
   ];

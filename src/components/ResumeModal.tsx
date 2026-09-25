@@ -104,6 +104,52 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
           </div>
         </div>
 
+        {/* Awards & Achievements Section */}
+        <div className="border-t border-[#efeeeb] pt-4">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-[#994524] mb-3 flex items-center gap-1.5">
+            <span className="material-symbols-outlined text-[16px]">emoji_events</span>
+            <span>Key Achievements &amp; Awards</span>
+          </h3>
+          <div className="space-y-3 text-xs">
+            <div className="bg-[#fbf9f6] p-3 rounded-lg border border-[#e4e2df]">
+              <div className="flex justify-between items-baseline font-semibold text-[#1b1c1a]">
+                <span>Best Content Writer Award — Grand View Research</span>
+                <span className="text-[#994524] font-medium">Jan 2022</span>
+              </div>
+              <p className="text-[#55433c] mt-0.5">
+                Conferred the award for exceptional editorial rigor, high-performing search content pieces, and associate mentorship.
+              </p>
+            </div>
+            <div className="bg-[#fbf9f6] p-3 rounded-lg border border-[#e4e2df]">
+              <div className="flex justify-between items-baseline font-semibold text-[#1b1c1a]">
+                <span>Client Commendation — PwC (PricewaterhouseCoopers)</span>
+                <span className="text-[#994524] font-medium">Enterprise Recognition</span>
+              </div>
+              <p className="text-[#55433c] mt-0.5">
+                Received positive client feedback for exceptional content quality, in-depth research, and timely delivery on a high-impact project.
+              </p>
+            </div>
+            <div className="bg-[#fbf9f6] p-3 rounded-lg border border-[#e4e2df]">
+              <div className="flex justify-between items-baseline font-semibold text-[#1b1c1a]">
+                <span>Recognition Badge (Get Involved Reward) — My Need To Live, UK</span>
+                <span className="text-[#994524] font-medium">Apr 2020</span>
+              </div>
+              <p className="text-[#55433c] mt-0.5">
+                International recognition for research and content creation around mental endurance and human potential.
+              </p>
+            </div>
+            <div className="bg-[#fbf9f6] p-3 rounded-lg border border-[#e4e2df]">
+              <div className="flex justify-between items-baseline font-semibold text-[#1b1c1a]">
+                <span>Academic Conference Publications — ASM INCON XIII</span>
+                <span className="text-[#546252] font-medium">E-ISSN: 2320-0065</span>
+              </div>
+              <p className="text-[#55433c] mt-0.5">
+                Selection and publication of two research papers: <em>A Study of Consumer Behavior and its Impact on Marketing</em> &amp; <em>A Study of E-business Threats</em>.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Experience Snapshot */}
         <div className="border-t border-[#efeeeb] pt-4">
           <h3 className="text-xs font-semibold uppercase tracking-wider text-[#1b1c1a] mb-3">
@@ -112,20 +158,38 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
           <div className="space-y-4 text-xs">
             <div>
               <div className="flex justify-between items-baseline font-semibold text-[#1b1c1a]">
-                <span>Lead Editorial &amp; SEO Consultant</span>
-                <span className="text-[#546252] font-normal">2021 – Present</span>
+                <span>Assistant Manager — Imarc Group</span>
+                <span className="text-[#546252] font-normal">Aug 2024 – Nov 2025</span>
               </div>
               <p className="text-[#55433c] mt-1">
-                Advising high-growth B2B and technology companies on search-driven content systems, multi-month editorial workflows, and research-backed positioning.
+                Drove end-to-end B2B content strategy and execution, managing editorial calendars, establishing scalable content workflows, and conducting SEO audits.
               </p>
             </div>
             <div>
               <div className="flex justify-between items-baseline font-semibold text-[#1b1c1a]">
-                <span>Senior Research &amp; B2B Content Specialist</span>
-                <span className="text-[#546252] font-normal">2017 – 2021</span>
+                <span>Sr. Executive - Content Management — Grand View Research</span>
+                <span className="text-[#546252] font-normal">Jun 2021 – Aug 2024</span>
               </div>
               <p className="text-[#55433c] mt-1">
-                Produced comprehensive industry dossiers, market forecasts, and analytical briefs for research conglomerates and corporate decision-makers.
+                Authored high-performing blogs, articles, and FAQs; mentored associates in content writing and SEO optimization; led cross-functional content enhancement.
+              </p>
+            </div>
+            <div>
+              <div className="flex justify-between items-baseline font-semibold text-[#1b1c1a]">
+                <span>Research Analyst &amp; Sr. Research Analyst — The Insight Partners</span>
+                <span className="text-[#546252] font-normal">Sep 2018 – Jan 2021</span>
+              </div>
+              <p className="text-[#55433c] mt-1">
+                Handled bespoke client requirements, market estimations (ME), pre- and post-sales technical queries, and training teams for research reports.
+              </p>
+            </div>
+            <div>
+              <div className="flex justify-between items-baseline font-semibold text-[#1b1c1a]">
+                <span>Research Associate &amp; Sr. Research Associate — Allied Market Research</span>
+                <span className="text-[#546252] font-normal">Jan 2016 – Jul 2018</span>
+              </div>
+              <p className="text-[#55433c] mt-1">
+                Curated comprehensive market reports across ICT, Semiconductor, and Automotive verticals; conducted primary and secondary research.
               </p>
             </div>
             <div>
@@ -135,15 +199,6 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
               </div>
               <p className="text-[#55433c] mt-1">
                 Authored and published <em>Not Unworthy</em>, an original poetry collection examining resilience, everyday courage, and human potential.
-              </p>
-            </div>
-            <div>
-              <div className="flex justify-between items-baseline font-semibold text-[#1b1c1a]">
-                <span>Editorial Contributor &amp; Content Writer</span>
-                <span className="text-[#546252] font-normal">2014 – 2017</span>
-              </div>
-              <p className="text-[#55433c] mt-1">
-                Researched and authored long-form articles, creator profiles, and trend analyses across digital media publications.
               </p>
             </div>
           </div>

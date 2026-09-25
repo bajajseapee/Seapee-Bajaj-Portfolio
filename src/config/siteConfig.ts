@@ -33,9 +33,7 @@ export const SITE_CONFIG = {
   // Personal & Creative Work URLs (from source document)
   CREATIVE_LINKS: {
     STARTUP_INDIA: "https://www.startupindiamagazine.com/seapee-bajaj/",
-    WORDY_WORTHY: "https://www.instagram.com/wordy_worthy/",
-    FEVER_OF_THE_SLEEPERS: "https://foreverendeavour.uk/2020/02/26/fever-of-the-sleepers-by-seapee-bajaj/",
-    MY_NEED_TO_LIVE: "https://myneedtolive.com/top-5-personality-development-tips-that-are-not-based-on-the-appearance/"
+    WORDY_WORTHY: "https://www.instagram.com/wordy_worthy/"
   },
 
   // Published Poetry Book Details
@@ -58,8 +56,8 @@ export const SITE_CONFIG = {
 
   // SEO & Meta
   SEO: {
-    TITLE: "Seapee Bajaj | SEO Content Strategist & Research-Driven Writer",
-    DESCRIPTION: "Seapee Bajaj is an SEO content strategist and research-driven writer with 9+ years of experience creating B2B, SEO, research, and business content.",
+    TITLE: "Seapee Bajaj | B2B SEO Content & Editorial Strategist",
+    DESCRIPTION: "I help B2B and research-driven brands turn technical knowledge and market data into clear content that ranks and converts. With 9+ years of editorial and SEO experience, I write content that shows up in search, builds trust with your audience, and moves the right readers toward a decision.",
     CANONICAL: "https://seapeebajaj.com",
     TWITTER_HANDLE: "@seapeebajaj"
   }

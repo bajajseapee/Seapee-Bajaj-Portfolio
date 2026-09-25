@@ -1,4 +1,4 @@
-import { ProjectItem, ServiceItem, CreativeItem, ProcessStep, ValuePoint, StatItem } from '../types';
+import { ProjectItem, ServiceItem, CreativeItem, ProcessStep, ValuePoint, StatItem, AwardItem } from '../types';
 import { SITE_CONFIG } from '../config/siteConfig';
 
 export const PROFILE_INFO = {
@@ -9,8 +9,8 @@ export const PROFILE_INFO = {
   location: SITE_CONFIG.LOCATION,
   heroImage: SITE_CONFIG.HERO_IMAGE,
   avatarImage: SITE_CONFIG.AVATAR_IMAGE,
-  headline: "Content That Thinks. Writes. Performs.",
-  subheadline: "I turn complex research and business ideas into clear, credible, search-optimized content that helps brands educate, engage, and convert the right audience.",
+  headline: "Turn Complex Research into Search Content That Ranks and Converts.",
+  subheadline: "I help B2B and research-driven brands turn technical knowledge and market data into clear content that ranks and converts. With 9+ years of editorial and SEO experience, I write content that shows up in search, builds trust with your audience, and moves the right readers toward a decision.",
   topics: ["SEO Content", "B2B", "Research", "Strategy", "Editorial"] as const
 };
 
@@ -20,7 +20,7 @@ export const SERVICES: ServiceItem[] = [
     number: "01",
     phase: "Discovery",
     title: "SEO Content",
-    description: "Blogs, articles, FAQs, topic-led content, on-page optimization, and deep search-intent alignment built for sustainable compound ranking.",
+    description: "Build high-ranking organic assets engineered around real search intent, topic clusters, and technical on-page fundamentals. Designed to earn compound search visibility and attract high-intent organic traffic that converts over time.",
     icon: "search",
     deliverables: [
       "Topic clusters & semantic pillar architecture",
@@ -36,7 +36,7 @@ export const SERVICES: ServiceItem[] = [
     number: "02",
     phase: "Synthesis",
     title: "B2B & Research Content",
-    description: "Research-heavy articles and business content that turn complex datasets and intricate industry topics into accessible, authoritative insights.",
+    description: "Translate intricate market studies, technical data, and industry reports into lucid, compelling narratives. Establish your brand as the definitive intellectual authority that prospective enterprise buyers trust and reference.",
     icon: "query_stats",
     deliverables: [
       "Primary & secondary research synthesis into executive reports",
@@ -52,7 +52,7 @@ export const SERVICES: ServiceItem[] = [
     number: "03",
     phase: "Conversion",
     title: "Website & Conversion Content",
-    description: "Clear, audience-focused website and landing-page copy structured around genuine commercial objectives and seamless digital flows.",
+    description: "Clarify your value proposition with audience-first messaging that guides readers intuitively from curiosity to action. Eliminate friction across core web pages to turn casual visitors into qualified pipeline inquiries.",
     icon: "web",
     deliverables: [
       "Information architecture & page flow wireframing",
@@ -68,7 +68,7 @@ export const SERVICES: ServiceItem[] = [
     number: "04",
     phase: "Governance",
     title: "Content Strategy & Management",
-    description: "Editorial planning, calendar governance, structured review workflows, ongoing quality assurance, and end-to-end publishing roadmaps.",
+    description: "Develop repeatable publishing calendars, quality assurance rubrics, and cross-functional editorial systems. Scale content production smoothly without sacrificing factual depth, SEO rigor, or brand consistency.",
     icon: "calendar_view_day",
     deliverables: [
       "Editorial roadmap development",
@@ -84,7 +84,7 @@ export const SERVICES: ServiceItem[] = [
     number: "05",
     phase: "Amplification",
     title: "Social & Thought Leadership",
-    description: "Professional social writing and perspective-led narratives that extend the authority and reach of foundational long-form assets.",
+    description: "Distill long-form research and strategic viewpoints into sharp, high-impact perspectives for LinkedIn and industry channels. Expand executive reach, foster substantive engagement, and reinforce category leadership.",
     icon: "campaign",
     deliverables: [
       "Executive LinkedIn thought leadership & perspective essays",
@@ -377,28 +377,6 @@ export const CREATIVE_WORKS: CreativeItem[] = [
     sampleQuote: "Words are not empty vessels; they carry the weight of every century that whispered them before us.",
     medium: "Curated Micro-Essays",
     url: SITE_CONFIG.CREATIVE_LINKS.WORDY_WORTHY
-  },
-  {
-    id: "fever-of-the-sleepers",
-    title: "Fever of the Sleepers",
-    author: "By Seapee Bajaj",
-    tag: "Literary Fiction & Reflections",
-    icon: "nights_stay",
-    description: "Explorations of urban solitude, nocturnal landscapes, and introspective literary fiction tracing identity, longing, and transient connections.",
-    sampleQuote: "Night does not hide the city; it merely strips away the daylight alibis that keep us from confronting who we are in the quiet.",
-    medium: "Literary Manuscript & Short Fiction",
-    url: SITE_CONFIG.CREATIVE_LINKS.FEVER_OF_THE_SLEEPERS
-  },
-  {
-    id: "my-need-to-live",
-    title: "My Need To Live",
-    author: "Personality Development",
-    tag: "Mindset & Human Potential",
-    icon: "psychology",
-    description: "Essays on intentional living, psychological endurance, mental clarity, and cultivating meaningful craft in a distracting world.",
-    sampleQuote: "Living deliberately is an act of rebellion against the passive momentum of modern noise.",
-    medium: "Philosophical Journal & Essays",
-    url: SITE_CONFIG.CREATIVE_LINKS.MY_NEED_TO_LIVE
   }
 ];
 
@@ -520,5 +498,73 @@ export const VALUE_PROPOSITIONS: ValuePoint[] = [
     icon: "fact_check",
     headline: "An editorial mindset:",
     description: "accuracy, consistency, structure, quality, and business relevance matter as much as writing style."
+  }
+];
+
+export const AWARDS: AwardItem[] = [
+  {
+    id: "best-content-writer",
+    title: "Best Content Writer Award",
+    organization: "Grand View Research",
+    year: "January 2022",
+    badgeText: "Excellence in Content",
+    icon: "emoji_events",
+    description: "Awarded Best Content Writer in recognition of exceptional editorial standards, high-performing search content pieces, and editorial mentorship across research teams.",
+    highlight: "Recognized for editorial depth, accuracy, and strong digital content performance.",
+    category: "Award"
+  },
+  {
+    id: "pwc-commendation",
+    title: "Client Commendation — PwC",
+    organization: "PwC (PricewaterhouseCoopers)",
+    year: "High-Impact Project",
+    badgeText: "Enterprise Client Feedback",
+    icon: "verified",
+    description: "Received positive client feedback from enterprise leaders at PwC for exceptional content quality, in-depth research methodologies, and timely delivery on a high-stakes client engagement.",
+    highlight: "Contributed directly to client satisfaction, analytical credibility, and project success.",
+    category: "Client Commendation"
+  },
+  {
+    id: "my-need-to-live-reward",
+    title: "Recognition Badge (Get Involved Reward)",
+    organization: "My Need To Live (United Kingdom)",
+    year: "April 2020",
+    badgeText: "International Recognition",
+    icon: "military_tech",
+    description: "Awarded international recognition for research and content creation dedicated to mental wellness, human potential, and intentional living.",
+    highlight: "Honored for meaningful, reader-centric storytelling and research-backed perspective.",
+    category: "International Recognition"
+  },
+  {
+    id: "academic-publications",
+    title: "Selection of Two Research Papers",
+    organization: "ASM INCON XIII International Conference",
+    year: "E-ISSN: 2320-0065",
+    badgeText: "Academic Research Selection",
+    icon: "school",
+    description: "Selection and publication of two peer-reviewed research papers: 'A Study of Consumer Behavior and its Impact on Marketing' and 'A Study of E-business Threats' at the ASM INCON XIII International Conference.",
+    highlight: "Published under International Conference on Ongoing Research in Management and IT.",
+    category: "Academic Publication"
+  }
+];
+
+export const CERTIFICATIONS = [
+  {
+    id: "google-prompting",
+    title: "Google Prompting Essentials",
+    issuer: "Google",
+    date: "September 2025",
+    score: "97% Passing Score",
+    description: "Successfully completed the 4-module advanced generative AI prompting course with a 97% passing score.",
+    icon: "auto_awesome"
+  },
+  {
+    id: "hubspot-content-marketing",
+    title: "Content Marketing Certification",
+    issuer: "HubSpot Academy",
+    date: "April 2025",
+    score: "90% Score",
+    description: "Certified in strategic content creation frameworks, inbound distribution, and conversion-focused storytelling.",
+    icon: "workspace_premium"
   }
 ];

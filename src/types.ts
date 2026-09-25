@@ -72,3 +72,15 @@ export interface StatItem {
   subtext: string;
   detail: string;
 }
+
+export interface AwardItem {
+  id: string;
+  title: string;
+  organization: string;
+  year: string;
+  badgeText: string;
+  icon: string;
+  description: string;
+  highlight?: string;
+  category: 'Award' | 'Client Commendation' | 'International Recognition' | 'Academic Publication';
+}

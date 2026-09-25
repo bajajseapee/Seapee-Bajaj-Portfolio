@@ -10,6 +10,7 @@ import { CreativeWork } from './components/CreativeWork';
 import { PhilosophyBanner } from './components/PhilosophyBanner';
 import { Process } from './components/Process';
 import { WhyWorkWithMe } from './components/WhyWorkWithMe';
+import { Awards } from './components/Awards';
 import { PublishedBook } from './components/PublishedBook';
 import { Contact } from './components/Contact';
 import { ResumeModal } from './components/ResumeModal';
@@ -26,7 +27,7 @@ export default function App() {
 
   // Track active section for navigation highlighting
   useEffect(() => {
-    const sectionIds = ['about', 'services', 'selected-work', 'process', 'published-work', 'contact'];
+    const sectionIds = ['about', 'services', 'selected-work', 'process', 'awards', 'published-work', 'contact'];
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 200;
 
@@ -123,6 +124,9 @@ export default function App() {
 
         {/* Why Work With Me / Value Proposition */}
         <WhyWorkWithMe />
+
+        {/* Strategic Awards & Industry Recognition Section */}
+        <Awards />
 
         {/* Beyond Brand Content / Published Work Feature */}
         <PublishedBook />
