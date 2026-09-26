@@ -3,6 +3,7 @@ import { PROJECTS } from '../data/portfolioData';
 import { ProjectItem, PortfolioCategory } from '../types';
 import { PortfolioFilter } from './PortfolioFilter';
 import { PortfolioCard } from './PortfolioCard';
+import { useFirebase } from '../context/FirebaseContext';
 
 interface PortfolioProps {
   onSelectProject: (project: ProjectItem) => void;
@@ -24,10 +25,39 @@ export const Portfolio: React.FC<PortfolioProps> = ({
   activeCategory,
   onSelectCategory,
 }) => {
+  const { dynamicPortfolioItems } = useFirebase();
   const [searchQuery, setSearchQuery] = useState('');
 
+  const allProjects = useMemo(() => {
+    const dbProjects: ProjectItem[] = dynamicPortfolioItems
+      .filter((item) => item.published)
+      .map((item) => {
+        const mappedCategory: ProjectItem['category'] =
+          item.category === 'B2B' || item.category === 'Research' || item.category === 'SEO & Content'
+            ? item.category
+            : 'SEO & Content';
+        return {
+          id: item.id,
+          category: mappedCategory,
+          categories: [mappedCategory],
+          tag: item.category,
+          type: 'Published Case Study',
+          title: item.title,
+          description: item.summary,
+          url: item.externalUrl || '#selected-work',
+          readTime: item.impactMetric,
+          deliverables: [item.category, 'Editorial Strategy', 'Search Optimization'],
+          challenge: 'Addressing complex industry requirements with research-backed editorial clarity.',
+          approach:
+            'Conducted primary and secondary industry research, structured semantic hierarchy around buyer search intent, and delivered a publication-ready asset.',
+          keyInsights: [item.impactMetric],
+        };
+      });
+    return [...dbProjects, ...PROJECTS];
+  }, [dynamicPortfolioItems]);
+
   const filteredProjects = useMemo(() => {
-    return PROJECTS.filter((item) => {
+    return allProjects.filter((item) => {
       const matchesCategory =
         activeCategory === 'All' ||
         item.category === activeCategory ||
@@ -42,7 +72,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({
 
       return matchesCategory && matchesSearch;
     });
-  }, [activeCategory, searchQuery]);
+  }, [allProjects, activeCategory, searchQuery]);
 
   return (
     <section className="w-full px-5 md:px-10 lg:px-16 py-20 lg:py-28 bg-[#f5f3f0]" id="selected-work">

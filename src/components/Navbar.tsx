@@ -3,10 +3,15 @@ import { SITE_CONFIG } from '../config/siteConfig';
 
 interface NavbarProps {
   onWorkTogether: () => void;
+  onOpenWorkspace?: () => void;
   activeSection: string;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onWorkTogether, activeSection }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  onWorkTogether,
+  onOpenWorkspace,
+  activeSection,
+}) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -89,7 +94,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onWorkTogether, activeSection })
         </nav>
 
         {/* Action Button & Avatar */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          {onOpenWorkspace && (
+            <button
+              onClick={onOpenWorkspace}
+              className="hidden md:inline-flex items-center justify-center text-xs font-semibold text-[#55433c] hover:text-[#1b1c1a] bg-[#efeeeb] hover:bg-[#eae8e5] border border-[#e4e2df] transition-all px-3.5 py-2 rounded-lg cursor-pointer"
+              title="Open Client & Editorial Database Workspace"
+            >
+              Workspace
+            </button>
+          )}
           <button
             onClick={onWorkTogether}
             className="hidden sm:inline-flex items-center justify-center text-sm font-semibold bg-[#b85d3a] hover:bg-[#994524] text-white transition-all px-4 py-2 rounded-lg shadow-sm hover:shadow active:scale-[0.98] cursor-pointer"

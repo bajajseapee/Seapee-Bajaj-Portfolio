@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SITE_CONFIG } from '../config/siteConfig';
+import { useFirebase } from '../context/FirebaseContext';
 
 interface ContactProps {
   initialService?: string;
   onOpenResume: () => void;
+  onOpenWorkspace?: () => void;
 }
 
 interface FormErrors {
   name?: string;
   email?: string;
   message?: string;
+  submit?: string;
 }
 
-export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }) => {
+export const Contact: React.FC<ContactProps> = ({
+  initialService,
+  onOpenResume,
+  onOpenWorkspace,
+}) => {
+  const { user, inquiries, submitInquiry, signIn } = useFirebase();
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -20,45 +28,82 @@ export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
-  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (initialService) {
+      setProjectType(initialService);
+    }
+  }, [initialService]);
+
+  useEffect(() => {
+    if (user) {
+      if (!name && user.displayName) {
+        setName(user.displayName.slice(0, 120));
+      }
+      if (!email && user.email) {
+        setEmail(user.email.slice(0, 160));
+      }
+    }
+  }, [user]);
 
   const validate = (): boolean => {
     const errs: FormErrors = {};
-    if (!name.trim()) {
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedMessage = message.trim();
+
+    if (!trimmedName) {
       errs.name = 'Please provide your name or organization.';
+    } else if (trimmedName.length > 120) {
+      errs.name = 'Name must be 120 characters or fewer.';
     }
-    if (!email.trim()) {
+
+    if (!trimmedEmail) {
       errs.email = 'Please provide a valid email address.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    } else if (
+      trimmedEmail.length < 3 ||
+      trimmedEmail.length > 160 ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)
+    ) {
       errs.email = 'Please enter a valid email format (e.g., name@company.com).';
     }
-    if (!message.trim()) {
+
+    if (!trimmedMessage) {
       errs.message = 'Please share a brief note about your project or editorial goals.';
-    } else if (message.trim().length < 15) {
+    } else if (trimmedMessage.length < 15) {
       errs.message = 'Please provide a little more detail (at least 15 characters).';
+    } else if (trimmedMessage.length > 3000) {
+      errs.message = 'Project summary must be 3,000 characters or fewer.';
     }
 
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
-    // Client-side validation passed.
-    // Ready for Formspree, EmailJS, or Resend webhook integration.
-    setSubmitted(true);
-  };
-
-  const handleCopyEmail = async () => {
+    setIsSubmitting(true);
+    setErrors({});
     try {
-      await navigator.clipboard.writeText(SITE_CONFIG.EMAIL);
-      setCopiedEmail(true);
-      setTimeout(() => setCopiedEmail(false), 2500);
-    } catch {
-      // Fallback
-      window.location.href = `mailto:${SITE_CONFIG.EMAIL}`;
+      await submitInquiry({
+        name,
+        email,
+        projectType,
+        message,
+      });
+      setSubmitted(true);
+    } catch (err) {
+      setErrors({
+        submit:
+          err instanceof Error
+            ? err.message
+            : 'Unable to save inquiry to the database. Please try again.',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -236,6 +281,7 @@ export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }
                   <textarea
                     id="message"
                     rows={4}
+                    maxLength={3000}
                     value={message}
                     onChange={(e) => {
                       setMessage(e.target.value);
@@ -251,15 +297,41 @@ export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }
                   )}
                 </div>
 
+                {errors.submit && (
+                  <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-xs text-red-700">
+                    {errors.submit}
+                  </div>
+                )}
+
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
-                  <span className="text-[11px] text-[#546252]">
-                    Form validated locally. Pre-configured for direct delivery.
-                  </span>
+                  <div className="text-[11px] text-[#546252]">
+                    {user ? (
+                      <span>
+                        Signed in as <strong className="text-[#1b1c1a]">{user.email}</strong>. Ready to save directly to database.
+                      </span>
+                    ) : (
+                      <span>
+                        Requires verified Google Sign-In to securely record your inquiry.{' '}
+                        <button
+                          type="button"
+                          onClick={() => signIn()}
+                          className="text-[#994524] font-semibold underline cursor-pointer"
+                        >
+                          Sign in now
+                        </button>
+                      </span>
+                    )}
+                  </div>
                   <button
                     type="submit"
-                    className="px-6 py-3 bg-[#994524] hover:bg-[#7b2f0f] text-white text-sm font-semibold rounded-lg shadow-sm hover:shadow transition-all"
+                    disabled={isSubmitting}
+                    className="px-6 py-3 bg-[#994524] hover:bg-[#7b2f0f] text-white text-sm font-semibold rounded-lg shadow-sm hover:shadow transition-all cursor-pointer disabled:opacity-50"
                   >
-                    Submit Inquiry
+                    {isSubmitting
+                      ? 'Saving Inquiry...'
+                      : user
+                      ? 'Submit Inquiry'
+                      : 'Sign In & Submit Inquiry'}
                   </button>
                 </div>
               </form>
@@ -278,17 +350,27 @@ export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }
                 Thank you, {name}!
               </h3>
               <p className="text-sm text-[#55433c] leading-relaxed max-w-md">
-                Your message details have been validated. Because this portfolio is deployed client-side, click the button below to send your structured inquiry directly via your email client to{' '}
+                Your inquiry has been securely saved to the database. You can view or update your submission anytime in the Client Workspace, or also send a copy via email to{' '}
                 <strong className="text-[#1b1c1a]">{SITE_CONFIG.EMAIL}</strong>.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                {onOpenWorkspace && (
+                  <button
+                    type="button"
+                    onClick={onOpenWorkspace}
+                    className="px-6 py-2.5 bg-[#994524] hover:bg-[#7b2f0f] text-white text-sm font-semibold rounded-lg shadow-sm transition-colors inline-flex items-center gap-2 cursor-pointer"
+                  >
+                    <span>View in Client Workspace ({inquiries.length})</span>
+                    <span className="material-symbols-outlined text-[18px]">folder_Shared</span>
+                  </button>
+                )}
                 <a
                   href={mailtoFallback}
-                  className="px-6 py-2.5 bg-[#994524] hover:bg-[#7b2f0f] text-white text-sm font-semibold rounded-lg shadow-sm transition-colors inline-flex items-center gap-2"
+                  className="px-4 py-2.5 text-xs text-[#1b1c1a] font-semibold hover:bg-[#efeeeb] border border-[#e4e2df] rounded-lg bg-white inline-flex items-center gap-1.5"
                 >
                   <span>Open in Email Client</span>
-                  <span className="material-symbols-outlined text-[18px]">outgoing_mail</span>
+                  <span className="material-symbols-outlined text-[16px]">outgoing_mail</span>
                 </a>
                 <button
                   type="button"
@@ -296,7 +378,7 @@ export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }
                     setSubmitted(false);
                     setMessage('');
                   }}
-                  className="px-4 py-2.5 text-xs text-[#546252] hover:text-[#1b1c1a] border border-[#e4e2df] rounded-lg bg-white"
+                  className="px-4 py-2.5 text-xs text-[#546252] hover:text-[#1b1c1a] border border-[#e4e2df] rounded-lg bg-white cursor-pointer"
                 >
                   Send another inquiry
                 </button>

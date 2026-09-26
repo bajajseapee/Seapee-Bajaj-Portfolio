@@ -1,0 +1,213 @@
+{
+  "entities": {
+    "Inquiry": {
+      "title": "Inquiry",
+      "description": "A client project or collaboration inquiry submitted through the portfolio contact form.",
+      "type": "object",
+      "properties": {
+        "authorId": {
+          "type": "string",
+          "description": "The Firebase Auth UID of the user who submitted the inquiry.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name or organization of the prospective client.",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email address of the prospective client.",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "projectType": {
+          "type": "string",
+          "description": "Selected service pillar or inquiry focus.",
+          "enum": [
+            "SEO Content Strategy",
+            "B2B & Research Synthesis",
+            "Website & Conversion Copy",
+            "Editorial Calendar Governance",
+            "Thought Leadership & Social",
+            "Full-Time / Contract Role",
+            "Other Inquiries"
+          ],
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "message": {
+          "type": "string",
+          "description": "Detailed project summary, timeline, and editorial goals.",
+          "minLength": 15,
+          "maxLength": 3000
+        },
+        "status": {
+          "type": "string",
+          "description": "Workflow state of the inquiry (closed is terminal).",
+          "enum": [
+            "new",
+            "in_review",
+            "replied",
+            "closed"
+          ],
+          "minLength": 3,
+          "maxLength": 20
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the inquiry was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the inquiry was last updated."
+        }
+      },
+      "required": [
+        "authorId",
+        "name",
+        "email",
+        "projectType",
+        "message",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "PortfolioItem": {
+      "title": "PortfolioItem",
+      "description": "A dynamic portfolio case study or published article managed in Firestore.",
+      "type": "object",
+      "properties": {
+        "authorId": {
+          "type": "string",
+          "description": "The Firebase Auth UID of the admin who created the item.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the case study or published piece.",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "category": {
+          "type": "string",
+          "description": "Primary portfolio category.",
+          "enum": [
+            "SEO & Content",
+            "B2B",
+            "Research",
+            "Content Strategy",
+            "Creative"
+          ],
+          "minLength": 2,
+          "maxLength": 40
+        },
+        "summary": {
+          "type": "string",
+          "description": "Concise summary of the project and editorial approach.",
+          "minLength": 10,
+          "maxLength": 600
+        },
+        "impactMetric": {
+          "type": "string",
+          "description": "Key business or editorial outcome achieved.",
+          "minLength": 2,
+          "maxLength": 120
+        },
+        "externalUrl": {
+          "type": "string",
+          "description": "URL to the live article or study.",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "published": {
+          "type": "boolean",
+          "description": "Whether the item is publicly visible on the portfolio."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when last updated."
+        }
+      },
+      "required": [
+        "authorId",
+        "title",
+        "category",
+        "summary",
+        "impactMetric",
+        "externalUrl",
+        "published",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "Trusted administrator registry document keyed by Firebase Auth UID.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth UID of the administrator.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "role": {
+          "type": "string",
+          "description": "Role identifier.",
+          "enum": [
+            "admin"
+          ],
+          "minLength": 5,
+          "maxLength": 10
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the admin record was created."
+        }
+      },
+      "required": [
+        "uid",
+        "role",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/inquiries/{inquiryId}": {
+      "schema": {
+        "$ref": "#/entities/Inquiry"
+      },
+      "description": "Stores client project inquiries with PII isolation so only the inquiry author or an admin can read/manage them."
+    },
+    "/portfolioItems/{itemId}": {
+      "schema": {
+        "$ref": "#/entities/PortfolioItem"
+      },
+      "description": "Stores dynamic portfolio items managed by the admin and publicly readable when published is true."
+    },
+    "/admins/{adminId}": {
+      "schema": {
+        "$ref": "#/entities/AdminRecord"
+      },
+      "description": "Stores verified administrator UIDs for role-based access control."
+    }
+  }
+}
