@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { ServiceItem } from '../types';
+import { SERVICE_LOGOS } from './Services';
 
 interface ServiceDetailModalProps {
   service: ServiceItem | null;
@@ -28,6 +29,8 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
 
   if (!service) return null;
 
+  const logo = SERVICE_LOGOS[service.id];
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200"
@@ -48,13 +51,24 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
           <span className="material-symbols-outlined text-[20px]">close</span>
         </button>
 
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-lg bg-[#efeeeb] flex items-center justify-center text-[#994524]">
-            <span className="material-symbols-outlined text-2xl">{service.icon}</span>
-          </div>
+        <div className="flex items-center gap-4">
+          {logo ? (
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#fbf9f6] border border-[#e4e2df] overflow-hidden flex items-center justify-center shrink-0">
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ) : (
+            <div className="w-14 h-14 rounded-lg bg-[#efeeeb] flex items-center justify-center text-[#994524]">
+              <span className="material-symbols-outlined text-2xl">{service.icon}</span>
+            </div>
+          )}
           <div>
             <span className="text-xs uppercase text-[#546252] font-semibold tracking-wider">
-              {service.number} // {service.phase}
+              {service.number}. {service.phase}
             </span>
             <h2 id="service-title" className="font-serif text-2xl text-[#1b1c1a] font-medium">
               {service.title}

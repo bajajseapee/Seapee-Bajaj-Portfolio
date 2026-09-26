@@ -1,6 +1,34 @@
 import React from 'react';
 import { SERVICES } from '../data/portfolioData';
 import { ServiceItem } from '../types';
+import seoContentLogo from '../assets/images/service_logo_seo_content_1790405462914.jpg';
+import b2bResearchLogo from '../assets/images/service_logo_b2b_research_1790405473123.jpg';
+import websiteConversionLogo from '../assets/images/service_logo_website_conversion_1790405483488.jpg';
+import contentStrategyLogo from '../assets/images/service_logo_content_strategy_1790405496321.jpg';
+import thoughtLeadershipLogo from '../assets/images/service_logo_thought_leadership_1790405506344.jpg';
+
+export const SERVICE_LOGOS: Record<string, { src: string; alt: string }> = {
+  'seo-content': {
+    src: seoContentLogo,
+    alt: 'SEO Content logo',
+  },
+  'b2b-research': {
+    src: b2bResearchLogo,
+    alt: 'B2B & Research Content logo',
+  },
+  'website-conversion': {
+    src: websiteConversionLogo,
+    alt: 'Website & Conversion Content logo',
+  },
+  'content-strategy': {
+    src: contentStrategyLogo,
+    alt: 'Content Strategy & Management logo',
+  },
+  'social-thought-leadership': {
+    src: thoughtLeadershipLogo,
+    alt: 'Social & Thought Leadership logo',
+  },
+};
 
 interface ServicesProps {
   onSelectService: (service: ServiceItem) => void;
@@ -29,6 +57,7 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {SERVICES.map((service, index) => {
             const isLastOnDesktop = index === 4;
+            const logo = SERVICE_LOGOS[service.id];
             return (
               <div
                 key={service.id}
@@ -38,13 +67,27 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
                 }`}
               >
                 <div>
-                  <div className="w-12 h-12 rounded-lg bg-[#efeeeb] flex items-center justify-center text-[#994524] mb-5 group-hover:bg-[#ffdbcf] transition-colors">
-                    <span className="material-symbols-outlined text-2xl">{service.icon}</span>
+                  <div className="flex items-start justify-between gap-4 mb-5">
+                    {logo ? (
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-[#fbf9f6] border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0">
+                        <img
+                          src={logo.src}
+                          alt={logo.alt}
+                          referrerPolicy="no-referrer"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-16 h-16 rounded-xl bg-[#efeeeb] flex items-center justify-center text-[#994524] group-hover:bg-[#ffdbcf] transition-colors">
+                        <span className="material-symbols-outlined text-3xl">{service.icon}</span>
+                      </div>
+                    )}
+                    <span className="text-xs uppercase text-[#546252] font-semibold tracking-wider pt-1">
+                      {service.number}. {service.phase}
+                    </span>
                   </div>
-                  <span className="text-xs uppercase text-[#546252] font-semibold tracking-wider">
-                    {service.number} // {service.phase}
-                  </span>
-                  <h3 className="font-serif text-2xl text-[#1b1c1a] mt-1.5 mb-3 group-hover:text-[#994524] transition-colors font-medium">
+
+                  <h3 className="font-serif text-2xl text-[#1b1c1a] mb-3 group-hover:text-[#994524] transition-colors font-medium">
                     {service.title}
                   </h3>
                   <p className="text-sm text-[#55433c] leading-relaxed">

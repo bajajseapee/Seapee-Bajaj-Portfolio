@@ -1,5 +1,28 @@
 import React, { useState } from 'react';
 import { STATS } from '../data/portfolioData';
+import experienceLogo from '../assets/images/about_logo_experience_1790405416482.jpg';
+import rankReachLogo from '../assets/images/about_logo_rank_reach_1790405429831.jpg';
+import empiricalLogo from '../assets/images/about_logo_empirical_1790405440606.jpg';
+import refinedLogo from '../assets/images/about_logo_refined_1790405450987.jpg';
+
+const STAT_LOGOS: Record<string, { src: string; alt: string }> = {
+  experience: {
+    src: experienceLogo,
+    alt: '9+ Years Experience in Content, SEO & Research logo',
+  },
+  'rank-reach': {
+    src: rankReachLogo,
+    alt: 'Rank & Reach — SEO & Content Architecture logo',
+  },
+  empirical: {
+    src: empiricalLogo,
+    alt: 'Empirical — B2B & Market Research logo',
+  },
+  refined: {
+    src: refinedLogo,
+    alt: 'Refined — Editorial Expertise logo',
+  },
+};
 
 export const About: React.FC = () => {
   const [selectedStat, setSelectedStat] = useState<string | null>(null);
@@ -44,39 +67,53 @@ export const About: React.FC = () => {
           </div>
 
           {/* 4 Stats Cards Grid */}
-          <div className="lg:col-span-6 grid grid-cols-2 gap-4 pt-1">
-            {STATS.map((stat) => (
-              <button
-                key={stat.id}
-                onClick={() => setSelectedStat(selectedStat === stat.id ? null : stat.id)}
-                className={`text-left bg-white p-6 rounded-xl shadow-xs hover:shadow-md transition-all flex flex-col justify-between min-h-[176px] border ${
-                  selectedStat === stat.id ? 'border-[#994524] ring-1 ring-[#994524]' : 'border-[#e4e2df]'
-                } group cursor-pointer`}
-              >
-                <div className="flex items-center justify-between w-full">
-                  <span className="material-symbols-outlined text-[#994524] text-3xl group-hover:scale-110 transition-transform">
-                    {stat.icon}
-                  </span>
-                  <span className="material-symbols-outlined text-[18px] text-[#88726b] opacity-0 group-hover:opacity-100 transition-opacity">
-                    {selectedStat === stat.id ? 'expand_less' : 'info'}
-                  </span>
-                </div>
+          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 pt-1">
+            {STATS.map((stat) => {
+              const logo = STAT_LOGOS[stat.id];
+              return (
+                <button
+                  key={stat.id}
+                  onClick={() => setSelectedStat(selectedStat === stat.id ? null : stat.id)}
+                  className={`text-left bg-white p-6 rounded-xl shadow-xs hover:shadow-md transition-all flex flex-col justify-between min-h-[210px] border ${
+                    selectedStat === stat.id ? 'border-[#994524] ring-1 ring-[#994524]' : 'border-[#e4e2df]'
+                  } group cursor-pointer`}
+                >
+                  <div className="flex items-start justify-between w-full mb-4">
+                    {logo ? (
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#fbf9f6] border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0">
+                        <img
+                          src={logo.src}
+                          alt={logo.alt}
+                          referrerPolicy="no-referrer"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    ) : (
+                      <span className="material-symbols-outlined text-[#994524] text-3xl group-hover:scale-110 transition-transform">
+                        {stat.icon}
+                      </span>
+                    )}
+                    <span className="material-symbols-outlined text-[18px] text-[#88726b] opacity-0 group-hover:opacity-100 transition-opacity">
+                      {selectedStat === stat.id ? 'expand_less' : 'info'}
+                    </span>
+                  </div>
 
-                <div>
-                  <span className="font-serif text-2xl sm:text-3xl text-[#1b1c1a] font-medium block leading-none mb-1.5">
-                    {stat.value}
-                  </span>
-                  <span className="text-xs uppercase tracking-wider text-[#546252] font-semibold block">
-                    {stat.label}
-                  </span>
-                  {selectedStat === stat.id && (
-                    <p className="mt-2 text-xs text-[#55433c] leading-relaxed pt-2 border-t border-[#efeeeb] animate-in fade-in duration-200">
-                      {stat.detail}
-                    </p>
-                  )}
-                </div>
-              </button>
-            ))}
+                  <div>
+                    <span className="font-serif text-2xl sm:text-3xl text-[#1b1c1a] font-medium block leading-none mb-1.5">
+                      {stat.value}
+                    </span>
+                    <span className="text-xs uppercase tracking-wider text-[#546252] font-semibold block">
+                      {stat.label}
+                    </span>
+                    {selectedStat === stat.id && (
+                      <p className="mt-2 text-xs text-[#55433c] leading-relaxed pt-2 border-t border-[#efeeeb] animate-in fade-in duration-200">
+                        {stat.detail}
+                      </p>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>

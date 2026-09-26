@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { ProjectItem } from '../types';
+import { PROJECT_LOGOS } from './PortfolioCard';
 
 interface CaseStudyModalProps {
   project: ProjectItem | null;
@@ -28,6 +29,8 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
 
   if (!project) return null;
 
+  const logo = PROJECT_LOGOS[project.id];
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200"
@@ -50,7 +53,23 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
         </button>
 
         {/* Header Tags */}
-        <div className="flex flex-wrap items-center gap-2 pt-1">
+        <div className="flex flex-wrap items-center gap-3 pt-1 pr-8">
+          {logo && (
+            <div
+              className={`w-16 h-12 rounded-lg border border-[#e4e2df] overflow-hidden flex items-center justify-center shrink-0 ${
+                logo.bg || 'bg-white'
+              }`}
+            >
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                referrerPolicy="no-referrer"
+                className={`w-full h-full ${
+                  logo.fit === 'contain' ? 'object-contain p-0.5' : 'object-cover'
+                }`}
+              />
+            </div>
+          )}
           <span className="px-2.5 py-1 rounded bg-[#efeeeb] text-[#546252] text-xs font-semibold uppercase tracking-wider">
             {project.tag}
           </span>

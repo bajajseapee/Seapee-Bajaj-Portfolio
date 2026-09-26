@@ -1,5 +1,6 @@
 import React from 'react';
 import { SITE_CONFIG } from '../config/siteConfig';
+import notUnworthyCover from '../assets/images/not_unworthy_book_cover_1790402940878.jpg';
 
 export const PublishedBook: React.FC = () => {
   const { BOOK } = SITE_CONFIG;
@@ -15,29 +16,53 @@ export const PublishedBook: React.FC = () => {
 
       <div className="max-w-[1080px] mx-auto bg-white p-8 sm:p-12 md:p-16 rounded-2xl shadow-sm border border-[#e4e2df] relative">
         <div className="flex flex-col gap-6">
-          {/* Credibility Tag */}
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#994524]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#994524]" />
-            <span>{BOOK.CREDIBILITY_TAG}</span>
-          </div>
+          {/* Top Row: Left Editorial Intro + Right Compact Book Cover */}
+          <div className="flex flex-col-reverse md:flex-row md:items-center justify-between gap-6 md:gap-10">
+            <div className="flex-1 flex flex-col gap-4">
+              {/* Credibility Tag */}
+              <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#994524]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#994524]" />
+                <span>{BOOK.CREDIBILITY_TAG}</span>
+              </div>
 
-          {/* Headline & Subheadline */}
-          <div className="flex flex-col gap-2">
-            <h2
-              id="published-work-heading"
-              className="font-serif text-3xl sm:text-4xl text-[#1b1c1a] font-medium tracking-tight leading-snug"
-            >
-              {BOOK.HEADLINE}
-            </h2>
-            <p className="text-lg sm:text-xl text-[#546252] font-medium leading-relaxed">
-              {BOOK.SUBHEADLINE}
-            </p>
-          </div>
+              {/* Headline & Subheadline */}
+              <div className="flex flex-col gap-2">
+                <h2
+                  id="published-work-heading"
+                  className="font-serif text-3xl sm:text-4xl text-[#1b1c1a] font-medium tracking-tight leading-snug"
+                >
+                  {BOOK.HEADLINE}
+                </h2>
+                <p className="text-lg sm:text-xl text-[#546252] font-medium leading-relaxed">
+                  {BOOK.SUBHEADLINE}
+                </p>
+              </div>
 
-          {/* Concise Description */}
-          <p className="text-base text-[#55433c] leading-relaxed max-w-3xl">
-            {BOOK.DESCRIPTION}
-          </p>
+              {/* Concise Description */}
+              <p className="text-base text-[#55433c] leading-relaxed max-w-2xl">
+                {BOOK.DESCRIPTION}
+              </p>
+            </div>
+
+            {/* Compact Book Cover on the Right */}
+            <div className="shrink-0 flex flex-col items-center md:items-end">
+              <a
+                href={BOOK.AMAZON_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative block w-32 sm:w-36 md:w-40 rounded-lg overflow-hidden shadow-md border border-[#e4e2df] bg-[#0f0c24] transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl"
+                aria-label="View Not Unworthy on Amazon"
+              >
+                <div className="absolute inset-y-0 left-0 w-2 bg-gradient-to-r from-white/25 via-black/20 to-transparent z-10 pointer-events-none" />
+                <img
+                  src={notUnworthyCover}
+                  alt="Not Unworthy: A Metaphorical Anthology book cover by Seapee Bajaj and Premsagar Bajaj"
+                  referrerPolicy="no-referrer"
+                  className="w-full aspect-[2/3] object-cover block"
+                />
+              </a>
+            </div>
+          </div>
 
           {/* Publication Metadata Strip */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 pb-2 text-xs text-[#55433c]">
@@ -48,7 +73,9 @@ export const PublishedBook: React.FC = () => {
               <p className="font-serif text-base text-[#1b1c1a] italic font-medium">
                 {BOOK.TITLE}
               </p>
-              <span className="text-[#546252] mt-0.5 block">{BOOK.GENRE} by {BOOK.AUTHOR}</span>
+              <span className="text-[#546252] mt-0.5 block">
+                {BOOK.GENRE} • {BOOK.AUTHOR} &amp; Premsagar Bajaj
+              </span>
             </div>
 
             <div className="bg-[#fbf9f6] p-4 rounded-xl border border-[#e4e2df]">
@@ -85,7 +112,7 @@ export const PublishedBook: React.FC = () => {
             </a>
 
             <span className="text-xs text-[#546252]">
-              Available on Amazon in Paperback &amp; Kindle Edition
+              Available on Amazon in Paperback
             </span>
           </div>
         </div>

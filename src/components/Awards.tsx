@@ -1,5 +1,45 @@
 import React from 'react';
 import { AWARDS, CERTIFICATIONS } from '../data/portfolioData';
+import gvrTrophyImg from '../assets/images/gvr_star_award_trophy_1790403565114.jpg';
+import pwcLogoImg from '../assets/images/pwc_logo.svg';
+import myNeedToLiveBadgeImg from '../assets/images/my_need_to_live_award_badge_1790403584967.jpg';
+import asmLogoImg from '../assets/images/asm_group_logo_1790403595371.jpg';
+import googlePromptingBadgeImg from '../assets/images/google_prompting_essentials_badge_1790403691771.jpg';
+import hubspotBadgeImg from '../assets/images/hubspot_content_marketing_badge_1790403703530.jpg';
+
+const AWARD_LOGOS: Record<string, { src: string; alt: string; fit: 'cover' | 'contain' }> = {
+  'best-content-writer': {
+    src: gvrTrophyImg,
+    alt: 'Grand View Research STAR Awards trophy — Seapee Bajaj, Content Creation',
+    fit: 'cover',
+  },
+  'pwc-commendation': {
+    src: pwcLogoImg,
+    alt: 'PwC (PricewaterhouseCoopers) logo',
+    fit: 'contain',
+  },
+  'my-need-to-live-reward': {
+    src: myNeedToLiveBadgeImg,
+    alt: 'My Need To Live — Get Involved Award badge',
+    fit: 'contain',
+  },
+  'academic-publications': {
+    src: asmLogoImg,
+    alt: 'ASM (Audyogik Shikshan Mandal) logo',
+    fit: 'contain',
+  },
+};
+
+const CERTIFICATION_LOGOS: Record<string, { src: string; alt: string }> = {
+  'google-prompting': {
+    src: googlePromptingBadgeImg,
+    alt: 'Google Prompting Essentials — Certificate of Completion badge',
+  },
+  'hubspot-content-marketing': {
+    src: hubspotBadgeImg,
+    alt: 'HubSpot Academy — Content Marketing Certification badge',
+  },
+};
 
 export const Awards: React.FC = () => {
   return (
@@ -31,56 +71,74 @@ export const Awards: React.FC = () => {
 
         {/* Awards Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-          {AWARDS.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white rounded-2xl p-7 sm:p-8 border border-[#e4e2df] shadow-xs hover:shadow-md hover:border-[#dbc1b8] transition-all duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                {/* Card Top Header */}
-                <div className="flex items-center justify-between gap-4 mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl bg-[#f5f3f0] text-[#994524] flex items-center justify-center group-hover:bg-[#994524] group-hover:text-white transition-colors duration-300">
-                      <span className="material-symbols-outlined text-[24px]">
-                        {item.icon}
-                      </span>
+          {AWARDS.map((item) => {
+            const logo = AWARD_LOGOS[item.id];
+            return (
+              <div
+                key={item.id}
+                className="bg-white rounded-2xl p-7 sm:p-8 border border-[#e4e2df] shadow-xs hover:shadow-md hover:border-[#dbc1b8] transition-all duration-300 flex flex-col justify-between group"
+              >
+                <div>
+                  {/* Card Top Header with Logo */}
+                  <div className="flex items-start justify-between gap-4 mb-5">
+                    <div className="flex items-center gap-4">
+                      {logo ? (
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-white border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0 p-1.5">
+                          <img
+                            src={logo.src}
+                            alt={logo.alt}
+                            referrerPolicy="no-referrer"
+                            className={`w-full h-full ${
+                              logo.fit === 'cover'
+                                ? 'object-cover rounded-lg'
+                                : 'object-contain'
+                            }`}
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-14 h-14 rounded-xl bg-[#f5f3f0] text-[#994524] flex items-center justify-center shrink-0">
+                          <span className="material-symbols-outlined text-[24px]">
+                            {item.icon}
+                          </span>
+                        </div>
+                      )}
+                      <div>
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#994524] block">
+                          {item.badgeText}
+                        </span>
+                        <span className="text-xs sm:text-sm text-[#546252] font-medium block mt-0.5">
+                          {item.organization}
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#994524] block">
-                        {item.badgeText}
-                      </span>
-                      <span className="text-xs text-[#546252] font-medium">
-                        {item.organization}
-                      </span>
-                    </div>
+                    <span className="text-xs font-medium text-[#546252] bg-[#f5f3f0] px-3 py-1 rounded-full whitespace-nowrap shrink-0">
+                      {item.year}
+                    </span>
                   </div>
-                  <span className="text-xs font-medium text-[#546252] bg-[#f5f3f0] px-3 py-1 rounded-full whitespace-nowrap">
-                    {item.year}
-                  </span>
+
+                  {/* Award Title */}
+                  <h3 className="font-serif text-xl sm:text-2xl text-[#1b1c1a] font-medium tracking-tight mb-3 group-hover:text-[#994524] transition-colors">
+                    {item.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-sm text-[#55433c] leading-relaxed mb-4">
+                    {item.description}
+                  </p>
                 </div>
 
-                {/* Award Title */}
-                <h3 className="font-serif text-xl sm:text-2xl text-[#1b1c1a] font-medium tracking-tight mb-3 group-hover:text-[#994524] transition-colors">
-                  {item.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-sm text-[#55433c] leading-relaxed mb-4">
-                  {item.description}
-                </p>
+                {/* Key Highlight Footnote */}
+                {item.highlight && (
+                  <div className="pt-4 border-t border-[#efeeeb] flex items-start gap-2 text-xs text-[#546252]">
+                    <span className="material-symbols-outlined text-[16px] text-[#994524] shrink-0 mt-0.5">
+                      check_circle
+                    </span>
+                    <span className="leading-snug">{item.highlight}</span>
+                  </div>
+                )}
               </div>
-
-              {/* Key Highlight Footnote */}
-              {item.highlight && (
-                <div className="pt-4 border-t border-[#efeeeb] flex items-start gap-2 text-xs text-[#546252]">
-                  <span className="material-symbols-outlined text-[16px] text-[#994524] shrink-0 mt-0.5">
-                    check_circle
-                  </span>
-                  <span className="leading-snug">{item.highlight}</span>
-                </div>
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Certifications & Specialized Credentials Strip */}
@@ -100,34 +158,48 @@ export const Awards: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
-            {CERTIFICATIONS.map((cert) => (
-              <div
-                key={cert.id}
-                className="flex items-start gap-4 p-4 rounded-xl bg-[#fbf9f6] border border-[#e4e2df]"
-              >
-                <div className="w-10 h-10 rounded-lg bg-white border border-[#e4e2df] text-[#994524] flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-[20px]">
-                    {cert.icon}
-                  </span>
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-baseline justify-between gap-2 flex-wrap mb-0.5">
-                    <h4 className="text-sm font-semibold text-[#1b1c1a]">
-                      {cert.title}
-                    </h4>
-                    <span className="text-xs font-bold text-[#994524]">
-                      {cert.score}
-                    </span>
+            {CERTIFICATIONS.map((cert) => {
+              const certLogo = CERTIFICATION_LOGOS[cert.id];
+              return (
+                <div
+                  key={cert.id}
+                  className="flex items-start gap-4 p-4 sm:p-5 rounded-xl bg-[#fbf9f6] border border-[#e4e2df]"
+                >
+                  {certLogo ? (
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-white border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0 p-1.5">
+                      <img
+                        src={certLogo.src}
+                        alt={certLogo.alt}
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-12 h-12 rounded-lg bg-white border border-[#e4e2df] text-[#994524] flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-[20px]">
+                        {cert.icon}
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-baseline justify-between gap-2 flex-wrap mb-0.5">
+                      <h4 className="text-sm sm:text-base font-semibold text-[#1b1c1a]">
+                        {cert.title}
+                      </h4>
+                      <span className="text-xs font-bold text-[#994524]">
+                        {cert.score}
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#546252] font-medium mb-1">
+                      {cert.issuer} • {cert.date}
+                    </p>
+                    <p className="text-xs text-[#55433c] leading-relaxed">
+                      {cert.description}
+                    </p>
                   </div>
-                  <p className="text-xs text-[#546252] font-medium mb-1">
-                    {cert.issuer} • {cert.date}
-                  </p>
-                  <p className="text-xs text-[#55433c] leading-relaxed">
-                    {cert.description}
-                  </p>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

@@ -1,6 +1,19 @@
 import React, { useState } from 'react';
 import { CREATIVE_WORKS } from '../data/portfolioData';
 import { CreativeItem } from '../types';
+import startupIndiaLogo from '../assets/images/startup_india_magazine_logo_1790403917955.jpg';
+import wordyWorthyLogo from '../assets/images/wordy_worthy_logo_1790403930143.jpg';
+
+const CREATIVE_LOGOS: Record<string, { src: string; alt: string }> = {
+  'startup-india-magazine': {
+    src: startupIndiaLogo,
+    alt: 'Startup India Magazine logo',
+  },
+  'instagram-wordy-worthy': {
+    src: wordyWorthyLogo,
+    alt: 'Wordy Worthy logo',
+  },
+};
 
 export const CreativeWork: React.FC = () => {
   const [selectedPiece, setSelectedPiece] = useState<CreativeItem | null>(null);
@@ -23,55 +36,77 @@ export const CreativeWork: React.FC = () => {
 
         {/* 2 Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {CREATIVE_WORKS.map((work) => (
-            <a
-              key={work.id}
-              href={work.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#efeeeb] p-6 rounded-xl flex flex-col justify-between min-h-[224px] transition-transform duration-300 hover:-translate-y-1 cursor-pointer border border-transparent hover:border-[#dbc1b8] group focus-visible:outline-2 focus-visible:outline-[#994524] relative"
-              aria-label={`Open ${work.title} (opens in a new tab)`}
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="material-symbols-outlined text-[#994524] text-2xl block group-hover:scale-110 transition-transform">
-                    {work.icon}
-                  </span>
-                  {work.sampleQuote && (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setSelectedPiece(work);
-                      }}
-                      className="text-gray-400 hover:text-[#994524] p-1 rounded transition-colors"
-                      title="Read excerpt"
-                      aria-label="Read excerpt"
-                    >
-                      <span className="material-symbols-outlined text-[18px]">format_quote</span>
-                    </button>
-                  )}
+          {CREATIVE_WORKS.map((work) => {
+            const logo = CREATIVE_LOGOS[work.id];
+            return (
+              <a
+                key={work.id}
+                href={work.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#efeeeb] p-6 sm:p-7 rounded-xl flex flex-col justify-between min-h-[240px] transition-transform duration-300 hover:-translate-y-1 cursor-pointer border border-transparent hover:border-[#dbc1b8] group focus-visible:outline-2 focus-visible:outline-[#994524] relative"
+                aria-label={`Open ${work.title} (opens in a new tab)`}
+              >
+                <div>
+                  <div className="flex items-start justify-between gap-4 mb-5">
+                    <div className="flex items-center gap-4">
+                      {logo ? (
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-white border border-[#e4e2df] shadow-xs overflow-hidden flex items-center justify-center shrink-0">
+                          <img
+                            src={logo.src}
+                            alt={logo.alt}
+                            referrerPolicy="no-referrer"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <span className="material-symbols-outlined text-[#994524] text-2xl block group-hover:scale-110 transition-transform">
+                          {work.icon}
+                        </span>
+                      )}
+                      <div>
+                        <h3 className="font-serif text-xl sm:text-2xl text-[#1b1c1a] font-medium leading-snug group-hover:text-[#994524] transition-colors">
+                          {work.title}
+                        </h3>
+                        <p className="text-xs text-[#546252] mt-1 font-medium">
+                          {work.author}
+                        </p>
+                      </div>
+                    </div>
+
+                    {work.sampleQuote && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setSelectedPiece(work);
+                        }}
+                        className="text-gray-400 hover:text-[#994524] p-1.5 rounded-lg hover:bg-white/60 transition-colors shrink-0"
+                        title="Read excerpt"
+                        aria-label="Read excerpt"
+                      >
+                        <span className="material-symbols-outlined text-[18px]">format_quote</span>
+                      </button>
+                    )}
+                  </div>
+
+                  <p className="text-sm text-[#55433c] leading-relaxed mb-4">
+                    {work.description}
+                  </p>
                 </div>
 
-                <h3 className="font-serif text-xl text-[#1b1c1a] font-medium leading-snug group-hover:text-[#994524] transition-colors">
-                  {work.title}
-                </h3>
-                <p className="text-xs text-[#546252] mt-1 font-medium">
-                  {work.author}
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-[#e4e2df]/60 flex items-center justify-between">
-                <span className="text-[11px] uppercase text-[#55433c] tracking-wider font-medium">
-                  {work.tag}
-                </span>
-                <span className="material-symbols-outlined text-[16px] text-[#994524] group-hover:translate-x-1 transition-transform">
-                  arrow_forward
-                </span>
-              </div>
-            </a>
-          ))}
+                <div className="pt-4 border-t border-[#e4e2df]/60 flex items-center justify-between">
+                  <span className="text-[11px] uppercase text-[#55433c] tracking-wider font-medium">
+                    {work.tag}
+                  </span>
+                  <span className="material-symbols-outlined text-[16px] text-[#994524] group-hover:translate-x-1 transition-transform">
+                    arrow_forward
+                  </span>
+                </div>
+              </a>
+            );
+          })}
         </div>
       </div>
 
@@ -95,10 +130,21 @@ export const CreativeWork: React.FC = () => {
               <span className="material-symbols-outlined text-[20px]">close</span>
             </button>
 
-            <div className="flex items-center gap-3">
-              <span className="material-symbols-outlined text-[#994524] text-3xl">
-                {selectedPiece.icon}
-              </span>
+            <div className="flex items-center gap-4">
+              {CREATIVE_LOGOS[selectedPiece.id] ? (
+                <div className="w-14 h-14 rounded-xl bg-white border border-[#e4e2df] overflow-hidden shrink-0">
+                  <img
+                    src={CREATIVE_LOGOS[selectedPiece.id].src}
+                    alt={CREATIVE_LOGOS[selectedPiece.id].alt}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                <span className="material-symbols-outlined text-[#994524] text-3xl">
+                  {selectedPiece.icon}
+                </span>
+              )}
               <div>
                 <h3 className="font-serif text-2xl text-[#1b1c1a] font-medium">
                   {selectedPiece.title}
