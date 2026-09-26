@@ -20,7 +20,7 @@ export const Contact: React.FC<ContactProps> = ({
   onOpenResume,
   onOpenWorkspace,
 }) => {
-  const { user, inquiries, submitInquiry, signIn } = useFirebase();
+  const { user, inquiries, submitInquiry } = useFirebase();
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -88,36 +88,7 @@ export const Contact: React.FC<ContactProps> = ({
     if (!validate()) return;
 
     setErrors({});
-    if (user) {
-      setIsSubmitting(true);
-      try {
-        await submitInquiry({
-          name,
-          email,
-          projectType,
-          message,
-        });
-        setSavedToDb(true);
-        setSubmitted(true);
-      } catch (err) {
-        setErrors({
-          submit:
-            err instanceof Error
-              ? err.message
-              : 'Unable to save inquiry to the database. Please try again.',
-        });
-      } finally {
-        setIsSubmitting(false);
-      }
-    } else {
-      setSavedToDb(false);
-      setSubmitted(true);
-    }
-  };
-
-  const handleSignInAndSave = async () => {
     setIsSubmitting(true);
-    setErrors({});
     try {
       await submitInquiry({
         name,
@@ -126,12 +97,13 @@ export const Contact: React.FC<ContactProps> = ({
         message,
       });
       setSavedToDb(true);
+      setSubmitted(true);
     } catch (err) {
       setErrors({
         submit:
           err instanceof Error
             ? err.message
-            : 'Unable to save inquiry to the database.',
+            : 'Unable to save inquiry. Please try again.',
       });
     } finally {
       setIsSubmitting(false);
@@ -337,23 +309,9 @@ export const Contact: React.FC<ContactProps> = ({
 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
                   <div className="text-[11px] text-[#546252]">
-                    {user ? (
-                      <span>
-                        Signed in as <strong className="text-[#1b1c1a]">{user.email}</strong>. Saves to database &amp; prepares Gmail message.
-                      </span>
-                    ) : (
-                      <span>
-                        Prepares your structured inquiry for Gmail.{' '}
-                        <button
-                          type="button"
-                          onClick={() => signIn()}
-                          className="text-[#994524] font-semibold underline cursor-pointer"
-                        >
-                          Sign in with Google
-                        </button>{' '}
-                        to also track in Client Workspace.
-                      </span>
-                    )}
+                    <span>
+                      Saves your inquiry to the Client Workspace &amp; prepares your pre-filled Gmail message.
+                    </span>
                   </div>
                   <button
                     type="submit"
@@ -380,7 +338,7 @@ export const Contact: React.FC<ContactProps> = ({
               </h3>
               <p className="text-sm text-[#55433c] leading-relaxed max-w-md">
                 {savedToDb
-                  ? 'Your inquiry has been saved to the database. Click below to send your structured message directly via Gmail to '
+                  ? 'Your inquiry has been recorded in the workspace. Click below to open Gmail with your structured inquiry pre-filled for '
                   : 'Your message details are ready. Click the button below to open Gmail with your structured inquiry pre-filled for '}
                 <strong className="text-[#1b1c1a]">{SITE_CONFIG.EMAIL}</strong>.
               </p>
@@ -395,7 +353,7 @@ export const Contact: React.FC<ContactProps> = ({
                   <span>Open in Gmail</span>
                   <span className="material-symbols-outlined text-[18px]">outgoing_mail</span>
                 </a>
-                {savedToDb && onOpenWorkspace && (
+                {onOpenWorkspace && (
                   <button
                     type="button"
                     onClick={onOpenWorkspace}
@@ -403,17 +361,6 @@ export const Contact: React.FC<ContactProps> = ({
                   >
                     <span>View in Client Workspace ({inquiries.length})</span>
                     <span className="material-symbols-outlined text-[16px]">folder_shared</span>
-                  </button>
-                )}
-                {!savedToDb && (
-                  <button
-                    type="button"
-                    onClick={handleSignInAndSave}
-                    disabled={isSubmitting}
-                    className="px-4 py-2.5 text-xs text-[#1b1c1a] font-semibold hover:bg-[#efeeeb] border border-[#e4e2df] rounded-lg bg-white inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
-                  >
-                    <span>{isSubmitting ? 'Saving...' : 'Save to Client Workspace'}</span>
-                    <span className="material-symbols-outlined text-[16px]">cloud_upload</span>
                   </button>
                 )}
                 <button

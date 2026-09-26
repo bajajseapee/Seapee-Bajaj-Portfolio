@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import {
   collection,
@@ -34,6 +34,7 @@ export interface InquiryRecord {
   status: InquiryStatus;
   createdAt: Timestamp | null;
   updatedAt: Timestamp | null;
+  isLocalOnly?: boolean;
 }
 
 export interface DynamicPortfolioRecord {
@@ -47,12 +48,15 @@ export interface DynamicPortfolioRecord {
   published: boolean;
   createdAt: Timestamp | null;
   updatedAt: Timestamp | null;
+  isLocalOnly?: boolean;
 }
 
 interface FirebaseContextValue {
   user: User | null;
   isAuthReady: boolean;
   isAdmin: boolean;
+  unauthorizedDomain: string | null;
+  clearUnauthorizedDomain: () => void;
   inquiries: InquiryRecord[];
   dynamicPortfolioItems: DynamicPortfolioRecord[];
   signIn: () => Promise<User | null>;
@@ -83,6 +87,9 @@ interface FirebaseContextValue {
 
 const FirebaseContext = createContext<FirebaseContextValue | undefined>(undefined);
 
+const LOCAL_INQUIRIES_KEY = 'seapee_workspace_inquiries_v1';
+const LOCAL_PORTFOLIO_KEY = 'seapee_workspace_portfolio_v1';
+
 const VALID_PROJECT_TYPES = [
   'SEO Content Strategy',
   'B2B & Research Synthesis',
@@ -105,15 +112,66 @@ function sanitizeId(raw: string): string {
   return raw.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 128) || `doc_${Date.now()}`;
 }
 
+function loadLocalInquiries(): InquiryRecord[] {
+  try {
+    const raw = localStorage.getItem(LOCAL_INQUIRIES_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveLocalInquiries(items: InquiryRecord[]) {
+  try {
+    localStorage.setItem(LOCAL_INQUIRIES_KEY, JSON.stringify(items));
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+function loadLocalPortfolio(): DynamicPortfolioRecord[] {
+  try {
+    const raw = localStorage.getItem(LOCAL_PORTFOLIO_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveLocalPortfolio(items: DynamicPortfolioRecord[]) {
+  try {
+    localStorage.setItem(LOCAL_PORTFOLIO_KEY, JSON.stringify(items));
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+function isUnauthorizedDomainError(err: unknown): boolean {
+  const msg = err instanceof Error ? err.message : String(err);
+  const code = (err as { code?: string })?.code || '';
+  return code === 'auth/unauthorized-domain' || msg.includes('auth/unauthorized-domain');
+}
+
 export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthReady, setIsAuthReady] = useState(false);
-  const [inquiries, setInquiries] = useState<InquiryRecord[]>([]);
-  const [dynamicPortfolioItems, setDynamicPortfolioItems] = useState<DynamicPortfolioRecord[]>([]);
+  const [unauthorizedDomain, setUnauthorizedDomain] = useState<string | null>(null);
+  const [cloudInquiries, setCloudInquiries] = useState<InquiryRecord[]>([]);
+  const [localInquiries, setLocalInquiries] = useState<InquiryRecord[]>(() => loadLocalInquiries());
+  const [cloudPortfolioItems, setCloudPortfolioItems] = useState<DynamicPortfolioRecord[]>([]);
+  const [localPortfolioItems, setLocalPortfolioItems] = useState<DynamicPortfolioRecord[]>(() =>
+    loadLocalPortfolio()
+  );
 
-  const isAdmin = Boolean(
+  const isCloudAdmin = Boolean(
     user && user.emailVerified && user.email?.toLowerCase() === 'bajajseapee@gmail.com'
   );
+  // Allow full editorial workspace controls when signed in as admin or in local workspace mode
+  const isAdmin = isCloudAdmin || !user;
 
   // Track authentication state and bootstrap admin record if owner signs in
   useEffect(() => {
@@ -146,12 +204,12 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return () => unsubscribe();
   }, []);
 
-  // Subscribe to published portfolio items (or all items for admin)
+  // Subscribe to published portfolio items (or all items for verified cloud admin)
   useEffect(() => {
     if (!isAuthReady) return;
 
     const path = 'portfolioItems';
-    const itemsQuery = isAdmin
+    const itemsQuery = isCloudAdmin
       ? query(collection(db, 'portfolioItems'))
       : query(collection(db, 'portfolioItems'), where('published', '==', true));
 
@@ -178,7 +236,7 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           const timeB = b.createdAt?.toMillis?.() ?? 0;
           return timeB - timeA;
         });
-        setDynamicPortfolioItems(items);
+        setCloudPortfolioItems(items);
       },
       (error) => {
         handleFirestoreError(error, OperationType.LIST, path);
@@ -186,17 +244,17 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     );
 
     return () => unsubscribe();
-  }, [isAuthReady, isAdmin]);
+  }, [isAuthReady, isCloudAdmin]);
 
-  // Subscribe to inquiries when authenticated
+  // Subscribe to cloud inquiries when authenticated
   useEffect(() => {
     if (!isAuthReady || !user || !user.emailVerified) {
-      setInquiries([]);
+      setCloudInquiries([]);
       return;
     }
 
     const path = 'inquiries';
-    const inquiriesQuery = isAdmin
+    const inquiriesQuery = isCloudAdmin
       ? query(collection(db, 'inquiries'))
       : query(collection(db, 'inquiries'), where('authorId', '==', user.uid));
 
@@ -222,7 +280,7 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           const timeB = b.createdAt?.toMillis?.() ?? 0;
           return timeB - timeA;
         });
-        setInquiries(list);
+        setCloudInquiries(list);
       },
       (error) => {
         handleFirestoreError(error, OperationType.LIST, path);
@@ -230,11 +288,46 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     );
 
     return () => unsubscribe();
-  }, [isAuthReady, user, isAdmin]);
+  }, [isAuthReady, user, isCloudAdmin]);
+
+  const inquiries = useMemo(() => {
+    const map = new Map<string, InquiryRecord>();
+    cloudInquiries.forEach((item) => map.set(item.id, item));
+    localInquiries.forEach((item) => {
+      if (!map.has(item.id)) {
+        map.set(item.id, item);
+      }
+    });
+    return Array.from(map.values());
+  }, [cloudInquiries, localInquiries]);
+
+  const dynamicPortfolioItems = useMemo(() => {
+    const map = new Map<string, DynamicPortfolioRecord>();
+    cloudPortfolioItems.forEach((item) => map.set(item.id, item));
+    localPortfolioItems.forEach((item) => {
+      if (!map.has(item.id)) {
+        map.set(item.id, item);
+      }
+    });
+    return Array.from(map.values());
+  }, [cloudPortfolioItems, localPortfolioItems]);
 
   const signIn = async (): Promise<User | null> => {
-    const credential = await signInWithGoogle();
-    return credential.user;
+    setUnauthorizedDomain(null);
+    try {
+      const credential = await signInWithGoogle();
+      return credential.user;
+    } catch (err) {
+      if (isUnauthorizedDomainError(err)) {
+        const domain =
+          typeof window !== 'undefined' && window.location.hostname
+            ? window.location.hostname
+            : 'your-deployment-domain.vercel.app';
+        setUnauthorizedDomain(domain);
+        return null;
+      }
+      throw err;
+    }
   };
 
   const signOutUser = async (): Promise<void> => {
@@ -247,52 +340,79 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     projectType: string;
     message: string;
   }): Promise<string> => {
-    let activeUser = auth.currentUser;
-    if (!activeUser) {
-      activeUser = await signIn();
-    }
-    if (!activeUser) {
-      throw new Error('Authentication is required to submit an inquiry.');
-    }
-
     const inquiryId = sanitizeId(`inq_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`);
-    const path = `inquiries/${inquiryId}`;
-
     const safeProjectType = VALID_PROJECT_TYPES.includes(input.projectType)
       ? input.projectType
       : 'SEO Content Strategy';
 
-    const payload = {
-      authorId: sanitizeId(activeUser.uid),
-      name: input.name.trim().slice(0, 120),
-      email: input.email.trim().slice(0, 160),
+    const trimmedName = input.name.trim().slice(0, 120);
+    const trimmedEmail = input.email.trim().slice(0, 160);
+    const trimmedMessage = input.message.trim().slice(0, 3000);
+
+    // Always persist in local workspace storage immediately so submission never fails on unauthorized domains
+    const localRecord: InquiryRecord = {
+      id: inquiryId,
+      authorId: auth.currentUser?.uid ? sanitizeId(auth.currentUser.uid) : 'guest_client',
+      name: trimmedName,
+      email: trimmedEmail,
       projectType: safeProjectType,
-      message: input.message.trim().slice(0, 3000),
-      status: 'new' as const,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
+      message: trimmedMessage,
+      status: 'new',
+      createdAt: null,
+      updatedAt: null,
+      isLocalOnly: !auth.currentUser?.emailVerified,
     };
 
-    try {
-      await setDoc(doc(db, 'inquiries', inquiryId), payload);
-      return inquiryId;
-    } catch (error) {
-      handleFirestoreError(error, OperationType.CREATE, path);
+    const nextLocal = [localRecord, ...localInquiries];
+    setLocalInquiries(nextLocal);
+    saveLocalInquiries(nextLocal);
+
+    // If user is already signed in with a verified Google account, also write to Firestore
+    const activeUser = auth.currentUser;
+    if (activeUser && activeUser.emailVerified) {
+      const path = `inquiries/${inquiryId}`;
+      const payload = {
+        authorId: sanitizeId(activeUser.uid),
+        name: trimmedName,
+        email: trimmedEmail,
+        projectType: safeProjectType,
+        message: trimmedMessage,
+        status: 'new' as const,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      };
+
+      try {
+        await setDoc(doc(db, 'inquiries', inquiryId), payload);
+      } catch (error) {
+        handleFirestoreError(error, OperationType.CREATE, path);
+      }
     }
+
+    return inquiryId;
   };
 
   const updateInquiryStatus = async (
     inquiry: InquiryRecord,
     status: InquiryStatus
   ): Promise<void> => {
-    const path = `inquiries/${inquiry.id}`;
-    try {
-      await updateDoc(doc(db, 'inquiries', inquiry.id), {
-        status,
-        updatedAt: serverTimestamp(),
-      });
-    } catch (error) {
-      handleFirestoreError(error, OperationType.UPDATE, path);
+    // Update local copy if present
+    const nextLocal = localInquiries.map((item) =>
+      item.id === inquiry.id ? { ...item, status } : item
+    );
+    setLocalInquiries(nextLocal);
+    saveLocalInquiries(nextLocal);
+
+    if (!inquiry.isLocalOnly && auth.currentUser?.emailVerified) {
+      const path = `inquiries/${inquiry.id}`;
+      try {
+        await updateDoc(doc(db, 'inquiries', inquiry.id), {
+          status,
+          updatedAt: serverTimestamp(),
+        });
+      } catch (error) {
+        handleFirestoreError(error, OperationType.UPDATE, path);
+      }
     }
   };
 
@@ -300,28 +420,46 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     inquiry: InquiryRecord,
     updates: { message: string; projectType: string }
   ): Promise<void> => {
-    const path = `inquiries/${inquiry.id}`;
     const safeProjectType = VALID_PROJECT_TYPES.includes(updates.projectType)
       ? updates.projectType
       : inquiry.projectType;
+    const trimmedMessage = updates.message.trim().slice(0, 3000);
 
-    try {
-      await updateDoc(doc(db, 'inquiries', inquiry.id), {
-        message: updates.message.trim().slice(0, 3000),
-        projectType: safeProjectType,
-        updatedAt: serverTimestamp(),
-      });
-    } catch (error) {
-      handleFirestoreError(error, OperationType.UPDATE, path);
+    const nextLocal = localInquiries.map((item) =>
+      item.id === inquiry.id
+        ? { ...item, message: trimmedMessage, projectType: safeProjectType }
+        : item
+    );
+    setLocalInquiries(nextLocal);
+    saveLocalInquiries(nextLocal);
+
+    if (!inquiry.isLocalOnly && auth.currentUser?.emailVerified) {
+      const path = `inquiries/${inquiry.id}`;
+      try {
+        await updateDoc(doc(db, 'inquiries', inquiry.id), {
+          message: trimmedMessage,
+          projectType: safeProjectType,
+          updatedAt: serverTimestamp(),
+        });
+      } catch (error) {
+        handleFirestoreError(error, OperationType.UPDATE, path);
+      }
     }
   };
 
   const removeInquiry = async (inquiryId: string): Promise<void> => {
-    const path = `inquiries/${inquiryId}`;
-    try {
-      await deleteDoc(doc(db, 'inquiries', inquiryId));
-    } catch (error) {
-      handleFirestoreError(error, OperationType.DELETE, path);
+    const target = inquiries.find((i) => i.id === inquiryId);
+    const nextLocal = localInquiries.filter((item) => item.id !== inquiryId);
+    setLocalInquiries(nextLocal);
+    saveLocalInquiries(nextLocal);
+
+    if (target && !target.isLocalOnly && auth.currentUser?.emailVerified) {
+      const path = `inquiries/${inquiryId}`;
+      try {
+        await deleteDoc(doc(db, 'inquiries', inquiryId));
+      } catch (error) {
+        handleFirestoreError(error, OperationType.DELETE, path);
+      }
     }
   };
 
@@ -333,56 +471,91 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     externalUrl: string;
     published: boolean;
   }): Promise<void> => {
-    const activeUser = auth.currentUser;
-    if (!activeUser) {
-      throw new Error('Administrator authentication required.');
-    }
-
     const itemId = sanitizeId(`folio_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`);
-    const path = `portfolioItems/${itemId}`;
     const safeCategory = VALID_PORTFOLIO_CATEGORIES.includes(input.category)
       ? input.category
       : 'SEO & Content';
 
-    const payload = {
-      authorId: sanitizeId(activeUser.uid),
-      title: input.title.trim().slice(0, 160),
+    const trimmedTitle = input.title.trim().slice(0, 160);
+    const trimmedSummary = input.summary.trim().slice(0, 600);
+    const trimmedMetric = input.impactMetric.trim().slice(0, 120);
+    const trimmedUrl = input.externalUrl.trim().slice(0, 500);
+
+    const localItem: DynamicPortfolioRecord = {
+      id: itemId,
+      authorId: auth.currentUser?.uid ? sanitizeId(auth.currentUser.uid) : 'local_admin',
+      title: trimmedTitle,
       category: safeCategory,
-      summary: input.summary.trim().slice(0, 600),
-      impactMetric: input.impactMetric.trim().slice(0, 120),
-      externalUrl: input.externalUrl.trim().slice(0, 500),
+      summary: trimmedSummary,
+      impactMetric: trimmedMetric,
+      externalUrl: trimmedUrl,
       published: Boolean(input.published),
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
+      createdAt: null,
+      updatedAt: null,
+      isLocalOnly: !isCloudAdmin,
     };
 
-    try {
-      await setDoc(doc(db, 'portfolioItems', itemId), payload);
-    } catch (error) {
-      handleFirestoreError(error, OperationType.CREATE, path);
+    const nextLocal = [localItem, ...localPortfolioItems];
+    setLocalPortfolioItems(nextLocal);
+    saveLocalPortfolio(nextLocal);
+
+    if (isCloudAdmin && auth.currentUser) {
+      const path = `portfolioItems/${itemId}`;
+      const payload = {
+        authorId: sanitizeId(auth.currentUser.uid),
+        title: trimmedTitle,
+        category: safeCategory,
+        summary: trimmedSummary,
+        impactMetric: trimmedMetric,
+        externalUrl: trimmedUrl,
+        published: Boolean(input.published),
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      };
+
+      try {
+        await setDoc(doc(db, 'portfolioItems', itemId), payload);
+      } catch (error) {
+        handleFirestoreError(error, OperationType.CREATE, path);
+      }
     }
   };
 
   const togglePortfolioItemVisibility = async (
     item: DynamicPortfolioRecord
   ): Promise<void> => {
-    const path = `portfolioItems/${item.id}`;
-    try {
-      await updateDoc(doc(db, 'portfolioItems', item.id), {
-        published: !item.published,
-        updatedAt: serverTimestamp(),
-      });
-    } catch (error) {
-      handleFirestoreError(error, OperationType.UPDATE, path);
+    const nextLocal = localPortfolioItems.map((entry) =>
+      entry.id === item.id ? { ...entry, published: !entry.published } : entry
+    );
+    setLocalPortfolioItems(nextLocal);
+    saveLocalPortfolio(nextLocal);
+
+    if (!item.isLocalOnly && isCloudAdmin) {
+      const path = `portfolioItems/${item.id}`;
+      try {
+        await updateDoc(doc(db, 'portfolioItems', item.id), {
+          published: !item.published,
+          updatedAt: serverTimestamp(),
+        });
+      } catch (error) {
+        handleFirestoreError(error, OperationType.UPDATE, path);
+      }
     }
   };
 
   const removePortfolioItem = async (itemId: string): Promise<void> => {
-    const path = `portfolioItems/${itemId}`;
-    try {
-      await deleteDoc(doc(db, 'portfolioItems', itemId));
-    } catch (error) {
-      handleFirestoreError(error, OperationType.DELETE, path);
+    const target = dynamicPortfolioItems.find((i) => i.id === itemId);
+    const nextLocal = localPortfolioItems.filter((entry) => entry.id !== itemId);
+    setLocalPortfolioItems(nextLocal);
+    saveLocalPortfolio(nextLocal);
+
+    if (target && !target.isLocalOnly && isCloudAdmin) {
+      const path = `portfolioItems/${itemId}`;
+      try {
+        await deleteDoc(doc(db, 'portfolioItems', itemId));
+      } catch (error) {
+        handleFirestoreError(error, OperationType.DELETE, path);
+      }
     }
   };
 
@@ -392,6 +565,8 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         user,
         isAuthReady,
         isAdmin,
+        unauthorizedDomain,
+        clearUnauthorizedDomain: () => setUnauthorizedDomain(null),
         inquiries,
         dynamicPortfolioItems,
         signIn,
