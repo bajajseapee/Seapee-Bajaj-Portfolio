@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { SITE_CONFIG, buildGmailComposeUrl } from '../config/siteConfig';
+import {
+  SITE_CONFIG,
+  buildGmailComposeUrl,
+  buildOutlookComposeUrl,
+  buildWhatsAppUrl,
+} from '../config/siteConfig';
 import { useFirebase } from '../context/FirebaseContext';
+import { WhatsAppIcon } from './WhatsAppIcon';
 
 interface ContactProps {
   initialService?: string;
@@ -110,9 +116,13 @@ export const Contact: React.FC<ContactProps> = ({
     }
   };
 
-  const gmailComposeUrl = buildGmailComposeUrl(
-    `Project Inquiry: ${projectType} from ${name || 'Prospective Client'}`,
-    `Hi Seapee,\n\nName: ${name}\nEmail: ${email}\nProject Type: ${projectType}\n\nProject Overview:\n${message}\n`
+  const emailSubject = `Project Inquiry: ${projectType} from ${name || 'Prospective Client'}`;
+  const emailBody = `Hi Seapee,\n\nName: ${name}\nEmail: ${email}\nProject Type: ${projectType}\n\nProject Overview:\n${message}\n`;
+
+  const gmailComposeUrl = buildGmailComposeUrl(emailSubject, emailBody);
+  const outlookComposeUrl = buildOutlookComposeUrl(emailSubject, emailBody);
+  const whatsappInquiryUrl = buildWhatsAppUrl(
+    `Hi Seapee, I just submitted an inquiry on your portfolio.\n\n*Name:* ${name}\n*Email:* ${email}\n*Project Type:* ${projectType}\n*Details:* ${message}`
   );
 
   return (
@@ -164,6 +174,17 @@ export const Contact: React.FC<ContactProps> = ({
             >
               <span className="material-symbols-outlined text-[18px] text-[#994524]">mail</span>
               <span>{SITE_CONFIG.EMAIL}</span>
+            </a>
+
+            <a
+              href={buildWhatsAppUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2.5 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] text-xs font-semibold transition-colors flex items-center gap-2 border border-[#e4e2df]"
+              title={`Chat on WhatsApp (${SITE_CONFIG.WHATSAPP_DISPLAY})`}
+            >
+              <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
+              <span>WhatsApp • {SITE_CONFIG.WHATSAPP_DISPLAY}</span>
             </a>
 
             <a
@@ -338,8 +359,8 @@ export const Contact: React.FC<ContactProps> = ({
               </h3>
               <p className="text-sm text-[#55433c] leading-relaxed max-w-md">
                 {savedToDb
-                  ? 'Your inquiry has been recorded in the workspace. Click below to open Gmail with your structured inquiry pre-filled for '
-                  : 'Your message details are ready. Click the button below to open Gmail with your structured inquiry pre-filled for '}
+                  ? 'Your inquiry has been recorded in the workspace. Choose your preferred email client or WhatsApp below to send your structured message directly to '
+                  : 'Your message details are ready. Choose your preferred email client or WhatsApp below to send your structured inquiry directly to '}
                 <strong className="text-[#1b1c1a]">{SITE_CONFIG.EMAIL}</strong>.
               </p>
 
@@ -348,16 +369,35 @@ export const Contact: React.FC<ContactProps> = ({
                   href={gmailComposeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-2.5 bg-[#994524] hover:bg-[#7b2f0f] text-white text-sm font-semibold rounded-lg shadow-sm transition-colors inline-flex items-center gap-2"
+                  className="px-5 py-2.5 bg-[#994524] hover:bg-[#7b2f0f] text-white text-sm font-semibold rounded-lg shadow-sm transition-colors inline-flex items-center gap-2"
                 >
                   <span>Open in Gmail</span>
                   <span className="material-symbols-outlined text-[18px]">outgoing_mail</span>
                 </a>
+                <a
+                  href={outlookComposeUrl}
+                  className="px-5 py-2.5 bg-[#1b1c1a] hover:bg-[#333531] text-white text-sm font-semibold rounded-lg shadow-sm transition-colors inline-flex items-center gap-2"
+                >
+                  <span>Open in Outlook</span>
+                  <span className="material-symbols-outlined text-[18px]">mail</span>
+                </a>
+                <a
+                  href={whatsappInquiryUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2.5 bg-[#25D366] hover:bg-[#1ebe5d] text-white text-sm font-semibold rounded-lg shadow-sm transition-colors inline-flex items-center gap-2"
+                >
+                  <WhatsAppIcon className="w-4 h-4" />
+                  <span>Send via WhatsApp</span>
+                </a>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
                 {onOpenWorkspace && (
                   <button
                     type="button"
                     onClick={onOpenWorkspace}
-                    className="px-4 py-2.5 text-xs text-[#1b1c1a] font-semibold hover:bg-[#efeeeb] border border-[#e4e2df] rounded-lg bg-white inline-flex items-center gap-1.5 cursor-pointer"
+                    className="px-4 py-2 text-xs text-[#1b1c1a] font-semibold hover:bg-[#efeeeb] border border-[#e4e2df] rounded-lg bg-white inline-flex items-center gap-1.5 cursor-pointer"
                   >
                     <span>View in Client Workspace ({inquiries.length})</span>
                     <span className="material-symbols-outlined text-[16px]">folder_shared</span>
@@ -370,7 +410,7 @@ export const Contact: React.FC<ContactProps> = ({
                     setSavedToDb(false);
                     setMessage('');
                   }}
-                  className="px-4 py-2.5 text-xs text-[#546252] hover:text-[#1b1c1a] border border-[#e4e2df] rounded-lg bg-white cursor-pointer"
+                  className="px-4 py-2 text-xs text-[#546252] hover:text-[#1b1c1a] border border-[#e4e2df] rounded-lg bg-white cursor-pointer"
                 >
                   Send another inquiry
                 </button>

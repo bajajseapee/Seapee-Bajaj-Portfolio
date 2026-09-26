@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { SITE_CONFIG } from '../config/siteConfig';
+import { SITE_CONFIG, buildWhatsAppUrl } from '../config/siteConfig';
+import { WhatsAppIcon } from './WhatsAppIcon';
 
 interface NavbarProps {
   onWorkTogether: () => void;
@@ -104,6 +105,16 @@ export const Navbar: React.FC<NavbarProps> = ({
               Workspace
             </button>
           )}
+          <a
+            href={buildWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] border border-[#e4e2df] text-[#25D366] transition-all"
+            title={`Chat on WhatsApp (${SITE_CONFIG.WHATSAPP_DISPLAY})`}
+            aria-label={`Chat on WhatsApp (${SITE_CONFIG.WHATSAPP_DISPLAY})`}
+          >
+            <WhatsAppIcon className="w-4 h-4" />
+          </a>
           <button
             onClick={onWorkTogether}
             className="hidden sm:inline-flex items-center justify-center text-sm font-semibold bg-[#b85d3a] hover:bg-[#994524] text-white transition-all px-4 py-2 rounded-lg shadow-sm hover:shadow active:scale-[0.98] cursor-pointer"
@@ -167,7 +178,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </a>
               );
             })}
-            <div className="pt-3 mt-1 border-t border-[#eae8e5]">
+            <div className="pt-3 mt-1 border-t border-[#eae8e5] flex flex-col gap-2">
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
@@ -177,6 +188,16 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 Let's Work Together
               </button>
+              <a
+                href={buildWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] border border-[#e4e2df] text-[#1b1c1a] text-sm font-semibold transition-colors"
+              >
+                <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
+                <span>WhatsApp ({SITE_CONFIG.WHATSAPP_DISPLAY})</span>
+              </a>
             </div>
           </div>
         </div>

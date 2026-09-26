@@ -1,5 +1,6 @@
 import React from 'react';
-import { SITE_CONFIG, buildGmailComposeUrl } from '../config/siteConfig';
+import { SITE_CONFIG, buildGmailComposeUrl, buildWhatsAppUrl } from '../config/siteConfig';
+import { WhatsAppIcon } from './WhatsAppIcon';
 
 export const Footer: React.FC = () => {
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -98,6 +99,15 @@ export const Footer: React.FC = () => {
                 className="hover:text-[#994524] transition-colors w-fit"
               >
                 Email
+              </a>
+              <a
+                href={buildWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#994524] transition-colors w-fit inline-flex items-center gap-1.5"
+              >
+                <WhatsAppIcon className="w-3.5 h-3.5 text-[#25D366]" />
+                <span>WhatsApp ({SITE_CONFIG.WHATSAPP_DISPLAY})</span>
               </a>
               <a
                 href={SITE_CONFIG.TOPMATE_URL}

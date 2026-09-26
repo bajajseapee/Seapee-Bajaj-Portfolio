@@ -11,6 +11,9 @@ export const SITE_CONFIG = {
 
   // Core External Links & Contact Variables
   EMAIL: "bajajseapee@gmail.com",
+  WHATSAPP_NUMBER: "+918888010822",
+  WHATSAPP_DISPLAY: "+91 88880 10822",
+  WHATSAPP_DIGITS: "918888010822",
   LINKEDIN_URL: "https://www.linkedin.com/in/seapeebajaj",
   TOPMATE_URL: "https://topmate.io/seapee_bajaj",
   RESUME_URL: "/resume-seapee-bajaj.pdf",
@@ -77,4 +80,24 @@ export function buildGmailComposeUrl(subject?: string, body?: string): string {
   }
   return `https://mail.google.com/mail/?${params.toString()}`;
 }
+
+export function buildOutlookComposeUrl(subject?: string, body?: string): string {
+  const queryParts: string[] = [];
+  if (subject) {
+    queryParts.push(`subject=${encodeURIComponent(subject)}`);
+  }
+  if (body) {
+    queryParts.push(`body=${encodeURIComponent(body)}`);
+  }
+  const queryString = queryParts.length > 0 ? `?${queryParts.join('&')}` : '';
+  return `mailto:${SITE_CONFIG.EMAIL}${queryString}`;
+}
+
+export function buildWhatsAppUrl(message?: string): string {
+  const text =
+    message ||
+    "Hi Seapee, I visited your portfolio and would love to discuss a content or SEO project.";
+  return `https://wa.me/${SITE_CONFIG.WHATSAPP_DIGITS}?text=${encodeURIComponent(text)}`;
+}
+
 

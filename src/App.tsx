@@ -16,6 +16,7 @@ import { Contact } from './components/Contact';
 import { ResumeModal } from './components/ResumeModal';
 import { EditorialWorkspaceModal } from './components/EditorialWorkspaceModal';
 import { Footer } from './components/Footer';
+import { FloatingWhatsApp } from './components/WhatsAppIcon';
 import { FirebaseProvider } from './context/FirebaseContext';
 import { ProjectItem, ServiceItem, PortfolioCategory } from './types';
 
@@ -146,6 +147,9 @@ export default function App() {
 
         {/* Site Footer */}
         <Footer />
+
+        {/* Floating WhatsApp Quick-Chat Button */}
+        <FloatingWhatsApp />
 
         {/* Interactive Modals */}
         <CaseStudyModal
