@@ -1,5 +1,5 @@
 import React from 'react';
-import { SITE_CONFIG } from '../config/siteConfig';
+import { SITE_CONFIG, buildGmailComposeUrl } from '../config/siteConfig';
 
 export const Footer: React.FC = () => {
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -92,7 +92,9 @@ export const Footer: React.FC = () => {
                 LinkedIn
               </a>
               <a
-                href={`mailto:${SITE_CONFIG.EMAIL}`}
+                href={buildGmailComposeUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="hover:text-[#994524] transition-colors w-fit"
               >
                 Email

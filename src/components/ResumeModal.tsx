@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { SITE_CONFIG } from '../config/siteConfig';
+import { SITE_CONFIG, buildGmailComposeUrl } from '../config/siteConfig';
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -207,11 +207,13 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
         {/* Actions */}
         <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[#efeeeb]">
           <a
-            href={`mailto:${SITE_CONFIG.EMAIL}?subject=Resume%20Request%20-%20Seapee%20Bajaj`}
+            href={buildGmailComposeUrl('Resume Request - Seapee Bajaj')}
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-xs font-semibold text-[#994524] hover:underline inline-flex items-center gap-1.5"
           >
             <span className="material-symbols-outlined text-[16px]">mail</span>
-            Request Full PDF by Email
+            Request Full PDF via Gmail
           </a>
 
           <div className="flex items-center gap-3">

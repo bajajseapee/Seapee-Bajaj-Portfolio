@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SITE_CONFIG } from '../config/siteConfig';
+import { SITE_CONFIG, buildGmailComposeUrl } from '../config/siteConfig';
 import { useFirebase } from '../context/FirebaseContext';
 
 interface ContactProps {
@@ -81,10 +81,41 @@ export const Contact: React.FC<ContactProps> = ({
     return Object.keys(errs).length === 0;
   };
 
+  const [savedToDb, setSavedToDb] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
+    setErrors({});
+    if (user) {
+      setIsSubmitting(true);
+      try {
+        await submitInquiry({
+          name,
+          email,
+          projectType,
+          message,
+        });
+        setSavedToDb(true);
+        setSubmitted(true);
+      } catch (err) {
+        setErrors({
+          submit:
+            err instanceof Error
+              ? err.message
+              : 'Unable to save inquiry to the database. Please try again.',
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
+    } else {
+      setSavedToDb(false);
+      setSubmitted(true);
+    }
+  };
+
+  const handleSignInAndSave = async () => {
     setIsSubmitting(true);
     setErrors({});
     try {
@@ -94,24 +125,23 @@ export const Contact: React.FC<ContactProps> = ({
         projectType,
         message,
       });
-      setSubmitted(true);
+      setSavedToDb(true);
     } catch (err) {
       setErrors({
         submit:
           err instanceof Error
             ? err.message
-            : 'Unable to save inquiry to the database. Please try again.',
+            : 'Unable to save inquiry to the database.',
       });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const mailtoFallback = `mailto:${SITE_CONFIG.EMAIL}?subject=${encodeURIComponent(
-    `Project Inquiry: ${projectType} from ${name || 'Prospective Client'}`
-  )}&body=${encodeURIComponent(
+  const gmailComposeUrl = buildGmailComposeUrl(
+    `Project Inquiry: ${projectType} from ${name || 'Prospective Client'}`,
     `Hi Seapee,\n\nName: ${name}\nEmail: ${email}\nProject Type: ${projectType}\n\nProject Overview:\n${message}\n`
-  )}`;
+  );
 
   return (
     <section className="w-full px-5 md:px-10 lg:px-16 py-20 lg:py-28 bg-[#fbf9f6] relative" id="contact">
@@ -154,9 +184,11 @@ export const Contact: React.FC<ContactProps> = ({
           {/* Links & Badges */}
           <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
             <a
-              href={`mailto:${SITE_CONFIG.EMAIL}`}
+              href={buildGmailComposeUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-4 py-2.5 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] text-xs font-semibold transition-colors flex items-center gap-2 border border-[#e4e2df]"
-              title={`Send email to ${SITE_CONFIG.EMAIL}`}
+              title={`Compose email in Gmail to ${SITE_CONFIG.EMAIL}`}
             >
               <span className="material-symbols-outlined text-[18px] text-[#994524]">mail</span>
               <span>{SITE_CONFIG.EMAIL}</span>
@@ -307,18 +339,19 @@ export const Contact: React.FC<ContactProps> = ({
                   <div className="text-[11px] text-[#546252]">
                     {user ? (
                       <span>
-                        Signed in as <strong className="text-[#1b1c1a]">{user.email}</strong>. Ready to save directly to database.
+                        Signed in as <strong className="text-[#1b1c1a]">{user.email}</strong>. Saves to database &amp; prepares Gmail message.
                       </span>
                     ) : (
                       <span>
-                        Requires verified Google Sign-In to securely record your inquiry.{' '}
+                        Prepares your structured inquiry for Gmail.{' '}
                         <button
                           type="button"
                           onClick={() => signIn()}
                           className="text-[#994524] font-semibold underline cursor-pointer"
                         >
-                          Sign in now
-                        </button>
+                          Sign in with Google
+                        </button>{' '}
+                        to also track in Client Workspace.
                       </span>
                     )}
                   </div>
@@ -327,11 +360,7 @@ export const Contact: React.FC<ContactProps> = ({
                     disabled={isSubmitting}
                     className="px-6 py-3 bg-[#994524] hover:bg-[#7b2f0f] text-white text-sm font-semibold rounded-lg shadow-sm hover:shadow transition-all cursor-pointer disabled:opacity-50"
                   >
-                    {isSubmitting
-                      ? 'Saving Inquiry...'
-                      : user
-                      ? 'Submit Inquiry'
-                      : 'Sign In & Submit Inquiry'}
+                    {isSubmitting ? 'Submitting...' : 'Submit Inquiry'}
                   </button>
                 </div>
               </form>
@@ -350,32 +379,48 @@ export const Contact: React.FC<ContactProps> = ({
                 Thank you, {name}!
               </h3>
               <p className="text-sm text-[#55433c] leading-relaxed max-w-md">
-                Your inquiry has been securely saved to the database. You can view or update your submission anytime in the Client Workspace, or also send a copy via email to{' '}
+                {savedToDb
+                  ? 'Your inquiry has been saved to the database. Click below to send your structured message directly via Gmail to '
+                  : 'Your message details are ready. Click the button below to open Gmail with your structured inquiry pre-filled for '}
                 <strong className="text-[#1b1c1a]">{SITE_CONFIG.EMAIL}</strong>.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-                {onOpenWorkspace && (
+                <a
+                  href={gmailComposeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-2.5 bg-[#994524] hover:bg-[#7b2f0f] text-white text-sm font-semibold rounded-lg shadow-sm transition-colors inline-flex items-center gap-2"
+                >
+                  <span>Open in Gmail</span>
+                  <span className="material-symbols-outlined text-[18px]">outgoing_mail</span>
+                </a>
+                {savedToDb && onOpenWorkspace && (
                   <button
                     type="button"
                     onClick={onOpenWorkspace}
-                    className="px-6 py-2.5 bg-[#994524] hover:bg-[#7b2f0f] text-white text-sm font-semibold rounded-lg shadow-sm transition-colors inline-flex items-center gap-2 cursor-pointer"
+                    className="px-4 py-2.5 text-xs text-[#1b1c1a] font-semibold hover:bg-[#efeeeb] border border-[#e4e2df] rounded-lg bg-white inline-flex items-center gap-1.5 cursor-pointer"
                   >
                     <span>View in Client Workspace ({inquiries.length})</span>
-                    <span className="material-symbols-outlined text-[18px]">folder_Shared</span>
+                    <span className="material-symbols-outlined text-[16px]">folder_shared</span>
                   </button>
                 )}
-                <a
-                  href={mailtoFallback}
-                  className="px-4 py-2.5 text-xs text-[#1b1c1a] font-semibold hover:bg-[#efeeeb] border border-[#e4e2df] rounded-lg bg-white inline-flex items-center gap-1.5"
-                >
-                  <span>Open in Email Client</span>
-                  <span className="material-symbols-outlined text-[16px]">outgoing_mail</span>
-                </a>
+                {!savedToDb && (
+                  <button
+                    type="button"
+                    onClick={handleSignInAndSave}
+                    disabled={isSubmitting}
+                    className="px-4 py-2.5 text-xs text-[#1b1c1a] font-semibold hover:bg-[#efeeeb] border border-[#e4e2df] rounded-lg bg-white inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  >
+                    <span>{isSubmitting ? 'Saving...' : 'Save to Client Workspace'}</span>
+                    <span className="material-symbols-outlined text-[16px]">cloud_upload</span>
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={() => {
                     setSubmitted(false);
+                    setSavedToDb(false);
                     setMessage('');
                   }}
                   className="px-4 py-2.5 text-xs text-[#546252] hover:text-[#1b1c1a] border border-[#e4e2df] rounded-lg bg-white cursor-pointer"
