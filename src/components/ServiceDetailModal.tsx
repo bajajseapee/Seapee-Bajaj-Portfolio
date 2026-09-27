@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Image from 'next/image';
 import { ServiceItem } from '../types';
 import { SERVICE_LOGOS } from './Services';
 
@@ -54,9 +55,11 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
         <div className="flex items-center gap-4">
           {logo ? (
             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#fbf9f6] border border-[#e4e2df] overflow-hidden flex items-center justify-center shrink-0">
-              <img
+              <Image
                 src={logo.src}
                 alt={logo.alt}
+                width={78}
+                height={78}
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />

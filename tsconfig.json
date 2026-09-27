@@ -19,6 +19,9 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "next/image": [
+        "./src/components/NextImage.tsx"
       ]
     },
     "allowImportingTsExtensions": true,

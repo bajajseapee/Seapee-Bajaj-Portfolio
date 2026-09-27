@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { STATS, PROFILE_INFO } from '../data/portfolioData';
-import experienceLogo from '../assets/images/about_logo_experience_1790405416482.jpg';
-import rankReachLogo from '../assets/images/about_logo_rank_reach_1790405429831.jpg';
-import empiricalLogo from '../assets/images/about_logo_empirical_1790405440606.jpg';
-import refinedLogo from '../assets/images/about_logo_refined_1790405450987.jpg';
+import experienceLogo from '../assets/images/about_logo_experience_1790405416482.webp';
+import rankReachLogo from '../assets/images/about_logo_rank_reach_1790405429831.webp';
+import empiricalLogo from '../assets/images/about_logo_empirical_1790405440606.webp';
+import refinedLogo from '../assets/images/about_logo_refined_1790405450987.webp';
 
 const STAT_LOGOS: Record<string, { src: string; alt: string }> = {
   experience: {
@@ -137,11 +138,11 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
                   <div className="flex items-start justify-between w-full mb-4">
                     {logo ? (
                       <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#fbf9f6] border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0">
-                        <img
+                        <Image
                           src={logo.src}
                           alt={logo.alt}
-                          width={80}
-                          height={80}
+                          width={78}
+                          height={78}
                           loading="lazy"
                           decoding="async"
                           referrerPolicy="no-referrer"

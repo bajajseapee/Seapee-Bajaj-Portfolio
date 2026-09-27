@@ -1,14 +1,15 @@
 import React from 'react';
+import Image from 'next/image';
 import { SERVICES } from '../data/portfolioData';
 import { ServiceItem } from '../types';
-import seoContentLogo from '../assets/images/service_logo_seo_content_1790405462914.jpg';
-import b2bResearchLogo from '../assets/images/service_logo_b2b_research_1790405473123.jpg';
+import seoContentLogo from '../assets/images/service_logo_seo_content_1790405462914.webp';
+import b2bResearchLogo from '../assets/images/service_logo_b2b_research_1790405473123.webp';
 import websiteConversionLogo from '../assets/images/service_logo_website_conversion_1790405483488.jpg';
 import contentStrategyLogo from '../assets/images/service_logo_content_strategy_1790405496321.jpg';
 import thoughtLeadershipLogo from '../assets/images/service_logo_thought_leadership_1790405506344.jpg';
-import rankReachLogo from '../assets/images/about_logo_rank_reach_1790405429831.jpg';
-import empiricalLogo from '../assets/images/about_logo_empirical_1790405440606.jpg';
-import refinedLogo from '../assets/images/about_logo_refined_1790405450987.jpg';
+import rankReachLogo from '../assets/images/about_logo_rank_reach_1790405429831.webp';
+import empiricalLogo from '../assets/images/about_logo_empirical_1790405440606.webp';
+import refinedLogo from '../assets/images/about_logo_refined_1790405450987.webp';
 
 export const SERVICE_LOGOS: Record<string, { src: string; alt: string }> = {
   'seo-content': {
@@ -97,11 +98,11 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
                   <div className="flex items-start justify-between gap-3 mb-5">
                     {logo ? (
                       <div className="w-20 h-20 rounded-2xl bg-[#fbf9f6] border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0">
-                        <img
+                        <Image
                           src={logo.src}
                           alt={logo.alt}
-                          width={80}
-                          height={80}
+                          width={78}
+                          height={78}
                           loading="lazy"
                           decoding="async"
                           referrerPolicy="no-referrer"

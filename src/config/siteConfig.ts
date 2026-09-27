@@ -78,7 +78,7 @@ export const SITE_CONFIG = {
   // Default SEO & Meta
   SEO: {
     TITLE: "Seapee Bajaj | SEO Content Strategist, B2B Content & GEO Specialist",
-    DESCRIPTION: "Seapee Bajaj is a research-driven SEO content strategist with 9+ years of experience across B2B content, market research, SEO, content strategy, GEO and AI search optimization.",
+    DESCRIPTION: "Seapee Bajaj is a research-driven SEO content strategist with 9+ years across B2B content, market research, SEO and GEO/AI search optimization.",
     CANONICAL: SITE_URL,
     OG_SHORT_TAGLINE: "Seapee Bajaj — SEO • Content Strategy • GEO | Research-Led. Reader-Focused."
   }
@@ -101,7 +101,7 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
     path: "/",
     title: "Seapee Bajaj | SEO Content Strategist, B2B Content & GEO Specialist",
     description:
-      "Seapee Bajaj is a research-driven SEO content strategist with 9+ years of experience across B2B content, market research, SEO, content strategy, GEO and AI search optimization.",
+      "Seapee Bajaj is a research-driven SEO content strategist with 9+ years across B2B content, market research, SEO and GEO/AI search optimization.",
     h1: "Seapee Bajaj",
     kicker: "SEO Content Strategist | B2B Content | GEO & AI Search",
     subtitle: "Research-Led. Reader-Focused. Strategy, Storytelling & Search — Thoughtfully Combined.",
