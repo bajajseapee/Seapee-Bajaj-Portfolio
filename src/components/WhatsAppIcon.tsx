@@ -40,7 +40,7 @@ export const FloatingWhatsApp: React.FC = () => {
   }, [isOpen]);
 
   return (
-    <div ref={containerRef} className="fixed bottom-6 right-6 z-40 flex flex-col items-end">
+    <div ref={containerRef} className="fixed bottom-5 left-5 z-40 flex flex-col items-start">
       {/* Expandable Contact Menu mentioning WhatsApp and Email */}
       {isOpen && (
         <div className="mb-3 w-72 sm:w-80 bg-white border border-[#e4e2df] rounded-2xl shadow-2xl p-4 animate-in fade-in slide-in-from-bottom-2 duration-200">

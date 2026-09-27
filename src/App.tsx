@@ -18,6 +18,7 @@ import { PublishedBook } from './components/PublishedBook';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/WhatsAppIcon';
+import { AskSeapeeChatbot } from './components/AskSeapeeChatbot';
 import { SEOHead } from './components/SEOHead';
 import { FirebaseProvider } from './context/FirebaseContext';
 import { SEO_ROUTES } from './config/siteConfig';
@@ -307,6 +308,9 @@ export default function App() {
 
         {/* Floating WhatsApp Quick-Chat Button */}
         <FloatingWhatsApp />
+
+        {/* "Ask Seapee" AI Portfolio Assistant (Bottom-Right) */}
+        <AskSeapeeChatbot onNavigate={handleNavigate} />
 
         {/* Interactive Modals (Lazy-loaded on demand) */}
         <Suspense fallback={null}>

@@ -60,7 +60,7 @@
       "destination": "/favicon.svg"
     },
     {
-      "source": "/((?!assets/|fonts/|favicon\\.svg|BingSiteAuth\\.xml|google7d582d90dd9539de\\.html|sitemap\\.xml|robots\\.txt|.*\\..*).*)",
+      "source": "/((?!api/|assets/|fonts/|favicon\\.svg|BingSiteAuth\\.xml|google7d582d90dd9539de\\.html|sitemap\\.xml|robots\\.txt|.*\\..*).*)",
       "destination": "/index.html"
     }
   ]
