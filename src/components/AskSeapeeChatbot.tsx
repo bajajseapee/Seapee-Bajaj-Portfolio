@@ -16,7 +16,7 @@ export type VoiceAgentState =
   | 'Thinking...'
   | 'Speaking...'
   | 'Muted'
-  | 'Call ended';
+  | 'Session ended';
 
 interface ChatMessage {
   id: string;
@@ -32,7 +32,7 @@ interface AskSeapeeChatbotProps {
   onNavigate?: (path: string, sectionId?: string) => void;
 }
 
-const SESSION_STORAGE_KEY = 'seapee_talk_ai_session_v2';
+const SESSION_STORAGE_KEY = 'seapee_ask_me_anything_ai_v3';
 
 const INITIAL_MESSAGES: ChatMessage[] = [
   {
@@ -123,6 +123,25 @@ function VolumeSvg({ muted, className = 'w-4 h-4' }: { muted?: boolean; classNam
       <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
       <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
       <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+    </svg>
+  );
+}
+
+function AiChatSvg({ className = 'w-4 h-4' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      <path d="M12 7v4" />
+      <path d="M10 9h4" />
     </svg>
   );
 }
@@ -374,7 +393,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
           );
           setAgentState('Muted');
         } else if (errorCode === 'no-speech') {
-          if (handsFreeRef.current && agentStateRef.current !== 'Muted' && agentStateRef.current !== 'Call ended') {
+          if (handsFreeRef.current && agentStateRef.current !== 'Muted' && agentStateRef.current !== 'Session ended') {
             setAgentState('Ready');
           }
         } else if (errorCode !== 'aborted') {
@@ -391,7 +410,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
           agentStateRef.current !== 'Thinking...' &&
           agentStateRef.current !== 'Speaking...' &&
           agentStateRef.current !== 'Muted' &&
-          agentStateRef.current !== 'Call ended'
+          agentStateRef.current !== 'Session ended'
         ) {
           setAgentState('Ready');
         }
@@ -416,7 +435,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
       ) {
         if (autoListenAfter && handsFreeRef.current && agentStateRef.current !== 'Muted') {
           startListening();
-        } else if (agentStateRef.current !== 'Muted' && agentStateRef.current !== 'Call ended') {
+        } else if (agentStateRef.current !== 'Muted' && agentStateRef.current !== 'Session ended') {
           setAgentState('Ready');
         }
         return;
@@ -449,24 +468,24 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
           autoListenAfter &&
           handsFreeRef.current &&
           agentStateRef.current !== 'Muted' &&
-          agentStateRef.current !== 'Call ended'
+          agentStateRef.current !== 'Session ended'
         ) {
           setTimeout(() => {
             if (
               handsFreeRef.current &&
               agentStateRef.current !== 'Muted' &&
-              agentStateRef.current !== 'Call ended'
+              agentStateRef.current !== 'Session ended'
             ) {
               startListening();
             }
           }, 220);
-        } else if (agentStateRef.current !== 'Muted' && agentStateRef.current !== 'Call ended') {
+        } else if (agentStateRef.current !== 'Muted' && agentStateRef.current !== 'Session ended') {
           setAgentState('Ready');
         }
       };
 
       utterance.onerror = () => {
-        if (agentStateRef.current !== 'Muted' && agentStateRef.current !== 'Call ended') {
+        if (agentStateRef.current !== 'Muted' && agentStateRef.current !== 'Session ended') {
           setAgentState('Ready');
         }
       };
@@ -549,7 +568,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
         setMessages((prev) => [...prev, assistantMsg]);
 
         // Speak response aloud if voice output is enabled
-        if (voiceOutputRef.current && agentStateRef.current !== 'Call ended') {
+        if (voiceOutputRef.current && agentStateRef.current !== 'Session ended') {
           speakText(spoken, fromVoice || handsFreeRef.current);
         } else {
           setAgentState(agentStateRef.current === 'Muted' ? 'Muted' : 'Ready');
@@ -574,7 +593,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
   }, [stopRecognition, stopSpeechOutput]);
 
   const handlePrimaryOrbAction = () => {
-    if (agentState === 'Call ended') {
+    if (agentState === 'Session ended') {
       setAgentState('Ready');
       setHandsFreeActive(true);
       handsFreeRef.current = true;
@@ -626,7 +645,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
     stopSpeechOutput();
     setHandsFreeActive(false);
     handsFreeRef.current = false;
-    setAgentState('Call ended');
+    setAgentState('Session ended');
   };
 
   const handleStartNewConversation = () => {
@@ -695,7 +714,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
     'Thinking...': 'bg-[#fef3c7] text-[#92400e] border-[#f59e0b]/40',
     'Speaking...': 'bg-[#dcfce7] text-[#166534] border-[#22c55e]/40',
     Muted: 'bg-[#f3f4f6] text-[#4b5563] border-[#d1d5db]',
-    'Call ended': 'bg-[#f5f3f0] text-[#55433c] border-[#dbc1b8]',
+    'Session ended': 'bg-[#f5f3f0] text-[#55433c] border-[#dbc1b8]',
   };
 
   return (
@@ -703,7 +722,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
       {/* Voice Conversation Panel */}
       {isOpen && (
         <section
-          aria-label="Talk to Seapee Voice AI Assistant"
+          aria-label="Ask Me Anything — Seapee's AI Assistant"
           className="mb-3 w-[calc(100vw-2rem)] sm:w-[430px] max-h-[min(700px,calc(100vh-6.5rem))] bg-[#fbf9f6] border border-[#dbc1b8] rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-3 duration-200"
         >
           {/* Top Header */}
@@ -712,7 +731,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
               <div className="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-[#994524]/25 shrink-0 bg-[#b85d3a] mt-0.5">
                 <img
                   src={SITE_CONFIG.AVATAR_IMAGE}
-                  alt="Seapee Bajaj AI Voice Representative"
+                  alt="Seapee's AI Assistant"
                   width={40}
                   height={40}
                   loading="lazy"
@@ -722,7 +741,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                 />
                 <span
                   className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full ring-2 ring-white ${
-                    agentState === 'Call ended' ? 'bg-[#88726b]' : 'bg-[#2e7d32]'
+                    agentState === 'Session ended' ? 'bg-[#88726b]' : 'bg-[#2e7d32]'
                   }`}
                   title={`Status: ${agentState}`}
                 />
@@ -730,8 +749,11 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
               <div className="min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <h3 className="font-serif text-sm sm:text-base text-[#1b1c1a] font-bold tracking-wider uppercase">
-                    TALK TO SEAPEE
+                    ASK ME ANYTHING
                   </h3>
+                  <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-[#ffdbcf]/70 text-[#994524]">
+                    AI Assistant
+                  </span>
                   <span
                     className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${stateBadgeStyle[agentState]}`}
                   >
@@ -739,7 +761,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                   </span>
                 </div>
                 <p className="text-[11.5px] text-[#55433c] leading-snug mt-1">
-                  Ask me anything about my work, experience, projects, writing, SEO, or how we could work together.
+                  Hi! I&apos;m Seapee&apos;s AI assistant. Ask me anything about her work, experience, skills, projects, or how you can work with her.
                 </p>
               </div>
             </div>
@@ -768,8 +790,8 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                 type="button"
                 onClick={handleToggleOpen}
                 className="p-1.5 rounded-lg text-[#55433c] hover:text-[#1b1c1a] hover:bg-[#f5f3f0] transition-colors cursor-pointer"
-                title="Minimize Talk to Seapee"
-                aria-label="Close Talk to Seapee"
+                title="Minimize Ask Me Anything"
+                aria-label="Close Ask Me Anything"
               >
                 <span className="material-symbols-outlined text-[20px]">close</span>
               </button>
@@ -778,13 +800,13 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
 
           {/* Interactive Voice Orb Stage */}
           <div className="bg-gradient-to-b from-white via-[#fbf9f6] to-[#f5f3f0] px-4 py-4 border-b border-[#e4e2df] flex flex-col items-center text-center shrink-0">
-            {agentState === 'Call ended' ? (
+            {agentState === 'Session ended' ? (
               <div className="py-2 space-y-3 w-full">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#efeeeb] text-[#55433c] text-xs font-medium">
-                  <span>Call ended</span>
+                  <span>Conversation ended</span>
                 </div>
                 <p className="text-xs sm:text-sm text-[#1b1c1a] font-medium max-w-xs mx-auto">
-                  Thanks for speaking with Seapee&apos;s AI representative. Explore her work or get in touch directly below:
+                  Thanks for chatting with Seapee&apos;s AI. Want to explore her work or get in touch?
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
                   <a
@@ -828,7 +850,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                     onClick={handleStartNewConversation}
                     className="text-xs font-semibold text-[#546252] hover:text-[#1b1c1a] underline cursor-pointer"
                   >
-                    Start a new voice conversation
+                    Start a new AI conversation
                   </button>
                 </div>
               </div>
@@ -952,7 +974,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                       onClick={handleEndConversation}
                       className="px-2.5 py-1 rounded-full bg-white hover:bg-[#fee2e2] text-[#991b1b] border border-[#fecaca] text-[11px] font-medium transition-colors cursor-pointer"
                     >
-                      End Call
+                      End conversation
                     </button>
                   )}
                 </div>
@@ -970,7 +992,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                 }`}
               >
                 <span className="text-[10px] uppercase tracking-wider font-semibold text-[#546252] mb-1 px-1">
-                  {msg.role === 'user' ? 'You' : "Seapee's AI Representative"}
+                  {msg.role === 'user' ? 'You' : "Seapee's AI Assistant"}
                 </span>
                 <div
                   className={`max-w-[92%] rounded-2xl px-3.5 py-2.5 ${
@@ -988,21 +1010,30 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                   {/* Action Links inside Assistant Message */}
                   {msg.role === 'assistant' && msg.actions && msg.actions.length > 0 && (
                     <div className="mt-2.5 pt-2 border-t border-[#efeeeb] flex flex-wrap items-center gap-1.5">
-                      {msg.actions.map((action) => (
-                        <a
-                          key={action.label}
-                          href={action.href}
-                          target={action.external ? '_blank' : undefined}
-                          rel={action.external ? 'noopener noreferrer' : undefined}
-                          onClick={(e) => handleActionClick(e, action)}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#fbf9f6] hover:bg-[#efeeeb] text-[#994524] border border-[#dbc1b8] text-[11px] font-semibold transition-colors"
-                        >
-                          <span>{action.label}</span>
-                          <span className="material-symbols-outlined text-[12px]">
-                            {action.external ? 'open_in_new' : 'arrow_forward'}
-                          </span>
-                        </a>
-                      ))}
+                      {msg.actions.map((action) => {
+                        const isPrimaryContactCta =
+                          action.label === 'Contact Seapee' &&
+                          msg.sourceNote === 'Direct Inquiry Recommended';
+                        return (
+                          <a
+                            key={action.label}
+                            href={action.href}
+                            target={action.external ? '_blank' : undefined}
+                            rel={action.external ? 'noopener noreferrer' : undefined}
+                            onClick={(e) => handleActionClick(e, action)}
+                            className={
+                              isPrimaryContactCta
+                                ? 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#994524] hover:bg-[#7b2f0f] text-white text-[11.5px] font-semibold transition-colors shadow-2xs'
+                                : 'inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#fbf9f6] hover:bg-[#efeeeb] text-[#994524] border border-[#dbc1b8] text-[11px] font-semibold transition-colors'
+                            }
+                          >
+                            <span>{action.label}</span>
+                            <span className="material-symbols-outlined text-[12px]">
+                              {action.external ? 'open_in_new' : 'arrow_forward'}
+                            </span>
+                          </a>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -1037,7 +1068,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                   msg.followUpSuggestions &&
                   msg.followUpSuggestions.length > 0 &&
                   msg.id === messages[messages.length - 1]?.id &&
-                  agentState !== 'Call ended' && (
+                  agentState !== 'Session ended' && (
                     <div className="mt-2 flex flex-wrap gap-1.5">
                       {msg.followUpSuggestions.map((followUp) => (
                         <button
@@ -1055,7 +1086,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
             ))}
 
             {/* Suggested Starter Questions */}
-            {messages.length <= 2 && agentState !== 'Call ended' && (
+            {messages.length <= 2 && agentState !== 'Session ended' && (
               <div className="pt-2 border-t border-[#e4e2df]/80">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[10.5px] uppercase tracking-wider font-semibold text-[#546252]">
@@ -1110,8 +1141,8 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Or type a question for Seapee's AI..."
-              aria-label="Type a question for Seapee's AI"
+              placeholder="Prefer typing? Ask here."
+              aria-label="Prefer typing? Ask here."
               className="flex-1 px-3 py-2 text-xs sm:text-[13px] bg-[#fbf9f6] border border-[#e4e2df] rounded-xl focus:outline-none focus:border-[#994524] text-[#1b1c1a] placeholder:text-[#88726b]"
             />
             <button
@@ -1126,28 +1157,29 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
         </section>
       )}
 
-      {/* Floating Primary CTA Button: "Talk to Seapee" */}
+      {/* Floating Primary AI Button: "Ask Me Anything" */}
       <button
         type="button"
         onClick={handleToggleOpen}
         aria-expanded={isOpen}
-        aria-label="Talk to Seapee — Speak with Seapee's AI voice representative"
-        title="Talk to Seapee — Curious about my work? Talk to my AI."
+        aria-label="Ask Me Anything — Interactive AI Assistant for Seapee Bajaj"
+        title="Ask Me Anything — Seapee's AI Assistant (Voice & Chat)"
         className="group flex items-center gap-2.5 bg-[#1b1c1a] hover:bg-[#994524] text-white pl-3.5 pr-4 py-3 rounded-full shadow-xl hover:shadow-2xl border border-[#dbc1b8]/30 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
       >
         <span className="relative w-8 h-8 rounded-full bg-[#994524] group-hover:bg-white/20 text-white flex items-center justify-center shrink-0 transition-colors">
           {isOpen ? (
             <span className="material-symbols-outlined text-[17px]">close</span>
           ) : (
-            <MicSvg className="w-4 h-4" />
+            <AiChatSvg className="w-4 h-4" />
           )}
         </span>
         <span className="flex flex-col items-start text-left leading-none pr-0.5">
-          <span className="text-xs sm:text-[13px] font-semibold tracking-wide">
-            Talk to Seapee
+          <span className="text-xs sm:text-[13px] font-semibold tracking-wide flex items-center gap-1.5">
+            <span>Ask Me Anything</span>
+            <MicSvg className="w-3.5 h-3.5 text-[#ffdbcf] group-hover:text-white transition-colors" />
           </span>
           <span className="text-[10px] text-[#dbc1b8] group-hover:text-white/90 font-normal mt-0.5 hidden sm:inline">
-            Voice &amp; Chat AI Representative
+            Seapee&apos;s AI Assistant • Voice &amp; Chat
           </span>
         </span>
       </button>

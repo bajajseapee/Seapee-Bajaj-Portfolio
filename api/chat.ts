@@ -1,6 +1,7 @@
 import { GoogleGenAI, Type } from '@google/genai';
 import {
   ASK_SEAPEE_SYSTEM_INSTRUCTION,
+  DIRECT_INQUIRY_ACTIONS,
   buildGroundedFallbackReply,
   isPromptInjectionAttempt,
   stripMarkdownForSpeech,
@@ -25,8 +26,13 @@ export async function generateAskSeapeeResponse(
   }
 
   const fallback = buildGroundedFallbackReply(trimmed, history);
-  const apiKey = process.env.GEMINI_API_KEY;
 
+  // If deterministic guardrail already identified an unverified/out-of-scope query (pricing, availability, unlisted company/tool, private info), return it immediately without risking LLM speculation
+  if (fallback.sourceNote === 'Direct Inquiry Recommended') {
+    return fallback;
+  }
+
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     return fallback;
   }
@@ -55,7 +61,7 @@ export async function generateAskSeapeeResponse(
       contents: promptText,
       config: {
         systemInstruction: ASK_SEAPEE_SYSTEM_INSTRUCTION,
-        temperature: 0.35,
+        temperature: 0.1,
         responseMimeType: 'application/json',
         responseSchema: {
           type: Type.OBJECT,
@@ -63,12 +69,12 @@ export async function generateAskSeapeeResponse(
             answer: {
               type: Type.STRING,
               description:
-                'Natural, warm, conversational response (1 to 4 sentences unless the visitor explicitly asks for detail). Grounded strictly in Seapee Bajaj portfolio facts.',
+                'Natural, warm, conversational response (1 to 4 sentences unless the visitor explicitly asks for detail). Grounded strictly in Seapee Bajaj portfolio facts. Never guess, infer, or extrapolate.',
             },
             sourceNote: {
               type: Type.STRING,
               description:
-                'One of: "Portfolio Verified", "Inferred from Portfolio Work", or "Direct Inquiry Recommended".',
+                'Either "Portfolio Verified" (if 100% explicitly supported by the portfolio knowledge base) or "Direct Inquiry Recommended" (if any part of the question is not explicitly in the knowledge base).',
             },
             followUpSuggestions: {
               type: Type.ARRAY,
@@ -93,17 +99,31 @@ export async function generateAskSeapeeResponse(
       return fallback;
     }
 
-    const validSourceNote: AskSeapeeReply['sourceNote'] =
-      parsed.sourceNote === 'Inferred from Portfolio Work' ||
-      parsed.sourceNote === 'Direct Inquiry Recommended'
-        ? parsed.sourceNote
-        : 'Portfolio Verified';
+    const answerLower = parsed.answer.toLowerCase();
+    const indicatesUncertaintyOrRedirect =
+      parsed.sourceNote === 'Direct Inquiry Recommended' ||
+      answerLower.includes("don't have") ||
+      answerLower.includes('do not have') ||
+      answerLower.includes("isn't listed") ||
+      answerLower.includes('not listed') ||
+      answerLower.includes("not sure") ||
+      answerLower.includes("don't want to guess") ||
+      answerLower.includes("don't want to make assumptions") ||
+      answerLower.includes('contact seapee directly') ||
+      answerLower.includes('ask seapee directly');
+
+    const validSourceNote: AskSeapeeReply['sourceNote'] = indicatesUncertaintyOrRedirect
+      ? 'Direct Inquiry Recommended'
+      : 'Portfolio Verified';
 
     return {
       answer: parsed.answer,
       spokenText: stripMarkdownForSpeech(parsed.answer),
       sourceNote: validSourceNote,
-      actions: fallback.actions,
+      actions:
+        validSourceNote === 'Direct Inquiry Recommended'
+          ? DIRECT_INQUIRY_ACTIONS
+          : fallback.actions,
       followUpSuggestions:
         Array.isArray(parsed.followUpSuggestions) && parsed.followUpSuggestions.length > 0
           ? parsed.followUpSuggestions.slice(0, 3)
