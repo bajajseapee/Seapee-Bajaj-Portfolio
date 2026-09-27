@@ -3,13 +3,12 @@ import {
   ASK_SEAPEE_SYSTEM_INSTRUCTION,
   buildGroundedFallbackReply,
   isPromptInjectionAttempt,
+  stripMarkdownForSpeech,
   type AskSeapeeReply,
+  type ConversationTurn,
 } from '../src/services/askSeapeeKnowledge';
 
-export interface ChatHistoryTurn {
-  role: 'user' | 'assistant';
-  content: string;
-}
+export type ChatHistoryTurn = ConversationTurn;
 
 export async function generateAskSeapeeResponse(
   message: string,
@@ -17,15 +16,15 @@ export async function generateAskSeapeeResponse(
 ): Promise<AskSeapeeReply> {
   const trimmed = (message || '').trim().slice(0, 1200);
   if (!trimmed) {
-    return buildGroundedFallbackReply('What does Seapee do?');
+    return buildGroundedFallbackReply('What exactly does Seapee do?', history);
   }
 
   // Enforce prompt injection guardrail before invoking LLM
   if (isPromptInjectionAttempt(trimmed)) {
-    return buildGroundedFallbackReply(trimmed);
+    return buildGroundedFallbackReply(trimmed, history);
   }
 
-  const fallback = buildGroundedFallbackReply(trimmed);
+  const fallback = buildGroundedFallbackReply(trimmed, history);
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
@@ -43,13 +42,13 @@ export async function generateAskSeapeeResponse(
     });
 
     const recentHistory = history
-      .slice(-6)
-      .map((turn) => `${turn.role === 'user' ? 'Visitor' : 'Ask Seapee'}: ${turn.content}`)
+      .slice(-8)
+      .map((turn) => `${turn.role === 'user' ? 'Visitor' : 'Seapee AI'}: ${turn.content}`)
       .join('\n');
 
     const promptText = recentHistory
-      ? `Recent conversation:\n${recentHistory}\n\nVisitor's current question: ${trimmed}`
-      : `Visitor's question: ${trimmed}`;
+      ? `Recent conversation:\n${recentHistory}\n\nVisitor's spoken/written question: ${trimmed}`
+      : `Visitor's spoken/written question: ${trimmed}`;
 
     const response = await ai.models.generateContent({
       model: 'gemini-3.8-flash',
@@ -64,7 +63,7 @@ export async function generateAskSeapeeResponse(
             answer: {
               type: Type.STRING,
               description:
-                'Concise, warm, professional, source-grounded answer (use **bold** for key terms and • for bullet points when helpful). Never invent facts.',
+                'Natural, warm, conversational response (1 to 4 sentences unless the visitor explicitly asks for detail). Grounded strictly in Seapee Bajaj portfolio facts.',
             },
             sourceNote: {
               type: Type.STRING,
@@ -76,7 +75,7 @@ export async function generateAskSeapeeResponse(
               items: {
                 type: Type.STRING,
               },
-              description: '2 to 3 natural follow-up questions the visitor might ask next.',
+              description: '2 to 3 short, natural follow-up questions the visitor might ask next.',
             },
           },
           required: ['answer', 'sourceNote'],
@@ -102,6 +101,7 @@ export async function generateAskSeapeeResponse(
 
     return {
       answer: parsed.answer,
+      spokenText: stripMarkdownForSpeech(parsed.answer),
       sourceNote: validSourceNote,
       actions: fallback.actions,
       followUpSuggestions:
