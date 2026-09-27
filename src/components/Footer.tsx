@@ -49,7 +49,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </div>
 
           {/* Primary Navigation Links */}
-          <div className="md:col-span-3 flex flex-col gap-2">
+          <nav className="md:col-span-3 flex flex-col gap-2" aria-label="Footer Navigation">
             <span className="text-xs uppercase tracking-wider text-[#546252] font-semibold mb-1.5">
               Navigation
             </span>
@@ -59,21 +59,21 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 onClick={(e) => handleRouteClick(e, '/about', 'about')}
                 className="hover:text-[#994524] transition-colors w-fit"
               >
-                About
+                About Seapee Bajaj
               </a>
               <a
                 href="/work"
                 onClick={(e) => handleRouteClick(e, '/work', 'selected-work')}
                 className="hover:text-[#994524] transition-colors w-fit"
               >
-                Work
+                Portfolio
               </a>
               <a
                 href="/services"
                 onClick={(e) => handleRouteClick(e, '/services', 'services')}
                 className="hover:text-[#994524] transition-colors w-fit"
               >
-                Services
+                SEO &amp; Content Strategy
               </a>
               <a
                 href="/case-studies"
@@ -94,7 +94,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 onClick={(e) => handleRouteClick(e, '/book', 'published-work')}
                 className="hover:text-[#994524] transition-colors w-fit"
               >
-                Book — Not Unworthy
+                Not Unworthy by Seapee Bajaj
               </a>
               <a
                 href="/contact"
@@ -104,10 +104,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 Contact
               </a>
             </div>
-          </div>
+          </nav>
 
           {/* Core Expertise Routes */}
-          <div className="md:col-span-3 flex flex-col gap-2">
+          <nav className="md:col-span-3 flex flex-col gap-2" aria-label="Focus Areas Navigation">
             <span className="text-xs uppercase tracking-wider text-[#546252] font-semibold mb-1.5">
               Focus Areas
             </span>
@@ -117,21 +117,21 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 onClick={(e) => handleRouteClick(e, '/seo-content', 'seo-geo-expertise')}
                 className="hover:text-[#994524] transition-colors w-fit"
               >
-                SEO Content Strategy
+                SEO &amp; Content Strategy
               </a>
               <a
                 href="/geo-aeo"
                 onClick={(e) => handleRouteClick(e, '/geo-aeo', 'seo-geo-expertise')}
                 className="hover:text-[#994524] transition-colors w-fit"
               >
-                GEO &amp; AEO Optimization
+                GEO &amp; AI Search
               </a>
               <a
                 href="/b2b-content"
                 onClick={(e) => handleRouteClick(e, '/b2b-content', 'services')}
                 className="hover:text-[#994524] transition-colors w-fit"
               >
-                B2B Content Writing
+                B2B Content
               </a>
               <a
                 href="/market-research-content"
@@ -141,7 +141,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 Market Research Content
               </a>
             </div>
-          </div>
+          </nav>
 
           {/* Verified Professional Profiles */}
           <div className="md:col-span-2 flex flex-col gap-2">

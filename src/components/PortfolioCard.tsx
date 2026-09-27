@@ -137,6 +137,14 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({ project, onOpenPro
         <p className="text-sm text-[#55433c] leading-relaxed line-clamp-3">
           {project.description}
         </p>
+        {project.challenge && project.approach && (
+          <div className="sr-only">
+            <p>Problem: {project.challenge}</p>
+            <p>Approach: {project.approach}</p>
+            {project.deliverables && <p>Work Performed: {project.deliverables.join(', ')}</p>}
+            {project.keyInsights && <p>Outcome &amp; Key Insights: {project.keyInsights.join(' ')}</p>}
+          </div>
+        )}
       </div>
 
       <div className="mt-6 pt-4 border-t border-[#efeeeb] flex items-center justify-between">

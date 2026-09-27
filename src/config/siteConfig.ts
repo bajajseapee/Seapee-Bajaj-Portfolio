@@ -44,7 +44,7 @@ export const SITE_CONFIG = {
     HOLIDAY_SUCCESS: "https://www.linkedin.com/pulse/unwrapping-holiday-success-power-strategic-consumer-insights-odcoc?utm_source=share&utm_medium=member_android&utm_campaign=share_via",
     GEN_Z: "https://www.linkedin.com/pulse/decoding-gen-z-generation-shaping-future-imarc-group-lkzoc?utm_source=share&utm_medium=member_android&utm_campaign=share_via",
     QUORA_WELL_OF_INSIGHTS: "https://wellofinsights.quora.com/",
-    METAVERSE_CONTENT: "http://www.globalindustryherald.com/how-is-metaverse-impacting-the-universe-of-content-creation/",
+    METAVERSE_CONTENT: "https://www.globalindustryherald.com/how-is-metaverse-impacting-the-universe-of-content-creation/",
     AI_MARKET_RESEARCH: "https://www.prnewswire.co.uk/news-releases/artificial-intelligence-market-to-garner-19478-million-by-2022-globally---allied-market-research-601286115.html",
     WMS_MARKET: "https://www.explorewms.com/wms-market-figures-2022.html",
     SOCIAL_MEDIA_ANALYTICS: "https://www.einnews.com/pr_news/528071240/social-media-analytics-market-is-expected-to-rise-at-a-cagr-of-29-2-and-to-reach-9-383-million-by-2022-says-amr",
@@ -78,7 +78,8 @@ export const SITE_CONFIG = {
   // Default SEO & Meta
   SEO: {
     TITLE: "Seapee Bajaj | SEO Content Strategist, B2B Content & GEO Specialist",
-    DESCRIPTION: "Seapee Bajaj is a research-driven SEO content strategist with 9+ years across B2B content, market research, SEO and GEO/AI search optimization.",
+    DESCRIPTION: "Seapee Bajaj is an SEO Content Strategist specializing in B2B content, GEO, AI search and research-led content.",
+    OG_DESCRIPTION: "SEO, B2B content, GEO and research-led content by Seapee Bajaj.",
     CANONICAL: SITE_URL,
     OG_SHORT_TAGLINE: "Seapee Bajaj — SEO • Content Strategy • GEO | Research-Led. Reader-Focused."
   }
@@ -101,7 +102,7 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
     path: "/",
     title: "Seapee Bajaj | SEO Content Strategist, B2B Content & GEO Specialist",
     description:
-      "Seapee Bajaj is a research-driven SEO content strategist with 9+ years across B2B content, market research, SEO and GEO/AI search optimization.",
+      "Seapee Bajaj is an SEO Content Strategist specializing in B2B content, GEO, AI search and research-led content.",
     h1: "Seapee Bajaj",
     kicker: "SEO Content Strategist | B2B Content | GEO & AI Search",
     subtitle: "Research-Led. Reader-Focused. Strategy, Storytelling & Search — Thoughtfully Combined.",

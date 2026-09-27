@@ -11,6 +11,24 @@
       ]
     },
     {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
+    },
+    {
       "source": "/fonts/(.*)",
       "headers": [
         {
@@ -38,7 +56,11 @@
       "destination": "/robots.txt"
     },
     {
-      "source": "/((?!assets/|fonts/|BingSiteAuth\\.xml|google7d582d90dd9539de\\.html|sitemap\\.xml|robots\\.txt|.*\\..*).*)",
+      "source": "/favicon.svg",
+      "destination": "/favicon.svg"
+    },
+    {
+      "source": "/((?!assets/|fonts/|favicon\\.svg|BingSiteAuth\\.xml|google7d582d90dd9539de\\.html|sitemap\\.xml|robots\\.txt|.*\\..*).*)",
       "destination": "/index.html"
     }
   ]

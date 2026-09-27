@@ -131,74 +131,78 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
                   </div>
                 </div>
 
-                {/* Structured 6-Part Case Study Body: Problem, Research, Strategy, Execution, Outcome, Key Takeaways */}
-                {isExpanded && (
-                  <div className="px-6 sm:px-8 pb-8 pt-4 border-t border-[#efeeeb] bg-[#fbf9f6]/60">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                      <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
-                        <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
-                          1. Problem
-                        </h4>
-                        <p className="text-sm text-[#55433c] leading-relaxed">
-                          {cs.problem}
-                        </p>
-                      </div>
+                {/* Structured 6-Part Case Study Body: Problem, Research, Strategy, Execution, Outcome, Key Takeaways (Always in DOM for crawlability) */}
+                <div
+                  className={
+                    isExpanded
+                      ? 'px-6 sm:px-8 pb-8 pt-4 border-t border-[#efeeeb] bg-[#fbf9f6]/60'
+                      : 'sr-only'
+                  }
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
+                      <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
+                        1. Problem
+                      </h4>
+                      <p className="text-sm text-[#55433c] leading-relaxed">
+                        {cs.problem}
+                      </p>
+                    </div>
 
-                      <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
-                        <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
-                          2. Research
-                        </h4>
-                        <p className="text-sm text-[#55433c] leading-relaxed">
-                          {cs.research}
-                        </p>
-                      </div>
+                    <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
+                      <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
+                        2. Research
+                      </h4>
+                      <p className="text-sm text-[#55433c] leading-relaxed">
+                        {cs.research}
+                      </p>
+                    </div>
 
-                      <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
-                        <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
-                          3. Strategy
-                        </h4>
-                        <p className="text-sm text-[#55433c] leading-relaxed">
-                          {cs.strategy}
-                        </p>
-                      </div>
+                    <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
+                      <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
+                        3. Strategy
+                      </h4>
+                      <p className="text-sm text-[#55433c] leading-relaxed">
+                        {cs.strategy}
+                      </p>
+                    </div>
 
-                      <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
-                        <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
-                          4. Execution
-                        </h4>
-                        <p className="text-sm text-[#55433c] leading-relaxed">
-                          {cs.execution}
-                        </p>
-                      </div>
+                    <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
+                      <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
+                        4. Execution
+                      </h4>
+                      <p className="text-sm text-[#55433c] leading-relaxed">
+                        {cs.execution}
+                      </p>
+                    </div>
 
-                      <div className="bg-white p-5 rounded-xl border border-[#dbc1b8]">
-                        <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
-                          5. Outcome
-                        </h4>
-                        <p className="text-sm text-[#1b1c1a] font-medium leading-relaxed">
-                          {cs.outcome}
-                        </p>
-                      </div>
+                    <div className="bg-white p-5 rounded-xl border border-[#dbc1b8]">
+                      <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
+                        5. Outcome
+                      </h4>
+                      <p className="text-sm text-[#1b1c1a] font-medium leading-relaxed">
+                        {cs.outcome}
+                      </p>
+                    </div>
 
-                      <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
-                        <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
-                          6. Key Takeaways
-                        </h4>
-                        <ul className="space-y-1.5 text-xs text-[#55433c] leading-relaxed">
-                          {cs.keyTakeaways.map((takeaway, tIdx) => (
-                            <li key={tIdx} className="flex items-start gap-2">
-                              <span
-                                className="w-1.5 h-1.5 rounded-full bg-[#994524] shrink-0 mt-1.5"
-                                aria-hidden="true"
-                              />
-                              <span>{takeaway}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                    <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
+                      <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
+                        6. Key Takeaways
+                      </h4>
+                      <ul className="space-y-1.5 text-xs text-[#55433c] leading-relaxed">
+                        {cs.keyTakeaways.map((takeaway, tIdx) => (
+                          <li key={tIdx} className="flex items-start gap-2">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full bg-[#994524] shrink-0 mt-1.5"
+                              aria-hidden="true"
+                            />
+                            <span>{takeaway}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
-                )}
+                </div>
               </article>
             );
           })}

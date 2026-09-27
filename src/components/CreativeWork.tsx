@@ -55,6 +55,10 @@ export const CreativeWork: React.FC = () => {
                           <img
                             src={logo.src}
                             alt={logo.alt}
+                            width={80}
+                            height={80}
+                            loading="lazy"
+                            decoding="async"
                             referrerPolicy="no-referrer"
                             className="w-full h-full object-cover"
                           />
@@ -136,6 +140,10 @@ export const CreativeWork: React.FC = () => {
                   <img
                     src={CREATIVE_LOGOS[selectedPiece.id].src}
                     alt={CREATIVE_LOGOS[selectedPiece.id].alt}
+                    width={56}
+                    height={56}
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover"
                   />

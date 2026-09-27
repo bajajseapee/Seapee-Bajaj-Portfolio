@@ -100,15 +100,15 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
                 onClick={(e) => handleInternalLink(e, '/services', 'services')}
                 className="hover:underline inline-flex items-center gap-1"
               >
-                <span>Explore Services</span>
+                <span>SEO &amp; Content Strategy</span>
                 <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
               </a>
               <a
-                href="/case-studies"
-                onClick={(e) => handleInternalLink(e, '/case-studies', 'case-studies')}
+                href="/b2b-content"
+                onClick={(e) => handleInternalLink(e, '/b2b-content', 'services')}
                 className="hover:underline inline-flex items-center gap-1"
               >
-                <span>Read Case Studies</span>
+                <span>B2B Content</span>
                 <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
               </a>
               <a
@@ -116,7 +116,15 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
                 onClick={(e) => handleInternalLink(e, '/geo-aeo', 'seo-geo-expertise')}
                 className="hover:underline inline-flex items-center gap-1"
               >
-                <span>SEO, GEO &amp; AEO Expertise</span>
+                <span>GEO &amp; AI Search</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+              <a
+                href="/case-studies"
+                onClick={(e) => handleInternalLink(e, '/case-studies', 'case-studies')}
+                className="hover:underline inline-flex items-center gap-1"
+              >
+                <span>Case Studies</span>
                 <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
               </a>
             </div>
@@ -166,11 +174,15 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
                     <span className="text-xs uppercase tracking-wider text-[#546252] font-semibold block">
                       {stat.label}
                     </span>
-                    {selectedStat === stat.id && (
-                      <p className="mt-2 text-xs text-[#55433c] leading-relaxed pt-2 border-t border-[#efeeeb] animate-in fade-in duration-200">
-                        {stat.detail}
-                      </p>
-                    )}
+                    <p
+                      className={
+                        selectedStat === stat.id
+                          ? 'mt-2 text-xs text-[#55433c] leading-relaxed pt-2 border-t border-[#efeeeb] animate-in fade-in duration-200'
+                          : 'sr-only'
+                      }
+                    >
+                      {stat.detail}
+                    </p>
                   </div>
                 </button>
               );
