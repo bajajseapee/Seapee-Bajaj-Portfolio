@@ -61,7 +61,7 @@ export const SITE_CONFIG = {
   SEO: {
     TITLE: "Seapee Bajaj | B2B SEO Content & Editorial Strategist",
     DESCRIPTION: "I help B2B and research-driven brands turn technical knowledge and market data into clear content that ranks and converts. With 9+ years of editorial and SEO experience, I write content that shows up in search, builds trust with your audience, and moves the right readers toward a decision.",
-    CANONICAL: "https://seapeebajaj.com",
+    CANONICAL: "https://seapee-bajaj-portfolio-3a8w-omega.vercel.app/",
     TWITTER_HANDLE: "@seapeebajaj"
   }
 } as const;
