@@ -36,6 +36,24 @@
   src: url('/fonts/material-symbols-outlined-subset.woff2') format('woff2');
 }
 
+@font-face {
+  font-family: 'Plus Jakarta Sans Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('Roboto'), local('sans-serif');
+  size-adjust: 105.2%;
+  ascent-override: 96%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Playfair Display Fallback';
+  src: local('Georgia'), local('Times New Roman'), local('serif');
+  size-adjust: 108.5%;
+  ascent-override: 98%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
 @theme {
   --color-primary: #994524;
   --color-primary-container: #b85d3a;
@@ -59,8 +77,8 @@
   --color-outline: #88726b;
   --color-outline-variant: #dbc1b8;
 
-  --font-serif: "Playfair Display", Georgia, serif;
-  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Playfair Display", "Playfair Display Fallback", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 @layer base {

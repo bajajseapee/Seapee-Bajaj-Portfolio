@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -9,8 +9,6 @@ import { CaseStudies } from './components/CaseStudies';
 import { Portfolio } from './components/Portfolio';
 import { SeoGeoExpertise } from './components/SeoGeoExpertise';
 import { WritingSection } from './components/WritingSection';
-import { CaseStudyModal } from './components/CaseStudyModal';
-import { ServiceDetailModal } from './components/ServiceDetailModal';
 import { CreativeWork } from './components/CreativeWork';
 import { PhilosophyBanner } from './components/PhilosophyBanner';
 import { Process } from './components/Process';
@@ -18,14 +16,27 @@ import { WhyWorkWithMe } from './components/WhyWorkWithMe';
 import { Awards } from './components/Awards';
 import { PublishedBook } from './components/PublishedBook';
 import { Contact } from './components/Contact';
-import { ResumeModal } from './components/ResumeModal';
-import { EditorialWorkspaceModal } from './components/EditorialWorkspaceModal';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/WhatsAppIcon';
 import { SEOHead } from './components/SEOHead';
 import { FirebaseProvider } from './context/FirebaseContext';
 import { SEO_ROUTES } from './config/siteConfig';
 import { ProjectItem, ServiceItem, PortfolioCategory } from './types';
+
+const CaseStudyModal = lazy(() =>
+  import('./components/CaseStudyModal').then((m) => ({ default: m.CaseStudyModal }))
+);
+const ServiceDetailModal = lazy(() =>
+  import('./components/ServiceDetailModal').then((m) => ({ default: m.ServiceDetailModal }))
+);
+const ResumeModal = lazy(() =>
+  import('./components/ResumeModal').then((m) => ({ default: m.ResumeModal }))
+);
+const EditorialWorkspaceModal = lazy(() =>
+  import('./components/EditorialWorkspaceModal').then((m) => ({
+    default: m.EditorialWorkspaceModal,
+  }))
+);
 
 function normalizePathname(pathname: string): string {
   if (!pathname || pathname === '/') return '/';
@@ -297,35 +308,45 @@ export default function App() {
         {/* Floating WhatsApp Quick-Chat Button */}
         <FloatingWhatsApp />
 
-        {/* Interactive Modals */}
-        <CaseStudyModal
-          project={selectedProject}
-          onClose={() => setSelectedProject(null)}
-          onContactClick={() => {
-            setSelectedProject(null);
-            handleNavigate('/contact', 'contact');
-          }}
-        />
+        {/* Interactive Modals (Lazy-loaded on demand) */}
+        <Suspense fallback={null}>
+          {selectedProject && (
+            <CaseStudyModal
+              project={selectedProject}
+              onClose={() => setSelectedProject(null)}
+              onContactClick={() => {
+                setSelectedProject(null);
+                handleNavigate('/contact', 'contact');
+              }}
+            />
+          )}
 
-        <ServiceDetailModal
-          service={selectedService}
-          onClose={() => setSelectedService(null)}
-          onSelectInquiry={handleSelectInquiry}
-        />
+          {selectedService && (
+            <ServiceDetailModal
+              service={selectedService}
+              onClose={() => setSelectedService(null)}
+              onSelectInquiry={handleSelectInquiry}
+            />
+          )}
 
-        <ResumeModal
-          isOpen={isResumeOpen}
-          onClose={() => setIsResumeOpen(false)}
-          onContactClick={() => {
-            setIsResumeOpen(false);
-            handleNavigate('/contact', 'contact');
-          }}
-        />
+          {isResumeOpen && (
+            <ResumeModal
+              isOpen={isResumeOpen}
+              onClose={() => setIsResumeOpen(false)}
+              onContactClick={() => {
+                setIsResumeOpen(false);
+                handleNavigate('/contact', 'contact');
+              }}
+            />
+          )}
 
-        <EditorialWorkspaceModal
-          isOpen={isWorkspaceOpen}
-          onClose={() => setIsWorkspaceOpen(false)}
-        />
+          {isWorkspaceOpen && (
+            <EditorialWorkspaceModal
+              isOpen={isWorkspaceOpen}
+              onClose={() => setIsWorkspaceOpen(false)}
+            />
+          )}
+        </Suspense>
       </div>
     </FirebaseProvider>
   );

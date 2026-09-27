@@ -34,8 +34,8 @@
     <meta name="twitter:image" content="https://lh3.googleusercontent.com/aida-public/AB6AXuBLprfha2SI32O8n7gJDCRaEv8AvhIETinZCZp3HLXo8nr1KAK7XIPvBztAnnZAf-ywge1dUzKPYjH0rm-v5GSRJdSKkPUpADTNvDIvp7EMUfVtT8NP9JtCSO0F24a33bJ9cdJzX5HviwwKpKeUSAZpNO68DqqKgjO85-hwH4_Z-5ESP9Y6MdYZhCsuFj3rM-0Ne5xs2kgjy6SGL80daDr0_dbq1xLfV7MbxAnW4S4MWtuA8DSEFo_Ta0hM9MYUfCaXng" />
 
     <!-- Typography & Icons (Self-Hosted Latin & Icon Subsets) -->
-    <link rel="preload" href="/fonts/plus-jakarta-sans-latin-400-700-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/playfair-display-latin-400-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/plus-jakarta-sans-latin-400-700-normal.woff2" as="font" type="font/woff2" fetchpriority="high" crossorigin />
+    <link rel="preload" href="/fonts/playfair-display-latin-400-700-normal.woff2" as="font" type="font/woff2" fetchpriority="high" crossorigin />
     <link rel="preload" href="/fonts/material-symbols-outlined-subset.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Schema.org JSON-LD Structured Data -->
@@ -104,7 +104,33 @@
   </head>
   <body class="bg-[#fbf9f6] text-[#1b1c1a] antialiased">
     <div id="root">
-      <h1 class="sr-only">Seapee Bajaj — SEO Content Strategist, B2B Content &amp; GEO Specialist: Strategy, Storytelling &amp; Search — Thoughtfully Combined.</h1>
+      <div class="min-h-screen bg-[#fbf9f6] text-[#1b1c1a] flex flex-col antialiased selection:bg-[#ffdbcf] selection:text-[#994524]">
+        <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#fbf9f6]/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+          <div class="h-20 max-w-[1280px] mx-auto px-5 md:px-10 lg:px-16 flex items-center justify-between gap-4">
+            <a href="/" class="group flex flex-col justify-center focus-visible:outline-2 focus-visible:outline-[#994524] shrink-0" aria-label="Seapee Bajaj Portfolio Home">
+              <span class="font-serif text-xl tracking-tight text-[#1b1c1a] group-hover:text-[#994524] transition-colors font-medium">Seapee Bajaj</span>
+              <span class="text-[10px] sm:text-[11px] leading-[14px] uppercase tracking-wider text-[#546252] font-semibold">SEO • B2B Content • GEO &amp; AI Search</span>
+            </a>
+          </div>
+        </header>
+        <main class="w-full pt-20 flex-1">
+          <section id="hero" class="relative w-full px-5 md:px-10 lg:px-16 py-12 lg:py-20 overflow-hidden" aria-label="Introduction — Seapee Bajaj">
+            <div class="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 lg:gap-14 items-start">
+              <div class="md:col-span-7 flex flex-col gap-4 z-10">
+                <div class="flex flex-col gap-1.5">
+                  <span class="text-xs sm:text-sm uppercase tracking-widest text-[#994524] font-semibold">Seapee Bajaj — SEO Content Strategist</span>
+                  <span class="text-xs text-[#546252] font-semibold tracking-wide">SEO • Content Strategy • GEO | Research-Led. Reader-Focused. · 9+ years in market research • B2B content • SEO • GEO &amp; AI search</span>
+                </div>
+                <h1 class="font-serif text-3xl sm:text-4xl md:text-[44px] lg:text-[52px] text-[#1b1c1a] tracking-tight leading-[1.14] mt-1 font-medium">
+                  <span class="sr-only">Seapee Bajaj — SEO Content Strategist, B2B Content &amp; GEO Specialist: </span>Strategy, <span class="italic font-normal text-[#994524]">Storytelling</span> &amp; Search — Thoughtfully Combined.
+                </h1>
+                <p class="font-serif text-lg sm:text-xl text-[#994524] font-medium">SEO • Content Strategy • GEO | Research-Led. Reader-Focused.</p>
+                <p class="text-base sm:text-lg md:text-xl text-[#55433c] max-w-xl leading-relaxed font-normal">I combine research, strategy, storytelling and search to create content that is useful to readers, valuable to businesses, and discoverable across traditional and AI-driven search.</p>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
     </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -1,26 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
-import { User, onAuthStateChanged } from 'firebase/auth';
-import {
-  collection,
-  doc,
-  setDoc,
-  updateDoc,
-  deleteDoc,
-  getDoc,
-  onSnapshot,
-  query,
-  where,
-  serverTimestamp,
-  Timestamp,
-} from 'firebase/firestore';
-import {
-  auth,
-  db,
-  signInWithGoogle,
-  logOutUser,
-  handleFirestoreError,
-  OperationType,
-} from '../firebase';
+import type { User } from 'firebase/auth';
+import type { Timestamp } from 'firebase/firestore';
 
 export type InquiryStatus = 'new' | 'in_review' | 'replied' | 'closed';
 
@@ -156,6 +136,15 @@ function isUnauthorizedDomainError(err: unknown): boolean {
   return code === 'auth/unauthorized-domain' || msg.includes('auth/unauthorized-domain');
 }
 
+async function loadFirebaseModules() {
+  const [fbApp, fbAuth, fbFirestore] = await Promise.all([
+    import('../firebase'),
+    import('firebase/auth'),
+    import('firebase/firestore'),
+  ]);
+  return { fbApp, fbAuth, fbFirestore };
+}
+
 export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthReady, setIsAuthReady] = useState(false);
@@ -170,80 +159,113 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const isCloudAdmin = Boolean(
     user && user.emailVerified && user.email?.toLowerCase() === 'bajajseapee@gmail.com'
   );
-  // Allow full editorial workspace controls when signed in as admin or in local workspace mode
   const isAdmin = isCloudAdmin || !user;
 
-  // Track authentication state and bootstrap admin record if owner signs in
+  // Defer Firebase Auth & Firestore initialization until after first paint / LCP so it never blocks initial render
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setUser(currentUser);
-      setIsAuthReady(true);
+    let isCancelled = false;
+    let unsubscribeAuth: (() => void) | undefined;
 
-      if (
-        currentUser &&
-        currentUser.emailVerified &&
-        currentUser.email?.toLowerCase() === 'bajajseapee@gmail.com'
-      ) {
-        const adminPath = `admins/${currentUser.uid}`;
-        try {
-          const adminDocRef = doc(db, 'admins', currentUser.uid);
-          const snap = await getDoc(adminDocRef);
-          if (!snap.exists()) {
-            await setDoc(adminDocRef, {
-              uid: currentUser.uid.slice(0, 128),
-              role: 'admin',
-              createdAt: serverTimestamp(),
-            });
+    const initAuth = async () => {
+      try {
+        const { fbApp, fbAuth, fbFirestore } = await loadFirebaseModules();
+        if (isCancelled) return;
+
+        unsubscribeAuth = fbAuth.onAuthStateChanged(fbApp.auth, async (currentUser) => {
+          if (isCancelled) return;
+          setUser(currentUser);
+          setIsAuthReady(true);
+
+          if (
+            currentUser &&
+            currentUser.emailVerified &&
+            currentUser.email?.toLowerCase() === 'bajajseapee@gmail.com'
+          ) {
+            const adminPath = `admins/${currentUser.uid}`;
+            try {
+              const adminDocRef = fbFirestore.doc(fbApp.db, 'admins', currentUser.uid);
+              const snap = await fbFirestore.getDoc(adminDocRef);
+              if (!snap.exists()) {
+                await fbFirestore.setDoc(adminDocRef, {
+                  uid: currentUser.uid.slice(0, 128),
+                  role: 'admin',
+                  createdAt: fbFirestore.serverTimestamp(),
+                });
+              }
+            } catch (error) {
+              fbApp.handleFirestoreError(error, fbApp.OperationType.WRITE, adminPath);
+            }
           }
-        } catch (error) {
-          handleFirestoreError(error, OperationType.WRITE, adminPath);
+        });
+      } catch {
+        if (!isCancelled) {
+          setIsAuthReady(true);
         }
       }
-    });
+    };
 
-    return () => unsubscribe();
+    const timerId = window.setTimeout(initAuth, 2000);
+
+    return () => {
+      isCancelled = true;
+      window.clearTimeout(timerId);
+      if (unsubscribeAuth) unsubscribeAuth();
+    };
   }, []);
 
-  // Subscribe to published portfolio items (or all items for verified cloud admin)
+  // Subscribe to published portfolio items once Firebase Auth is ready
   useEffect(() => {
     if (!isAuthReady) return;
 
-    const path = 'portfolioItems';
-    const itemsQuery = isCloudAdmin
-      ? query(collection(db, 'portfolioItems'))
-      : query(collection(db, 'portfolioItems'), where('published', '==', true));
+    let isCancelled = false;
+    let unsubscribeSnapshot: (() => void) | undefined;
 
-    const unsubscribe = onSnapshot(
-      itemsQuery,
-      (snapshot) => {
-        const items: DynamicPortfolioRecord[] = snapshot.docs.map((docSnap) => {
-          const data = docSnap.data();
-          return {
-            id: docSnap.id,
-            authorId: String(data.authorId || ''),
-            title: String(data.title || ''),
-            category: (data.category as DynamicPortfolioRecord['category']) || 'SEO & Content',
-            summary: String(data.summary || ''),
-            impactMetric: String(data.impactMetric || ''),
-            externalUrl: String(data.externalUrl || ''),
-            published: Boolean(data.published),
-            createdAt: data.createdAt || null,
-            updatedAt: data.updatedAt || null,
-          };
-        });
-        items.sort((a, b) => {
-          const timeA = a.createdAt?.toMillis?.() ?? 0;
-          const timeB = b.createdAt?.toMillis?.() ?? 0;
-          return timeB - timeA;
-        });
-        setCloudPortfolioItems(items);
-      },
-      (error) => {
-        handleFirestoreError(error, OperationType.LIST, path);
-      }
-    );
+    loadFirebaseModules().then(({ fbApp, fbFirestore }) => {
+      if (isCancelled) return;
+      const path = 'portfolioItems';
+      const itemsQuery = isCloudAdmin
+        ? fbFirestore.query(fbFirestore.collection(fbApp.db, 'portfolioItems'))
+        : fbFirestore.query(
+            fbFirestore.collection(fbApp.db, 'portfolioItems'),
+            fbFirestore.where('published', '==', true)
+          );
 
-    return () => unsubscribe();
+      unsubscribeSnapshot = fbFirestore.onSnapshot(
+        itemsQuery,
+        (snapshot) => {
+          if (isCancelled) return;
+          const items: DynamicPortfolioRecord[] = snapshot.docs.map((docSnap) => {
+            const data = docSnap.data();
+            return {
+              id: docSnap.id,
+              authorId: String(data.authorId || ''),
+              title: String(data.title || ''),
+              category: (data.category as DynamicPortfolioRecord['category']) || 'SEO & Content',
+              summary: String(data.summary || ''),
+              impactMetric: String(data.impactMetric || ''),
+              externalUrl: String(data.externalUrl || ''),
+              published: Boolean(data.published),
+              createdAt: data.createdAt || null,
+              updatedAt: data.updatedAt || null,
+            };
+          });
+          items.sort((a, b) => {
+            const timeA = a.createdAt?.toMillis?.() ?? 0;
+            const timeB = b.createdAt?.toMillis?.() ?? 0;
+            return timeB - timeA;
+          });
+          setCloudPortfolioItems(items);
+        },
+        (error) => {
+          fbApp.handleFirestoreError(error, fbApp.OperationType.LIST, path);
+        }
+      );
+    });
+
+    return () => {
+      isCancelled = true;
+      if (unsubscribeSnapshot) unsubscribeSnapshot();
+    };
   }, [isAuthReady, isCloudAdmin]);
 
   // Subscribe to cloud inquiries when authenticated
@@ -253,41 +275,54 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       return;
     }
 
-    const path = 'inquiries';
-    const inquiriesQuery = isCloudAdmin
-      ? query(collection(db, 'inquiries'))
-      : query(collection(db, 'inquiries'), where('authorId', '==', user.uid));
+    let isCancelled = false;
+    let unsubscribeSnapshot: (() => void) | undefined;
 
-    const unsubscribe = onSnapshot(
-      inquiriesQuery,
-      (snapshot) => {
-        const list: InquiryRecord[] = snapshot.docs.map((docSnap) => {
-          const data = docSnap.data();
-          return {
-            id: docSnap.id,
-            authorId: String(data.authorId || ''),
-            name: String(data.name || ''),
-            email: String(data.email || ''),
-            projectType: String(data.projectType || 'SEO Content Strategy'),
-            message: String(data.message || ''),
-            status: (data.status as InquiryStatus) || 'new',
-            createdAt: data.createdAt || null,
-            updatedAt: data.updatedAt || null,
-          };
-        });
-        list.sort((a, b) => {
-          const timeA = a.createdAt?.toMillis?.() ?? 0;
-          const timeB = b.createdAt?.toMillis?.() ?? 0;
-          return timeB - timeA;
-        });
-        setCloudInquiries(list);
-      },
-      (error) => {
-        handleFirestoreError(error, OperationType.LIST, path);
-      }
-    );
+    loadFirebaseModules().then(({ fbApp, fbFirestore }) => {
+      if (isCancelled) return;
+      const path = 'inquiries';
+      const inquiriesQuery = isCloudAdmin
+        ? fbFirestore.query(fbFirestore.collection(fbApp.db, 'inquiries'))
+        : fbFirestore.query(
+            fbFirestore.collection(fbApp.db, 'inquiries'),
+            fbFirestore.where('authorId', '==', user.uid)
+          );
 
-    return () => unsubscribe();
+      unsubscribeSnapshot = fbFirestore.onSnapshot(
+        inquiriesQuery,
+        (snapshot) => {
+          if (isCancelled) return;
+          const list: InquiryRecord[] = snapshot.docs.map((docSnap) => {
+            const data = docSnap.data();
+            return {
+              id: docSnap.id,
+              authorId: String(data.authorId || ''),
+              name: String(data.name || ''),
+              email: String(data.email || ''),
+              projectType: String(data.projectType || 'SEO Content Strategy'),
+              message: String(data.message || ''),
+              status: (data.status as InquiryStatus) || 'new',
+              createdAt: data.createdAt || null,
+              updatedAt: data.updatedAt || null,
+            };
+          });
+          list.sort((a, b) => {
+            const timeA = a.createdAt?.toMillis?.() ?? 0;
+            const timeB = b.createdAt?.toMillis?.() ?? 0;
+            return timeB - timeA;
+          });
+          setCloudInquiries(list);
+        },
+        (error) => {
+          fbApp.handleFirestoreError(error, fbApp.OperationType.LIST, path);
+        }
+      );
+    });
+
+    return () => {
+      isCancelled = true;
+      if (unsubscribeSnapshot) unsubscribeSnapshot();
+    };
   }, [isAuthReady, user, isCloudAdmin]);
 
   const inquiries = useMemo(() => {
@@ -315,7 +350,8 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const signIn = async (): Promise<User | null> => {
     setUnauthorizedDomain(null);
     try {
-      const credential = await signInWithGoogle();
+      const { fbApp } = await loadFirebaseModules();
+      const credential = await fbApp.signInWithGoogle();
       return credential.user;
     } catch (err) {
       if (isUnauthorizedDomainError(err)) {
@@ -331,7 +367,8 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const signOutUser = async (): Promise<void> => {
-    await logOutUser();
+    const { fbApp } = await loadFirebaseModules();
+    await fbApp.logOutUser();
   };
 
   const submitInquiry = async (input: {
@@ -340,6 +377,7 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     projectType: string;
     message: string;
   }): Promise<string> => {
+    const { fbApp, fbFirestore } = await loadFirebaseModules();
     const inquiryId = sanitizeId(`inq_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`);
     const safeProjectType = VALID_PROJECT_TYPES.includes(input.projectType)
       ? input.projectType
@@ -349,10 +387,9 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const trimmedEmail = input.email.trim().slice(0, 160);
     const trimmedMessage = input.message.trim().slice(0, 3000);
 
-    // Always persist in local workspace storage immediately so submission never fails on unauthorized domains
     const localRecord: InquiryRecord = {
       id: inquiryId,
-      authorId: auth.currentUser?.uid ? sanitizeId(auth.currentUser.uid) : 'guest_client',
+      authorId: fbApp.auth.currentUser?.uid ? sanitizeId(fbApp.auth.currentUser.uid) : 'guest_client',
       name: trimmedName,
       email: trimmedEmail,
       projectType: safeProjectType,
@@ -360,15 +397,14 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       status: 'new',
       createdAt: null,
       updatedAt: null,
-      isLocalOnly: !auth.currentUser?.emailVerified,
+      isLocalOnly: !fbApp.auth.currentUser?.emailVerified,
     };
 
     const nextLocal = [localRecord, ...localInquiries];
     setLocalInquiries(nextLocal);
     saveLocalInquiries(nextLocal);
 
-    // If user is already signed in with a verified Google account, also write to Firestore
-    const activeUser = auth.currentUser;
+    const activeUser = fbApp.auth.currentUser;
     if (activeUser && activeUser.emailVerified) {
       const path = `inquiries/${inquiryId}`;
       const payload = {
@@ -378,14 +414,14 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         projectType: safeProjectType,
         message: trimmedMessage,
         status: 'new' as const,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
+        createdAt: fbFirestore.serverTimestamp(),
+        updatedAt: fbFirestore.serverTimestamp(),
       };
 
       try {
-        await setDoc(doc(db, 'inquiries', inquiryId), payload);
+        await fbFirestore.setDoc(fbFirestore.doc(fbApp.db, 'inquiries', inquiryId), payload);
       } catch (error) {
-        handleFirestoreError(error, OperationType.CREATE, path);
+        fbApp.handleFirestoreError(error, fbApp.OperationType.CREATE, path);
       }
     }
 
@@ -396,22 +432,22 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     inquiry: InquiryRecord,
     status: InquiryStatus
   ): Promise<void> => {
-    // Update local copy if present
     const nextLocal = localInquiries.map((item) =>
       item.id === inquiry.id ? { ...item, status } : item
     );
     setLocalInquiries(nextLocal);
     saveLocalInquiries(nextLocal);
 
-    if (!inquiry.isLocalOnly && auth.currentUser?.emailVerified) {
+    const { fbApp, fbFirestore } = await loadFirebaseModules();
+    if (!inquiry.isLocalOnly && fbApp.auth.currentUser?.emailVerified) {
       const path = `inquiries/${inquiry.id}`;
       try {
-        await updateDoc(doc(db, 'inquiries', inquiry.id), {
+        await fbFirestore.updateDoc(fbFirestore.doc(fbApp.db, 'inquiries', inquiry.id), {
           status,
-          updatedAt: serverTimestamp(),
+          updatedAt: fbFirestore.serverTimestamp(),
         });
       } catch (error) {
-        handleFirestoreError(error, OperationType.UPDATE, path);
+        fbApp.handleFirestoreError(error, fbApp.OperationType.UPDATE, path);
       }
     }
   };
@@ -433,16 +469,17 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setLocalInquiries(nextLocal);
     saveLocalInquiries(nextLocal);
 
-    if (!inquiry.isLocalOnly && auth.currentUser?.emailVerified) {
+    const { fbApp, fbFirestore } = await loadFirebaseModules();
+    if (!inquiry.isLocalOnly && fbApp.auth.currentUser?.emailVerified) {
       const path = `inquiries/${inquiry.id}`;
       try {
-        await updateDoc(doc(db, 'inquiries', inquiry.id), {
+        await fbFirestore.updateDoc(fbFirestore.doc(fbApp.db, 'inquiries', inquiry.id), {
           message: trimmedMessage,
           projectType: safeProjectType,
-          updatedAt: serverTimestamp(),
+          updatedAt: fbFirestore.serverTimestamp(),
         });
       } catch (error) {
-        handleFirestoreError(error, OperationType.UPDATE, path);
+        fbApp.handleFirestoreError(error, fbApp.OperationType.UPDATE, path);
       }
     }
   };
@@ -453,12 +490,13 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setLocalInquiries(nextLocal);
     saveLocalInquiries(nextLocal);
 
-    if (target && !target.isLocalOnly && auth.currentUser?.emailVerified) {
+    const { fbApp, fbFirestore } = await loadFirebaseModules();
+    if (target && !target.isLocalOnly && fbApp.auth.currentUser?.emailVerified) {
       const path = `inquiries/${inquiryId}`;
       try {
-        await deleteDoc(doc(db, 'inquiries', inquiryId));
+        await fbFirestore.deleteDoc(fbFirestore.doc(fbApp.db, 'inquiries', inquiryId));
       } catch (error) {
-        handleFirestoreError(error, OperationType.DELETE, path);
+        fbApp.handleFirestoreError(error, fbApp.OperationType.DELETE, path);
       }
     }
   };
@@ -471,6 +509,7 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     externalUrl: string;
     published: boolean;
   }): Promise<void> => {
+    const { fbApp, fbFirestore } = await loadFirebaseModules();
     const itemId = sanitizeId(`folio_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`);
     const safeCategory = VALID_PORTFOLIO_CATEGORIES.includes(input.category)
       ? input.category
@@ -483,7 +522,7 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
     const localItem: DynamicPortfolioRecord = {
       id: itemId,
-      authorId: auth.currentUser?.uid ? sanitizeId(auth.currentUser.uid) : 'local_admin',
+      authorId: fbApp.auth.currentUser?.uid ? sanitizeId(fbApp.auth.currentUser.uid) : 'local_admin',
       title: trimmedTitle,
       category: safeCategory,
       summary: trimmedSummary,
@@ -499,24 +538,24 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setLocalPortfolioItems(nextLocal);
     saveLocalPortfolio(nextLocal);
 
-    if (isCloudAdmin && auth.currentUser) {
+    if (isCloudAdmin && fbApp.auth.currentUser) {
       const path = `portfolioItems/${itemId}`;
       const payload = {
-        authorId: sanitizeId(auth.currentUser.uid),
+        authorId: sanitizeId(fbApp.auth.currentUser.uid),
         title: trimmedTitle,
         category: safeCategory,
         summary: trimmedSummary,
         impactMetric: trimmedMetric,
         externalUrl: trimmedUrl,
         published: Boolean(input.published),
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
+        createdAt: fbFirestore.serverTimestamp(),
+        updatedAt: fbFirestore.serverTimestamp(),
       };
 
       try {
-        await setDoc(doc(db, 'portfolioItems', itemId), payload);
+        await fbFirestore.setDoc(fbFirestore.doc(fbApp.db, 'portfolioItems', itemId), payload);
       } catch (error) {
-        handleFirestoreError(error, OperationType.CREATE, path);
+        fbApp.handleFirestoreError(error, fbApp.OperationType.CREATE, path);
       }
     }
   };
@@ -530,15 +569,16 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setLocalPortfolioItems(nextLocal);
     saveLocalPortfolio(nextLocal);
 
+    const { fbApp, fbFirestore } = await loadFirebaseModules();
     if (!item.isLocalOnly && isCloudAdmin) {
       const path = `portfolioItems/${item.id}`;
       try {
-        await updateDoc(doc(db, 'portfolioItems', item.id), {
+        await fbFirestore.updateDoc(fbFirestore.doc(fbApp.db, 'portfolioItems', item.id), {
           published: !item.published,
-          updatedAt: serverTimestamp(),
+          updatedAt: fbFirestore.serverTimestamp(),
         });
       } catch (error) {
-        handleFirestoreError(error, OperationType.UPDATE, path);
+        fbApp.handleFirestoreError(error, fbApp.OperationType.UPDATE, path);
       }
     }
   };
@@ -549,12 +589,13 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setLocalPortfolioItems(nextLocal);
     saveLocalPortfolio(nextLocal);
 
+    const { fbApp, fbFirestore } = await loadFirebaseModules();
     if (target && !target.isLocalOnly && isCloudAdmin) {
       const path = `portfolioItems/${itemId}`;
       try {
-        await deleteDoc(doc(db, 'portfolioItems', itemId));
+        await fbFirestore.deleteDoc(fbFirestore.doc(fbApp.db, 'portfolioItems', itemId));
       } catch (error) {
-        handleFirestoreError(error, OperationType.DELETE, path);
+        fbApp.handleFirestoreError(error, fbApp.OperationType.DELETE, path);
       }
     }
   };
