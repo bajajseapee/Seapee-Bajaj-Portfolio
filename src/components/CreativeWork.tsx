@@ -7,11 +7,11 @@ import wordyWorthyLogo from '../assets/images/wordy_worthy_logo_1790403930143.jp
 const CREATIVE_LOGOS: Record<string, { src: string; alt: string }> = {
   'startup-india-magazine': {
     src: startupIndiaLogo,
-    alt: 'Startup India Magazine logo',
+    alt: 'Startup India Magazine — features and founder stories by Seapee Bajaj logo',
   },
   'instagram-wordy-worthy': {
     src: wordyWorthyLogo,
-    alt: 'Wordy Worthy logo',
+    alt: 'Wordy Worthy — curated prose and creative micro-essays by Seapee Bajaj logo',
   },
 };
 

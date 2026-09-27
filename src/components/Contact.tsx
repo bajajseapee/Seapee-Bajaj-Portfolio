@@ -159,7 +159,7 @@ export const Contact: React.FC<ContactProps> = ({
               {SITE_CONFIG.NAME}
             </span>
             <span className="text-xs text-[#546252] mt-1 font-medium">
-              Content Strategy • SEO • Research • Editorial
+              {SITE_CONFIG.TITLE} · {SITE_CONFIG.CORE_POSITIONING}
             </span>
           </div>
 
@@ -290,10 +290,13 @@ export const Contact: React.FC<ContactProps> = ({
                     className="w-full px-4 py-2.5 text-sm bg-[#fbf9f6] border border-[#e4e2df] rounded-lg focus:outline-none focus:border-[#994524] transition-colors"
                   >
                     <option value="SEO Content Strategy">SEO Content Strategy</option>
-                    <option value="B2B & Research Synthesis">B2B &amp; Research Synthesis</option>
-                    <option value="Website & Conversion Copy">Website &amp; Conversion Copy</option>
-                    <option value="Editorial Calendar Governance">Editorial Calendar Governance</option>
-                    <option value="Thought Leadership & Social">Thought Leadership &amp; Social</option>
+                    <option value="B2B Content Writing">B2B Content Writing</option>
+                    <option value="Research-Driven Content">Research-Driven Content</option>
+                    <option value="GEO / Generative Engine Optimization">GEO / Generative Engine Optimization</option>
+                    <option value="AEO / Answer Engine Optimization">AEO / Answer Engine Optimization</option>
+                    <option value="Content Optimization">Content Optimization</option>
+                    <option value="AI-Assisted Content Strategy">AI-Assisted Content Strategy</option>
+                    <option value="Portfolio Website Creation">Portfolio Website Creation</option>
                     <option value="Full-Time / Contract Role">Full-Time / Contract Role</option>
                     <option value="Other Inquiries">Other Inquiries</option>
                   </select>

@@ -31,10 +31,10 @@ export const PublishedBook: React.FC = () => {
                   id="published-work-heading"
                   className="font-serif text-3xl sm:text-4xl text-[#1b1c1a] font-medium tracking-tight leading-snug"
                 >
-                  {BOOK.HEADLINE}
+                  {BOOK.TITLE} — by {BOOK.AUTHOR}
                 </h2>
                 <p className="text-lg sm:text-xl text-[#546252] font-medium leading-relaxed">
-                  {BOOK.SUBHEADLINE}
+                  {BOOK.HEADLINE} {BOOK.SUBHEADLINE}
                 </p>
               </div>
 
@@ -51,12 +51,16 @@ export const PublishedBook: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative block w-32 sm:w-36 md:w-40 rounded-lg overflow-hidden shadow-md border border-[#e4e2df] bg-[#0f0c24] transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl"
-                aria-label="View Not Unworthy on Amazon"
+                aria-label="Buy Not Unworthy by Seapee Bajaj on Amazon"
               >
                 <div className="absolute inset-y-0 left-0 w-2 bg-gradient-to-r from-white/25 via-black/20 to-transparent z-10 pointer-events-none" />
                 <img
                   src={notUnworthyCover}
-                  alt="Not Unworthy: A Metaphorical Anthology book cover by Seapee Bajaj and Premsagar Bajaj"
+                  alt="Not Unworthy paperback poetry book cover by Seapee Bajaj"
+                  width={160}
+                  height={240}
+                  loading="lazy"
+                  decoding="async"
                   referrerPolicy="no-referrer"
                   className="w-full aspect-[2/3] object-cover block"
                 />
@@ -68,13 +72,13 @@ export const PublishedBook: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 pb-2 text-xs text-[#55433c]">
             <div className="bg-[#fbf9f6] p-4 rounded-xl border border-[#e4e2df]">
               <span className="font-semibold text-[#1b1c1a] uppercase tracking-wider block text-[11px] mb-1">
-                Collection
+                Book Title &amp; Author
               </span>
               <p className="font-serif text-base text-[#1b1c1a] italic font-medium">
                 {BOOK.TITLE}
               </p>
               <span className="text-[#546252] mt-0.5 block">
-                {BOOK.GENRE} • {BOOK.AUTHOR} &amp; Premsagar Bajaj
+                By {BOOK.AUTHOR} · Poetry (Paperback)
               </span>
             </div>
 
@@ -94,7 +98,7 @@ export const PublishedBook: React.FC = () => {
               <p className="text-[#55433c] leading-relaxed">
                 Published by {BOOK.PUBLISHER}
               </p>
-              <span className="text-[#546252] mt-0.5 block">December 18, 2020</span>
+              <span className="text-[#546252] mt-0.5 block">{BOOK.PUBLICATION_DATE}</span>
             </div>
           </div>
 
@@ -105,14 +109,14 @@ export const PublishedBook: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-[#994524] hover:bg-[#7b2f0f] transition-all px-6 py-3 rounded-lg shadow-sm hover:shadow active:scale-[0.98] w-fit"
-              aria-label="Read or buy Not Unworthy on Amazon (opens in a new tab)"
+              aria-label="Buy My Book — Not Unworthy by Seapee Bajaj on Amazon (opens in a new tab)"
             >
-              <span>Read / Buy Not Unworthy</span>
+              <span>Buy My Book</span>
               <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
             </a>
 
             <span className="text-xs text-[#546252]">
-              Available on Amazon in Paperback
+              Published Paperback Edition • Available on Amazon
             </span>
           </div>
         </div>

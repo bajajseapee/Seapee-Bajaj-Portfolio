@@ -6,12 +6,16 @@ interface NavbarProps {
   onWorkTogether: () => void;
   onOpenWorkspace?: () => void;
   activeSection: string;
+  currentPath?: string;
+  onNavigate?: (path: string, sectionId?: string) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   onWorkTogether,
   onOpenWorkspace,
   activeSection,
+  currentPath = '/',
+  onNavigate,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -20,33 +24,47 @@ export const Navbar: React.FC<NavbarProps> = ({
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'About', href: '#about', id: 'about' },
-    { name: 'Services', href: '#services', id: 'services' },
-    { name: 'Selected Work', href: '#selected-work', id: 'selected-work' },
-    { name: 'Process', href: '#process', id: 'process' },
-    { name: 'Awards', href: '#awards', id: 'awards' },
-    { name: 'Published Work', href: '#published-work', id: 'published-work' },
-    { name: 'Contact', href: '#contact', id: 'contact' },
+    { name: 'About', href: '/about', id: 'about' },
+    { name: 'Experience', href: '/market-research-content', id: 'experience' },
+    { name: 'Services', href: '/services', id: 'services' },
+    { name: 'Case Studies', href: '/case-studies', id: 'case-studies' },
+    { name: 'Work', href: '/work', id: 'selected-work' },
+    { name: 'SEO & GEO', href: '/geo-aeo', id: 'seo-geo-expertise' },
+    { name: 'Writing', href: '/writing', id: 'writing' },
+    { name: 'Book', href: '/book', id: 'published-work' },
+    { name: 'Contact', href: '/contact', id: 'contact' },
   ];
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleLinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+    sectionId: string
+  ) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (onNavigate) {
+      onNavigate(href, sectionId);
+    } else {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (onNavigate) {
+      onNavigate('/', 'hero');
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -57,32 +75,34 @@ export const Navbar: React.FC<NavbarProps> = ({
           : 'bg-[#fbf9f6]/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]'
       }`}
     >
-      <div className="h-20 max-w-[1280px] mx-auto px-5 md:px-10 lg:px-16 flex items-center justify-between">
+      <div className="h-20 max-w-[1280px] mx-auto px-5 md:px-10 lg:px-16 flex items-center justify-between gap-4">
         {/* Brand Zone */}
         <a
-          href="#"
+          href="/"
           onClick={handleLogoClick}
-          className="group flex flex-col justify-center focus-visible:outline-2 focus-visible:outline-[#994524]"
-          aria-label="Seapee Bajaj Home"
+          className="group flex flex-col justify-center focus-visible:outline-2 focus-visible:outline-[#994524] shrink-0"
+          aria-label="Seapee Bajaj Portfolio Home"
         >
           <span className="font-serif text-xl tracking-tight text-[#1b1c1a] group-hover:text-[#994524] transition-colors font-medium">
             {SITE_CONFIG.NAME}
           </span>
-          <span className="text-[11px] leading-[14px] uppercase tracking-widest text-[#546252] font-semibold">
-            {SITE_CONFIG.TITLE}
+          <span className="text-[10px] sm:text-[11px] leading-[14px] uppercase tracking-wider text-[#546252] font-semibold">
+            SEO • B2B Content • GEO &amp; AI Search
           </span>
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-6" aria-label="Main Navigation">
+        <nav className="hidden xl:flex items-center gap-5" aria-label="Main Navigation">
           {navLinks.map((link) => {
-            const isActive = activeSection === link.id;
+            const isActive =
+              activeSection === link.id ||
+              (currentPath !== '/' && currentPath === link.href);
             return (
               <a
                 key={link.id}
                 href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                className={`py-1 text-sm tracking-wide transition-colors ${
+                onClick={(e) => handleLinkClick(e, link.href, link.id)}
+                className={`py-1 text-xs sm:text-sm tracking-wide transition-colors whitespace-nowrap ${
                   isActive
                     ? 'text-[#994524] font-semibold border-b-2 border-[#994524]'
                     : 'text-[#55433c] hover:text-[#1b1c1a] font-medium'
@@ -95,11 +115,12 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
 
         {/* Action Button & Avatar */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 shrink-0">
           {onOpenWorkspace && (
             <button
+              type="button"
               onClick={onOpenWorkspace}
-              className="hidden md:inline-flex items-center justify-center text-xs font-semibold text-[#55433c] hover:text-[#1b1c1a] bg-[#efeeeb] hover:bg-[#eae8e5] border border-[#e4e2df] transition-all px-3.5 py-2 rounded-lg cursor-pointer"
+              className="hidden md:inline-flex items-center justify-center text-xs font-semibold text-[#55433c] hover:text-[#1b1c1a] bg-[#efeeeb] hover:bg-[#eae8e5] border border-[#e4e2df] transition-all px-3 py-2 rounded-lg cursor-pointer"
               title="Open Client & Editorial Database Workspace"
             >
               Workspace
@@ -116,21 +137,26 @@ export const Navbar: React.FC<NavbarProps> = ({
             <WhatsAppIcon className="w-4 h-4" />
           </a>
           <button
+            type="button"
             onClick={onWorkTogether}
-            className="hidden sm:inline-flex items-center justify-center text-sm font-semibold bg-[#b85d3a] hover:bg-[#994524] text-white transition-all px-4 py-2 rounded-lg shadow-sm hover:shadow active:scale-[0.98] cursor-pointer"
+            className="hidden sm:inline-flex items-center justify-center text-xs sm:text-sm font-semibold bg-[#b85d3a] hover:bg-[#994524] text-white transition-all px-4 py-2 rounded-lg shadow-sm hover:shadow active:scale-[0.98] cursor-pointer"
           >
-            Let's Work Together
+            Let's Talk
           </button>
 
           <a
-            href="#about"
-            onClick={(e) => handleLinkClick(e, '#about')}
+            href="/about"
+            onClick={(e) => handleLinkClick(e, '/about', 'about')}
             className="relative block w-9 h-9 rounded-full overflow-hidden ring-1 ring-[#dbc1b8] hover:ring-2 hover:ring-[#994524] transition-all"
-            title="Seapee Bajaj"
+            title="About Seapee Bajaj"
           >
             <img
               src={SITE_CONFIG.AVATAR_IMAGE}
-              alt="Seapee Bajaj profile thumbnail"
+              alt="Seapee Bajaj — SEO Content Strategist"
+              width={36}
+              height={36}
+              loading="eager"
+              decoding="async"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
               onError={(e) => {
@@ -145,9 +171,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Mobile Menu Button */}
           <button
+            type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-md text-[#55433c] hover:text-[#1b1c1a] hover:bg-[#eae8e5] transition-colors focus:outline-none"
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            className="xl:hidden p-2 rounded-md text-[#55433c] hover:text-[#1b1c1a] hover:bg-[#eae8e5] transition-colors focus:outline-none"
+            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={mobileMenuOpen}
           >
             <span className="material-symbols-outlined text-[24px]">
@@ -159,16 +186,16 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#fbf9f6] border-b border-[#e4e2df] px-6 py-5 shadow-lg animate-in slide-in-from-top duration-200">
-          <div className="flex flex-col gap-3">
+        <div className="xl:hidden bg-[#fbf9f6] border-b border-[#e4e2df] px-6 py-5 shadow-lg animate-in slide-in-from-top duration-200">
+          <div className="flex flex-col gap-2.5">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
                 <a
                   key={link.id}
                   href={link.href}
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                  className={`py-2 text-base font-medium transition-colors ${
+                  onClick={(e) => handleLinkClick(e, link.href, link.id)}
+                  className={`py-1.5 text-base font-medium transition-colors ${
                     isActive
                       ? 'text-[#994524] font-semibold pl-2 border-l-2 border-[#994524]'
                       : 'text-[#55433c] hover:text-[#1b1c1a]'
@@ -180,13 +207,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
             <div className="pt-3 mt-1 border-t border-[#eae8e5] flex flex-col gap-2">
               <button
+                type="button"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onWorkTogether();
                 }}
                 className="w-full text-center py-2.5 px-4 rounded-lg bg-[#b85d3a] hover:bg-[#994524] text-white text-sm font-semibold transition-colors cursor-pointer"
               >
-                Let's Work Together
+                Work With Me
               </button>
               <a
                 href={buildWhatsAppUrl()}

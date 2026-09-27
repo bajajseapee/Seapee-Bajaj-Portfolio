@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://seapeebajaj.com/sitemap.xml
+Sitemap: https://seapee-bajaj-portfolio-3a8w-omega.vercel.app/sitemap.xml

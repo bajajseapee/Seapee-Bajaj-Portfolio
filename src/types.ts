@@ -9,12 +9,12 @@ export type PortfolioCategory =
 export interface ProjectItem {
   id: string;
   title: string;
-  tag: string; // e.g. "Research / Industry Content", "B2B Content"
+  tag: string;
   description: string;
-  type: string; // e.g. "Analysis Report", "Strategic Brief", "Seasonal Study"
+  type: string;
   category: 'SEO & Content' | 'B2B' | 'Research' | 'Technology' | 'Consumer Insights';
   categories: ('SEO & Content' | 'B2B' | 'Research' | 'Technology' | 'Consumer Insights')[];
-  url: string; // Direct link or placeholder URL (e.g. "https://example.com/project-name")
+  url: string;
   image?: string;
   platform?: string;
   year?: string;
@@ -36,6 +36,52 @@ export interface ServiceItem {
   deliverables: string[];
   idealFor: string;
   outcome: string;
+}
+
+export interface ExperienceItem {
+  id: string;
+  organization: string;
+  role: string;
+  period?: string;
+  focusSummary: string;
+  highlights: string[];
+  domains?: string[];
+}
+
+export interface DetailedCaseStudyItem {
+  id: string;
+  title: string;
+  clientOrPlatform: string;
+  category: string;
+  focusAreas: string[];
+  problem: string;
+  research: string;
+  strategy: string;
+  execution: string;
+  outcome: string;
+  keyTakeaways: string[];
+  externalUrl?: string;
+}
+
+export interface SeoGeoPillarItem {
+  id: string;
+  code: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  practices: string[];
+}
+
+export interface WritingTopicItem {
+  id: string;
+  slug: string;
+  title: string;
+  category: 'SEO Strategy' | 'GEO & AEO' | 'AI & Editorial' | 'B2B & Market Research';
+  summary: string;
+  keyQuestionsAnswered: string[];
+  relatedServicePath: string;
+  status: 'Topic Brief & Framework' | 'Published Perspective';
+  externalUrl?: string;
 }
 
 export interface CreativeItem {

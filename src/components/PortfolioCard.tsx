@@ -17,55 +17,55 @@ export const PROJECT_LOGOS: Record<
 > = {
   'real-estate-dynamics': {
     src: realEstateImg,
-    alt: "Beyond the Blueprint: Insights into India's Evolving Real Estate Dynamics — IMARC",
+    alt: "Beyond the Blueprint: Insights on India's Evolving Real Estate Dynamics — housing market growth illustration",
     fit: 'cover',
   },
   'imarc-group-manufacturing': {
     src: imarcManufacturingImg,
-    alt: 'IMARC: Your Manufacturing Success Partner',
+    alt: 'IMARC Group B2B manufacturing plant advisory logo tile',
     fit: 'cover',
   },
   'unwrapping-holiday-success': {
     src: holidaySuccessImg,
-    alt: 'Unwrapping Holiday Success: The Power of Strategic Consumer Insights — IMARC',
+    alt: 'Unwrapping Holiday Success: Strategic Consumer Insights gift box illustration',
     fit: 'cover',
   },
   'decoding-gen-z': {
     src: decodingGenZImg,
-    alt: 'Decoding Gen Z: The Generation Shaping the Future — IMARC',
+    alt: 'Decoding Gen Z: The Generation Shaping the Future sketchnote illustration',
     fit: 'cover',
   },
   'well-of-insights-quora': {
     src: quoraLogoImg,
-    alt: 'Quora — Well of Insights logo',
+    alt: 'Quora — Well of Insights research communication page badge',
     fit: 'cover',
   },
   'metaverse-content-creation': {
     src: metaverseLogoImg,
-    alt: 'Metaverse logo',
+    alt: 'Metaverse content creation technology trend emblem',
     fit: 'cover',
     bg: 'bg-[#12073b]',
   },
   'ai-market-research-pr-newswire': {
     src: aiChipImg,
-    alt: 'AI Market Research microchip logo',
+    alt: 'Artificial Intelligence market research coverage microchip illustration',
     fit: 'cover',
     bg: 'bg-[#1c2536]',
   },
   'wms-market-figures': {
     src: wmsDiagramImg,
-    alt: 'WMS Warehouse Management System workflow logo',
+    alt: 'Warehouse Management System (WMS) market figures workflow diagram',
     fit: 'contain',
     bg: 'bg-white',
   },
   'social-media-analytics-market': {
     src: socialMediaAnalyticsImg,
-    alt: 'Social Media Analytics Market illustration',
+    alt: 'Social Media Analytics Market growth chart illustration',
     fit: 'cover',
   },
   'trends-inbound-logistics': {
     src: inboundLogisticsImg,
-    alt: 'Inbound Logistics warehouse trends illustration',
+    alt: 'Inbound Logistics supply chain and warehouse trends illustration',
     fit: 'cover',
   },
 };
@@ -98,6 +98,10 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({ project, onOpenPro
                 <img
                   src={logo.src}
                   alt={logo.alt}
+                  width={96}
+                  height={64}
+                  loading="lazy"
+                  decoding="async"
                   referrerPolicy="no-referrer"
                   className={`w-full h-full ${
                     logo.fit === 'contain' ? 'object-contain p-1' : 'object-cover'
@@ -105,7 +109,7 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({ project, onOpenPro
                 />
               </div>
             )}
-            <span className="inline-block px-2.5 py-1 rounded bg-[#efeeeb] text-[#546252] text-[11px] font-semibold uppercase tracking-wider w-fit">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-[#546252]">
               {project.tag}
             </span>
           </div>
@@ -120,7 +124,7 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({ project, onOpenPro
               }}
               title="Inspect brief & insights"
               className="text-gray-400 hover:text-[#994524] p-1 rounded-md transition-colors shrink-0"
-              aria-label="Inspect project brief"
+              aria-label={`Inspect brief for ${project.title}`}
             >
               <span className="material-symbols-outlined text-[18px]">info</span>
             </button>

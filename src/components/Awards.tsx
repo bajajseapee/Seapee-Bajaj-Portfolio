@@ -10,22 +10,22 @@ import hubspotBadgeImg from '../assets/images/hubspot_content_marketing_badge_17
 const AWARD_LOGOS: Record<string, { src: string; alt: string; fit: 'cover' | 'contain' }> = {
   'best-content-writer': {
     src: gvrTrophyImg,
-    alt: 'Grand View Research STAR Awards trophy — Seapee Bajaj, Content Creation',
+    alt: 'Grand View Research STAR Awards trophy — Seapee Bajaj, Best Content Writer',
     fit: 'cover',
   },
   'pwc-commendation': {
     src: pwcLogoImg,
-    alt: 'PwC (PricewaterhouseCoopers) logo',
+    alt: 'PwC (PricewaterhouseCoopers) enterprise client commendation logo',
     fit: 'contain',
   },
   'my-need-to-live-reward': {
     src: myNeedToLiveBadgeImg,
-    alt: 'My Need To Live — Get Involved Award badge',
+    alt: 'My Need To Live UK — Get Involved Award recognition badge',
     fit: 'contain',
   },
   'academic-publications': {
     src: asmLogoImg,
-    alt: 'ASM (Audyogik Shikshan Mandal) logo',
+    alt: 'ASM (Audyogik Shikshan Mandal) INCON XIII conference logo',
     fit: 'contain',
   },
 };
@@ -33,11 +33,11 @@ const AWARD_LOGOS: Record<string, { src: string; alt: string; fit: 'cover' | 'co
 const CERTIFICATION_LOGOS: Record<string, { src: string; alt: string }> = {
   'google-prompting': {
     src: googlePromptingBadgeImg,
-    alt: 'Google Prompting Essentials — Certificate of Completion badge',
+    alt: 'Google Prompting Essentials Certificate of Completion badge',
   },
   'hubspot-content-marketing': {
     src: hubspotBadgeImg,
-    alt: 'HubSpot Academy — Content Marketing Certification badge',
+    alt: 'HubSpot Academy Content Marketing Certification badge',
   },
 };
 
@@ -56,16 +56,16 @@ export const Awards: React.FC = () => {
         <div className="flex flex-col gap-3 max-w-2xl mb-12 lg:mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#994524]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#994524]" />
-            <span>Achievements &amp; Accolades</span>
+            <span>Achievements &amp; Credentials</span>
           </div>
           <h2
             id="awards-heading"
             className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1b1c1a] font-medium tracking-tight"
           >
-            Honors &amp; Industry Recognition
+            Honors, Certifications &amp; Education
           </h2>
           <p className="text-base sm:text-lg text-[#55433c] leading-relaxed">
-            Tangible proof of editorial excellence, enterprise client trust, and academic research rigor documented across 9+ years.
+            Recognition across editorial quality, enterprise client engagements, academic research publications, and professional certifications.
           </p>
         </div>
 
@@ -87,6 +87,10 @@ export const Awards: React.FC = () => {
                           <img
                             src={logo.src}
                             alt={logo.alt}
+                            width={80}
+                            height={80}
+                            loading="lazy"
+                            decoding="async"
                             referrerPolicy="no-referrer"
                             className={`w-full h-full ${
                               logo.fit === 'cover'
@@ -111,7 +115,7 @@ export const Awards: React.FC = () => {
                         </span>
                       </div>
                     </div>
-                    <span className="text-xs font-medium text-[#546252] bg-[#f5f3f0] px-3 py-1 rounded-full whitespace-nowrap shrink-0">
+                    <span className="text-xs font-medium text-[#546252] whitespace-nowrap shrink-0">
                       {item.year}
                     </span>
                   </div>
@@ -141,19 +145,19 @@ export const Awards: React.FC = () => {
           })}
         </div>
 
-        {/* Certifications & Specialized Credentials Strip */}
+        {/* Certifications & Academic Credentials Strip */}
         <div className="mt-12 lg:mt-16 bg-white rounded-2xl p-6 sm:p-8 border border-[#e4e2df] shadow-xs">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#efeeeb]">
             <div>
               <span className="text-[11px] font-bold uppercase tracking-widest text-[#994524] block mb-1">
-                Continuous Learning &amp; AI Integration
+                Education, Certifications &amp; AI Training
               </span>
               <h3 className="font-serif text-xl sm:text-2xl text-[#1b1c1a] font-medium">
-                Verified Professional Certifications
+                Verified Certifications &amp; Academic Background
               </h3>
             </div>
-            <span className="text-xs text-[#546252] bg-[#fbf9f6] px-3.5 py-1.5 rounded-full border border-[#e4e2df] font-medium w-fit">
-              Top Percentile Scores
+            <span className="text-xs text-[#546252] font-medium">
+              MBA in Systems · HubSpot · Google · Be10x
             </span>
           </div>
 
@@ -170,13 +174,17 @@ export const Awards: React.FC = () => {
                       <img
                         src={certLogo.src}
                         alt={certLogo.alt}
+                        width={80}
+                        height={80}
+                        loading="lazy"
+                        decoding="async"
                         referrerPolicy="no-referrer"
                         className="w-full h-full object-contain"
                       />
                     </div>
                   ) : (
-                    <div className="w-12 h-12 rounded-lg bg-white border border-[#e4e2df] text-[#994524] flex items-center justify-center shrink-0">
-                      <span className="material-symbols-outlined text-[20px]">
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-white border border-[#e4e2df] text-[#994524] flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-[26px]">
                         {cert.icon}
                       </span>
                     </div>
@@ -191,7 +199,7 @@ export const Awards: React.FC = () => {
                       </span>
                     </div>
                     <p className="text-xs text-[#546252] font-medium mb-1">
-                      {cert.issuer} • {cert.date}
+                      {cert.issuer} · {cert.date}
                     </p>
                     <p className="text-xs text-[#55433c] leading-relaxed">
                       {cert.description}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { STATS } from '../data/portfolioData';
+import { STATS, PROFILE_INFO } from '../data/portfolioData';
 import experienceLogo from '../assets/images/about_logo_experience_1790405416482.jpg';
 import rankReachLogo from '../assets/images/about_logo_rank_reach_1790405429831.jpg';
 import empiricalLogo from '../assets/images/about_logo_empirical_1790405440606.jpg';
@@ -8,61 +8,116 @@ import refinedLogo from '../assets/images/about_logo_refined_1790405450987.jpg';
 const STAT_LOGOS: Record<string, { src: string; alt: string }> = {
   experience: {
     src: experienceLogo,
-    alt: '9+ Years Experience in Content, SEO & Research logo',
+    alt: '9+ years of experience across market research, B2B content, and SEO illustration',
   },
   'rank-reach': {
     src: rankReachLogo,
-    alt: 'Rank & Reach — SEO & Content Architecture logo',
+    alt: 'SEO, GEO and AI search visibility strategy illustration',
   },
   empirical: {
     src: empiricalLogo,
-    alt: 'Empirical — B2B & Market Research logo',
+    alt: 'Research-led B2B and market intelligence dossier illustration',
   },
   refined: {
     src: refinedLogo,
-    alt: 'Refined — Editorial Expertise logo',
+    alt: 'Reader-first editorial storytelling and book authorship illustration',
   },
 };
 
-export const About: React.FC = () => {
+interface AboutProps {
+  onNavigate?: (path: string, sectionId?: string) => void;
+}
+
+export const About: React.FC<AboutProps> = ({ onNavigate }) => {
   const [selectedStat, setSelectedStat] = useState<string | null>(null);
 
+  const handleInternalLink = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    path: string,
+    sectionId: string
+  ) => {
+    if (onNavigate) {
+      e.preventDefault();
+      onNavigate(path, sectionId);
+    }
+  };
+
   return (
-    <section className="w-full px-5 md:px-10 lg:px-16 py-16 lg:py-24 bg-[#f5f3f0]" id="about">
+    <section
+      className="w-full px-5 md:px-10 lg:px-16 py-16 lg:py-24 bg-[#f5f3f0]"
+      id="about"
+      aria-labelledby="about-heading"
+    >
       <div className="max-w-[1280px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           {/* Text Narrative */}
-          <div className="lg:col-span-6 flex flex-col gap-3">
+          <div className="lg:col-span-6 flex flex-col gap-3.5">
             <span className="text-xs uppercase tracking-widest text-[#546252] font-semibold">
-              Perspective
+              About Seapee Bajaj • Perspective
             </span>
-            <h2 className="font-serif text-3xl md:text-4xl text-[#1b1c1a] font-medium tracking-tight">
-              More Than a Writer.
+            <h2
+              id="about-heading"
+              className="font-serif text-3xl md:text-4xl text-[#1b1c1a] font-medium tracking-tight"
+            >
+              More Than a Writer — Research-Led. Reader-Focused.
             </h2>
-            <div className="w-12 h-[2px] bg-[#994524] my-2" />
-            <p className="text-lg md:text-xl text-[#55433c] leading-relaxed font-normal">
-              Great content starts with understanding — the audience, the business objective, the subject, and the search intent behind it.
+            <div className="w-12 h-[2px] bg-[#994524] my-1" />
+            <p className="text-lg md:text-xl text-[#1b1c1a] leading-relaxed font-normal">
+              {PROFILE_INFO.aboutIntro}
             </p>
             <p className="text-base text-[#55433c] leading-relaxed">
-              With 9+ years of experience across content, SEO, editorial workflows, and market research, I combine research depth with clear, reader-first writing. My focus is creating content that is accurate, useful, discoverable, and aligned with real business objectives.
+              My career started in primary and secondary market research at <strong className="text-[#1b1c1a] font-semibold">Allied Market Research</strong> and <strong className="text-[#1b1c1a] font-semibold">The Insight Partners</strong>, where I worked on market estimation, data analysis, and industry reports across ICT, Semiconductor, and Automotive domains. That foundation shaped how I approach content at <strong className="text-[#1b1c1a] font-semibold">Grand View Research</strong> and <strong className="text-[#1b1c1a] font-semibold">IMARC Group</strong>—translating complex research into clear, reader-focused B2B and SEO content.
             </p>
             <p className="text-sm text-[#55433c] leading-relaxed">
-              My work spans <strong className="text-[#1b1c1a] font-semibold">SEO + Content Strategy + Storytelling + Creative Writing</strong>. As a published author (<em>Not Unworthy</em>), I bring original narrative poise and literary sensitivity to technical and analytical subjects.
+              I focus on hands-on <strong className="text-[#1b1c1a] font-semibold">SEO content strategy, B2B content writing, keyword research, on-page SEO, E-E-A-T alignment, and AI-search visibility (GEO &amp; AEO)</strong> across Google AI Overviews, ChatGPT, Perplexity, and Gemini. I hold an <strong className="text-[#1b1c1a] font-semibold">MBA in Systems</strong>, the <strong className="text-[#1b1c1a] font-semibold">HubSpot Content Marketing Certification</strong>, <strong className="text-[#1b1c1a] font-semibold">Google Prompting Essentials</strong>, completed the <strong className="text-[#1b1c1a] font-semibold">Be10x AI tools program</strong>, and authored the published poetry book <em>Not Unworthy</em>.
             </p>
 
-            <div className="pt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-[#546252]">
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#994524]" />
-                <span>SEO &amp; Content Architecture</span>
+            {/* Quick Progression Summary */}
+            <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#55433c]">
+              <div className="bg-white p-3.5 rounded-xl border border-[#e4e2df]">
+                <span className="font-semibold text-[#994524] block mb-0.5">
+                  Allied Market Research &amp; The Insight Partners
+                </span>
+                <span>
+                  Primary &amp; secondary research, market estimation, ICT/Semiconductor/Automotive reports, client pre-sales &amp; post-sales solutions.
+                </span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#994524]" />
-                <span>Storytelling &amp; Creative Writing</span>
+              <div className="bg-white p-3.5 rounded-xl border border-[#e4e2df]">
+                <span className="font-semibold text-[#994524] block mb-0.5">
+                  Grand View Research &amp; IMARC Group
+                </span>
+                <span>
+                  SEO blogs, articles, listicles, FAQs, Well of Insights Quora strategy (60–70 to 250+ avg views), content workflows &amp; SEO quality checks.
+                </span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#994524]" />
-                <span>Empirical Research Rigor</span>
-              </div>
+            </div>
+
+            {/* Internal Links Row */}
+            <div className="pt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-[#994524]">
+              <a
+                href="/services"
+                onClick={(e) => handleInternalLink(e, '/services', 'services')}
+                className="hover:underline inline-flex items-center gap-1"
+              >
+                <span>Explore Services</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+              <a
+                href="/case-studies"
+                onClick={(e) => handleInternalLink(e, '/case-studies', 'case-studies')}
+                className="hover:underline inline-flex items-center gap-1"
+              >
+                <span>Read Case Studies</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+              <a
+                href="/geo-aeo"
+                onClick={(e) => handleInternalLink(e, '/geo-aeo', 'seo-geo-expertise')}
+                className="hover:underline inline-flex items-center gap-1"
+              >
+                <span>SEO, GEO &amp; AEO Expertise</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
             </div>
           </div>
 
@@ -73,6 +128,7 @@ export const About: React.FC = () => {
               return (
                 <button
                   key={stat.id}
+                  type="button"
                   onClick={() => setSelectedStat(selectedStat === stat.id ? null : stat.id)}
                   className={`text-left bg-white p-6 rounded-xl shadow-xs hover:shadow-md transition-all flex flex-col justify-between min-h-[210px] border ${
                     selectedStat === stat.id ? 'border-[#994524] ring-1 ring-[#994524]' : 'border-[#e4e2df]'
@@ -84,6 +140,10 @@ export const About: React.FC = () => {
                         <img
                           src={logo.src}
                           alt={logo.alt}
+                          width={80}
+                          height={80}
+                          loading="lazy"
+                          decoding="async"
                           referrerPolicy="no-referrer"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
