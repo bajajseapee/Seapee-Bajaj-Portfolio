@@ -1,5 +1,10 @@
 {
+  "cleanUrls": false,
   "rewrites": [
+    {
+      "source": "/google7d582d90dd9539de.html",
+      "destination": "/google7d582d90dd9539de.html"
+    },
     {
       "source": "/sitemap.xml",
       "destination": "/sitemap.xml"
@@ -9,7 +14,7 @@
       "destination": "/robots.txt"
     },
     {
-      "source": "/((?!assets/|.*\\..*).*)",
+      "source": "/((?!assets/|google7d582d90dd9539de\\.html|sitemap\\.xml|robots\\.txt|.*\\..*).*)",
       "destination": "/index.html"
     }
   ]

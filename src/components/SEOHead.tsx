@@ -90,25 +90,49 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath }) => {
       'summary_large_image'
     );
     setMetaTag(
-      'meta[name="twitter:url"], meta[property="twitter:url"]',
+      'meta[property="twitter:url"]',
+      'property',
+      'twitter:url',
+      canonicalUrl
+    );
+    setMetaTag(
+      'meta[name="twitter:url"]',
       'name',
       'twitter:url',
       canonicalUrl
     );
     setMetaTag(
-      'meta[name="twitter:title"], meta[property="twitter:title"]',
+      'meta[property="twitter:title"]',
+      'property',
+      'twitter:title',
+      routeConfig.title
+    );
+    setMetaTag(
+      'meta[name="twitter:title"]',
       'name',
       'twitter:title',
       routeConfig.title
     );
     setMetaTag(
-      'meta[name="twitter:description"], meta[property="twitter:description"]',
+      'meta[property="twitter:description"]',
+      'property',
+      'twitter:description',
+      routeConfig.description
+    );
+    setMetaTag(
+      'meta[name="twitter:description"]',
       'name',
       'twitter:description',
       routeConfig.description
     );
     setMetaTag(
-      'meta[name="twitter:image"], meta[property="twitter:image"]',
+      'meta[property="twitter:image"]',
+      'property',
+      'twitter:image',
+      SITE_CONFIG.HERO_IMAGE
+    );
+    setMetaTag(
+      'meta[name="twitter:image"]',
       'name',
       'twitter:image',
       SITE_CONFIG.HERO_IMAGE
