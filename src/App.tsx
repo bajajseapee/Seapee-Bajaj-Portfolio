@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -172,6 +173,7 @@ export default function App() {
   return (
     <FirebaseProvider>
       <SEOHead currentPath={currentPath} />
+      <GoogleAnalytics gaId="G-6BMZ8XCK2T" />
 
       <div className="min-h-screen bg-[#fbf9f6] text-[#1b1c1a] flex flex-col antialiased selection:bg-[#ffdbcf] selection:text-[#994524]">
         {/* Fixed Navigation Bar */}
