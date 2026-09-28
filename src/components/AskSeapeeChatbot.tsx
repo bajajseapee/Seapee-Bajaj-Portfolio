@@ -1013,7 +1013,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
     : ASK_SEAPEE_SUGGESTED_QUESTIONS.slice(0, 5);
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end">
+    <div className="fixed bottom-3 right-3 sm:bottom-5 sm:right-5 z-50 flex flex-col items-end">
       {/* Assistant Window */}
       {isOpen && (
         <section
@@ -1410,24 +1410,24 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
         </section>
       )}
 
-      {/* Floating Primary AI Button: "Ask Me Anything" */}
+      {/* Floating Primary AI Button: "Ask Me Anything" (compact on mobile so it never covers card text) */}
       <button
         type="button"
         onClick={handleTogglePanelOpen}
         aria-expanded={isOpen}
         aria-label="Ask Me Anything — Interactive AI Assistant for Seapee Bajaj"
         title="Ask Me Anything — Seapee's AI Assistant (Chat & Voice)"
-        className="group flex items-center gap-2.5 bg-[#1b1c1a] hover:bg-[#994524] text-white pl-3.5 pr-4 py-3 rounded-full shadow-xl hover:shadow-2xl border border-[#dbc1b8]/30 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+        className="group flex items-center gap-1.5 sm:gap-2.5 bg-[#1b1c1a] hover:bg-[#994524] text-white pl-2.5 pr-3 py-2 sm:pl-3.5 sm:pr-4 sm:py-3 rounded-full shadow-xl hover:shadow-2xl border border-[#dbc1b8]/30 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
       >
-        <span className="relative w-8 h-8 rounded-full bg-[#994524] group-hover:bg-white/20 text-white flex items-center justify-center shrink-0 transition-colors">
+        <span className="relative w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#994524] group-hover:bg-white/20 text-white flex items-center justify-center shrink-0 transition-colors">
           {isOpen ? (
-            <span className="material-symbols-outlined text-[17px]">close</span>
+            <span className="material-symbols-outlined text-[15px] sm:text-[17px]">close</span>
           ) : (
-            <AiChatSvg className="w-4 h-4" />
+            <AiChatSvg className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           )}
         </span>
         <span className="flex flex-col items-start text-left leading-none pr-0.5">
-          <span className="text-xs sm:text-[13px] font-semibold tracking-wide flex items-center gap-1.5">
+          <span className="text-[11px] sm:text-[13px] font-semibold tracking-wide flex items-center gap-1.5">
             <span>Ask Me Anything</span>
           </span>
           <span className="text-[10px] text-[#dbc1b8] group-hover:text-white/90 font-normal mt-0.5 hidden sm:inline">

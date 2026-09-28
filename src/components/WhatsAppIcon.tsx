@@ -40,7 +40,7 @@ export const FloatingWhatsApp: React.FC = () => {
   }, [isOpen]);
 
   return (
-    <div ref={containerRef} className="fixed bottom-5 left-5 z-40 flex flex-col items-start">
+    <div ref={containerRef} className="fixed bottom-3 left-3 sm:bottom-5 sm:left-5 z-40 flex flex-col items-start">
       {/* Expandable Contact Menu mentioning WhatsApp and Email */}
       {isOpen && (
         <div className="mb-3 w-72 sm:w-80 bg-white border border-[#e4e2df] rounded-2xl shadow-2xl p-4 animate-in fade-in slide-in-from-bottom-2 duration-200">
@@ -127,18 +127,18 @@ export const FloatingWhatsApp: React.FC = () => {
         </div>
       )}
 
-      {/* Floating Scroll Button: "Contact" */}
+      {/* Floating Scroll Button: "Contact" (compact on mobile to avoid covering card text) */}
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
         aria-label="Open Contact Options (WhatsApp & Email)"
-        className="group flex items-center gap-2.5 bg-[#994524] hover:bg-[#7b2f0f] text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+        className="group flex items-center gap-1.5 sm:gap-2.5 bg-[#994524] hover:bg-[#7b2f0f] text-white px-3 py-2 sm:px-4 sm:py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
       >
-        <span className="material-symbols-outlined text-[20px]">
+        <span className="material-symbols-outlined text-[17px] sm:text-[20px]">
           {isOpen ? 'close' : 'chat'}
         </span>
-        <span className="text-xs font-semibold tracking-wide pr-0.5">
+        <span className="text-[11px] sm:text-xs font-semibold tracking-wide pr-0.5">
           Contact
         </span>
       </button>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { VALUE_PROPOSITIONS } from '../data/portfolioData';
+import { PortfolioIcon } from './PortfolioIcon';
 
 export const WhyWorkWithMe: React.FC = () => {
   return (
@@ -20,8 +21,8 @@ export const WhyWorkWithMe: React.FC = () => {
 
           {/* Inline Visual Micro-Badge */}
           <div className="mt-4 p-4 bg-white rounded-xl shadow-xs border border-[#e4e2df] flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#d5e4cf] flex items-center justify-center text-[#586656] shrink-0">
-              <span className="material-symbols-outlined text-xl">verified</span>
+            <div className="w-10 h-10 rounded-full bg-[#d5e4cf] flex items-center justify-center text-[#586656] shrink-0 overflow-hidden">
+              <PortfolioIcon name="verified" className="w-5 h-5" />
             </div>
             <div>
               <span className="text-sm font-semibold text-[#1b1c1a] block">
@@ -41,9 +42,9 @@ export const WhyWorkWithMe: React.FC = () => {
               key={index}
               className="bg-white p-4 sm:p-5 rounded-xl shadow-xs border border-[#e4e2df] flex gap-4 items-start hover:border-[#dbc1b8] transition-colors"
             >
-              <span className="material-symbols-outlined text-[#994524] text-2xl mt-0.5 shrink-0">
-                {point.icon}
-              </span>
+              <div className="w-9 h-9 rounded-lg bg-[#fbf9f6] border border-[#e4e2df] text-[#994524] flex items-center justify-center shrink-0 mt-0.5 overflow-hidden">
+                <PortfolioIcon name={point.icon} className="w-5 h-5" />
+              </div>
               <p className="text-base text-[#1b1c1a] leading-relaxed font-normal">
                 <strong className="font-semibold text-[#1b1c1a]">{point.headline}</strong>{' '}
                 {point.description}

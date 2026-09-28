@@ -25,7 +25,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   };
 
   return (
-    <footer className="w-full bg-[#f5f3f0] shadow-[0_-1px_8px_rgba(0,0,0,0.02)] border-t border-[#e4e2df]">
+    <footer className="w-full bg-[#f5f3f0] shadow-[0_-1px_8px_rgba(0,0,0,0.02)] border-t border-[#e4e2df] pb-20 sm:pb-0">
       <div className="max-w-[1280px] mx-auto px-5 md:px-10 lg:px-16 py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12">
           {/* Brand Identity */}

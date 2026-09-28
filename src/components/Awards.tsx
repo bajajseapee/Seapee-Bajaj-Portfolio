@@ -1,5 +1,6 @@
 import React from 'react';
 import { AWARDS, CERTIFICATIONS } from '../data/portfolioData';
+import { PortfolioIcon } from './PortfolioIcon';
 import gvrTrophyImg from '../assets/images/gvr_star_award_trophy_1790403565114.jpg';
 import pwcLogoImg from '../assets/images/pwc_logo.svg';
 import myNeedToLiveBadgeImg from '../assets/images/my_need_to_live_award_badge_1790403584967.jpg';
@@ -100,10 +101,8 @@ export const Awards: React.FC = () => {
                           />
                         </div>
                       ) : (
-                        <div className="w-14 h-14 rounded-xl bg-[#f5f3f0] text-[#994524] flex items-center justify-center shrink-0">
-                          <span className="material-symbols-outlined text-[24px]">
-                            {item.icon}
-                          </span>
+                        <div className="w-14 h-14 rounded-xl bg-[#f5f3f0] text-[#994524] flex items-center justify-center shrink-0 overflow-hidden">
+                          <PortfolioIcon name={item.icon} className="w-6 h-6" />
                         </div>
                       )}
                       <div>
@@ -134,9 +133,7 @@ export const Awards: React.FC = () => {
                 {/* Key Highlight Footnote */}
                 {item.highlight && (
                   <div className="pt-4 border-t border-[#efeeeb] flex items-start gap-2 text-xs text-[#546252]">
-                    <span className="material-symbols-outlined text-[16px] text-[#994524] shrink-0 mt-0.5">
-                      check_circle
-                    </span>
+                    <PortfolioIcon name="check_circle" className="w-4 h-4 text-[#994524] shrink-0 mt-0.5" />
                     <span className="leading-snug">{item.highlight}</span>
                   </div>
                 )}
@@ -195,10 +192,8 @@ export const Awards: React.FC = () => {
                       />
                     </div>
                   ) : (
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-white border border-[#e4e2df] text-[#994524] flex flex-col items-center justify-center shrink-0">
-                      <span className="material-symbols-outlined text-[24px]">
-                        {cert.icon}
-                      </span>
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-white border border-[#e4e2df] text-[#994524] flex flex-col items-center justify-center shrink-0 overflow-hidden">
+                      <PortfolioIcon name={cert.icon} className="w-6 h-6" />
                       {isRecentGeoCert && (
                         <span className="text-[9px] font-bold uppercase tracking-wider text-[#546252] mt-0.5">
                           Coursera

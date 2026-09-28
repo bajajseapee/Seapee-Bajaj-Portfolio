@@ -1,5 +1,6 @@
 import React from 'react';
 import { SEO_GEO_PILLARS } from '../data/portfolioData';
+import { PortfolioIcon } from './PortfolioIcon';
 
 interface SeoGeoExpertiseProps {
   onNavigate?: (path: string, sectionId?: string) => void;
@@ -92,9 +93,7 @@ export const SeoGeoExpertise: React.FC<SeoGeoExpertiseProps> = ({ onNavigate }) 
                 <ul className="space-y-2 border-t border-[#efeeeb] pt-4 text-xs sm:text-sm text-[#55433c]">
                   {pillar.practices.map((practice, pIdx) => (
                     <li key={pIdx} className="flex items-start gap-2.5 leading-relaxed">
-                      <span className="material-symbols-outlined text-[16px] text-[#994524] shrink-0 mt-0.5">
-                        check_circle
-                      </span>
+                      <PortfolioIcon name="check_circle" className="w-4 h-4 text-[#994524] shrink-0 mt-0.5" />
                       <span>{practice}</span>
                     </li>
                   ))}
