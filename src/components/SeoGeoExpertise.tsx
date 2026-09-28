@@ -79,9 +79,9 @@ export const SeoGeoExpertise: React.FC<SeoGeoExpertiseProps> = ({ onNavigate }) 
                     {pillar.code}. {pillar.subtitle}
                   </span>
                 </div>
-                <h3 className="font-serif text-xl sm:text-2xl text-[#1b1c1a] font-medium mb-3">
+                <p className="font-serif text-xl sm:text-2xl text-[#1b1c1a] font-medium mb-3">
                   {pillar.title}
-                </h3>
+                </p>
                 <p className="text-sm text-[#55433c] leading-relaxed mb-5">
                   {pillar.description}
                 </p>

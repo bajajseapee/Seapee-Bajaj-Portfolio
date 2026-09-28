@@ -1036,9 +1036,9 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <h3 className="font-serif text-sm font-bold tracking-wide text-[#1b1c1a] truncate">
+                  <p className="font-serif text-sm font-bold tracking-wide text-[#1b1c1a] truncate">
                     Seapee&apos;s AI Assistant
-                  </h3>
+                  </p>
                 </div>
                 <p className="text-[11px] text-[#546252] truncate">
                   {mode === 'chat' ? 'Chat Mode • Text responses' : `Voice Mode • ${agentState}`}

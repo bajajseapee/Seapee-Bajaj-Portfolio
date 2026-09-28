@@ -49,9 +49,9 @@ export const FloatingWhatsApp: React.FC = () => {
               <span className="text-[10px] uppercase tracking-widest text-[#994524] font-semibold block">
                 Direct Channels
               </span>
-              <h4 className="font-serif text-base text-[#1b1c1a] font-medium">
+              <p className="font-serif text-base text-[#1b1c1a] font-medium">
                 Contact {SITE_CONFIG.NAME}
-              </h4>
+              </p>
             </div>
             <button
               type="button"

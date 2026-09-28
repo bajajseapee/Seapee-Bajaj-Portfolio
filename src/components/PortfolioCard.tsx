@@ -131,9 +131,9 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({ project, onOpenPro
           )}
         </div>
 
-        <h3 className="font-serif text-xl text-[#1b1c1a] mt-1 font-medium group-hover:text-[#994524] transition-colors line-clamp-2">
+        <p className="font-serif text-xl text-[#1b1c1a] mt-1 font-medium group-hover:text-[#994524] transition-colors line-clamp-2">
           {project.title}
-        </h3>
+        </p>
         <p className="text-sm text-[#55433c] leading-relaxed line-clamp-3">
           {project.description}
         </p>

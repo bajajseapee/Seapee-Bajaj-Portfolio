@@ -119,9 +119,9 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
                     </span>
                   </div>
 
-                  <h3 className="font-serif text-xl sm:text-2xl text-[#1b1c1a] mb-2.5 group-hover:text-[#994524] transition-colors font-medium leading-snug">
+                  <p className="font-serif text-xl sm:text-2xl text-[#1b1c1a] mb-2.5 group-hover:text-[#994524] transition-colors font-medium leading-snug">
                     {service.title}
-                  </h3>
+                  </p>
                   <p className="text-sm text-[#55433c] leading-relaxed">
                     {service.description}
                   </p>

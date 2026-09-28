@@ -141,54 +141,54 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
-                      <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
+                      <p className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
                         1. Problem
-                      </h4>
+                      </p>
                       <p className="text-sm text-[#55433c] leading-relaxed">
                         {cs.problem}
                       </p>
                     </div>
 
                     <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
-                      <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
+                      <p className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
                         2. Research
-                      </h4>
+                      </p>
                       <p className="text-sm text-[#55433c] leading-relaxed">
                         {cs.research}
                       </p>
                     </div>
 
                     <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
-                      <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
+                      <p className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
                         3. Strategy
-                      </h4>
+                      </p>
                       <p className="text-sm text-[#55433c] leading-relaxed">
                         {cs.strategy}
                       </p>
                     </div>
 
                     <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
-                      <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
+                      <p className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
                         4. Execution
-                      </h4>
+                      </p>
                       <p className="text-sm text-[#55433c] leading-relaxed">
                         {cs.execution}
                       </p>
                     </div>
 
                     <div className="bg-white p-5 rounded-xl border border-[#dbc1b8]">
-                      <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
+                      <p className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
                         5. Outcome
-                      </h4>
+                      </p>
                       <p className="text-sm text-[#1b1c1a] font-medium leading-relaxed">
                         {cs.outcome}
                       </p>
                     </div>
 
                     <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
-                      <h4 className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
+                      <p className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
                         6. Key Takeaways
-                      </h4>
+                      </p>
                       <ul className="space-y-1.5 text-xs text-[#55433c] leading-relaxed">
                         {cs.keyTakeaways.map((takeaway, tIdx) => (
                           <li key={tIdx} className="flex items-start gap-2">

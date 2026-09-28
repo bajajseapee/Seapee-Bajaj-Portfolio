@@ -49,9 +49,9 @@ export const Process: React.FC = () => {
                   <div className="w-8 h-8 rounded-full bg-[#994524] text-white text-xs font-semibold flex items-center justify-center mb-3">
                     {step.step}
                   </div>
-                  <h3 className="font-serif text-lg text-[#1b1c1a] mb-2 font-medium">
+                  <p className="font-serif text-lg text-[#1b1c1a] mb-2 font-medium">
                     {step.title}
-                  </h3>
+                  </p>
                   <p className="text-xs text-[#55433c] leading-relaxed">
                     {step.description}
                   </p>
@@ -76,9 +76,9 @@ export const Process: React.FC = () => {
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#994524]">
                   Phase {activeStep.step} Details
                 </span>
-                <h4 className="font-serif text-2xl text-[#1b1c1a] font-medium mt-0.5">
+                <h3 className="font-serif text-2xl text-[#1b1c1a] font-medium mt-0.5">
                   {activeStep.title} — Methodology &amp; Checkpoints
-                </h4>
+                </h3>
               </div>
               <button
                 onClick={() => setActiveStep(null)}
@@ -90,9 +90,9 @@ export const Process: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-5">
               <div>
-                <h5 className="text-xs font-semibold uppercase tracking-wider text-[#1b1c1a] mb-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#1b1c1a] mb-3">
                   Key Activities &amp; Quality Gates
-                </h5>
+                </p>
                 <ul className="space-y-2">
                   {activeStep.activities.map((act, i) => (
                     <li key={i} className="flex items-start gap-2.5 text-sm text-[#55433c]">

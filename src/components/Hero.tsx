@@ -39,18 +39,18 @@ export const Hero: React.FC<HeroProps> = ({
             </span>
           </div>
 
-          {/* Main H1 Headline (single H1 on homepage) */}
+          {/* Main H1 Headline (single H1 on homepage; styled paragraph on sub-routes where route header provides H1) */}
           {isHomeRoute ? (
             <h1 className="font-serif text-3xl sm:text-4xl md:text-[44px] lg:text-[52px] text-[#1b1c1a] tracking-tight leading-[1.14] mt-1 font-medium">
               <span className="sr-only">
-                Seapee Bajaj — SEO Content Strategist, B2B Content &amp; GEO Specialist:{' '}
+                Seapee Bajaj — B2B SEO Content &amp; Editorial Strategist:{' '}
               </span>
               Strategy, <span className="italic font-normal text-[#994524]">Storytelling</span> &amp; Search — Thoughtfully Combined.
             </h1>
           ) : (
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-[44px] lg:text-[52px] text-[#1b1c1a] tracking-tight leading-[1.14] mt-1 font-medium">
+            <p className="font-serif text-3xl sm:text-4xl md:text-[44px] lg:text-[52px] text-[#1b1c1a] tracking-tight leading-[1.14] mt-1 font-medium">
               Strategy, <span className="italic font-normal text-[#994524]">Storytelling</span> &amp; Search — Thoughtfully Combined.
-            </h2>
+            </p>
           )}
 
           {/* Supporting Positioning Line */}

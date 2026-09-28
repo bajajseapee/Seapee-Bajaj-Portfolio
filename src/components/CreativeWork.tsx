@@ -69,9 +69,9 @@ export const CreativeWork: React.FC = () => {
                         </span>
                       )}
                       <div>
-                        <h3 className="font-serif text-xl sm:text-2xl text-[#1b1c1a] font-medium leading-snug group-hover:text-[#994524] transition-colors">
+                        <p className="font-serif text-xl sm:text-2xl text-[#1b1c1a] font-medium leading-snug group-hover:text-[#994524] transition-colors">
                           {work.title}
-                        </h3>
+                        </p>
                         <p className="text-xs text-[#546252] mt-1 font-medium">
                           {work.author}
                         </p>

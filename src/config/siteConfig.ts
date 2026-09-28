@@ -32,7 +32,9 @@ export const SITE_CONFIG = {
   WHATSAPP_NUMBER: "+918888010822",
   WHATSAPP_DISPLAY: "+91 88880 10822",
   WHATSAPP_DIGITS: "918888010822",
-  LINKEDIN_URL: "https://www.linkedin.com/in/seapeebajaj",
+  // Social & Profile URLs used in Person JSON-LD sameAs (replace placeholders if updating profile URLs)
+  LINKEDIN_URL: "https://www.linkedin.com/in/seapeebajaj", // PLACEHOLDER: Replace with your exact LinkedIn profile URL if different
+  QUORA_PROFILE_URL: "https://wellofinsights.quora.com/", // PLACEHOLDER: Replace with your personal Quora profile URL
   TOPMATE_URL: "https://topmate.io/seapee_bajaj",
   RESUME_URL: "/resume-seapee-bajaj.pdf",
   SUBSTACK_URL: "https://seapeebajaj.substack.com",
@@ -78,9 +80,11 @@ export const SITE_CONFIG = {
 
   // Default SEO & Meta
   SEO: {
-    TITLE: "Seapee Bajaj | SEO Content Strategist, B2B Content & GEO Specialist",
-    DESCRIPTION: "Seapee Bajaj is an SEO Content Strategist specializing in B2B content, GEO, AI search and research-led content.",
-    OG_DESCRIPTION: "SEO, B2B content, GEO and research-led content by Seapee Bajaj.",
+    TITLE: "Seapee Bajaj | B2B SEO Content & GEO Strategist",
+    DESCRIPTION:
+      "Portfolio of Seapee Bajaj, a B2B SEO content strategist specializing in market research content, GEO, AI search optimization, and editorial strategy.",
+    OG_DESCRIPTION:
+      "Portfolio of Seapee Bajaj, a B2B SEO content strategist specializing in market research content, GEO, AI search optimization, and editorial strategy.",
     CANONICAL: SITE_URL,
     OG_SHORT_TAGLINE: "Seapee Bajaj — SEO • Content Strategy • GEO | Research-Led. Reader-Focused."
   }
@@ -101,10 +105,10 @@ export interface RouteSEOConfig {
 export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
   "/": {
     path: "/",
-    title: "Seapee Bajaj | SEO Content Strategist, B2B Content & GEO Specialist",
+    title: "Seapee Bajaj | B2B SEO Content & Editorial Strategist",
     description:
-      "Seapee Bajaj is an SEO Content Strategist specializing in B2B content, GEO, AI search and research-led content.",
-    h1: "Seapee Bajaj",
+      "B2B SEO content & editorial strategist with 9+ years of experience in market research, search-aligned storytelling, and GEO/AEO optimization.",
+    h1: "Seapee Bajaj — B2B SEO Content & Editorial Strategist",
     kicker: "SEO Content Strategist | B2B Content | GEO & AI Search",
     subtitle: "Research-Led. Reader-Focused. Strategy, Storytelling & Search — Thoughtfully Combined.",
     sectionId: "hero",
@@ -113,34 +117,58 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
   },
   "/about": {
     path: "/about",
-    title: "About Seapee Bajaj | Research-Driven SEO Content Strategist",
+    title: "About Seapee Bajaj | B2B SEO Content Strategist",
     description:
-      "Learn about Seapee Bajaj, an SEO content strategist and B2B writer with 9+ years of experience at IMARC Group, Grand View Research, The Insight Partners, and Allied Market Research.",
-    h1: "About Seapee Bajaj — Research-Driven Content Strategist & SEO Professional",
+      "Seapee Bajaj is a B2B SEO content strategist with 9+ years of experience at IMARC Group, Grand View Research and Allied Market Research.",
+    h1: "Seapee Bajaj — B2B SEO Content & Editorial Strategist",
     kicker: "Professional Background & Career Progression",
     subtitle: "9+ years across market research, B2B content, SEO, editorial workflows, and AI-search optimization.",
     sectionId: "about",
     pageType: "ProfilePage",
     breadcrumbLabel: "About"
   },
+  "/experience": {
+    path: "/experience",
+    title: "Experience & Career | Seapee Bajaj — B2B & SEO",
+    description:
+      "Explore Seapee Bajaj's 9+ years of experience across Perfect Clicks, IMARC Group, Grand View Research, The Insight Partners and Allied Market Research.",
+    h1: "Seapee Bajaj — B2B Content & SEO Strategist Experience",
+    kicker: "Career Chronology & Professional Journey",
+    subtitle: "9+ years of progression across market research, B2B content strategy, and SEO execution.",
+    sectionId: "experience",
+    pageType: "ProfilePage",
+    breadcrumbLabel: "Experience"
+  },
   "/work": {
     path: "/work",
-    title: "Selected Work & Portfolio | Seapee Bajaj — B2B & SEO Content",
+    title: "Selected B2B & Research Work | Seapee Bajaj",
     description:
-      "Explore published B2B articles, market research coverage, consumer insights, and SEO content written by Seapee Bajaj across technology, manufacturing, and business.",
-    h1: "Selected Work & Published Portfolio by Seapee Bajaj",
+      "Explore selected B2B articles, industry analysis briefings, consumer trend studies, and SEO content pieces published by strategist Seapee Bajaj.",
+    h1: "Seapee Bajaj — B2B & SEO Content Strategist Portfolio",
     kicker: "Published B2B, Market Research & SEO Content",
     subtitle: "A curated index of published work across market research, B2B strategy, consumer insights, and technology.",
     sectionId: "selected-work",
     pageType: "CollectionPage",
     breadcrumbLabel: "Work"
   },
+  "/portfolio": {
+    path: "/portfolio",
+    title: "Published B2B & SEO Portfolio | Seapee Bajaj",
+    description:
+      "Browse published B2B articles, market research insights, consumer trend reports, and SEO content samples written and strategized by Seapee Bajaj.",
+    h1: "Seapee Bajaj — B2B & SEO Content Strategist Portfolio",
+    kicker: "Published B2B, Market Research & SEO Content",
+    subtitle: "A curated index of published work across market research, B2B strategy, consumer insights, and technology.",
+    sectionId: "selected-work",
+    pageType: "CollectionPage",
+    breadcrumbLabel: "Portfolio"
+  },
   "/services": {
     path: "/services",
     title: "SEO, B2B Content & GEO Services | Seapee Bajaj",
     description:
-      "Hands-on SEO content strategy, B2B content writing, research-driven content, GEO, AEO, content optimization, AI-assisted content workflows, and portfolio website creation.",
-    h1: "SEO Content Strategy, B2B Content & GEO Services",
+      "Professional B2B content writing, SEO content strategy, market research storytelling, content optimization, and GEO/AEO services by Seapee Bajaj.",
+    h1: "Seapee Bajaj — SEO, B2B Content & GEO Strategist Services",
     kicker: "Core Practice & Hands-On Capabilities",
     subtitle: "Research-led content and search optimization services tailored for B2B brands, research firms, and professionals.",
     sectionId: "services",
@@ -151,20 +179,32 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
     path: "/case-studies",
     title: "SEO & B2B Content Case Studies | Seapee Bajaj",
     description:
-      "Real-world SEO, Quora content strategy, B2B content operations, homepage conversion rewrites, and competitive intelligence case studies by Seapee Bajaj.",
-    h1: "SEO, Content Strategy & Research Case Studies",
+      "Review B2B content and SEO case studies by Seapee Bajaj, including Well of Insights on Quora, IMARC Group workflows, Fire AI, and Sorbitol research.",
+    h1: "Seapee Bajaj — SEO & B2B Content Strategist Case Studies",
     kicker: "Documented Projects & Methodology",
     subtitle: "In-depth breakdowns of real projects across Grand View Research, IMARC Group, Jones Road Beauty, Fire AI, and Sorbitol competitive intelligence.",
     sectionId: "case-studies",
     pageType: "CollectionPage",
     breadcrumbLabel: "Case Studies"
   },
+  "/seo-geo": {
+    path: "/seo-geo",
+    title: "SEO, AEO & GEO Search Expertise | Seapee Bajaj",
+    description:
+      "How Seapee Bajaj combines traditional on-page SEO and E-E-A-T with Answer Engine Optimization (AEO) and Generative Engine Optimization (GEO).",
+    h1: "Seapee Bajaj — SEO, AEO & GEO Content Strategist",
+    kicker: "Traditional & AI-Driven Search Optimization",
+    subtitle: "Structuring research-backed content for Google Search, AI Overviews, ChatGPT, Perplexity, and Gemini.",
+    sectionId: "seo-geo-expertise",
+    pageType: "WebPage",
+    breadcrumbLabel: "SEO & GEO"
+  },
   "/seo-content": {
     path: "/seo-content",
-    title: "SEO Content Strategy & On-Page Optimization | Seapee Bajaj",
+    title: "SEO Content Strategy Services | Seapee Bajaj",
     description:
-      "How Seapee Bajaj approaches keyword research, search intent mapping, E-E-A-T, on-page SEO, internal linking, and research-driven content optimization.",
-    h1: "SEO Content Strategy: Search Intent, E-E-A-T & On-Page Architecture",
+      "Search-intent-led SEO content strategy, Semrush keyword research, topic clusters, and on-page SEO optimization for B2B brands by Seapee Bajaj.",
+    h1: "Seapee Bajaj — SEO Content Strategist & On-Page Specialist",
     kicker: "SEO Content Expertise",
     subtitle: "Aligning deep subject-matter research with search intent, semantic structure, and human-first readability.",
     sectionId: "seo-geo-expertise",
@@ -173,10 +213,10 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
   },
   "/geo-aeo": {
     path: "/geo-aeo",
-    title: "GEO & AEO Specialist | Generative & Answer Engine Optimization — Seapee Bajaj",
+    title: "GEO & AEO Optimization Services | Seapee Bajaj",
     description:
-      "Structuring research-backed content for AI Overviews, Answer Engine Optimization (AEO), and Generative Engine Optimization (GEO) across ChatGPT, Perplexity, and Gemini.",
-    h1: "GEO & AEO: Optimizing Content for AI Search & Answer Engines",
+      "Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO) services to structure B2B content for AI Overviews, ChatGPT, and Perplexity.",
+    h1: "Seapee Bajaj — GEO & AEO AI Search Content Strategist",
     kicker: "Generative Engine Optimization & AI Search Visibility",
     subtitle: "Helping brands structure clear, factual, entity-rich content for traditional search and AI-driven answer systems.",
     sectionId: "seo-geo-expertise",
@@ -185,10 +225,10 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
   },
   "/b2b-content": {
     path: "/b2b-content",
-    title: "B2B Content Writer & Strategist | Seapee Bajaj",
+    title: "B2B Content Writing Services | Seapee Bajaj",
     description:
-      "B2B content writing and strategy grounded in primary and secondary market research across ICT, semiconductors, manufacturing, logistics, and enterprise technology.",
-    h1: "B2B Content Strategy & Technical Industry Storytelling",
+      "Authoritative B2B content writing across technology, manufacturing, semiconductors, and SaaS—grounded in 9+ years of industry research experience.",
+    h1: "Seapee Bajaj — B2B Content Writer & Editorial Strategist",
     kicker: "B2B Content Specialist",
     subtitle: "Translating complex technical specifications and market data into clear, decision-ready B2B narratives.",
     sectionId: "services",
@@ -197,10 +237,10 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
   },
   "/market-research-content": {
     path: "/market-research-content",
-    title: "Market Research Content & Industry Analysis | Seapee Bajaj",
+    title: "Market Research Content Strategy | Seapee Bajaj",
     description:
-      "9+ years of market research and content experience across Allied Market Research, The Insight Partners, Grand View Research, and IMARC Group.",
-    h1: "Market Research Content: Turning Data & Forecasts into Clear Narratives",
+      "Translating primary and secondary market research, competitive intelligence, and industry data into clear B2B narratives by strategist Seapee Bajaj.",
+    h1: "Seapee Bajaj — Market Research & B2B Content Strategist",
     kicker: "Research-Driven Writer",
     subtitle: "Built on a foundation of primary research, secondary research, market estimation, and competitive intelligence.",
     sectionId: "experience",
@@ -209,10 +249,10 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
   },
   "/writing": {
     path: "/writing",
-    title: "Writing, Essays & Editorial Perspectives | Seapee Bajaj",
+    title: "Articles & Insights on SEO & B2B | Seapee Bajaj",
     description:
-      "Editorial essays, SEO and GEO guides, founder features in Startup India Magazine, and creative writing by Seapee Bajaj.",
-    h1: "Writing, Essays & Editorial Perspectives on SEO, B2B & GEO",
+      "Read deep-dive articles by Seapee Bajaj on B2B SEO content strategy, AEO vs GEO, human-edited AI workflows, and market-research-backed writing.",
+    h1: "Seapee Bajaj — B2B SEO & Editorial Strategist Writing",
     kicker: "Editorial Hub & Thought Leadership",
     subtitle: "Practical perspectives on B2B SEO content, Generative Engine Optimization, market research, and human-first AI workflows.",
     sectionId: "writing",
@@ -221,10 +261,10 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
   },
   "/book": {
     path: "/book",
-    title: "Not Unworthy — Poetry Book by Seapee Bajaj",
+    title: "Not Unworthy — Published Book by Seapee Bajaj",
     description:
-      "Not Unworthy is a published paperback poetry collection by Seapee Bajaj (Notion Press) exploring resilience, consistency, everyday courage, and human potential.",
-    h1: "Not Unworthy — Published Poetry Collection by Seapee Bajaj",
+      "Discover Not Unworthy, a published poetry and prose collection by Seapee Bajaj (Notion Press, ISBN 979-8889356134), exploring resilience and worth.",
+    h1: "Seapee Bajaj — Published Author & Editorial Strategist",
     kicker: "Published Author • Notion Press",
     subtitle: "Exploring resilience, consistency, everyday courage, and the quiet worth of ordinary lives.",
     sectionId: "published-work",
@@ -233,10 +273,10 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
   },
   "/contact": {
     path: "/contact",
-    title: "Contact Seapee Bajaj | Work With an SEO & B2B Content Strategist",
+    title: "Contact Seapee Bajaj | B2B Content & SEO Roles",
     description:
-      "Get in touch with Seapee Bajaj for SEO content strategy, B2B content writing, GEO/AEO optimization, market research content, or portfolio website projects.",
-    h1: "Contact Seapee Bajaj — Let's Discuss Your Content & SEO Goals",
+      "Contact Seapee Bajaj for B2B content writing, SEO strategy, market-research storytelling, and editorial consulting opportunities in Pune or remote.",
+    h1: "Contact Seapee Bajaj — B2B SEO Content Strategist",
     kicker: "Work With Me",
     subtitle: "Available for B2B content strategy, SEO content writing, GEO/AEO optimization, and research-driven editorial projects.",
     sectionId: "contact",

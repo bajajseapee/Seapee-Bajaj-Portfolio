@@ -301,9 +301,9 @@ export const EditorialWorkspaceModal: React.FC<EditorialWorkspaceModalProps> = (
                     <div className="flex flex-wrap items-start justify-between gap-2">
                       <div>
                         <div className="flex items-center gap-2.5">
-                          <h4 className="font-serif text-lg text-[#1b1c1a] font-medium">
+                          <p className="font-serif text-lg text-[#1b1c1a] font-medium">
                             {inq.name}
-                          </h4>
+                          </p>
                           <span
                             className={`px-2.5 py-0.5 rounded-md text-[11px] font-semibold uppercase tracking-wider ${statusBadgeStyle(
                               inq.status
@@ -552,9 +552,9 @@ export const EditorialWorkspaceModal: React.FC<EditorialWorkspaceModalProps> = (
                           <span className="text-[10px] uppercase tracking-wider font-semibold text-[#994524]">
                             {item.category} • {item.published ? 'Published' : 'Draft'}
                           </span>
-                          <h4 className="font-serif text-base text-[#1b1c1a] font-medium">
+                          <p className="font-serif text-base text-[#1b1c1a] font-medium">
                             {item.title}
-                          </h4>
+                          </p>
                         </div>
                         <div className="flex items-center gap-2">
                           <button

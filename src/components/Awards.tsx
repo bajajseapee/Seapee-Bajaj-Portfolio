@@ -121,9 +121,9 @@ export const Awards: React.FC = () => {
                   </div>
 
                   {/* Award Title */}
-                  <h3 className="font-serif text-xl sm:text-2xl text-[#1b1c1a] font-medium tracking-tight mb-3 group-hover:text-[#994524] transition-colors">
+                  <p className="font-serif text-xl sm:text-2xl text-[#1b1c1a] font-medium tracking-tight mb-3 group-hover:text-[#994524] transition-colors">
                     {item.title}
-                  </h3>
+                  </p>
 
                   {/* Description */}
                   <p className="text-sm text-[#55433c] leading-relaxed mb-4">
@@ -191,9 +191,9 @@ export const Awards: React.FC = () => {
                   )}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-baseline justify-between gap-2 flex-wrap mb-0.5">
-                      <h4 className="text-sm sm:text-base font-semibold text-[#1b1c1a]">
+                      <p className="text-sm sm:text-base font-semibold text-[#1b1c1a]">
                         {cert.title}
-                      </h4>
+                      </p>
                       <span className="text-xs font-bold text-[#994524]">
                         {cert.score}
                       </span>
