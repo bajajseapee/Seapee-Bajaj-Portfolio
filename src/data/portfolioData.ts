@@ -1010,6 +1010,16 @@ export const AWARDS: AwardItem[] = [
 
 export const CERTIFICATIONS = [
   {
+    id: "intro-generative-engine-optimization",
+    title: "Introduction to Generative Engine Optimization",
+    issuer: "Coursera",
+    date: "Completed: September 28, 2026",
+    score: "Coursera · GEO & AI Search",
+    description:
+      "Completed professional development and training on Coursera focused on Generative Engine Optimization (GEO), generative search, and structuring content for AI-powered search and answer engines—complementing 9+ years of hands-on experience in market research, B2B content, and SEO.",
+    icon: "travel_explore"
+  },
+  {
     id: "google-prompting",
     title: "Google Prompting Essentials",
     issuer: "Google / Coursera",
@@ -1052,25 +1062,43 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "faq-specialization",
     question: "What does Seapee Bajaj specialize in?",
     answer:
-      "Seapee Bajaj is a content and SEO professional specializing in research-led content, SEO optimization, editorial workflows, B2B content, and AI-assisted content creation."
+      "Seapee Bajaj is a content and SEO professional with 9+ years of experience specializing in research-led content, content strategy, SEO optimization, editorial workflows, B2B content writing, competitive intelligence, and AI-assisted content creation.",
+    relatedLink: { label: "Explore Core Services & Practice", path: "/services", sectionId: "services" }
   },
   {
     id: "faq-content-types",
     question: "What kind of content does Seapee Bajaj create?",
     answer:
-      "Seapee creates research-driven articles, SEO content, website copy, thought-leadership content, editorial content, and other written assets designed to be useful to both readers and search engines."
+      "Seapee creates research-driven articles, SEO blogs, listicles, FAQs, website copy, market research summaries, competitive intelligence narratives, thought-leadership content, and editorial assets designed to be useful to both human readers and search engines.",
+    relatedLink: { label: "Browse Selected Portfolio Work", path: "/work", sectionId: "selected-work" }
   },
   {
     id: "faq-b2b-experience",
     question: "Does Seapee Bajaj have experience with B2B content?",
     answer:
-      "Yes. Seapee has experience creating and managing research-led content for B2B and knowledge-intensive industries, with a focus on accuracy, clarity, SEO, and audience relevance."
+      "Yes. Seapee has 9+ years of professional experience across Allied Market Research, The Insight Partners, Grand View Research, IMARC Group, and Perfect Clicks—creating and managing research-led content for B2B and knowledge-intensive industries including ICT, semiconductors, automotive, and enterprise technology.",
+    relatedLink: { label: "View Professional Experience Timeline", path: "/experience", sectionId: "experience" }
   },
   {
     id: "faq-seo-skills",
     question: "What SEO skills does Seapee Bajaj have?",
     answer:
-      "Seapee's SEO experience includes keyword research, search intent analysis, title and meta optimization, internal linking, heading structure, image optimization, content optimization, E-E-A-T principles, and improving content for search visibility."
+      "Seapee's SEO experience includes keyword research (including Semrush), search intent analysis, title and meta optimization, internal linking, logical heading structure, image optimization, content optimization, E-E-A-T principles, and structuring content for both traditional search and AI-powered answer engines.",
+    relatedLink: { label: "See SEO, GEO & AEO Approach", path: "/seo-geo", sectionId: "seo-geo-expertise" }
+  },
+  {
+    id: "faq-geo-aeo-training",
+    question: "What experience and training does Seapee Bajaj have in GEO and AEO?",
+    answer:
+      "Seapee combines hands-on experience in answer-focused content strategy—such as growing average post views on the Well of Insights Quora page from 60–70 to 250+ at Grand View Research—with formal professional development in Generative Engine Optimization (GEO), including completing Introduction to Generative Engine Optimization on Coursera (September 28, 2026), Google Prompting Essentials, and the Be10x AI tools program.",
+    relatedLink: { label: "View Certifications & Case Studies", path: "/case-studies", sectionId: "case-studies" }
+  },
+  {
+    id: "faq-geo-aeo-definition",
+    question: "How do Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO) relate to SEO?",
+    answer:
+      "Traditional SEO focuses on search intent, keyword research, and on-page signals to improve discoverability in search engines. Answer Engine Optimization (AEO) structures content to provide direct, scannable answers for featured snippets, AI Overviews, and Q&A platforms, while Generative Engine Optimization (GEO) focuses on clear entity context, factual accuracy, and structured depth so AI-powered search systems like ChatGPT, Gemini, and Perplexity can accurately interpret and synthesize the content.",
+    relatedLink: { label: "Read More on SEO, GEO & AEO", path: "/geo-aeo", sectionId: "seo-geo-expertise" }
   },
   {
     id: "faq-ai-workflow",
@@ -1082,13 +1110,15 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "faq-remote-work",
     question: "Is Seapee Bajaj available for remote work?",
     answer:
-      "Yes. Seapee is open to remote opportunities involving content writing, SEO, content strategy, editorial operations, research-led content, and related work."
+      "Yes. Seapee is open to remote opportunities involving content writing, SEO, content strategy, editorial operations, research-led content, and related work.",
+    relatedLink: { label: "Get in Touch for Remote Roles", path: "/contact", sectionId: "contact" }
   },
   {
     id: "faq-published-work",
     question: "Where can I see Seapee Bajaj's published work?",
     answer:
-      "Published work and selected projects are showcased throughout this portfolio. Visitors can also explore Seapee's published articles, creative writing, professional work, and published book through the relevant links on the website."
+      "Published work and selected projects are showcased throughout this portfolio. Visitors can also explore Seapee's published articles, creative writing, professional work, and published book Not Unworthy through the relevant links on the website.",
+    relatedLink: { label: "Explore Published Book & Portfolio", path: "/book", sectionId: "published-work" }
   },
   {
     id: "faq-contact",

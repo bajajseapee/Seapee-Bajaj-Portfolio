@@ -70,7 +70,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
               My career started in primary and secondary market research at <strong className="text-[#1b1c1a] font-semibold">Allied Market Research</strong> and <strong className="text-[#1b1c1a] font-semibold">The Insight Partners</strong>, where I worked on market estimation, data analysis, and industry reports across ICT, Semiconductor, and Automotive domains. That foundation shaped how I approach content and SEO across <strong className="text-[#1b1c1a] font-semibold">Perfect Clicks</strong>, <strong className="text-[#1b1c1a] font-semibold">Grand View Research</strong>, and <strong className="text-[#1b1c1a] font-semibold">IMARC Group</strong>—translating complex research into clear, reader-focused B2B and SEO content.
             </p>
             <p className="text-sm text-[#55433c] leading-relaxed">
-              I focus on hands-on <strong className="text-[#1b1c1a] font-semibold">SEO content strategy, B2B content writing, keyword research, on-page SEO, E-E-A-T alignment, and AI-search visibility (GEO &amp; AEO)</strong> across Google AI Overviews, ChatGPT, Perplexity, and Gemini. I hold an <strong className="text-[#1b1c1a] font-semibold">MBA in Systems</strong>, the <strong className="text-[#1b1c1a] font-semibold">HubSpot Content Marketing Certification</strong>, <strong className="text-[#1b1c1a] font-semibold">Google Prompting Essentials</strong>, completed the <strong className="text-[#1b1c1a] font-semibold">Be10x AI tools program</strong>, and authored the published poetry book <em>Not Unworthy</em>.
+              Seapee Bajaj is a content and SEO professional with 9+ years of experience in <strong className="text-[#1b1c1a] font-semibold">content strategy, SEO optimization, research-led content, editorial workflows, and content production</strong>. My work spans keyword research, on-page SEO, competitive intelligence, and structuring clear, factual content for traditional search and AI-powered answer engines (<strong className="text-[#1b1c1a] font-semibold">GEO &amp; AEO</strong>). Alongside hands-on industry experience, I hold an <strong className="text-[#1b1c1a] font-semibold">MBA in Systems</strong>, completed professional training in <strong className="text-[#1b1c1a] font-semibold">Introduction to Generative Engine Optimization</strong> (Coursera), <strong className="text-[#1b1c1a] font-semibold">HubSpot Content Marketing Certification</strong>, <strong className="text-[#1b1c1a] font-semibold">Google Prompting Essentials</strong>, and the <strong className="text-[#1b1c1a] font-semibold">Be10x AI tools program</strong>, and authored the published poetry book <em>Not Unworthy</em>.
             </p>
 
             {/* Quick Progression Summary */}
@@ -95,6 +95,14 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
 
             {/* Internal Links Row */}
             <div className="pt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-[#994524]">
+              <a
+                href="/experience"
+                onClick={(e) => handleInternalLink(e, '/experience', 'experience')}
+                className="hover:underline inline-flex items-center gap-1"
+              >
+                <span>Career Experience</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
               <a
                 href="/services"
                 onClick={(e) => handleInternalLink(e, '/services', 'services')}

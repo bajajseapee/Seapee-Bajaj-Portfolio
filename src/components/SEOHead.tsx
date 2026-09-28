@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { SITE_CONFIG, SITE_URL_ORIGIN, getCanonicalUrl } from '../config/siteConfig';
+import { SITE_CONFIG, SITE_URL_ORIGIN, SEO_ROUTES, getCanonicalUrl } from '../config/siteConfig';
 import { FAQ_ITEMS } from '../data/portfolioData';
 
 interface SEOHeadProps {
@@ -177,6 +177,41 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
         SOCIAL_PROFILE_PLACEHOLDERS.LINKEDIN_PROFILE_URL,
         SOCIAL_PROFILE_PLACEHOLDERS.QUORA_PROFILE_URL,
         SOCIAL_PROFILE_PLACEHOLDERS.QUORA_SPACE_URL,
+        SITE_CONFIG.SUBSTACK_URL,
+      ],
+      knowsAbout: [
+        'Search Engine Optimization (SEO)',
+        'Content Strategy',
+        'B2B Content Writing',
+        'Research-Led Content',
+        'Market Research & Competitive Intelligence',
+        'Keyword Research & On-Page SEO',
+        'Editorial Workflows',
+        'Generative Engine Optimization (GEO)',
+        'Answer Engine Optimization (AEO)',
+        'AI-Assisted Content Workflows',
+      ],
+      hasCredential: [
+        {
+          '@type': 'EducationalOccupationalCredential',
+          name: 'MBA in Systems',
+          credentialCategory: 'Postgraduate Degree',
+        },
+        {
+          '@type': 'EducationalOccupationalCredential',
+          name: 'Introduction to Generative Engine Optimization',
+          recognizedBy: { '@type': 'Organization', name: 'Coursera' },
+        },
+        {
+          '@type': 'EducationalOccupationalCredential',
+          name: 'Content Marketing Certification',
+          recognizedBy: { '@type': 'Organization', name: 'HubSpot Academy' },
+        },
+        {
+          '@type': 'EducationalOccupationalCredential',
+          name: 'Google Prompting Essentials',
+          recognizedBy: { '@type': 'Organization', name: 'Google / Coursera' },
+        },
       ],
       worksFor: [
         {
@@ -229,6 +264,62 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
       document.head.appendChild(scriptEl);
     }
     scriptEl.textContent = JSON.stringify(personJsonLd);
+
+    // WebSite, ProfilePage/WebPage, and BreadcrumbList JSON-LD structured data
+    const routeConfig = SEO_ROUTES[cleanPath] || SEO_ROUTES['/'];
+    const breadcrumbItems = [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Seapee Bajaj Portfolio',
+        item: `${SITE_URL_ORIGIN}/`,
+      },
+    ];
+    if (cleanPath !== '/') {
+      breadcrumbItems.push({
+        '@type': 'ListItem',
+        position: 2,
+        name: routeConfig.breadcrumbLabel,
+        item: canonicalUrl,
+      });
+    }
+
+    const pageContextJsonLd = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebSite',
+          '@id': `${SITE_URL_ORIGIN}/#website`,
+          name: SITE_CONFIG.SITE_NAME,
+          url: `${SITE_URL_ORIGIN}/`,
+          publisher: { '@id': `${SITE_URL_ORIGIN}/#person` },
+        },
+        {
+          '@type': routeConfig.pageType || 'ProfilePage',
+          '@id': `${canonicalUrl}#webpage`,
+          url: canonicalUrl,
+          name: meta.title,
+          description: meta.description,
+          isPartOf: { '@id': `${SITE_URL_ORIGIN}/#website` },
+          about: { '@id': `${SITE_URL_ORIGIN}/#person` },
+          mainEntity: { '@id': `${SITE_URL_ORIGIN}/#person` },
+        },
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${canonicalUrl}#breadcrumb`,
+          itemListElement: breadcrumbItems,
+        },
+      ],
+    };
+
+    let pageScriptEl = document.getElementById('page-context-jsonld') as HTMLScriptElement | null;
+    if (!pageScriptEl) {
+      pageScriptEl = document.createElement('script');
+      pageScriptEl.id = 'page-context-jsonld';
+      pageScriptEl.type = 'application/ld+json';
+      document.head.appendChild(pageScriptEl);
+    }
+    pageScriptEl.textContent = JSON.stringify(pageContextJsonLd);
 
     // FAQPage JSON-LD structured data matching visible FAQSection questions and answers exactly
     const faqJsonLd = {

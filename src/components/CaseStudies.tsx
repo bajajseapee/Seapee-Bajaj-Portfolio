@@ -131,7 +131,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
                   </div>
                 </div>
 
-                {/* Structured 6-Part Case Study Body: Problem, Research, Strategy, Execution, Outcome, Key Takeaways (Always in DOM for crawlability) */}
+                {/* Structured 6-Part Case Study Body: Challenge, Approach & Research, SEO / Content Strategy, Execution, Outcome, Key Takeaways (Always in DOM for crawlability) */}
                 <div
                   className={
                     isExpanded
@@ -142,7 +142,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
                       <p className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
-                        1. Problem
+                        1. Challenge
                       </p>
                       <p className="text-sm text-[#55433c] leading-relaxed">
                         {cs.problem}
@@ -151,7 +151,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
 
                     <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
                       <p className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
-                        2. Research
+                        2. Approach &amp; Research
                       </p>
                       <p className="text-sm text-[#55433c] leading-relaxed">
                         {cs.research}
@@ -160,7 +160,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
 
                     <div className="bg-white p-5 rounded-xl border border-[#e4e2df]">
                       <p className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
-                        3. Strategy
+                        3. SEO / Content Strategy
                       </p>
                       <p className="text-sm text-[#55433c] leading-relaxed">
                         {cs.strategy}

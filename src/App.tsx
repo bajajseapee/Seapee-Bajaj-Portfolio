@@ -300,7 +300,7 @@ export default function App() {
           <PublishedBook />
 
           {/* Frequently Asked Questions Section */}
-          <FAQSection />
+          <FAQSection onNavigate={handleNavigate} />
 
           {/* Contact & Inquiries Section */}
           <Contact

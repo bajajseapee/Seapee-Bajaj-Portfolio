@@ -156,18 +156,30 @@ export const Awards: React.FC = () => {
                 Verified Certifications &amp; Academic Background
               </h3>
             </div>
-            <span className="text-xs text-[#546252] font-medium">
-              MBA in Systems · HubSpot · Google · Be10x
-            </span>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="text-xs text-[#546252] font-medium">
+                MBA in Systems · Coursera · HubSpot · Google · Be10x
+              </span>
+              <a
+                href="#seo-geo-expertise"
+                className="text-xs font-semibold text-[#994524] hover:underline inline-flex items-center gap-1"
+              >
+                <span>SEO &amp; GEO Practice</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
             {CERTIFICATIONS.map((cert) => {
               const certLogo = CERTIFICATION_LOGOS[cert.id];
+              const isRecentGeoCert = cert.id === 'intro-generative-engine-optimization';
               return (
                 <div
                   key={cert.id}
-                  className="flex items-start gap-4 p-4 sm:p-5 rounded-xl bg-[#fbf9f6] border border-[#e4e2df]"
+                  className={`flex items-start gap-4 p-4 sm:p-5 rounded-xl bg-[#fbf9f6] border border-[#e4e2df] ${
+                    isRecentGeoCert ? 'md:col-span-2' : ''
+                  }`}
                 >
                   {certLogo ? (
                     <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-white border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0 p-1.5">
@@ -183,10 +195,15 @@ export const Awards: React.FC = () => {
                       />
                     </div>
                   ) : (
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-white border border-[#e4e2df] text-[#994524] flex items-center justify-center shrink-0">
-                      <span className="material-symbols-outlined text-[26px]">
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-white border border-[#e4e2df] text-[#994524] flex flex-col items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-[24px]">
                         {cert.icon}
                       </span>
+                      {isRecentGeoCert && (
+                        <span className="text-[9px] font-bold uppercase tracking-wider text-[#546252] mt-0.5">
+                          Coursera
+                        </span>
+                      )}
                     </div>
                   )}
                   <div className="flex-1 min-w-0">

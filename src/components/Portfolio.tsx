@@ -89,6 +89,19 @@ export const Portfolio: React.FC<PortfolioProps> = ({
             <p className="text-base text-[#55433c] leading-relaxed">
               A selection of published work across market research, business, consumer insights, technology, and content marketing.
             </p>
+            <div className="pt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-semibold text-[#994524]">
+              <a
+                href="/seo-geo"
+                className="hover:underline inline-flex items-center gap-1"
+              >
+                <span>Explore SEO, GEO &amp; AEO Expertise</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+              <span className="text-[#d8d4ce]" aria-hidden="true">·</span>
+              <a href="#case-studies" className="hover:underline inline-flex items-center gap-1">
+                <span>Read Detailed Case Studies</span>
+              </a>
+            </div>
           </div>
 
           {/* Search Box */}

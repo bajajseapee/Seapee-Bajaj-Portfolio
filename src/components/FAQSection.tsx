@@ -1,7 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { FAQ_ITEMS } from '../data/portfolioData';
 
-export const FAQSection: React.FC = () => {
+interface FAQSectionProps {
+  onNavigate?: (path: string, sectionId?: string) => void;
+}
+
+export const FAQSection: React.FC<FAQSectionProps> = ({ onNavigate }) => {
   // All answers are collapsed by default until the visitor clicks a question
   const [openId, setOpenId] = useState<string | null>(null);
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -119,6 +123,25 @@ export const FAQSection: React.FC = () => {
                   <div className="overflow-hidden">
                     <div className="px-5 sm:px-7 pb-5 pt-0.5 text-sm sm:text-base text-[#55433c] leading-relaxed border-t border-transparent">
                       <p>{item.answer}</p>
+                      {item.relatedLink && (
+                        <div className="mt-2.5">
+                          <a
+                            href={item.relatedLink.path}
+                            onClick={(e) => {
+                              if (onNavigate) {
+                                e.preventDefault();
+                                onNavigate(item.relatedLink!.path, item.relatedLink!.sectionId);
+                              }
+                            }}
+                            className="inline-flex items-center gap-1 text-xs font-semibold text-[#994524] hover:underline"
+                          >
+                            <span>{item.relatedLink.label}</span>
+                            <span className="material-symbols-outlined text-[14px]">
+                              arrow_forward
+                            </span>
+                          </a>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
