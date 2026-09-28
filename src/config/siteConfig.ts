@@ -73,7 +73,8 @@ export const SITE_CONFIG = {
 
   // Image URLs
   HERO_IMAGE: "https://lh3.googleusercontent.com/aida-public/AB6AXuBLprfha2SI32O8n7gJDCRaEv8AvhIETinZCZp3HLXo8nr1KAK7XIPvBztAnnZAf-ywge1dUzKPYjH0rm-v5GSRJdSKkPUpADTNvDIvp7EMUfVtT8NP9JtCSO0F24a33bJ9cdJzX5HviwwKpKeUSAZpNO68DqqKgjO85-hwH4_Z-5ESP9Y6MdYZhCsuFj3rM-0Ne5xs2kgjy6SGL80daDr0_dbq1xLfV7MbxAnW4S4MWtuA8DSEFo_Ta0hM9MYUfCaXng",
-  AVATAR_IMAGE: "https://lh3.googleusercontent.com/aida/AEtjO1WlYTkKE5L8l8AzerpuqfsVtE2XV4H2FA_r_Anzs1inOR9omahXC2jDejmj2ePWaN5dXb1_0yXgw8kivdQR1a62h2QpeF0ZyIwOBh_3BU1m_MUR9Z8c1Z8hgbOFYKf4pCdQGv9-7LAlEPvZOQpA7c8uOOGXivWYE-IKeTxA90gv5rfmAQxtPtp4IfVFtcq-hULv2UadQ_NtU73Po-YVr7EljLN15wMp5b_fLxTsmC6r2E_ADHvG41oL5dYpkGekiOqqBK4OM4PAAQ",
+  AVATAR_IMAGE: "/seapee-bajaj-portrait.jpg",
+  AI_ASSISTANT_AVATAR: "/seapee-ai-assistant-avatar.jpg",
 
   // Default SEO & Meta
   SEO: {

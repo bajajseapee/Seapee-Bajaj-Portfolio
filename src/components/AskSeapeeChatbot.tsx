@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { SITE_CONFIG } from '../config/siteConfig';
+import aiAssistantIllustration from '../assets/images/seapee_ai_assistant_avatar_1790582552233.jpg';
 import {
   ASK_SEAPEE_SUGGESTED_QUESTIONS,
   TALK_TO_SEAPEE_OPENING_MESSAGE,
@@ -107,6 +108,63 @@ function AiChatSvg({ className = 'w-4 h-4' }: { className?: string }) {
       <path d="M12 7v4" />
       <path d="M10 9h4" />
     </svg>
+  );
+}
+
+function HeadsetAvatarFallbackSvg({ className = 'w-5 h-5' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M4 13a8 8 0 0 1 16 0" />
+      <rect x="2.5" y="12" width="3.5" height="6" rx="1.5" />
+      <rect x="18" y="12" width="3.5" height="6" rx="1.5" />
+      <path d="M19.5 18v1a2.5 2.5 0 0 1-2.5 2.5h-4" />
+      <circle cx="12" cy="21.5" r="1" fill="currentColor" />
+      <circle cx="12" cy="11.5" r="3.2" />
+      <path d="M7.8 18.2a5 5 0 0 1 8.4 0" />
+    </svg>
+  );
+}
+
+function AiAssistantAvatar({ sizeClass = 'w-11 h-11' }: { sizeClass?: string }) {
+  const [srcIndex, setSrcIndex] = useState(0);
+  const sources = [aiAssistantIllustration, SITE_CONFIG.AI_ASSISTANT_AVATAR];
+  const currentSrc = sources[srcIndex];
+
+  return (
+    <div
+      className={`relative ${sizeClass} rounded-full overflow-hidden ring-2 ring-[#994524]/25 shrink-0 bg-[#f5efe8] flex items-center justify-center shadow-2xs`}
+    >
+      {currentSrc ? (
+        <img
+          src={currentSrc}
+          alt="Seapee's AI Assistant — Illustrated Avatar"
+          width={44}
+          height={44}
+          loading="eager"
+          decoding="async"
+          referrerPolicy="no-referrer"
+          onError={() => setSrcIndex((prev) => prev + 1)}
+          className="w-full h-full rounded-full object-cover object-center block select-none"
+        />
+      ) : (
+        <div
+          className="w-full h-full rounded-full bg-gradient-to-br from-[#994524] to-[#7b2f0f] text-white flex items-center justify-center"
+          role="img"
+          aria-label="Seapee's AI Assistant Headset Icon"
+        >
+          <HeadsetAvatarFallbackSvg className="w-5 h-5" />
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -714,17 +772,8 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
           {/* Compact Top Header + Mode Switcher (Never blocks messages) */}
           <div className="bg-white px-3.5 py-3 border-b border-[#e4e2df] flex items-center justify-between gap-2 shrink-0">
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="relative w-9 h-9 rounded-full overflow-hidden ring-2 ring-[#994524]/25 shrink-0 bg-[#b85d3a]">
-                <img
-                  src={SITE_CONFIG.AVATAR_IMAGE}
-                  alt="Seapee's AI Assistant"
-                  width={36}
-                  height={36}
-                  loading="lazy"
-                  decoding="async"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover"
-                />
+              <div className="relative shrink-0">
+                <AiAssistantAvatar sizeClass="w-11 h-11" />
                 <span
                   className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-[#2e7d32] ring-2 ring-white"
                   title="Online"
