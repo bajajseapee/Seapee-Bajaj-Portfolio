@@ -10,13 +10,14 @@ import {
   type ConversationTurn,
 } from '../services/askSeapeeKnowledge';
 
+export type InteractionMode = 'chat' | 'voice';
+
 export type VoiceAgentState =
   | 'Ready'
   | 'Listening...'
   | 'Thinking...'
   | 'Speaking...'
-  | 'Muted'
-  | 'Session ended';
+  | 'Muted';
 
 interface ChatMessage {
   id: string;
@@ -32,7 +33,7 @@ interface AskSeapeeChatbotProps {
   onNavigate?: (path: string, sectionId?: string) => void;
 }
 
-const SESSION_STORAGE_KEY = 'seapee_ask_me_anything_ai_v3';
+const SESSION_STORAGE_KEY = 'seapee_ai_assistant_session_v4';
 
 const INITIAL_MESSAGES: ChatMessage[] = [
   {
@@ -43,13 +44,13 @@ const INITIAL_MESSAGES: ChatMessage[] = [
     sourceNote: 'Portfolio Verified',
     actions: [
       { label: 'View Portfolio', href: '/work', sectionId: 'selected-work' },
-      { label: 'Work With Seapee', href: '/contact', sectionId: 'contact' },
-      { label: 'Book a Conversation', href: SITE_CONFIG.TOPMATE_URL, external: true },
+      { label: 'Contact Seapee', href: '/contact', sectionId: 'contact' },
+      { label: 'Talk to Seapee', href: SITE_CONFIG.TOPMATE_URL, external: true },
     ],
   },
 ];
 
-function MicSvg({ className = 'w-5 h-5' }: { className?: string }) {
+function MicSvg({ className = 'w-4 h-4' }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -68,7 +69,7 @@ function MicSvg({ className = 'w-5 h-5' }: { className?: string }) {
   );
 }
 
-function MicOffSvg({ className = 'w-5 h-5' }: { className?: string }) {
+function MicOffSvg({ className = 'w-4 h-4' }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -86,43 +87,6 @@ function MicOffSvg({ className = 'w-5 h-5' }: { className?: string }) {
       <path d="M15 9.34V5a3 3 0 0 0-5.68-1.33" />
       <path d="M9 9v3a3 3 0 0 0 5.12 2.12" />
       <line x1="12" x2="12" y1="19" y2="22" />
-    </svg>
-  );
-}
-
-function VolumeSvg({ muted, className = 'w-4 h-4' }: { muted?: boolean; className?: string }) {
-  if (muted) {
-    return (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={className}
-        aria-hidden="true"
-      >
-        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-        <line x1="22" x2="16" y1="9" y2="15" />
-        <line x1="16" x2="22" y1="9" y2="15" />
-      </svg>
-    );
-  }
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-      <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-      <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
     </svg>
   );
 }
@@ -217,7 +181,7 @@ function renderFormattedLine(line: string): React.ReactNode {
 function FormattedMessageContent({ content }: { content: string }) {
   const lines = content.split('\n');
   return (
-    <div className="space-y-1.5 text-[13px] leading-relaxed">
+    <div className="space-y-1.5 text-[13.5px] leading-relaxed">
       {lines.map((rawLine, index) => {
         const line = rawLine.trim();
         if (!line) return null;
@@ -239,11 +203,12 @@ function FormattedMessageContent({ content }: { content: string }) {
 
 export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }) => {
   const [isOpen, setIsOpen] = useState(false);
+  // Default mode is strictly "chat" (Text Chat Mode)
+  const [mode, setMode] = useState<InteractionMode>('chat');
   const [agentState, setAgentState] = useState<VoiceAgentState>('Ready');
-  const [handsFreeActive, setHandsFreeActive] = useState(false);
-  const [voiceOutputEnabled, setVoiceOutputEnabled] = useState(true);
+  const [isSending, setIsSending] = useState(false);
   const [interimTranscript, setInterimTranscript] = useState('');
-  const [micPermissionNote, setMicPermissionNote] = useState<string | null>(null);
+  const [voiceErrorNote, setVoiceErrorNote] = useState<string | null>(null);
   const [showAllSuggestions, setShowAllSuggestions] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>(() => {
@@ -261,25 +226,23 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
     return INITIAL_MESSAGES;
   });
 
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
-  const handsFreeRef = useRef<boolean>(false);
+  const modeRef = useRef<InteractionMode>('chat');
   const agentStateRef = useRef<VoiceAgentState>('Ready');
-  const voiceOutputRef = useRef<boolean>(true);
-  const sendMessageRef = useRef<(text: string, fromVoice?: boolean) => Promise<void>>(async () => {});
+  const sendMessageRef = useRef<(text: string, originMode: InteractionMode) => Promise<void>>(
+    async () => {}
+  );
 
   useEffect(() => {
-    handsFreeRef.current = handsFreeActive;
-  }, [handsFreeActive]);
+    modeRef.current = mode;
+  }, [mode]);
 
   useEffect(() => {
     agentStateRef.current = agentState;
   }, [agentState]);
-
-  useEffect(() => {
-    voiceOutputRef.current = voiceOutputEnabled;
-  }, [voiceOutputEnabled]);
 
   useEffect(() => {
     try {
@@ -289,15 +252,31 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
     }
   }, [messages]);
 
+  // Keep latest message visible whenever messages, typing state, or mode changes
+  const scrollToLatestMessage = useCallback(() => {
+    requestAnimationFrame(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    });
+  }, []);
+
   useEffect(() => {
     if (isOpen) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      scrollToLatestMessage();
     }
-  }, [isOpen, messages, interimTranscript, agentState]);
+  }, [isOpen, messages, isSending, interimTranscript, mode, scrollToLatestMessage]);
 
-  // Preload synthesis voices on mount
+  // Focus text input when opening or switching to Chat Mode on desktop
   useEffect(() => {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    if (isOpen && mode === 'chat' && typeof window !== 'undefined' && window.innerWidth >= 640) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    }
+  }, [isOpen, mode]);
+
+  // Preload synthesis voices lazily when Voice Mode is used
+  useEffect(() => {
+    if (mode === 'voice' && typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.getVoices();
       const handleVoicesChanged = () => {
         window.speechSynthesis.getVoices();
@@ -307,7 +286,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
         window.speechSynthesis.removeEventListener?.('voiceschanged', handleVoicesChanged);
       };
     }
-  }, []);
+  }, [mode]);
 
   const stopSpeechOutput = useCallback(() => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -329,20 +308,21 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
   }, []);
 
   const startListening = useCallback(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || modeRef.current !== 'voice') return;
 
     stopSpeechOutput();
-    setMicPermissionNote(null);
+    setVoiceErrorNote(null);
 
     const SpeechRecognitionApi =
       (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
 
     if (!SpeechRecognitionApi) {
-      setMicPermissionNote(
-        'Voice recognition is not supported in this browser. You can still type or tap any question below, and I will speak the answer aloud.'
+      setVoiceErrorNote(
+        'Voice input is not supported in this browser. Switched to Chat Mode so you can type your questions.'
       );
+      setMode('chat');
+      modeRef.current = 'chat';
       setAgentState('Ready');
-      inputRef.current?.focus();
       return;
     }
 
@@ -386,17 +366,16 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
       recognition.onerror = (event: any) => {
         const errorCode = event?.error;
         if (errorCode === 'not-allowed' || errorCode === 'service-not-allowed') {
-          setHandsFreeActive(false);
-          handsFreeRef.current = false;
-          setMicPermissionNote(
-            'Microphone access was blocked. Please allow microphone permissions in your browser address bar, or ask your question using text below.'
+          setVoiceErrorNote(
+            'Microphone access is blocked or unavailable. You can allow mic access in your browser or switch to Chat Mode.'
           );
           setAgentState('Muted');
         } else if (errorCode === 'no-speech') {
-          if (handsFreeRef.current && agentStateRef.current !== 'Muted' && agentStateRef.current !== 'Session ended') {
+          if (modeRef.current === 'voice' && agentStateRef.current !== 'Muted') {
             setAgentState('Ready');
           }
         } else if (errorCode !== 'aborted') {
+          setVoiceErrorNote('Voice recognition encountered an issue. You can tap the mic to retry or use Chat Mode.');
           setAgentState('Ready');
         }
       };
@@ -404,13 +383,13 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
       recognition.onend = () => {
         const spokenQuestion = finalCaptured.trim();
         setInterimTranscript('');
-        if (spokenQuestion) {
-          sendMessageRef.current(spokenQuestion, true);
+        if (spokenQuestion && modeRef.current === 'voice') {
+          sendMessageRef.current(spokenQuestion, 'voice');
         } else if (
+          modeRef.current === 'voice' &&
           agentStateRef.current !== 'Thinking...' &&
           agentStateRef.current !== 'Speaking...' &&
-          agentStateRef.current !== 'Muted' &&
-          agentStateRef.current !== 'Session ended'
+          agentStateRef.current !== 'Muted'
         ) {
           setAgentState('Ready');
         }
@@ -419,25 +398,24 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
       recognitionRef.current = recognition;
       recognition.start();
     } catch {
-      setMicPermissionNote(
-        'Could not start microphone capture. You can type or tap any question below.'
+      setVoiceErrorNote(
+        'Voice input could not start on this device. Please use Chat Mode to type your questions.'
       );
       setAgentState('Ready');
     }
   }, [stopRecognition, stopSpeechOutput]);
 
-  const speakText = useCallback(
+  const speakTextInVoiceMode = useCallback(
     (textToSpeak: string, autoListenAfter: boolean) => {
-      if (
-        !voiceOutputRef.current ||
-        typeof window === 'undefined' ||
-        !('speechSynthesis' in window)
-      ) {
-        if (autoListenAfter && handsFreeRef.current && agentStateRef.current !== 'Muted') {
-          startListening();
-        } else if (agentStateRef.current !== 'Muted' && agentStateRef.current !== 'Session ended') {
-          setAgentState('Ready');
-        }
+      // NEVER play audio if user is in Chat Mode
+      if (modeRef.current !== 'voice') {
+        setAgentState('Ready');
+        return;
+      }
+
+      if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+        setVoiceErrorNote('Audio playback is not available in this browser. Answers are shown in the chat above.');
+        setAgentState('Ready');
         return;
       }
 
@@ -460,32 +438,31 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
       utterance.pitch = 1.03;
 
       utterance.onstart = () => {
-        setAgentState('Speaking...');
+        if (modeRef.current === 'voice') {
+          setAgentState('Speaking...');
+        } else {
+          window.speechSynthesis.cancel();
+        }
       };
 
       utterance.onend = () => {
         if (
           autoListenAfter &&
-          handsFreeRef.current &&
-          agentStateRef.current !== 'Muted' &&
-          agentStateRef.current !== 'Session ended'
+          modeRef.current === 'voice' &&
+          agentStateRef.current !== 'Muted'
         ) {
           setTimeout(() => {
-            if (
-              handsFreeRef.current &&
-              agentStateRef.current !== 'Muted' &&
-              agentStateRef.current !== 'Session ended'
-            ) {
+            if (modeRef.current === 'voice' && agentStateRef.current !== 'Muted') {
               startListening();
             }
-          }, 220);
-        } else if (agentStateRef.current !== 'Muted' && agentStateRef.current !== 'Session ended') {
+          }, 240);
+        } else if (agentStateRef.current !== 'Muted') {
           setAgentState('Ready');
         }
       };
 
       utterance.onerror = () => {
-        if (agentStateRef.current !== 'Muted' && agentStateRef.current !== 'Session ended') {
+        if (agentStateRef.current !== 'Muted') {
           setAgentState('Ready');
         }
       };
@@ -497,17 +474,13 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
   );
 
   const sendMessage = useCallback(
-    async (questionText: string, fromVoice = false) => {
+    async (questionText: string, originMode: InteractionMode) => {
       const trimmed = questionText.trim();
-      if (!trimmed || agentStateRef.current === 'Thinking...') return;
+      if (!trimmed || isSending) return;
 
+      // Always stop any active recognition or speech when a new query is submitted
       stopRecognition();
       stopSpeechOutput();
-
-      if (fromVoice) {
-        setHandsFreeActive(true);
-        handsFreeRef.current = true;
-      }
 
       const userMsg: ChatMessage = {
         id: `user-${Date.now()}`,
@@ -518,7 +491,10 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
       const updatedHistory = [...messages, userMsg];
       setMessages(updatedHistory);
       setInputValue('');
-      setAgentState('Thinking...');
+      setIsSending(true);
+      if (originMode === 'voice') {
+        setAgentState('Thinking...');
+      }
 
       try {
         const historyPayload: ConversationTurn[] = updatedHistory.slice(-8).map((m) => ({
@@ -545,11 +521,11 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
             }
           }
         } catch {
-          // Use local grounded portfolio engine if network/serverless route is unavailable
+          // Fallback to deterministic local grounded engine
         }
 
         if (!replyData) {
-          await new Promise((resolve) => setTimeout(resolve, 220));
+          await new Promise((resolve) => setTimeout(resolve, 200));
           replyData = buildGroundedFallbackReply(trimmed, historyPayload.slice(0, -1));
         }
 
@@ -567,17 +543,21 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
 
         setMessages((prev) => [...prev, assistantMsg]);
 
-        // Speak response aloud if voice output is enabled
-        if (voiceOutputRef.current && agentStateRef.current !== 'Session ended') {
-          speakText(spoken, fromVoice || handsFreeRef.current);
+        // STRICT MODE SEPARATION:
+        // Only play audio if the message was triggered in Voice Mode AND the user is still in Voice Mode.
+        // In Chat Mode, NEVER play audio or activate microphone.
+        if (originMode === 'voice' && modeRef.current === 'voice') {
+          speakTextInVoiceMode(spoken, true);
         } else {
-          setAgentState(agentStateRef.current === 'Muted' ? 'Muted' : 'Ready');
+          setAgentState('Ready');
         }
       } catch {
         setAgentState('Ready');
+      } finally {
+        setIsSending(false);
       }
     },
-    [messages, speakText, stopRecognition, stopSpeechOutput]
+    [isSending, messages, speakTextInVoiceMode, stopRecognition, stopSpeechOutput]
   );
 
   useEffect(() => {
@@ -592,76 +572,74 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
     };
   }, [stopRecognition, stopSpeechOutput]);
 
-  const handlePrimaryOrbAction = () => {
-    if (agentState === 'Session ended') {
-      setAgentState('Ready');
-      setHandsFreeActive(true);
-      handsFreeRef.current = true;
-      startListening();
+  // Explicitly switch to Chat Mode (Default): immediately stop all mic & audio
+  const switchToChatMode = useCallback(() => {
+    stopRecognition();
+    stopSpeechOutput();
+    setMode('chat');
+    modeRef.current = 'chat';
+    setAgentState('Ready');
+    setVoiceErrorNote(null);
+  }, [stopRecognition, stopSpeechOutput]);
+
+  // Explicitly switch to Voice Mode: activate dedicated bottom voice dock and start listening
+  const switchToVoiceMode = useCallback(() => {
+    setVoiceErrorNote(null);
+    setMode('voice');
+    modeRef.current = 'voice';
+    setAgentState('Ready');
+    setTimeout(() => {
+      if (modeRef.current === 'voice') {
+        startListening();
+      }
+    }, 80);
+  }, [startListening]);
+
+  const handleVoiceMicButton = () => {
+    if (mode !== 'voice') {
+      switchToVoiceMode();
       return;
     }
 
-    // If currently speaking, interrupt immediately and listen (barge-in)
+    // In Voice Mode: if AI is currently speaking, interrupt immediately and listen
     if (agentState === 'Speaking...') {
       stopSpeechOutput();
-      setHandsFreeActive(true);
-      handsFreeRef.current = true;
       startListening();
       return;
     }
 
-    // If currently listening, stop listening
+    // If currently listening, pause/stop listening
     if (agentState === 'Listening...') {
       stopRecognition();
       setAgentState('Ready');
       return;
     }
 
-    // Otherwise (Ready or Muted), activate hands-free voice conversation and start listening
-    setHandsFreeActive(true);
-    handsFreeRef.current = true;
+    // Otherwise (Ready or Muted), start listening
     startListening();
   };
 
-  const handleToggleMuteMic = () => {
+  const handleToggleMuteInVoiceMode = () => {
     if (agentState === 'Muted') {
-      setHandsFreeActive(true);
-      handsFreeRef.current = true;
       startListening();
     } else {
       stopRecognition();
-      setHandsFreeActive(false);
-      handsFreeRef.current = false;
-      if (agentState === 'Listening...') {
-        setAgentState('Muted');
-      } else {
-        setAgentState('Muted');
-      }
+      stopSpeechOutput();
+      setAgentState('Muted');
     }
   };
 
-  const handleEndConversation = () => {
-    stopRecognition();
-    stopSpeechOutput();
-    setHandsFreeActive(false);
-    handsFreeRef.current = false;
-    setAgentState('Session ended');
-  };
-
-  const handleStartNewConversation = () => {
+  const handleClearConversation = () => {
     stopRecognition();
     stopSpeechOutput();
     setMessages(INITIAL_MESSAGES);
     setShowAllSuggestions(false);
-    setMicPermissionNote(null);
+    setVoiceErrorNote(null);
     setAgentState('Ready');
     try {
       sessionStorage.removeItem(SESSION_STORAGE_KEY);
     } catch {
       // Ignore storage errors
-    }
-    if (voiceOutputEnabled) {
-      speakText(TALK_TO_SEAPEE_OPENING_MESSAGE, true);
     }
   };
 
@@ -682,25 +660,42 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
       }
     }
     if (window.innerWidth < 640) {
+      stopRecognition();
+      stopSpeechOutput();
       setIsOpen(false);
     }
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleChatFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    sendMessage(inputValue, false);
+    if (!inputValue.trim() || isSending) return;
+    // Ensure typing ALWAYS stays in Chat Mode with zero audio or mic activation
+    if (mode !== 'chat') {
+      switchToChatMode();
+    }
+    sendMessage(inputValue, 'chat');
   };
 
-  const handleToggleOpen = () => {
+  const handleSuggestionClick = (question: string) => {
+    // Clicking a chip uses the currently selected mode (text-only in Chat Mode; spoken in Voice Mode)
+    sendMessage(question, mode);
+  };
+
+  const handleTogglePanelOpen = () => {
     if (isOpen) {
       stopRecognition();
       stopSpeechOutput();
-      setHandsFreeActive(false);
-      handsFreeRef.current = false;
+      setMode('chat');
+      modeRef.current = 'chat';
+      setAgentState('Ready');
       setIsOpen(false);
     } else {
-      setIsOpen(true);
+      // Always open in clean Default Chat Mode
+      setMode('chat');
+      modeRef.current = 'chat';
       setAgentState('Ready');
+      setVoiceErrorNote(null);
+      setIsOpen(true);
     }
   };
 
@@ -708,282 +703,110 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
     ? ASK_SEAPEE_SUGGESTED_QUESTIONS
     : ASK_SEAPEE_SUGGESTED_QUESTIONS.slice(0, 5);
 
-  const stateBadgeStyle: Record<VoiceAgentState, string> = {
-    Ready: 'bg-[#efeeeb] text-[#546252] border-[#dbc1b8]',
-    'Listening...': 'bg-[#ffdbcf] text-[#994524] border-[#994524]/40',
-    'Thinking...': 'bg-[#fef3c7] text-[#92400e] border-[#f59e0b]/40',
-    'Speaking...': 'bg-[#dcfce7] text-[#166534] border-[#22c55e]/40',
-    Muted: 'bg-[#f3f4f6] text-[#4b5563] border-[#d1d5db]',
-    'Session ended': 'bg-[#f5f3f0] text-[#55433c] border-[#dbc1b8]',
-  };
-
   return (
     <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end">
-      {/* Voice Conversation Panel */}
+      {/* Assistant Window */}
       {isOpen && (
         <section
           aria-label="Ask Me Anything — Seapee's AI Assistant"
-          className="mb-3 w-[calc(100vw-2rem)] sm:w-[430px] max-h-[min(700px,calc(100vh-6.5rem))] bg-[#fbf9f6] border border-[#dbc1b8] rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-3 duration-200"
+          className="mb-3 w-[calc(100vw-1.5rem)] sm:w-[420px] h-[min(600px,calc(100dvh-6.5rem))] bg-[#fbf9f6] border border-[#dbc1b8] rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-3 duration-200"
         >
-          {/* Top Header */}
-          <div className="bg-white px-4 py-3.5 border-b border-[#e4e2df] flex items-start justify-between gap-3 shrink-0">
-            <div className="flex items-start gap-3 min-w-0">
-              <div className="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-[#994524]/25 shrink-0 bg-[#b85d3a] mt-0.5">
+          {/* Compact Top Header + Mode Switcher (Never blocks messages) */}
+          <div className="bg-white px-3.5 py-3 border-b border-[#e4e2df] flex items-center justify-between gap-2 shrink-0">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="relative w-9 h-9 rounded-full overflow-hidden ring-2 ring-[#994524]/25 shrink-0 bg-[#b85d3a]">
                 <img
                   src={SITE_CONFIG.AVATAR_IMAGE}
                   alt="Seapee's AI Assistant"
-                  width={40}
-                  height={40}
+                  width={36}
+                  height={36}
                   loading="lazy"
                   decoding="async"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover"
                 />
                 <span
-                  className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full ring-2 ring-white ${
-                    agentState === 'Session ended' ? 'bg-[#88726b]' : 'bg-[#2e7d32]'
-                  }`}
-                  title={`Status: ${agentState}`}
+                  className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-[#2e7d32] ring-2 ring-white"
+                  title="Online"
                 />
               </div>
               <div className="min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="font-serif text-sm sm:text-base text-[#1b1c1a] font-bold tracking-wider uppercase">
-                    ASK ME ANYTHING
+                <div className="flex items-center gap-1.5">
+                  <h3 className="font-serif text-sm font-bold tracking-wide text-[#1b1c1a] truncate">
+                    Seapee&apos;s AI Assistant
                   </h3>
-                  <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-[#ffdbcf]/70 text-[#994524]">
-                    AI Assistant
-                  </span>
-                  <span
-                    className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${stateBadgeStyle[agentState]}`}
-                  >
-                    {agentState}
-                  </span>
                 </div>
-                <p className="text-[11.5px] text-[#55433c] leading-snug mt-1">
-                  Hi! I&apos;m Seapee&apos;s AI assistant. Ask me anything about her work, experience, skills, projects, or how you can work with her.
+                <p className="text-[11px] text-[#546252] truncate">
+                  {mode === 'chat' ? 'Chat Mode • Text responses' : `Voice Mode • ${agentState}`}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-1 shrink-0">
+            {/* Clear Segmented Mode Switcher: Chat | Voice */}
+            <div className="flex items-center gap-1.5 shrink-0">
+              <div
+                role="tablist"
+                aria-label="Assistant interaction mode"
+                className="inline-flex items-center bg-[#f5f3f0] p-0.5 rounded-xl border border-[#e4e2df]"
+              >
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={mode === 'chat'}
+                  onClick={switchToChatMode}
+                  className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all cursor-pointer ${
+                    mode === 'chat'
+                      ? 'bg-[#1b1c1a] text-white shadow-2xs'
+                      : 'text-[#55433c] hover:text-[#1b1c1a]'
+                  }`}
+                >
+                  Chat
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={mode === 'voice'}
+                  onClick={switchToVoiceMode}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all cursor-pointer ${
+                    mode === 'voice'
+                      ? 'bg-[#994524] text-white shadow-2xs'
+                      : 'text-[#55433c] hover:text-[#1b1c1a]'
+                  }`}
+                >
+                  <MicSvg className="w-3 h-3" />
+                  <span>Voice</span>
+                </button>
+              </div>
+
+              {messages.length > 1 && (
+                <button
+                  type="button"
+                  onClick={handleClearConversation}
+                  className="p-1.5 rounded-lg text-[#55433c] hover:text-[#1b1c1a] hover:bg-[#f5f3f0] transition-colors cursor-pointer text-[11px] font-medium"
+                  title="Reset conversation"
+                  aria-label="Reset conversation"
+                >
+                  Reset
+                </button>
+              )}
+
               <button
                 type="button"
-                onClick={() => {
-                  const next = !voiceOutputEnabled;
-                  setVoiceOutputEnabled(next);
-                  voiceOutputRef.current = next;
-                  if (!next) {
-                    stopSpeechOutput();
-                    if (agentState === 'Speaking...') {
-                      setAgentState('Ready');
-                    }
-                  }
-                }}
-                className="p-1.5 rounded-lg text-[#55433c] hover:text-[#1b1c1a] hover:bg-[#f5f3f0] transition-colors cursor-pointer"
-                title={voiceOutputEnabled ? 'Mute AI voice output' : 'Unmute AI voice output'}
-                aria-label={voiceOutputEnabled ? 'Mute AI voice output' : 'Unmute AI voice output'}
+                onClick={handleTogglePanelOpen}
+                className="p-1 rounded-lg text-[#55433c] hover:text-[#1b1c1a] hover:bg-[#f5f3f0] transition-colors cursor-pointer"
+                title="Close assistant"
+                aria-label="Close assistant"
               >
-                <VolumeSvg muted={!voiceOutputEnabled} className="w-4 h-4" />
-              </button>
-              <button
-                type="button"
-                onClick={handleToggleOpen}
-                className="p-1.5 rounded-lg text-[#55433c] hover:text-[#1b1c1a] hover:bg-[#f5f3f0] transition-colors cursor-pointer"
-                title="Minimize Ask Me Anything"
-                aria-label="Close Ask Me Anything"
-              >
-                <span className="material-symbols-outlined text-[20px]">close</span>
+                <span className="material-symbols-outlined text-[19px]">close</span>
               </button>
             </div>
           </div>
 
-          {/* Interactive Voice Orb Stage */}
-          <div className="bg-gradient-to-b from-white via-[#fbf9f6] to-[#f5f3f0] px-4 py-4 border-b border-[#e4e2df] flex flex-col items-center text-center shrink-0">
-            {agentState === 'Session ended' ? (
-              <div className="py-2 space-y-3 w-full">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#efeeeb] text-[#55433c] text-xs font-medium">
-                  <span>Conversation ended</span>
-                </div>
-                <p className="text-xs sm:text-sm text-[#1b1c1a] font-medium max-w-xs mx-auto">
-                  Thanks for chatting with Seapee&apos;s AI. Want to explore her work or get in touch?
-                </p>
-                <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
-                  <a
-                    href="/work"
-                    onClick={(e) =>
-                      handleActionClick(e, {
-                        label: 'View Portfolio',
-                        href: '/work',
-                        sectionId: 'selected-work',
-                      })
-                    }
-                    className="px-3 py-1.5 rounded-xl bg-white hover:bg-[#efeeeb] text-[#1b1c1a] border border-[#dbc1b8] text-xs font-semibold transition-colors"
-                  >
-                    View Portfolio
-                  </a>
-                  <a
-                    href="/contact"
-                    onClick={(e) =>
-                      handleActionClick(e, {
-                        label: 'Work With Seapee',
-                        href: '/contact',
-                        sectionId: 'contact',
-                      })
-                    }
-                    className="px-3 py-1.5 rounded-xl bg-[#994524] hover:bg-[#7b2f0f] text-white text-xs font-semibold transition-colors"
-                  >
-                    Work With Seapee
-                  </a>
-                  <a
-                    href={SITE_CONFIG.TOPMATE_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded-xl bg-white hover:bg-[#efeeeb] text-[#994524] border border-[#dbc1b8] text-xs font-semibold transition-colors"
-                  >
-                    Book a Conversation ↗
-                  </a>
-                </div>
-                <div className="pt-1">
-                  <button
-                    type="button"
-                    onClick={handleStartNewConversation}
-                    className="text-xs font-semibold text-[#546252] hover:text-[#1b1c1a] underline cursor-pointer"
-                  >
-                    Start a new AI conversation
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <>
-                {/* Central Animated Voice Orb */}
-                <div className="relative flex items-center justify-center my-1">
-                  {/* Outer pulsing aura when Listening or Speaking */}
-                  {agentState === 'Listening...' && (
-                    <>
-                      <span className="absolute w-24 h-24 rounded-full bg-[#994524]/20 animate-ping" />
-                      <span className="absolute w-20 h-20 rounded-full bg-[#994524]/30 animate-pulse" />
-                    </>
-                  )}
-                  {agentState === 'Speaking...' && (
-                    <>
-                      <span className="absolute w-24 h-24 rounded-full bg-[#546252]/20 animate-pulse" />
-                      <span className="absolute w-20 h-20 rounded-full bg-[#994524]/25 animate-ping" />
-                    </>
-                  )}
-
-                  <button
-                    type="button"
-                    onClick={handlePrimaryOrbAction}
-                    aria-label={
-                      agentState === 'Listening...'
-                        ? 'Stop listening'
-                        : agentState === 'Speaking...'
-                        ? 'Interrupt AI and speak now'
-                        : 'Tap to speak with Seapee AI'
-                    }
-                    className={`relative z-10 w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg cursor-pointer ${
-                      agentState === 'Listening...'
-                        ? 'bg-[#994524] text-white scale-105 ring-4 ring-[#ffdbcf]'
-                        : agentState === 'Speaking...'
-                        ? 'bg-[#546252] text-white scale-105 ring-4 ring-[#dcfce7]'
-                        : agentState === 'Thinking...'
-                        ? 'bg-[#1b1c1a] text-white opacity-90'
-                        : agentState === 'Muted'
-                        ? 'bg-[#e4e2df] text-[#55433c]'
-                        : 'bg-[#1b1c1a] hover:bg-[#994524] text-white hover:scale-105'
-                    }`}
-                  >
-                    {agentState === 'Muted' ? (
-                      <MicOffSvg className="w-6 h-6" />
-                    ) : agentState === 'Speaking...' ? (
-                      /* Animated Equalizer Bars while AI is speaking */
-                      <div className="flex items-end gap-1 h-5" aria-hidden="true">
-                        <span className="w-1 bg-white rounded-full h-3 animate-bounce" />
-                        <span className="w-1 bg-white rounded-full h-5 animate-pulse" />
-                        <span className="w-1 bg-white rounded-full h-4 animate-bounce" />
-                        <span className="w-1 bg-white rounded-full h-2.5 animate-pulse" />
-                      </div>
-                    ) : agentState === 'Thinking...' ? (
-                      <span className="w-5 h-5 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                    ) : (
-                      <MicSvg className="w-6 h-6" />
-                    )}
-                  </button>
-                </div>
-
-                {/* Live Voice Status & Action Controls */}
-                <p className="text-xs font-medium text-[#1b1c1a] mt-2">
-                  {agentState === 'Listening...'
-                    ? interimTranscript
-                      ? `"${interimTranscript}"`
-                      : 'Listening... speak naturally now'
-                    : agentState === 'Speaking...'
-                    ? 'Seapee’s AI is speaking — tap orb to interrupt & ask follow-up'
-                    : agentState === 'Thinking...'
-                    ? 'Thinking...'
-                    : agentState === 'Muted'
-                    ? 'Microphone muted — tap orb or Unmute to speak'
-                    : 'Tap the microphone orb to talk, or pick a topic below'}
-                </p>
-
-                {micPermissionNote && (
-                  <p className="text-[11px] text-[#994524] bg-[#ffdbcf]/40 border border-[#dbc1b8] rounded-lg px-2.5 py-1.5 mt-2 max-w-xs">
-                    {micPermissionNote}
-                  </p>
-                )}
-
-                {/* Voice Control Bar: Hear Intro / Mute / Interrupt / End Call */}
-                <div className="flex flex-wrap items-center justify-center gap-2 mt-2.5">
-                  {agentState === 'Speaking...' ? (
-                    <button
-                      type="button"
-                      onClick={handlePrimaryOrbAction}
-                      className="px-2.5 py-1 rounded-full bg-[#ffdbcf] hover:bg-[#994524] text-[#994524] hover:text-white text-[11px] font-semibold transition-colors cursor-pointer"
-                    >
-                      Interrupt &amp; Speak
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => speakText(TALK_TO_SEAPEE_OPENING_MESSAGE, true)}
-                      className="px-2.5 py-1 rounded-full bg-white hover:bg-[#efeeeb] text-[#55433c] border border-[#e4e2df] text-[11px] font-medium transition-colors cursor-pointer"
-                    >
-                      Play Voice Greeting
-                    </button>
-                  )}
-
-                  <button
-                    type="button"
-                    onClick={handleToggleMuteMic}
-                    className={`px-2.5 py-1 rounded-full text-[11px] font-medium border transition-colors cursor-pointer ${
-                      agentState === 'Muted'
-                        ? 'bg-[#994524] text-white border-[#994524]'
-                        : 'bg-white hover:bg-[#efeeeb] text-[#55433c] border-[#e4e2df]'
-                    }`}
-                  >
-                    {agentState === 'Muted' ? 'Unmute Mic' : 'Mute Mic'}
-                  </button>
-
-                  {(handsFreeActive ||
-                    agentState === 'Listening...' ||
-                    agentState === 'Speaking...' ||
-                    messages.length > 1) && (
-                    <button
-                      type="button"
-                      onClick={handleEndConversation}
-                      className="px-2.5 py-1 rounded-full bg-white hover:bg-[#fee2e2] text-[#991b1b] border border-[#fecaca] text-[11px] font-medium transition-colors cursor-pointer"
-                    >
-                      End conversation
-                    </button>
-                  )}
-                </div>
-              </>
-            )}
-          </div>
-
-          {/* Live Transcript & Suggested Questions Scroll Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3.5 custom-scrollbar">
+          {/* Unobstructed Scrollable Conversation Area (Full Height) */}
+          <div
+            ref={messagesContainerRef}
+            className="flex-1 overflow-y-auto px-4 py-3.5 space-y-3.5 custom-scrollbar"
+          >
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -992,17 +815,17 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                 }`}
               >
                 <span className="text-[10px] uppercase tracking-wider font-semibold text-[#546252] mb-1 px-1">
-                  {msg.role === 'user' ? 'You' : "Seapee's AI Assistant"}
+                  {msg.role === 'user' ? 'You' : "Seapee's AI"}
                 </span>
                 <div
-                  className={`max-w-[92%] rounded-2xl px-3.5 py-2.5 ${
+                  className={`max-w-[90%] rounded-2xl px-3.5 py-2.5 ${
                     msg.role === 'user'
                       ? 'bg-[#994524] text-white rounded-br-xs shadow-2xs'
                       : 'bg-white text-[#55433c] border border-[#e4e2df] rounded-bl-xs shadow-2xs'
                   }`}
                 >
                   {msg.role === 'user' ? (
-                    <p className="text-[13px] leading-relaxed">{msg.content}</p>
+                    <p className="text-[13.5px] leading-relaxed">{msg.content}</p>
                   ) : (
                     <FormattedMessageContent content={msg.content} />
                   )}
@@ -1038,28 +861,15 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                   )}
                 </div>
 
-                {/* Source Badge + Replay Voice Button */}
-                {msg.role === 'assistant' && (
-                  <div className="mt-1 px-1 flex items-center gap-3 text-[10px] text-[#546252]">
-                    {msg.sourceNote && (
-                      <span className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-[12px] text-[#994524]">
-                          verified
-                        </span>
-                        <span>{msg.sourceNote}</span>
+                {/* Source Badge */}
+                {msg.role === 'assistant' && msg.sourceNote && (
+                  <div className="mt-1 px-1 flex items-center gap-2 text-[10px] text-[#546252]">
+                    <span className="flex items-center gap-1">
+                      <span className="material-symbols-outlined text-[12px] text-[#994524]">
+                        verified
                       </span>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setVoiceOutputEnabled(true);
-                        voiceOutputRef.current = true;
-                        speakText(msg.spokenText || msg.content, false);
-                      }}
-                      className="text-[#994524] hover:underline font-medium cursor-pointer"
-                    >
-                      Speak aloud
-                    </button>
+                      <span>{msg.sourceNote}</span>
+                    </span>
                   </div>
                 )}
 
@@ -1068,13 +878,13 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                   msg.followUpSuggestions &&
                   msg.followUpSuggestions.length > 0 &&
                   msg.id === messages[messages.length - 1]?.id &&
-                  agentState !== 'Session ended' && (
+                  !isSending && (
                     <div className="mt-2 flex flex-wrap gap-1.5">
                       {msg.followUpSuggestions.map((followUp) => (
                         <button
                           key={followUp}
                           type="button"
-                          onClick={() => sendMessage(followUp, false)}
+                          onClick={() => handleSuggestionClick(followUp)}
                           className="text-left text-xs px-2.5 py-1 rounded-xl bg-white hover:bg-[#efeeeb] text-[#1b1c1a] border border-[#e4e2df] hover:border-[#dbc1b8] transition-colors cursor-pointer"
                         >
                           {followUp}
@@ -1085,12 +895,22 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
               </div>
             ))}
 
+            {/* Typing / Thinking Indicator inside Chat */}
+            {isSending && (
+              <div className="flex items-start">
+                <div className="bg-white border border-[#e4e2df] rounded-2xl rounded-bl-xs px-3.5 py-2 text-xs text-[#546252] flex items-center gap-2 shadow-2xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#994524] animate-pulse" />
+                  <span>Seapee&apos;s AI is writing...</span>
+                </div>
+              </div>
+            )}
+
             {/* Suggested Starter Questions */}
-            {messages.length <= 2 && agentState !== 'Session ended' && (
+            {messages.length <= 2 && !isSending && (
               <div className="pt-2 border-t border-[#e4e2df]/80">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[10.5px] uppercase tracking-wider font-semibold text-[#546252]">
-                    Suggested Questions (Speak or Tap)
+                    Suggested Questions
                   </span>
                   <button
                     type="button"
@@ -1105,7 +925,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                     <button
                       key={question}
                       type="button"
-                      onClick={() => sendMessage(question, false)}
+                      onClick={() => handleSuggestionClick(question)}
                       className="text-left text-xs px-2.5 py-1.5 rounded-xl bg-white hover:bg-[#efeeeb] text-[#1b1c1a] border border-[#e4e2df] hover:border-[#994524]/50 transition-all cursor-pointer shadow-2xs"
                     >
                       {question}
@@ -1118,52 +938,170 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Text Input Fallback Bar */}
-          <form
-            onSubmit={handleFormSubmit}
-            className="p-2.5 bg-white border-t border-[#e4e2df] flex items-center gap-2 shrink-0"
-          >
-            <button
-              type="button"
-              onClick={handlePrimaryOrbAction}
-              aria-label={agentState === 'Listening...' ? 'Stop voice input' : 'Start voice input'}
-              title={agentState === 'Listening...' ? 'Stop voice input' : 'Speak your question'}
-              className={`p-2 rounded-xl border transition-colors cursor-pointer shrink-0 ${
-                agentState === 'Listening...'
-                  ? 'bg-[#994524] text-white border-[#994524]'
-                  : 'bg-[#fbf9f6] hover:bg-[#efeeeb] text-[#994524] border-[#dbc1b8]'
-              }`}
+          {/* Non-blocking Voice Error Banner (if microphone or speech recognition fails) */}
+          {voiceErrorNote && (
+            <div className="px-3.5 py-2 bg-[#ffdbcf]/50 border-t border-[#dbc1b8] flex items-center justify-between gap-2 text-[11px] text-[#7b2f0f] shrink-0">
+              <span>{voiceErrorNote}</span>
+              <button
+                type="button"
+                onClick={switchToChatMode}
+                className="px-2 py-0.5 rounded bg-white text-[#1b1c1a] font-semibold border border-[#dbc1b8] shrink-0 cursor-pointer"
+              >
+                Use Chat
+              </button>
+            </div>
+          )}
+
+          {/* BOTTOM INTERACTION BAR: Strictly separated by mode */}
+          {mode === 'chat' ? (
+            /* 1. CHAT MODE (DEFAULT): Clean Text Input Bar + Optional Button to Enter Voice Mode */
+            <form
+              onSubmit={handleChatFormSubmit}
+              className="p-3 bg-white border-t border-[#e4e2df] flex items-center gap-2 shrink-0"
             >
-              <MicSvg className="w-4 h-4" />
-            </button>
-            <input
-              ref={inputRef}
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Prefer typing? Ask here."
-              aria-label="Prefer typing? Ask here."
-              className="flex-1 px-3 py-2 text-xs sm:text-[13px] bg-[#fbf9f6] border border-[#e4e2df] rounded-xl focus:outline-none focus:border-[#994524] text-[#1b1c1a] placeholder:text-[#88726b]"
-            />
-            <button
-              type="submit"
-              disabled={!inputValue.trim() || agentState === 'Thinking...'}
-              aria-label="Send question"
-              className="px-3 py-2 rounded-xl bg-[#994524] hover:bg-[#7b2f0f] disabled:opacity-45 text-white text-xs font-semibold inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
-            >
-              <span className="material-symbols-outlined text-[17px]">send</span>
-            </button>
-          </form>
+              <input
+                ref={inputRef}
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder="Type a question for Seapee's AI..."
+                aria-label="Type a question for Seapee's AI"
+                className="flex-1 px-3.5 py-2.5 text-xs sm:text-[13.5px] bg-[#fbf9f6] border border-[#e4e2df] rounded-xl focus:outline-none focus:border-[#994524] text-[#1b1c1a] placeholder:text-[#88726b]"
+              />
+              <button
+                type="submit"
+                disabled={!inputValue.trim() || isSending}
+                aria-label="Send message"
+                className="px-3.5 py-2.5 rounded-xl bg-[#994524] hover:bg-[#7b2f0f] disabled:opacity-45 text-white text-xs font-semibold inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
+              >
+                <span className="material-symbols-outlined text-[18px]">send</span>
+              </button>
+              <button
+                type="button"
+                onClick={switchToVoiceMode}
+                title="Switch to Voice Mode (Talk to Seapee's AI)"
+                aria-label="Switch to Voice Mode"
+                className="p-2.5 rounded-xl bg-[#f5f3f0] hover:bg-[#ffdbcf]/60 text-[#55433c] hover:text-[#994524] border border-[#e4e2df] transition-colors cursor-pointer shrink-0"
+              >
+                <MicSvg className="w-4 h-4" />
+              </button>
+            </form>
+          ) : (
+            /* 2. VOICE MODE: Compact Bottom Voice Dock (Never covers the chat transcript above) */
+            <div className="p-3 bg-white border-t border-[#dbc1b8] flex flex-col gap-2 shrink-0">
+              <div className="flex items-center justify-between gap-3">
+                {/* Left: Compact Animated Mic Button + Live Status */}
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="relative flex items-center justify-center shrink-0">
+                    {agentState === 'Listening...' && (
+                      <span className="absolute w-12 h-12 rounded-full bg-[#994524]/25 animate-ping" />
+                    )}
+                    {agentState === 'Speaking...' && (
+                      <span className="absolute w-12 h-12 rounded-full bg-[#546252]/25 animate-pulse" />
+                    )}
+                    <button
+                      type="button"
+                      onClick={handleVoiceMicButton}
+                      aria-label={
+                        agentState === 'Listening...'
+                          ? 'Stop listening'
+                          : agentState === 'Speaking...'
+                          ? 'Interrupt and speak'
+                          : 'Start speaking'
+                      }
+                      className={`relative z-10 w-11 h-11 rounded-full flex items-center justify-center transition-all shadow-md cursor-pointer ${
+                        agentState === 'Listening...'
+                          ? 'bg-[#994524] text-white ring-3 ring-[#ffdbcf]'
+                          : agentState === 'Speaking...'
+                          ? 'bg-[#546252] text-white ring-3 ring-[#dcfce7]'
+                          : agentState === 'Thinking...'
+                          ? 'bg-[#1b1c1a] text-white opacity-90'
+                          : agentState === 'Muted'
+                          ? 'bg-[#e4e2df] text-[#55433c]'
+                          : 'bg-[#1b1c1a] hover:bg-[#994524] text-white'
+                      }`}
+                    >
+                      {agentState === 'Muted' ? (
+                        <MicOffSvg className="w-4 h-4" />
+                      ) : agentState === 'Speaking...' ? (
+                        <div className="flex items-end gap-0.5 h-4" aria-hidden="true">
+                          <span className="w-1 bg-white rounded-full h-2.5 animate-bounce" />
+                          <span className="w-1 bg-white rounded-full h-4 animate-pulse" />
+                          <span className="w-1 bg-white rounded-full h-3 animate-bounce" />
+                        </div>
+                      ) : agentState === 'Thinking...' ? (
+                        <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                      ) : (
+                        <MicSvg className="w-4 h-4" />
+                      )}
+                    </button>
+                  </div>
+
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs font-semibold text-[#1b1c1a]">
+                        {agentState}
+                      </span>
+                      {agentState === 'Speaking...' && (
+                        <button
+                          type="button"
+                          onClick={handleVoiceMicButton}
+                          className="text-[11px] font-semibold text-[#994524] hover:underline cursor-pointer"
+                        >
+                          • Tap to interrupt
+                        </button>
+                      )}
+                    </div>
+                    <p className="text-[11.5px] text-[#55433c] truncate">
+                      {agentState === 'Listening...'
+                        ? interimTranscript
+                          ? `"${interimTranscript}"`
+                          : 'Speak naturally now...'
+                        : agentState === 'Speaking...'
+                        ? 'Playing spoken response...'
+                        : agentState === 'Thinking...'
+                        ? 'Generating response...'
+                        : agentState === 'Muted'
+                        ? 'Microphone is muted'
+                        : 'Tap the mic button to speak'}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right: Mute Toggle & Exit Voice Mode back to Chat Mode */}
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    type="button"
+                    onClick={handleToggleMuteInVoiceMode}
+                    className={`px-2.5 py-1.5 rounded-lg text-[11px] font-medium border transition-colors cursor-pointer ${
+                      agentState === 'Muted'
+                        ? 'bg-[#994524] text-white border-[#994524]'
+                        : 'bg-[#fbf9f6] hover:bg-[#efeeeb] text-[#55433c] border-[#e4e2df]'
+                    }`}
+                  >
+                    {agentState === 'Muted' ? 'Unmute' : 'Mute'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={switchToChatMode}
+                    className="px-2.5 py-1.5 rounded-lg bg-[#1b1c1a] hover:bg-[#994524] text-white text-[11px] font-semibold transition-colors cursor-pointer"
+                  >
+                    Back to Chat
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </section>
       )}
 
       {/* Floating Primary AI Button: "Ask Me Anything" */}
       <button
         type="button"
-        onClick={handleToggleOpen}
+        onClick={handleTogglePanelOpen}
         aria-expanded={isOpen}
         aria-label="Ask Me Anything — Interactive AI Assistant for Seapee Bajaj"
-        title="Ask Me Anything — Seapee's AI Assistant (Voice & Chat)"
+        title="Ask Me Anything — Seapee's AI Assistant (Chat & Voice)"
         className="group flex items-center gap-2.5 bg-[#1b1c1a] hover:bg-[#994524] text-white pl-3.5 pr-4 py-3 rounded-full shadow-xl hover:shadow-2xl border border-[#dbc1b8]/30 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
       >
         <span className="relative w-8 h-8 rounded-full bg-[#994524] group-hover:bg-white/20 text-white flex items-center justify-center shrink-0 transition-colors">
@@ -1176,10 +1114,9 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
         <span className="flex flex-col items-start text-left leading-none pr-0.5">
           <span className="text-xs sm:text-[13px] font-semibold tracking-wide flex items-center gap-1.5">
             <span>Ask Me Anything</span>
-            <MicSvg className="w-3.5 h-3.5 text-[#ffdbcf] group-hover:text-white transition-colors" />
           </span>
           <span className="text-[10px] text-[#dbc1b8] group-hover:text-white/90 font-normal mt-0.5 hidden sm:inline">
-            Seapee&apos;s AI Assistant • Voice &amp; Chat
+            Seapee&apos;s AI Assistant • Chat &amp; Voice
           </span>
         </span>
       </button>
