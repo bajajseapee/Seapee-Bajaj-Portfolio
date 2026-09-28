@@ -116,16 +116,6 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Action Button & Avatar */}
         <div className="flex items-center gap-2.5 shrink-0">
-          {onOpenWorkspace && (
-            <button
-              type="button"
-              onClick={onOpenWorkspace}
-              className="hidden md:inline-flex items-center justify-center text-xs font-semibold text-[#55433c] hover:text-[#1b1c1a] bg-[#efeeeb] hover:bg-[#eae8e5] border border-[#e4e2df] transition-all px-3 py-2 rounded-lg cursor-pointer"
-              title="Open Client & Editorial Database Workspace"
-            >
-              Workspace
-            </button>
-          )}
           <a
             href={buildWhatsAppUrl()}
             target="_blank"
@@ -147,7 +137,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <a
             href="/about"
             onClick={(e) => handleLinkClick(e, '/about', 'about')}
-            className="relative block w-9 h-9 rounded-full overflow-hidden ring-1 ring-[#dbc1b8] hover:ring-2 hover:ring-[#994524] transition-all"
+            className="relative block w-9 h-9 rounded-full overflow-hidden ring-1 ring-[#dbc1b8] hover:ring-2 hover:ring-[#994524] transition-all shrink-0 bg-[#eae8e5]"
             title="About Seapee Bajaj"
           >
             <img
@@ -157,10 +147,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               height={36}
               loading="eager"
               decoding="async"
-              className="w-full h-full object-cover"
+              className="w-full h-full rounded-full object-cover object-[center_22%]"
               referrerPolicy="no-referrer"
               onError={(e) => {
                 const target = e.currentTarget;
+                if (target.src !== SITE_CONFIG.HERO_IMAGE) {
+                  target.src = SITE_CONFIG.HERO_IMAGE;
+                  return;
+                }
                 target.style.display = 'none';
                 if (target.parentElement) {
                   target.parentElement.innerHTML = `<div class="w-full h-full bg-[#b85d3a] text-white flex items-center justify-center text-xs font-bold font-serif">SB</div>`;

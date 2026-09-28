@@ -46,7 +46,6 @@ const INITIAL_MESSAGES: ChatMessage[] = [
     actions: [
       { label: 'View Portfolio', href: '/work', sectionId: 'selected-work' },
       { label: 'Contact Seapee', href: '/contact', sectionId: 'contact' },
-      { label: 'Talk to Seapee', href: SITE_CONFIG.TOPMATE_URL, external: true },
     ],
   },
 ];
@@ -134,27 +133,217 @@ function HeadsetAvatarFallbackSvg({ className = 'w-5 h-5' }: { className?: strin
   );
 }
 
-function AiAssistantAvatar({ sizeClass = 'w-11 h-11' }: { sizeClass?: string }) {
+export type VisemeShape = 'rest' | 'closed' | 'slight' | 'open' | 'wide' | 'round';
+
+function computeVisemeFromSyllable(token: string, step: number): VisemeShape {
+  const clean = token.toLowerCase().replace(/[^a-z]/g, '');
+  if (!clean) {
+    return step % 2 === 0 ? 'slight' : 'closed';
+  }
+  const char = clean[step % clean.length];
+  if ('mbp'.includes(char)) return 'closed';
+  if ('ouqw'.includes(char)) return 'round';
+  if ('aei'.includes(char)) return step % 2 === 0 ? 'open' : 'wide';
+  if ('y'.includes(char)) return 'wide';
+  return step % 3 === 0 ? 'closed' : 'slight';
+}
+
+function AiAssistantAvatar({
+  sizeClass = 'w-11 h-11',
+  isSpeaking = false,
+  viseme = 'rest',
+}: {
+  sizeClass?: string;
+  isSpeaking?: boolean;
+  viseme?: VisemeShape;
+}) {
   const [srcIndex, setSrcIndex] = useState(0);
+  const [isBlinking, setIsBlinking] = useState(false);
   const sources = [aiAssistantIllustration, SITE_CONFIG.AI_ASSISTANT_AVATAR];
   const currentSrc = sources[srcIndex];
 
+  // Natural periodic eye blink
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsBlinking(true);
+      setTimeout(() => setIsBlinking(false), 140);
+    }, 3600);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div
-      className={`relative ${sizeClass} rounded-full overflow-hidden ring-2 ring-[#994524]/25 shrink-0 bg-[#f5efe8] flex items-center justify-center shadow-2xs`}
+      className={`relative ${sizeClass} rounded-full overflow-hidden ring-2 ${
+        isSpeaking ? 'ring-[#994524] shadow-md' : 'ring-[#994524]/25 shadow-2xs'
+      } shrink-0 bg-[#f5efe8] flex items-center justify-center transition-all duration-150`}
     >
       {currentSrc ? (
-        <img
-          src={currentSrc}
-          alt="Seapee's AI Assistant — Illustrated Avatar"
-          width={44}
-          height={44}
-          loading="eager"
-          decoding="async"
-          referrerPolicy="no-referrer"
-          onError={() => setSrcIndex((prev) => prev + 1)}
-          className="w-full h-full rounded-full object-cover object-center block select-none"
-        />
+        <div
+          className={`relative w-full h-full rounded-full overflow-hidden transition-transform duration-150 ${
+            isSpeaking && viseme === 'open'
+              ? 'scale-[1.015] -translate-y-[0.5px]'
+              : isSpeaking && viseme === 'round'
+              ? 'scale-[1.01]'
+              : 'scale-100'
+          }`}
+        >
+          <img
+            src={currentSrc}
+            alt="Seapee's AI Assistant — Illustrated Avatar"
+            width={88}
+            height={88}
+            loading="eager"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            onError={() => setSrcIndex((prev) => prev + 1)}
+            className="w-full h-full rounded-full object-cover object-center block select-none"
+          />
+
+          {/* Natural Eyelid Blink Overlay aligned to eye coordinates (y=36.5%..39.5%) */}
+          {isBlinking && (
+            <>
+              <span
+                aria-hidden="true"
+                className="absolute rounded-full bg-[#e49670]"
+                style={{ left: '40.5%', top: '36.2%', width: '6.8%', height: '3.2%' }}
+              />
+              <span
+                aria-hidden="true"
+                className="absolute rounded-full bg-[#e49670]"
+                style={{ left: '53.2%', top: '36.2%', width: '6.8%', height: '3.2%' }}
+              />
+            </>
+          )}
+
+          {/* Synchronized Lip-Sync Viseme Overlay aligned to mouth coordinates (x=43.2%..56.6%, y=48.6%..54.8%) */}
+          {isSpeaking && viseme !== 'rest' && (
+            <svg
+              viewBox="0 0 100 54"
+              aria-hidden="true"
+              className="absolute pointer-events-none"
+              style={{
+                left: '43.0%',
+                top: '48.4%',
+                width: '13.8%',
+                height: '6.6%',
+              }}
+            >
+              {/* Soft skin-matched base covering static smile during articulation */}
+              <ellipse cx="50" cy="27" rx="48" ry="25" fill="#EEA37B" />
+              <ellipse cx="50" cy="29" rx="44" ry="21" fill="#F2AA82" />
+
+              {viseme === 'closed' && (
+                <g>
+                  {/* Pressed lips for M / B / P */}
+                  <path
+                    d="M 14 26 Q 32 22, 50 25 Q 68 22, 86 26 Q 50 31, 14 26 Z"
+                    fill="#C25949"
+                  />
+                  <path
+                    d="M 16 26 Q 50 34, 84 26 Q 50 30, 16 26 Z"
+                    fill="#DF6D55"
+                  />
+                  <path
+                    d="M 15 26 Q 50 28, 85 26"
+                    stroke="#6C2620"
+                    strokeWidth="2.2"
+                    fill="none"
+                    strokeLinecap="round"
+                  />
+                </g>
+              )}
+
+              {viseme === 'slight' && (
+                <g>
+                  {/* Partially open natural articulation */}
+                  <path
+                    d="M 12 24 Q 50 18, 88 24 Q 76 38, 50 39 Q 24 38, 12 24 Z"
+                    fill="#3B1514"
+                  />
+                  {/* Upper teeth */}
+                  <path
+                    d="M 22 24 Q 50 21, 78 24 L 75 29 Q 50 30, 25 29 Z"
+                    fill="#F4F6F1"
+                  />
+                  {/* Upper & lower lip contour */}
+                  <path
+                    d="M 10 24 Q 32 17, 50 20 Q 68 17, 90 24 Q 50 21, 10 24 Z"
+                    fill="#C25949"
+                  />
+                  <path
+                    d="M 12 24 Q 50 44, 88 24 Q 74 41, 50 42 Q 26 41, 12 24 Z"
+                    fill="#E06D54"
+                  />
+                </g>
+              )}
+
+              {viseme === 'wide' && (
+                <g>
+                  {/* Wide E / I vowel articulation */}
+                  <path
+                    d="M 8 22 Q 50 16, 92 22 Q 80 41, 50 42 Q 20 41, 8 22 Z"
+                    fill="#381312"
+                  />
+                  <path
+                    d="M 18 22 Q 50 19, 82 22 L 79 29 Q 50 31, 21 29 Z"
+                    fill="#F4F6F1"
+                  />
+                  <ellipse cx="50" cy="37" rx="20" ry="4" fill="#BA4B42" />
+                  <path
+                    d="M 7 22 Q 30 14, 50 18 Q 70 14, 93 22 Q 50 19, 7 22 Z"
+                    fill="#C25949"
+                  />
+                  <path
+                    d="M 8 22 Q 50 46, 92 22 Q 78 44, 50 45 Q 22 44, 8 22 Z"
+                    fill="#E16D53"
+                  />
+                </g>
+              )}
+
+              {viseme === 'open' && (
+                <g>
+                  {/* Open A / AH vowel articulation */}
+                  <ellipse cx="50" cy="28" rx="34" ry="16" fill="#361110" />
+                  <path
+                    d="M 24 18 Q 50 16, 76 18 L 73 25 Q 50 26, 27 25 Z"
+                    fill="#F3F5F0"
+                  />
+                  <ellipse cx="50" cy="36" rx="18" ry="6" fill="#C24E44" />
+                  <ellipse
+                    cx="50"
+                    cy="28"
+                    rx="35"
+                    ry="16.5"
+                    fill="none"
+                    stroke="#CF624C"
+                    strokeWidth="5.5"
+                  />
+                </g>
+              )}
+
+              {viseme === 'round' && (
+                <g>
+                  {/* Rounded O / U vowel articulation */}
+                  <ellipse cx="50" cy="28" rx="22" ry="15" fill="#32100F" />
+                  <path
+                    d="M 34 19 Q 50 17, 66 19 L 64 24 Q 50 25, 36 24 Z"
+                    fill="#F3F5F0"
+                  />
+                  <ellipse cx="50" cy="35" rx="11" ry="4.5" fill="#BA4B42" />
+                  <ellipse
+                    cx="50"
+                    cy="28"
+                    rx="23.5"
+                    ry="15.5"
+                    fill="none"
+                    stroke="#C85D48"
+                    strokeWidth="6.5"
+                  />
+                </g>
+              )}
+            </svg>
+          )}
+        </div>
       ) : (
         <div
           className="w-full h-full rounded-full bg-gradient-to-br from-[#994524] to-[#7b2f0f] text-white flex items-center justify-center"
@@ -264,6 +453,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
   // Default mode is strictly "chat" (Text Chat Mode)
   const [mode, setMode] = useState<InteractionMode>('chat');
   const [agentState, setAgentState] = useState<VoiceAgentState>('Ready');
+  const [activeViseme, setActiveViseme] = useState<VisemeShape>('rest');
   const [isSending, setIsSending] = useState(false);
   const [interimTranscript, setInterimTranscript] = useState('');
   const [voiceErrorNote, setVoiceErrorNote] = useState<string | null>(null);
@@ -275,7 +465,12 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
+          return parsed.map((m: ChatMessage) => ({
+            ...m,
+            actions: m.actions?.filter(
+              (a) => !a.href?.toLowerCase().includes('topmate') && a.label !== 'Talk to Seapee'
+            ),
+          }));
         }
       }
     } catch {
@@ -288,6 +483,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
+  const visemeTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const modeRef = useRef<InteractionMode>('chat');
   const agentStateRef = useRef<VoiceAgentState>('Ready');
   const sendMessageRef = useRef<(text: string, originMode: InteractionMode) => Promise<void>>(
@@ -346,11 +542,20 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
     }
   }, [mode]);
 
+  const stopVisemeAnimation = useCallback(() => {
+    if (visemeTimerRef.current) {
+      clearInterval(visemeTimerRef.current);
+      visemeTimerRef.current = null;
+    }
+    setActiveViseme('rest');
+  }, []);
+
   const stopSpeechOutput = useCallback(() => {
+    stopVisemeAnimation();
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
     }
-  }, []);
+  }, [stopVisemeAnimation]);
 
   const stopRecognition = useCallback(() => {
     if (recognitionRef.current) {
@@ -467,17 +672,20 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
     (textToSpeak: string, autoListenAfter: boolean) => {
       // NEVER play audio if user is in Chat Mode
       if (modeRef.current !== 'voice') {
+        stopVisemeAnimation();
         setAgentState('Ready');
         return;
       }
 
       if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
         setVoiceErrorNote('Audio playback is not available in this browser. Answers are shown in the chat above.');
+        stopVisemeAnimation();
         setAgentState('Ready');
         return;
       }
 
       stopRecognition();
+      stopVisemeAnimation();
       window.speechSynthesis.cancel();
 
       const cleaned = stripMarkdownForSpeech(textToSpeak);
@@ -485,6 +693,33 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
         setAgentState('Ready');
         return;
       }
+
+      const words = cleaned.split(/\s+/).filter(Boolean);
+      let currentWordIndex = 0;
+      let stepCounter = 0;
+
+      const startLipSyncLoop = () => {
+        if (visemeTimerRef.current) {
+          clearInterval(visemeTimerRef.current);
+        }
+        visemeTimerRef.current = setInterval(() => {
+          if (modeRef.current !== 'voice') {
+            stopVisemeAnimation();
+            return;
+          }
+          // Verify speechSynthesis is still actively speaking
+          if (typeof window !== 'undefined' && 'speechSynthesis' in window && !window.speechSynthesis.speaking) {
+            return;
+          }
+          const activeWord = words[currentWordIndex % Math.max(1, words.length)] || 'seapee';
+          const nextShape = computeVisemeFromSyllable(activeWord, stepCounter);
+          setActiveViseme(nextShape);
+          stepCounter += 1;
+          if (stepCounter % 3 === 0) {
+            currentWordIndex = (currentWordIndex + 1) % Math.max(1, words.length);
+          }
+        }, 85);
+      };
 
       const utterance = new SpeechSynthesisUtterance(cleaned);
       const voices = window.speechSynthesis.getVoices();
@@ -498,12 +733,26 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
       utterance.onstart = () => {
         if (modeRef.current === 'voice') {
           setAgentState('Speaking...');
+          startLipSyncLoop();
         } else {
+          stopVisemeAnimation();
           window.speechSynthesis.cancel();
         }
       };
 
+      utterance.onboundary = (event: SpeechSynthesisEvent) => {
+        if (modeRef.current !== 'voice') return;
+        if (typeof event.charIndex === 'number') {
+          const slice = cleaned.slice(event.charIndex);
+          const boundaryWord = slice.split(/\s+/)[0] || '';
+          if (boundaryWord) {
+            setActiveViseme(computeVisemeFromSyllable(boundaryWord, stepCounter++));
+          }
+        }
+      };
+
       utterance.onend = () => {
+        stopVisemeAnimation();
         if (
           autoListenAfter &&
           modeRef.current === 'voice' &&
@@ -520,15 +769,17 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
       };
 
       utterance.onerror = () => {
+        stopVisemeAnimation();
         if (agentStateRef.current !== 'Muted') {
           setAgentState('Ready');
         }
       };
 
       setAgentState('Speaking...');
+      startLipSyncLoop();
       window.speechSynthesis.speak(utterance);
     },
-    [startListening, stopRecognition]
+    [startListening, stopRecognition, stopVisemeAnimation]
   );
 
   const sendMessage = useCallback(
@@ -773,7 +1024,11 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
           <div className="bg-white px-3.5 py-3 border-b border-[#e4e2df] flex items-center justify-between gap-2 shrink-0">
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="relative shrink-0">
-                <AiAssistantAvatar sizeClass="w-11 h-11" />
+                <AiAssistantAvatar
+                  sizeClass="w-11 h-11"
+                  isSpeaking={mode === 'voice' && agentState === 'Speaking...'}
+                  viseme={activeViseme}
+                />
                 <span
                   className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-[#2e7d32] ring-2 ring-white"
                   title="Online"
@@ -1036,17 +1291,28 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
               </button>
             </form>
           ) : (
-            /* 2. VOICE MODE: Compact Bottom Voice Dock (Never covers the chat transcript above) */
+            /* 2. VOICE MODE: Compact Bottom Talking Avatar + Voice Dock (Never covers the chat transcript above) */
             <div className="p-3 bg-white border-t border-[#dbc1b8] flex flex-col gap-2 shrink-0">
-              <div className="flex items-center justify-between gap-3">
-                {/* Left: Compact Animated Mic Button + Live Status */}
-                <div className="flex items-center gap-3 min-w-0">
+              <div className="flex items-center justify-between gap-2.5">
+                {/* Left: Live Talking Seapee Avatar with Synchronized Mouth Movement + Mic Control */}
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="relative shrink-0">
+                    {agentState === 'Speaking...' && (
+                      <span
+                        aria-hidden="true"
+                        className="absolute -inset-1 rounded-full bg-[#994524]/20 animate-pulse"
+                      />
+                    )}
+                    <AiAssistantAvatar
+                      sizeClass="w-14 h-14"
+                      isSpeaking={agentState === 'Speaking...'}
+                      viseme={activeViseme}
+                    />
+                  </div>
+
                   <div className="relative flex items-center justify-center shrink-0">
                     {agentState === 'Listening...' && (
-                      <span className="absolute w-12 h-12 rounded-full bg-[#994524]/25 animate-ping" />
-                    )}
-                    {agentState === 'Speaking...' && (
-                      <span className="absolute w-12 h-12 rounded-full bg-[#546252]/25 animate-pulse" />
+                      <span className="absolute w-11 h-11 rounded-full bg-[#994524]/25 animate-ping" />
                     )}
                     <button
                       type="button"
@@ -1058,11 +1324,11 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                           ? 'Interrupt and speak'
                           : 'Start speaking'
                       }
-                      className={`relative z-10 w-11 h-11 rounded-full flex items-center justify-center transition-all shadow-md cursor-pointer ${
+                      className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-md cursor-pointer ${
                         agentState === 'Listening...'
                           ? 'bg-[#994524] text-white ring-3 ring-[#ffdbcf]'
                           : agentState === 'Speaking...'
-                          ? 'bg-[#546252] text-white ring-3 ring-[#dcfce7]'
+                          ? 'bg-[#546252] text-white ring-2 ring-[#dcfce7]'
                           : agentState === 'Thinking...'
                           ? 'bg-[#1b1c1a] text-white opacity-90'
                           : agentState === 'Muted'
@@ -1073,10 +1339,10 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                       {agentState === 'Muted' ? (
                         <MicOffSvg className="w-4 h-4" />
                       ) : agentState === 'Speaking...' ? (
-                        <div className="flex items-end gap-0.5 h-4" aria-hidden="true">
-                          <span className="w-1 bg-white rounded-full h-2.5 animate-bounce" />
-                          <span className="w-1 bg-white rounded-full h-4 animate-pulse" />
-                          <span className="w-1 bg-white rounded-full h-3 animate-bounce" />
+                        <div className="flex items-end gap-0.5 h-3.5" aria-hidden="true">
+                          <span className="w-0.5 bg-white rounded-full h-2 animate-bounce" />
+                          <span className="w-0.5 bg-white rounded-full h-3.5 animate-pulse" />
+                          <span className="w-0.5 bg-white rounded-full h-2.5 animate-bounce" />
                         </div>
                       ) : agentState === 'Thinking...' ? (
                         <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
@@ -1097,22 +1363,22 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                           onClick={handleVoiceMicButton}
                           className="text-[11px] font-semibold text-[#994524] hover:underline cursor-pointer"
                         >
-                          • Tap to interrupt
+                          • Interrupt
                         </button>
                       )}
                     </div>
-                    <p className="text-[11.5px] text-[#55433c] truncate">
+                    <p className="text-[11px] text-[#55433c] truncate">
                       {agentState === 'Listening...'
                         ? interimTranscript
                           ? `"${interimTranscript}"`
                           : 'Speak naturally now...'
                         : agentState === 'Speaking...'
-                        ? 'Playing spoken response...'
+                        ? 'Seapee AI is speaking...'
                         : agentState === 'Thinking...'
                         ? 'Generating response...'
                         : agentState === 'Muted'
                         ? 'Microphone is muted'
-                        : 'Tap the mic button to speak'}
+                        : 'Tap mic to speak'}
                     </p>
                   </div>
                 </div>
@@ -1122,7 +1388,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                   <button
                     type="button"
                     onClick={handleToggleMuteInVoiceMode}
-                    className={`px-2.5 py-1.5 rounded-lg text-[11px] font-medium border transition-colors cursor-pointer ${
+                    className={`px-2 py-1.5 rounded-lg text-[11px] font-medium border transition-colors cursor-pointer ${
                       agentState === 'Muted'
                         ? 'bg-[#994524] text-white border-[#994524]'
                         : 'bg-[#fbf9f6] hover:bg-[#efeeeb] text-[#55433c] border-[#e4e2df]'
@@ -1135,7 +1401,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                     onClick={switchToChatMode}
                     className="px-2.5 py-1.5 rounded-lg bg-[#1b1c1a] hover:bg-[#994524] text-white text-[11px] font-semibold transition-colors cursor-pointer"
                   >
-                    Back to Chat
+                    Chat
                   </button>
                 </div>
               </div>

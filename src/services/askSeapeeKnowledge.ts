@@ -22,7 +22,7 @@ export interface ConversationTurn {
 
 export const DIRECT_INQUIRY_ACTIONS: ChatActionLink[] = [
   { label: 'Contact Seapee', href: '/contact', sectionId: 'contact' },
-  { label: 'Talk to Seapee', href: SITE_CONFIG.TOPMATE_URL, external: true },
+  { label: 'LinkedIn Profile', href: SITE_CONFIG.LINKEDIN_URL, external: true },
 ];
 
 export const ASK_SEAPEE_SUGGESTED_QUESTIONS: string[] = [
@@ -100,7 +100,6 @@ APPROVED PORTFOLIO KNOWLEDGE BASE (ONLY SOURCE OF TRUTH):
 - Documented Career Interests: Open to relevant opportunities in content, SEO, content strategy, GEO / AI search, research-driven content, B2B content, and AI-assisted content workflows. (Specific start dates, current immediate availability, salary expectations, and notice period are not listed—always redirect to Seapee).
 - Verified Contact Channels:
   - Contact Seapee: Portfolio contact section (#contact / /contact) and Email (${SITE_CONFIG.EMAIL})
-  - Talk to Seapee (Topmate): ${SITE_CONFIG.TOPMATE_URL}
   - LinkedIn: ${SITE_CONFIG.LINKEDIN_URL}
   - Substack: ${SITE_CONFIG.SUBSTACK_URL}
   - WhatsApp: ${SITE_CONFIG.WHATSAPP_DISPLAY}`;
@@ -632,14 +631,13 @@ export function buildGroundedFallbackReply(
     const answer =
       q.includes('why should i') || q.includes('recruiter') || q.includes('strongest skills')
         ? "Based on her portfolio, Seapee brings 9+ years of experience combining market research, B2B content, and SEO strategy across IMARC Group, Grand View Research, The Insight Partners, and Allied Market Research. She works independently from research and brief creation through on-page SEO and publishing, collaborates with marketing, SEO, research, and design teams, and pairs AI-assisted workflows with human editorial judgment."
-        : "Yes. Seapee is open to relevant opportunities and consulting work across SEO content writing, B2B content, website content, content strategy, SEO optimization, content audits, research-driven articles, AI-assisted content workflows, and GEO/AI-search-focused content. For specific availability or role details, please contact her directly or use her Topmate link.";
+        : "Yes. Seapee is open to relevant opportunities and consulting work across SEO content writing, B2B content, website content, content strategy, SEO optimization, content audits, research-driven articles, AI-assisted content workflows, and GEO/AI-search-focused content. For specific availability or role details, please contact her directly.";
     return {
       answer,
       spokenText: stripMarkdownForSpeech(answer),
       sourceNote: 'Portfolio Verified',
       actions: [
         { label: 'Contact Seapee', href: '/contact', sectionId: 'contact' },
-        { label: 'Talk to Seapee', href: SITE_CONFIG.TOPMATE_URL, external: true },
         { label: 'View Portfolio', href: '/work', sectionId: 'selected-work' },
       ],
       followUpSuggestions: [
@@ -651,16 +649,15 @@ export function buildGroundedFallbackReply(
   }
 
   // 17. Contact
-  if (/\b(contact|email|reach|topmate|linkedin|whatsapp|talk|book a call|get in touch)\b/.test(q)) {
+  if (/\b(contact|email|reach|linkedin|whatsapp|talk|get in touch)\b/.test(q)) {
     const answer =
-      `You can contact Seapee directly through the contact section on her portfolio, by email at ${SITE_CONFIG.EMAIL}, or on LinkedIn. You can also book a conversation with her on Topmate at topmate.io/seapee_bajaj.`;
+      `You can contact Seapee directly through the contact section on her portfolio, by email at ${SITE_CONFIG.EMAIL}, or on LinkedIn.`;
     return {
       answer,
       spokenText: stripMarkdownForSpeech(answer),
       sourceNote: 'Portfolio Verified',
       actions: [
         { label: 'Contact Seapee', href: '/contact', sectionId: 'contact' },
-        { label: 'Talk to Seapee', href: SITE_CONFIG.TOPMATE_URL, external: true },
         { label: 'LinkedIn Profile', href: SITE_CONFIG.LINKEDIN_URL, external: true },
       ],
       followUpSuggestions: [
@@ -687,7 +684,6 @@ export function buildGroundedFallbackReply(
       actions: [
         { label: 'View Portfolio', href: '/work', sectionId: 'selected-work' },
         { label: 'Contact Seapee', href: '/contact', sectionId: 'contact' },
-        { label: 'Talk to Seapee', href: SITE_CONFIG.TOPMATE_URL, external: true },
       ],
       followUpSuggestions: [
         "What's GEO?",
