@@ -68,7 +68,7 @@ export const Experience: React.FC<ExperienceProps> = ({ onNavigate }) => {
               className="bg-white rounded-2xl p-6 sm:p-8 border border-[#e4e2df] shadow-xs hover:shadow-md hover:border-[#dbc1b8] transition-all duration-300 flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-start justify-between gap-4 pb-4 border-b border-[#efeeeb]">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1.5 sm:gap-4 pb-4 border-b border-[#efeeeb]">
                   <div>
                     <span className="text-xs uppercase tracking-wider text-[#994524] font-semibold block">
                       0{idx + 1}. {item.organization}
@@ -78,7 +78,7 @@ export const Experience: React.FC<ExperienceProps> = ({ onNavigate }) => {
                     </h3>
                   </div>
                   {item.period && (
-                    <span className="text-xs text-[#546252] font-medium whitespace-nowrap pt-1">
+                    <span className="text-xs text-[#546252] font-medium sm:whitespace-nowrap sm:pt-1">
                       {item.period}
                     </span>
                   )}

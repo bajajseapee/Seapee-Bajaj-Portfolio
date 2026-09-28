@@ -67,7 +67,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
               {PROFILE_INFO.aboutIntro}
             </p>
             <p className="text-base text-[#55433c] leading-relaxed">
-              My career started in primary and secondary market research at <strong className="text-[#1b1c1a] font-semibold">Allied Market Research</strong> and <strong className="text-[#1b1c1a] font-semibold">The Insight Partners</strong>, where I worked on market estimation, data analysis, and industry reports across ICT, Semiconductor, and Automotive domains. That foundation shaped how I approach content at <strong className="text-[#1b1c1a] font-semibold">Grand View Research</strong> and <strong className="text-[#1b1c1a] font-semibold">IMARC Group</strong>—translating complex research into clear, reader-focused B2B and SEO content.
+              My career started in primary and secondary market research at <strong className="text-[#1b1c1a] font-semibold">Allied Market Research</strong> and <strong className="text-[#1b1c1a] font-semibold">The Insight Partners</strong>, where I worked on market estimation, data analysis, and industry reports across ICT, Semiconductor, and Automotive domains. That foundation shaped how I approach content and SEO across <strong className="text-[#1b1c1a] font-semibold">Perfect Clicks</strong>, <strong className="text-[#1b1c1a] font-semibold">Grand View Research</strong>, and <strong className="text-[#1b1c1a] font-semibold">IMARC Group</strong>—translating complex research into clear, reader-focused B2B and SEO content.
             </p>
             <p className="text-sm text-[#55433c] leading-relaxed">
               I focus on hands-on <strong className="text-[#1b1c1a] font-semibold">SEO content strategy, B2B content writing, keyword research, on-page SEO, E-E-A-T alignment, and AI-search visibility (GEO &amp; AEO)</strong> across Google AI Overviews, ChatGPT, Perplexity, and Gemini. I hold an <strong className="text-[#1b1c1a] font-semibold">MBA in Systems</strong>, the <strong className="text-[#1b1c1a] font-semibold">HubSpot Content Marketing Certification</strong>, <strong className="text-[#1b1c1a] font-semibold">Google Prompting Essentials</strong>, completed the <strong className="text-[#1b1c1a] font-semibold">Be10x AI tools program</strong>, and authored the published poetry book <em>Not Unworthy</em>.
@@ -85,10 +85,10 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
               </div>
               <div className="bg-white p-3.5 rounded-xl border border-[#e4e2df]">
                 <span className="font-semibold text-[#994524] block mb-0.5">
-                  Grand View Research &amp; IMARC Group
+                  Perfect Clicks, Grand View Research &amp; IMARC Group
                 </span>
                 <span>
-                  SEO blogs, articles, listicles, FAQs, Well of Insights Quora strategy (60–70 to 250+ avg views), content workflows &amp; SEO quality checks.
+                  SEO blogs, articles, listicles, FAQs, Semrush keyword research, on-page SEO, Well of Insights Quora strategy (60–70 to 250+ avg views), content workflows &amp; SEO quality checks.
                 </span>
               </div>
             </div>

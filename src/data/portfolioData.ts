@@ -172,6 +172,22 @@ export const SERVICES: ServiceItem[] = [
 
 export const EXPERIENCE_ITEMS: ExperienceItem[] = [
   {
+    id: "perfect-clicks",
+    organization: "Perfect Clicks",
+    role: "SEO Content Professional — Perfect Clicks",
+    period: "January 2026 – April 2026",
+    focusSummary:
+      "SEO-focused content creation, keyword research using Semrush, on-page SEO optimization, and independent editorial execution.",
+    highlights: [
+      "Created and optimized SEO-focused content aligned with search intent, keyword strategy, and readability.",
+      "Conducted keyword research using Semrush, focusing on relevant search volume and lower-competition opportunities.",
+      "Applied on-page SEO practices including title tags, meta descriptions, headings, internal linking, image optimization, and content structure.",
+      "Reviewed and refined content for SEO quality, accuracy, clarity, and engagement.",
+      "Worked independently across content assignments while maintaining deadlines and quality standards."
+    ],
+    domains: ["SEO Content Strategy", "Keyword Research (Semrush)", "On-Page SEO", "Content Optimization"]
+  },
+  {
     id: "imarc-group",
     organization: "IMARC Group",
     role: "Assistant Manager — Content & SEO Operations",

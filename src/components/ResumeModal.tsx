@@ -158,6 +158,15 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
           <div className="space-y-4 text-xs">
             <div>
               <div className="flex justify-between items-baseline font-semibold text-[#1b1c1a]">
+                <span>SEO Content Professional — Perfect Clicks</span>
+                <span className="text-[#546252] font-normal">January 2026 – April 2026</span>
+              </div>
+              <p className="text-[#55433c] mt-1">
+                Created and optimized SEO-focused content aligned with search intent and keyword strategy; conducted keyword research using Semrush and applied on-page SEO best practices across independent content assignments.
+              </p>
+            </div>
+            <div>
+              <div className="flex justify-between items-baseline font-semibold text-[#1b1c1a]">
                 <span>Assistant Manager — Imarc Group</span>
                 <span className="text-[#546252] font-normal">Aug 2024 – Nov 2025</span>
               </div>
