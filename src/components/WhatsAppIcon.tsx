@@ -80,7 +80,7 @@ export const FloatingWhatsApp: React.FC = () => {
                   WhatsApp
                 </span>
                 <span className="text-[11px] text-[#55433c] truncate block">
-                  {SITE_CONFIG.WHATSAPP_DISPLAY}
+                  Chat on WhatsApp
                 </span>
               </div>
               <span className="material-symbols-outlined text-[16px] text-[#546252] group-hover:text-[#1b1c1a]">

@@ -25,7 +25,7 @@ export const SITE_CONFIG = {
   CORE_POSITIONING: "Research-Led. Reader-Focused.",
   SUPPORTING_POSITIONING: "Strategy, Storytelling & Search — Thoughtfully Combined.",
   POSITIONING: "SEO Content Strategist | B2B Content | GEO & AI Search",
-  LOCATION: "New Delhi & Global Remote",
+  LOCATION: "Pune & Global Remote",
 
   // Core External Links & Contact Variables (Verified Existing Links Only)
   EMAIL: "bajajseapee@gmail.com",

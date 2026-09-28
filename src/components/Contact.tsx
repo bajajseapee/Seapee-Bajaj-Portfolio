@@ -181,10 +181,10 @@ export const Contact: React.FC<ContactProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2.5 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] text-xs font-semibold transition-colors flex items-center gap-2 border border-[#e4e2df]"
-              title={`Chat on WhatsApp (${SITE_CONFIG.WHATSAPP_DISPLAY})`}
+              title="Chat on WhatsApp"
             >
               <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
-              <span>WhatsApp • {SITE_CONFIG.WHATSAPP_DISPLAY}</span>
+              <span>WhatsApp</span>
             </a>
 
             <a

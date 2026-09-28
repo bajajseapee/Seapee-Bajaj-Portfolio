@@ -121,8 +121,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] border border-[#e4e2df] text-[#25D366] transition-all"
-            title={`Chat on WhatsApp (${SITE_CONFIG.WHATSAPP_DISPLAY})`}
-            aria-label={`Chat on WhatsApp (${SITE_CONFIG.WHATSAPP_DISPLAY})`}
+            title="Chat on WhatsApp"
+            aria-label="Chat on WhatsApp"
           >
             <WhatsAppIcon className="w-4 h-4" />
           </a>
@@ -218,7 +218,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] border border-[#e4e2df] text-[#1b1c1a] text-sm font-semibold transition-colors"
               >
                 <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
-                <span>WhatsApp ({SITE_CONFIG.WHATSAPP_DISPLAY})</span>
+                <span>WhatsApp</span>
               </a>
             </div>
           </div>
