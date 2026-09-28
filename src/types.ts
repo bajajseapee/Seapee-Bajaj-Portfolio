@@ -130,3 +130,11 @@ export interface AwardItem {
   highlight?: string;
   category: 'Award' | 'Client Commendation' | 'International Recognition' | 'Academic Publication';
 }
+
+export interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+

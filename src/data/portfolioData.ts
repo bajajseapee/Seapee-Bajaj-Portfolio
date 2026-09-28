@@ -10,6 +10,7 @@ import {
   DetailedCaseStudyItem,
   SeoGeoPillarItem,
   WritingTopicItem,
+  FaqItem,
 } from '../types';
 import { SITE_CONFIG } from '../config/siteConfig';
 
@@ -1045,3 +1046,56 @@ export const CERTIFICATIONS = [
     icon: "school"
   }
 ];
+
+export const FAQ_ITEMS: FaqItem[] = [
+  {
+    id: "faq-specialization",
+    question: "What does Seapee Bajaj specialize in?",
+    answer:
+      "Seapee Bajaj is a content and SEO professional specializing in research-led content, SEO optimization, editorial workflows, B2B content, and AI-assisted content creation."
+  },
+  {
+    id: "faq-content-types",
+    question: "What kind of content does Seapee Bajaj create?",
+    answer:
+      "Seapee creates research-driven articles, SEO content, website copy, thought-leadership content, editorial content, and other written assets designed to be useful to both readers and search engines."
+  },
+  {
+    id: "faq-b2b-experience",
+    question: "Does Seapee Bajaj have experience with B2B content?",
+    answer:
+      "Yes. Seapee has experience creating and managing research-led content for B2B and knowledge-intensive industries, with a focus on accuracy, clarity, SEO, and audience relevance."
+  },
+  {
+    id: "faq-seo-skills",
+    question: "What SEO skills does Seapee Bajaj have?",
+    answer:
+      "Seapee's SEO experience includes keyword research, search intent analysis, title and meta optimization, internal linking, heading structure, image optimization, content optimization, E-E-A-T principles, and improving content for search visibility."
+  },
+  {
+    id: "faq-ai-workflow",
+    question: "Does Seapee Bajaj use AI for content creation?",
+    answer:
+      "Yes. Seapee uses AI tools as part of the content workflow while maintaining human judgment, research accuracy, originality, readability, and a natural editorial voice."
+  },
+  {
+    id: "faq-remote-work",
+    question: "Is Seapee Bajaj available for remote work?",
+    answer:
+      "Yes. Seapee is open to remote opportunities involving content writing, SEO, content strategy, editorial operations, research-led content, and related work."
+  },
+  {
+    id: "faq-published-work",
+    question: "Where can I see Seapee Bajaj's published work?",
+    answer:
+      "Published work and selected projects are showcased throughout this portfolio. Visitors can also explore Seapee's published articles, creative writing, professional work, and published book through the relevant links on the website."
+  },
+  {
+    id: "faq-contact",
+    question: "How can I contact Seapee Bajaj?",
+    answer:
+      "Visitors can use the Contact section on this website to get in touch regarding professional opportunities, content projects, SEO work, collaborations, or other relevant enquiries."
+  }
+];
+
+

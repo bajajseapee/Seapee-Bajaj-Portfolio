@@ -45,6 +45,70 @@ function syncSeoAssetsPlugin(): Plugin {
     buildStart() {
       generateFiles();
     },
+    closeBundle() {
+      const distDir = path.resolve(__dirname, 'dist');
+      const indexHtmlPath = path.join(distDir, 'index.html');
+      if (!fs.existsSync(indexHtmlPath)) return;
+
+      const baseHtml = fs.readFileSync(indexHtmlPath, 'utf-8');
+
+      Object.values(SEO_ROUTES).forEach((route) => {
+        const canonicalUrl =
+          route.path === '/'
+            ? `${SITE_URL_ORIGIN}/`
+            : `${SITE_URL_ORIGIN}${route.path}`;
+
+        let routeHtml = baseHtml
+          .replace(
+            /<title>[\s\S]*?<\/title>/,
+            `<title>${route.title.replace(/&/g, '&amp;')}</title>`
+          )
+          .replace(
+            /<meta name="title" content="[^"]*" \/>/,
+            `<meta name="title" content="${route.title.replace(/&/g, '&amp;')}" />`
+          )
+          .replace(
+            /<meta name="description" content="[^"]*" \/>/,
+            `<meta name="description" content="${route.description.replace(/"/g, '&quot;')}" />`
+          )
+          .replace(
+            /<link rel="canonical" href="[^"]*" \/>/,
+            `<link rel="canonical" href="${canonicalUrl}" />`
+          )
+          .replace(
+            /<meta property="og:url" content="[^"]*" \/>/,
+            `<meta property="og:url" content="${canonicalUrl}" />`
+          )
+          .replace(
+            /<meta property="og:title" content="[^"]*" \/>/,
+            `<meta property="og:title" content="${route.title.replace(/&/g, '&amp;')}" />`
+          )
+          .replace(
+            /<meta property="og:description" content="[^"]*" \/>/,
+            `<meta property="og:description" content="${route.description.replace(/"/g, '&quot;')}" />`
+          )
+          .replace(
+            /<meta name="twitter:url" content="[^"]*" \/>/,
+            `<meta name="twitter:url" content="${canonicalUrl}" />`
+          )
+          .replace(
+            /<meta name="twitter:title" content="[^"]*" \/>/,
+            `<meta name="twitter:title" content="${route.title.replace(/&/g, '&amp;')}" />`
+          )
+          .replace(
+            /<meta name="twitter:description" content="[^"]*" \/>/,
+            `<meta name="twitter:description" content="${route.description.replace(/"/g, '&quot;')}" />`
+          );
+
+        if (route.path === '/') {
+          fs.writeFileSync(indexHtmlPath, routeHtml, 'utf-8');
+        } else {
+          const cleanSlug = route.path.replace(/^\/+|\/+$/g, '');
+          const htmlFilePath = path.join(distDir, `${cleanSlug}.html`);
+          fs.writeFileSync(htmlFilePath, routeHtml, 'utf-8');
+        }
+      });
+    },
   };
 }
 

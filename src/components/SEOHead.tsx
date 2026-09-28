@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { SITE_CONFIG, SITE_URL_ORIGIN, getCanonicalUrl } from '../config/siteConfig';
+import { FAQ_ITEMS } from '../data/portfolioData';
 
 interface SEOHeadProps {
   currentPath?: string;
@@ -228,6 +229,30 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
       document.head.appendChild(scriptEl);
     }
     scriptEl.textContent = JSON.stringify(personJsonLd);
+
+    // FAQPage JSON-LD structured data matching visible FAQSection questions and answers exactly
+    const faqJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      '@id': `${SITE_URL_ORIGIN}/#faq`,
+      mainEntity: FAQ_ITEMS.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
+    };
+
+    let faqScriptEl = document.getElementById('faq-jsonld') as HTMLScriptElement | null;
+    if (!faqScriptEl) {
+      faqScriptEl = document.createElement('script');
+      faqScriptEl.id = 'faq-jsonld';
+      faqScriptEl.type = 'application/ld+json';
+      document.head.appendChild(faqScriptEl);
+    }
+    faqScriptEl.textContent = JSON.stringify(faqJsonLd);
   }, [meta.title, meta.description, canonicalUrl]);
 
   return null;

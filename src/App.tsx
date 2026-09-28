@@ -15,6 +15,7 @@ import { Process } from './components/Process';
 import { WhyWorkWithMe } from './components/WhyWorkWithMe';
 import { Awards } from './components/Awards';
 import { PublishedBook } from './components/PublishedBook';
+import { FAQSection } from './components/FAQSection';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/WhatsAppIcon';
@@ -122,6 +123,7 @@ export default function App() {
       'process',
       'awards',
       'published-work',
+      'faq',
       'contact',
     ];
     const handleScroll = () => {
@@ -296,6 +298,9 @@ export default function App() {
 
           {/* Beyond Brand Content / Published Book Feature */}
           <PublishedBook />
+
+          {/* Frequently Asked Questions Section */}
+          <FAQSection />
 
           {/* Contact & Inquiries Section */}
           <Contact
