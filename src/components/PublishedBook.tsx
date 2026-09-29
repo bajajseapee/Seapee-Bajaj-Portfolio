@@ -193,7 +193,7 @@ export const PublishedBook: React.FC = () => {
                   id="published-work-heading"
                   className="font-serif text-3xl sm:text-4xl text-[#1b1c1a] font-medium tracking-tight leading-snug"
                 >
-                  {BOOK.TITLE} — by {BOOK.AUTHOR}
+                  {BOOK.TITLE} — My Published Poetry Collection
                 </h2>
                 <p className="text-lg sm:text-xl text-[#546252] font-medium leading-relaxed">
                   {BOOK.HEADLINE} {BOOK.SUBHEADLINE}
@@ -234,22 +234,22 @@ export const PublishedBook: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 pb-2 text-xs text-[#55433c]">
             <div className="bg-[#fbf9f6] p-4 rounded-xl border border-[#e4e2df]">
               <span className="font-semibold text-[#1b1c1a] uppercase tracking-wider block text-[11px] mb-1">
-                Book Title &amp; Author
+                Book Title &amp; Authorship
               </span>
               <p className="font-serif text-base text-[#1b1c1a] italic font-medium">
                 {BOOK.TITLE}
               </p>
               <span className="text-[#546252] mt-0.5 block">
-                By {BOOK.AUTHOR} · Poetry (Paperback)
+                Written by me ({BOOK.AUTHOR}) · Poetry (Paperback)
               </span>
             </div>
 
             <div className="bg-[#fbf9f6] p-4 rounded-xl border border-[#e4e2df]">
               <span className="font-semibold text-[#1b1c1a] uppercase tracking-wider block text-[11px] mb-1">
-                Key Themes
+                Themes I Explore
               </span>
               <p className="text-[#55433c] leading-relaxed">
-                Resilience, consistency, everyday courage, and the quiet worth of ordinary lives.
+                I explore resilience, consistency, everyday courage, and the quiet worth of ordinary lives.
               </p>
             </div>
 
@@ -258,7 +258,7 @@ export const PublishedBook: React.FC = () => {
                 Publication Details
               </span>
               <p className="text-[#55433c] leading-relaxed">
-                Published by {BOOK.PUBLISHER}
+                I published this collection with {BOOK.PUBLISHER}
               </p>
               <span className="text-[#546252] mt-0.5 block">{BOOK.PUBLICATION_DATE}</span>
             </div>

@@ -76,6 +76,7 @@ export const SITE_CONFIG = {
 
   // Image URLs
   HERO_IMAGE: "https://lh3.googleusercontent.com/aida-public/AB6AXuBLprfha2SI32O8n7gJDCRaEv8AvhIETinZCZp3HLXo8nr1KAK7XIPvBztAnnZAf-ywge1dUzKPYjH0rm-v5GSRJdSKkPUpADTNvDIvp7EMUfVtT8NP9JtCSO0F24a33bJ9cdJzX5HviwwKpKeUSAZpNO68DqqKgjO85-hwH4_Z-5ESP9Y6MdYZhCsuFj3rM-0Ne5xs2kgjy6SGL80daDr0_dbq1xLfV7MbxAnW4S4MWtuA8DSEFo_Ta0hM9MYUfCaXng",
+  OG_IMAGE: "https://seapee-bajaj-portfolio-3a8w-omega.vercel.app/og-image.jpg",
   AVATAR_IMAGE: "/seapee-header-avatar.jpg",
   AI_ASSISTANT_AVATAR: "/seapee-ai-assistant-avatar.jpg",
 
@@ -139,7 +140,7 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
     title: "Seapee Bajaj | B2B SEO Content & GEO Strategist",
     description:
       "Portfolio of Seapee Bajaj, a B2B SEO content strategist with 10+ years of experience in market research content, GEO, AI search, and editorial strategy.",
-    h1: "Seapee Bajaj — B2B SEO Content & Editorial Strategist",
+    h1: "B2B SEO Content Strategist, Research-Led and Reader-Focused",
     kicker: "SEO Content Strategist | B2B Content | GEO & AI Search",
     subtitle: "Research-Led. Reader-Focused. Strategy, Storytelling & Search — Thoughtfully Combined.",
     sectionId: "hero",

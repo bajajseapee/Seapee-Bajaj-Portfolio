@@ -9,7 +9,7 @@ import refinedLogo from '../assets/images/about_logo_refined_1790405450987.webp'
 const STAT_LOGOS: Record<string, { src: string; alt: string }> = {
   experience: {
     src: experienceLogo,
-    alt: '10+ years of experience across market research, B2B content, and SEO illustration',
+    alt: 'Market research, B2B content, and SEO career background illustration',
   },
   'rank-reach': {
     src: rankReachLogo,
@@ -54,7 +54,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
           {/* Text Narrative */}
           <div className="lg:col-span-6 flex flex-col gap-3.5">
             <span className="text-xs uppercase tracking-widest text-[#546252] font-semibold">
-              About Seapee Bajaj • Perspective
+              About Me • Perspective
             </span>
             <h2
               id="about-heading"
@@ -70,25 +70,25 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
               My career started in primary and secondary market research at <strong className="text-[#1b1c1a] font-semibold">Allied Market Research</strong> and <strong className="text-[#1b1c1a] font-semibold">The Insight Partners</strong>, where I worked on market estimation, data analysis, and industry reports across ICT, Semiconductor, and Automotive domains. That foundation shaped how I approach content and SEO across <strong className="text-[#1b1c1a] font-semibold">Perfect Clicks</strong>, <strong className="text-[#1b1c1a] font-semibold">Grand View Research</strong>, and <strong className="text-[#1b1c1a] font-semibold">IMARC Group</strong>—translating complex research into clear, reader-focused B2B and SEO content.
             </p>
             <p className="text-sm text-[#55433c] leading-relaxed">
-              Seapee Bajaj is a content and SEO professional with 10+ years of experience in <strong className="text-[#1b1c1a] font-semibold">content strategy, SEO optimization, research-led content, editorial workflows, and content production</strong>. My work spans keyword research, on-page SEO, competitive intelligence, and structuring clear, factual content for traditional search and AI-powered answer engines (<strong className="text-[#1b1c1a] font-semibold">GEO &amp; AEO</strong>). Alongside hands-on industry experience, I hold an <strong className="text-[#1b1c1a] font-semibold">MBA in Systems</strong>, completed professional training in <strong className="text-[#1b1c1a] font-semibold">Introduction to Generative Engine Optimization</strong> (Coursera), <strong className="text-[#1b1c1a] font-semibold">HubSpot Content Marketing Certification</strong>, <strong className="text-[#1b1c1a] font-semibold">Google Prompting Essentials</strong>, and the <strong className="text-[#1b1c1a] font-semibold">Be10x AI tools program</strong>, and authored the published poetry book <em>Not Unworthy</em>.
+              I specialize in <strong className="text-[#1b1c1a] font-semibold">content strategy, SEO optimization, research-led content, editorial workflows, and content production</strong>. My work spans keyword research, on-page SEO, competitive intelligence, and structuring clear, factual content for traditional search and AI-powered answer engines (<strong className="text-[#1b1c1a] font-semibold">GEO &amp; AEO</strong>). Alongside my industry experience, I hold an <strong className="text-[#1b1c1a] font-semibold">MBA in Systems</strong>, completed professional training in <strong className="text-[#1b1c1a] font-semibold">Introduction to Generative Engine Optimization</strong> (Coursera), <strong className="text-[#1b1c1a] font-semibold">HubSpot Content Marketing Certification</strong>, <strong className="text-[#1b1c1a] font-semibold">Google Prompting Essentials</strong>, and the <strong className="text-[#1b1c1a] font-semibold">Be10x AI tools program</strong>, and authored my published poetry book <em>Not Unworthy</em>.
             </p>
 
             {/* Quick Progression Summary */}
             <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#55433c]">
               <div className="bg-white p-3.5 rounded-xl border border-[#e4e2df]">
                 <span className="font-semibold text-[#994524] block mb-0.5">
-                  Allied Market Research &amp; The Insight Partners
+                  Market Research Foundation
                 </span>
                 <span>
-                  Primary &amp; secondary research, market estimation, ICT/Semiconductor/Automotive reports, client pre-sales &amp; post-sales solutions.
+                  I conducted primary &amp; secondary research, market estimation, ICT/Semiconductor/Automotive reports, and client pre-sales &amp; post-sales solutions.
                 </span>
               </div>
               <div className="bg-white p-3.5 rounded-xl border border-[#e4e2df]">
                 <span className="font-semibold text-[#994524] block mb-0.5">
-                  Perfect Clicks, Grand View Research &amp; IMARC Group
+                  B2B Content, SEO &amp; Editorial Operations
                 </span>
                 <span>
-                  SEO blogs, articles, listicles, FAQs, Semrush keyword research, on-page SEO, Well of Insights Quora strategy (60–70 to 250+ avg views), content workflows &amp; SEO quality checks.
+                  I created SEO blogs, articles, listicles, and FAQs; led Semrush keyword research, on-page SEO, Well of Insights Quora strategy (60–70 to 250+ avg views), content workflows &amp; SEO quality checks.
                 </span>
               </div>
             </div>

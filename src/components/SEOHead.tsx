@@ -46,12 +46,12 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
     upsertMeta('property', 'og:description', routeConfig.description);
     upsertMeta('property', 'og:url', canonicalUrl);
     upsertMeta('property', 'og:type', 'profile');
-    upsertMeta('property', 'og:image', SITE_CONFIG.HERO_IMAGE);
+    upsertMeta('property', 'og:image', SITE_CONFIG.OG_IMAGE);
     upsertMeta('name', 'twitter:card', 'summary_large_image');
     upsertMeta('name', 'twitter:url', canonicalUrl);
     upsertMeta('name', 'twitter:title', routeConfig.title);
     upsertMeta('name', 'twitter:description', routeConfig.description);
-    upsertMeta('name', 'twitter:image', SITE_CONFIG.HERO_IMAGE);
+    upsertMeta('name', 'twitter:image', SITE_CONFIG.OG_IMAGE);
 
     // Remove keywords meta tag if present
     const keywordsMeta = document.querySelector('meta[name="keywords"]');

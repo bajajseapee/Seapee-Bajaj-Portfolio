@@ -72,7 +72,7 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
             </h2>
           </div>
           <p className="text-sm md:text-base text-[#55433c] max-w-md leading-relaxed">
-            Hands-on SEO content strategy, B2B writing, market research translation, GEO/AEO optimization, and conversion-focused portfolio websites.
+            I help B2B brands, research teams, and professionals with hands-on SEO content strategy, B2B writing, market research translation, GEO/AEO optimization, and conversion-focused portfolio websites.
           </p>
         </div>
 

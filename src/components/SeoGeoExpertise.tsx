@@ -41,7 +41,7 @@ export const SeoGeoExpertise: React.FC<SeoGeoExpertiseProps> = ({ onNavigate }) 
               Search behaviour now spans traditional search engines, AI Overviews, and conversational AI platforms such as ChatGPT, Perplexity, and Gemini. My work focuses on the fundamentals that help content perform across all of them: credible research, clear search intent alignment, strong structure, and human-quality writing.
             </p>
             <p className="text-xs sm:text-sm text-[#546252] mt-2 leading-relaxed">
-              My approach combines 10+ years of experience in market research, B2B content, and on-page SEO with structured information architecture, direct answers, factual accuracy, contextual depth, and dedicated professional training in Generative Engine Optimization (<em>Introduction to Generative Engine Optimization</em>, Coursera, September 28, 2026).
+              My approach combines my research background, B2B content strategy, and on-page SEO with structured information architecture, direct answers, factual accuracy, contextual depth, and dedicated professional training in Generative Engine Optimization (<em>Introduction to Generative Engine Optimization</em>, Coursera, September 28, 2026).
             </p>
           </div>
 

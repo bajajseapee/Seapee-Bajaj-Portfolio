@@ -19,16 +19,16 @@ export const PROFILE_INFO = {
   title: SITE_CONFIG.TITLE,
   corePositioning: SITE_CONFIG.CORE_POSITIONING,
   supportingPositioning: SITE_CONFIG.SUPPORTING_POSITIONING,
-  badge: "10+ years of experience in market research • B2B content • SEO • GEO & AI search",
+  badge: "Market research • B2B content • SEO • GEO & AI search",
   email: SITE_CONFIG.EMAIL,
   location: SITE_CONFIG.LOCATION,
   heroImage: SITE_CONFIG.HERO_IMAGE,
   avatarImage: SITE_CONFIG.AVATAR_IMAGE,
-  headline: "Strategy, Storytelling & Search — Thoughtfully Combined.",
+  headline: "B2B SEO Content Strategist, Research-Led and Reader-Focused",
   subheadline:
     "I combine research, strategy, storytelling and search to create content that is useful to readers, valuable to businesses, and discoverable across traditional and AI-driven search.",
   aboutIntro:
-    "I’m Seapee Bajaj, a research-driven content strategist and SEO professional with 10+ years of experience across market research, B2B content, SEO and digital content strategy.",
+    "I’m Seapee Bajaj, a research-driven content strategist and SEO professional with 9+ years of experience across market research, B2B content, SEO and digital content strategy.",
   topics: ["SEO Content", "B2B", "Research", "GEO & AI Search", "Content Strategy"] as const,
 };
 
@@ -39,7 +39,7 @@ export const SERVICES: ServiceItem[] = [
     phase: "Discovery & Intent",
     title: "SEO Content Strategy",
     description:
-      "Build search-aligned content ecosystems around real audience queries, keyword research, search intent mapping, and E-E-A-T principles. Designed to improve organic discoverability while remaining genuinely helpful to human readers.",
+      "I build search-aligned content ecosystems around real audience queries, keyword research, search intent mapping, and E-E-A-T principles—designed to improve organic discoverability while remaining genuinely helpful to human readers.",
     icon: "search",
     deliverables: [
       "Keyword research & search intent mapping across funnel stages",
@@ -48,7 +48,7 @@ export const SERVICES: ServiceItem[] = [
       "E-E-A-T alignment & editorial briefs for research-backed articles"
     ],
     idealFor: "B2B companies, research-driven brands, and digital teams seeking sustainable organic search visibility.",
-    outcome: "Clear, search-intent-aligned content architecture that supports long-term organic discoverability."
+    outcome: "I deliver clear, search-intent-aligned content architecture that supports long-term organic discoverability."
   },
   {
     id: "b2b-content-writing",
@@ -56,7 +56,7 @@ export const SERVICES: ServiceItem[] = [
     phase: "B2B Narrative",
     title: "B2B Content Writing",
     description:
-      "Create clear, authoritative B2B blogs, articles, listicles, industry primers, and thought-leadership pieces that connect technical or business concepts with practical buyer considerations.",
+      "I create clear, authoritative B2B blogs, articles, listicles, industry primers, and thought-leadership pieces that connect technical or business concepts with practical buyer considerations.",
     icon: "article",
     deliverables: [
       "In-depth B2B blog posts, industry articles & executive primers",
@@ -65,7 +65,7 @@ export const SERVICES: ServiceItem[] = [
       "Brand-aligned editorial review, editing & proofreading"
     ],
     idealFor: "B2B technology firms, industrial & manufacturing companies, and consulting organizations.",
-    outcome: "Reader-focused B2B content that communicates domain credibility and supports informed decision-making."
+    outcome: "I produce reader-focused B2B content that communicates domain credibility and supports informed decision-making."
   },
   {
     id: "b2b-research",
@@ -73,7 +73,7 @@ export const SERVICES: ServiceItem[] = [
     phase: "Empirical Depth",
     title: "Research-Driven Content",
     description:
-      "Turn primary and secondary market research, competitive intelligence, and industry data into structured, readable narratives. Grounded in hands-on experience across global market research organizations.",
+      "I turn primary and secondary market research, competitive intelligence, and industry data into structured, readable narratives grounded in my research background.",
     icon: "query_stats",
     deliverables: [
       "Market research report summaries, blogs & executive briefings",
@@ -82,7 +82,7 @@ export const SERVICES: ServiceItem[] = [
       "Fact-checked, source-grounded editorial assets"
     ],
     idealFor: "Market research firms, B2B intelligence platforms, and data-rich enterprises.",
-    outcome: "Credible, well-researched content that translates complex market data into clear business takeaways."
+    outcome: "I craft credible, well-researched content that translates complex market data into clear business takeaways."
   },
   {
     id: "geo-optimization",
@@ -90,7 +90,7 @@ export const SERVICES: ServiceItem[] = [
     phase: "AI Search Visibility",
     title: "GEO / Generative Engine Optimization",
     description:
-      "Structure content with clear entity relationships, factual precision, and citation-ready depth to support discoverability across generative AI search systems such as ChatGPT, Perplexity, and Gemini.",
+      "I structure content with clear entity relationships, factual precision, and citation-ready depth to support discoverability across generative AI search systems such as ChatGPT, Perplexity, and Gemini.",
     icon: "psychology",
     deliverables: [
       "Entity-clear headings, definitions & structured context blocks",
@@ -99,7 +99,7 @@ export const SERVICES: ServiceItem[] = [
       "Schema.org & structured metadata alignment"
     ],
     idealFor: "Brands and professionals looking to strengthen their content's clarity and relevance for AI-driven search experiences.",
-    outcome: "Well-structured, authoritative content designed to be easily parsed and understood by generative search engines."
+    outcome: "I deliver well-structured, authoritative content designed to be easily parsed and understood by generative search engines."
   },
   {
     id: "aeo-optimization",
@@ -107,7 +107,7 @@ export const SERVICES: ServiceItem[] = [
     phase: "Direct Answers",
     title: "AEO / Answer Engine Optimization",
     description:
-      "Format and refine content to directly answer high-intent user questions for AI Overviews, featured snippets, Quora knowledge hubs, and conversational search queries.",
+      "I format and refine content to directly answer high-intent user questions for AI Overviews, featured snippets, Quora knowledge hubs, and conversational search queries.",
     icon: "quiz",
     deliverables: [
       "Question-led heading hierarchy & concise direct-answer blocks",
@@ -116,7 +116,7 @@ export const SERVICES: ServiceItem[] = [
       "Conversational query alignment & structured formatting"
     ],
     idealFor: "Knowledge-driven brands aiming to provide clear, direct answers where audiences search and ask questions.",
-    outcome: "Scannable, answer-first content that addresses user questions clearly and directly."
+    outcome: "I create scannable, answer-first content that addresses user questions clearly and directly."
   },
   {
     id: "content-optimization",
@@ -124,7 +124,7 @@ export const SERVICES: ServiceItem[] = [
     phase: "Refinement & CRO",
     title: "Content Optimization",
     description:
-      "Audit, rewrite, and upgrade existing web pages, blog posts, and landing pages for stronger search intent alignment, readability, on-page SEO, internal linking, and user-focused conversion flow.",
+      "I audit, rewrite, and upgrade existing web pages, blog posts, and landing pages for stronger search intent alignment, readability, on-page SEO, internal linking, and user-focused conversion flow.",
     icon: "tune",
     deliverables: [
       "On-page SEO audits (titles, meta descriptions, headings, image alt text)",
@@ -133,7 +133,7 @@ export const SERVICES: ServiceItem[] = [
       "Clarity, tone, and readability editing"
     ],
     idealFor: "Teams with existing content libraries or web pages that need sharper positioning, structure, and search alignment.",
-    outcome: "Upgraded content assets with clearer messaging, stronger on-page SEO fundamentals, and improved reader flow."
+    outcome: "I upgrade content assets with clearer messaging, stronger on-page SEO fundamentals, and improved reader flow."
   },
   {
     id: "ai-assisted-strategy",
@@ -141,7 +141,7 @@ export const SERVICES: ServiceItem[] = [
     phase: "Human-Led Workflow",
     title: "AI-Assisted Content Strategy",
     description:
-      "Combine structured AI prompting and workflow efficiency with rigorous human research, fact-checking, and editorial judgment so content remains natural, accurate, and genuinely useful.",
+      "I combine structured AI prompting and workflow efficiency with rigorous human research, fact-checking, and editorial judgment so content remains natural, accurate, and genuinely useful.",
     icon: "auto_awesome",
     deliverables: [
       "Human-in-the-loop AI editorial workflows & quality checklists",
@@ -150,7 +150,7 @@ export const SERVICES: ServiceItem[] = [
       "Brand voice consistency & factual verification standards"
     ],
     idealFor: "Content teams adopting AI tools who want to protect editorial quality, originality, and human voice.",
-    outcome: "Efficient content workflows that preserve natural human writing, accuracy, and brand credibility."
+    outcome: "I build efficient content workflows that preserve natural human writing, accuracy, and brand credibility."
   },
   {
     id: "website-conversion",
@@ -158,7 +158,7 @@ export const SERVICES: ServiceItem[] = [
     phase: "Personal Branding",
     title: "Portfolio Website Creation",
     description:
-      "Research-led, conversion-focused personal portfolio websites for professionals and creators. Built to communicate your expertise clearly, support search discoverability, and turn visitors into inquiries.",
+      "I design and write research-led, conversion-focused personal portfolio websites for professionals and creators—built to communicate your expertise clearly, support search discoverability, and turn visitors into inquiries.",
     icon: "web",
     deliverables: [
       "Personal brand positioning, information architecture & copywriting",
@@ -167,7 +167,7 @@ export const SERVICES: ServiceItem[] = [
       "Clean, responsive, fast-loading portfolio implementation"
     ],
     idealFor: "Consultants, strategists, writers, researchers, and creators who want a credible, search-ready portfolio website.",
-    outcome: "A professional, research-led personal portfolio website that presents your work clearly and makes it easy for clients or recruiters to reach out."
+    outcome: "I deliver a professional, research-led personal portfolio website that presents your work clearly and makes it easy for clients or recruiters to reach out."
   }
 ];
 
@@ -279,13 +279,13 @@ export const CASE_STUDIES: DetailedCaseStudyItem[] = [
     problem:
       "Market research insights posted on community platforms often struggle to attract readership when presented as dry, report-heavy excerpts with generic titles.",
     research:
-      "Analyzed how readers on Quora interact with industry and market-trend topics, identifying that curiosity-driven questions, relatable framing, and scannable answers perform significantly better than formal corporate summaries.",
+      "I analyzed how readers on Quora interact with industry and market-trend topics, identifying that curiosity-driven questions, relatable framing, and scannable answers perform significantly better than formal corporate summaries.",
     strategy:
-      "Repositioned the 'Well of Insights' Quora page around reader curiosity—combining credible market research takeaways with engaging, witty headlines and accessible narrative structure.",
+      "I repositioned the 'Well of Insights' Quora page around reader curiosity—combining credible market research takeaways with engaging, witty headlines and accessible narrative structure.",
     execution:
-      "Managed the Well of Insights Quora page, crafting research-backed posts with strategic headlines, clear formatting, and optimized topic alignment to make complex industry insights approachable.",
+      "I managed the Well of Insights Quora page, crafting research-backed posts with strategic headlines, clear formatting, and optimized topic alignment to make complex industry insights approachable.",
     outcome:
-      "Increased average Quora views from approximately 60–70 to over 250 per post.",
+      "I increased average Quora views from approximately 60–70 to over 250 per post.",
     keyTakeaways: [
       "Strong, curiosity-led headlines significantly improve initial engagement with research content.",
       "Translating dense market data into conversational, structured takeaways makes insights easier to read and share.",
@@ -309,13 +309,13 @@ export const CASE_STUDIES: DetailedCaseStudyItem[] = [
     problem:
       "High-volume B2B and market-research publishing requires consistent editorial standards, accurate research alignment, and reliable on-page SEO checks across multiple contributors and teams.",
     research:
-      "Evaluated content production stages across research, writing, SEO review, and design handoffs to identify where formatting, metadata, or factual alignment needed tighter structure.",
+      "I evaluated content production stages across research, writing, SEO review, and design handoffs to identify where formatting, metadata, or factual alignment needed tighter structure.",
     strategy:
-      "Established repeatable content workflows combining editorial curation, structured SEO checklists, and cross-functional coordination between marketing, SEO, research, and design teams.",
+      "I established repeatable content workflows combining editorial curation, structured SEO checklists, and cross-functional coordination between marketing, SEO, research, and design teams.",
     execution:
-      "Managed day-to-day content production, curation, and publishing; performed on-page SEO and editorial quality checks; and supported team members with research and content guidance.",
+      "I managed day-to-day content production, curation, and publishing; performed on-page SEO and editorial quality checks; and supported team members with research and content guidance.",
     outcome:
-      "Strengthened brand consistency, editorial accuracy, on-page SEO alignment, and timely content delivery across publishing workflows.",
+      "I strengthened brand consistency, editorial accuracy, on-page SEO alignment, and timely content delivery across publishing workflows.",
     keyTakeaways: [
       "Clear editorial and SEO checklists prevent quality drift in ongoing B2B publishing.",
       "Close collaboration between research, SEO, marketing, and design keeps content both accurate and engaging.",
@@ -337,13 +337,13 @@ export const CASE_STUDIES: DetailedCaseStudyItem[] = [
     problem:
       "A brand homepage needs to immediately communicate what the brand stands for, who the products are for, and why a visitor should explore further—while also supporting organic search clarity and conversion flow.",
     research:
-      "Reviewed brand positioning, product value propositions, audience expectations, and search-intent signals to identify opportunities for clearer hierarchy and stronger user-centric copy.",
+      "I reviewed brand positioning, product value propositions, audience expectations, and search-intent signals to identify opportunities for clearer hierarchy and stronger user-centric copy.",
     strategy:
-      "Developed a homepage rewrite framework balancing clean brand storytelling with SEO-aware heading structure and conversion rate optimization (CRO) principles.",
+      "I developed a homepage rewrite framework balancing clean brand storytelling with SEO-aware heading structure and conversion rate optimization (CRO) principles.",
     execution:
-      "Rewrote hero messaging, value-proposition blocks, product discovery sections, and calls to action with a focus on clarity, reader flow, and search-friendly structure.",
+      "I rewrote hero messaging, value-proposition blocks, product discovery sections, and calls to action with a focus on clarity, reader flow, and search-friendly structure.",
     outcome:
-      "Delivered a structured, user-focused homepage narrative that aligns brand voice with clear SEO hierarchy and conversion-oriented page flow.",
+      "I delivered a structured, user-focused homepage narrative that aligns brand voice with clear SEO hierarchy and conversion-oriented page flow.",
     keyTakeaways: [
       "Homepage copy works best when it answers visitor questions immediately rather than relying on vague slogans.",
       "SEO and CRO complement each other when headings and CTAs follow a logical reader journey.",
@@ -363,13 +363,13 @@ export const CASE_STUDIES: DetailedCaseStudyItem[] = [
     problem:
       "Advanced analytical concepts such as Causal Chain Analysis in enterprise AI can feel abstract and overly technical to business decision-makers who need to understand practical value.",
     research:
-      "Studied how Causal Chain Analysis works in business intelligence and root-cause diagnostics, mapping technical mechanisms to real-world operational questions.",
+      "I studied how Causal Chain Analysis works in business intelligence and root-cause diagnostics, mapping technical mechanisms to real-world operational questions.",
     strategy:
-      "Structured the narrative to move progressively from a clear definition of the problem to step-by-step causal logic and practical business applications.",
+      "I structured the narrative to move progressively from a clear definition of the problem to step-by-step causal logic and practical business applications.",
     execution:
-      "Created research-driven content that explained Causal Chain Analysis in plain, authoritative language without oversimplifying the underlying analytical rigor.",
+      "I created research-driven content that explained Causal Chain Analysis in plain, authoritative language without oversimplifying the underlying analytical rigor.",
     outcome:
-      "Produced clear, accessible B2B technology content that bridges complex AI methodology and practical business understanding.",
+      "I produced clear, accessible B2B technology content that bridges complex AI methodology and practical business understanding.",
     keyTakeaways: [
       "Technical B2B content succeeds when it connects how a system works to why it matters for decision-makers.",
       "Step-by-step examples make abstract analytical frameworks concrete and memorable.",
@@ -390,13 +390,13 @@ export const CASE_STUDIES: DetailedCaseStudyItem[] = [
     problem:
       "Chemical and ingredient market stakeholders require clear competitive intelligence, supply-demand context, and application insights rather than fragmented raw data tables.",
     research:
-      "Conducted secondary and market research on the Sorbitol market, examining key industry players, application segments, market drivers, and competitive positioning.",
+      "I conducted secondary and market research on the Sorbitol market, examining key industry players, application segments, market drivers, and competitive positioning.",
     strategy:
-      "Organized the competitive and market analysis into a logical narrative covering market drivers, segment dynamics, and strategic competitive considerations.",
+      "I organized the competitive and market analysis into a logical narrative covering market drivers, segment dynamics, and strategic competitive considerations.",
     execution:
-      "Converted raw market research and competitive intelligence into structured, decision-useful business content with clear headings and actionable takeaways.",
+      "I converted raw market research and competitive intelligence into structured, decision-useful business content with clear headings and actionable takeaways.",
     outcome:
-      "Delivered a comprehensive, reader-friendly market and competitive intelligence asset grounded in structured industry research.",
+      "I delivered a comprehensive, reader-friendly market and competitive intelligence asset grounded in structured industry research.",
     keyTakeaways: [
       "Competitive intelligence is most valuable when synthesized into clear strategic patterns.",
       "Structured headings and segment breakdowns help business readers locate relevant insights quickly.",
@@ -531,7 +531,7 @@ export const WRITING_TOPICS: WritingTopicItem[] = [
     title: "How Market Research Makes B2B Content Better",
     category: "B2B & Market Research",
     summary:
-      "Lessons from working with Allied Market Research, The Insight Partners, Grand View Research, and IMARC Group on turning industry data into compelling B2B narratives.",
+      "Lessons from my research background on turning industry data into compelling B2B narratives.",
     keyQuestionsAnswered: [
       "How does primary and secondary research strengthen B2B storytelling?",
       "How do you translate market sizing and competitive analysis for readers?",
@@ -542,8 +542,8 @@ export const WRITING_TOPICS: WritingTopicItem[] = [
   },
   {
     id: "ten-years-market-research-content-seo",
-    slug: "what-10-years-of-experience-across-market-research-and-content-taught-me-about-seo",
-    title: "What 10+ Years of Experience Across Market Research and Content Taught Me About SEO",
+    slug: "what-my-experience-across-market-research-and-content-taught-me-about-seo",
+    title: "What My Experience Across Market Research and Content Taught Me About SEO",
     category: "SEO Strategy",
     summary:
       "Reflections on evolving from market estimation and industry reports to B2B content strategy, SEO optimization, and AI-search readiness.",
@@ -843,11 +843,11 @@ export const CREATIVE_WORKS: CreativeItem[] = [
 export const STATS: StatItem[] = [
   {
     id: "experience",
-    value: "10+",
+    value: "9+",
     label: "Years of Experience",
     icon: "history_edu",
     subtext: "Market Research, B2B Content & SEO",
-    detail: "10+ years of experience across Allied Market Research, The Insight Partners, Grand View Research, and IMARC Group spanning market research, B2B content, SEO, and digital content strategy."
+    detail: "My background spans market research, B2B content, SEO, and digital content strategy across global research and digital teams."
   },
   {
     id: "rank-reach",
@@ -855,7 +855,7 @@ export const STATS: StatItem[] = [
     label: "Search & AI Visibility",
     icon: "trending_up",
     subtext: "Traditional & Generative Search",
-    detail: "Combining keyword research, search intent, on-page SEO, and E-E-A-T with GEO and AEO structuring for discoverability across Google Search, AI Overviews, ChatGPT, Perplexity, and Gemini."
+    detail: "I combine keyword research, search intent, on-page SEO, and E-E-A-T with GEO and AEO structuring for discoverability across Google Search, AI Overviews, ChatGPT, Perplexity, and Gemini."
   },
   {
     id: "empirical",
@@ -863,7 +863,7 @@ export const STATS: StatItem[] = [
     label: "B2B & Market Intelligence",
     icon: "analytics",
     subtext: "Primary & Secondary Research Rigor",
-    detail: "Strong foundation in primary and secondary research, market estimation, data analysis, and competitive intelligence across ICT, Semiconductor, Automotive, and B2B sectors."
+    detail: "I built a strong foundation in primary and secondary research, market estimation, data analysis, and competitive intelligence across ICT, Semiconductor, Automotive, and B2B sectors."
   },
   {
     id: "refined",
@@ -871,7 +871,7 @@ export const STATS: StatItem[] = [
     label: "Editorial & Storytelling",
     icon: "auto_stories",
     subtext: "Human-Quality Writing & Editing",
-    detail: "Published author of 'Not Unworthy' (Notion Press) with an MBA in Systems—blending analytical structure, AI-assisted efficiency, and natural human editing."
+    detail: "I am the published author of 'Not Unworthy' (Notion Press) and hold an MBA in Systems—blending analytical structure, AI-assisted efficiency, and natural human editing."
   }
 ];
 
@@ -937,7 +937,7 @@ export const VALUE_PROPOSITIONS: ValuePoint[] = [
   {
     icon: "menu_book",
     headline: "Research is part of my foundation",
-    description: "— built on hands-on primary and secondary research, market estimation, and industry analysis across Allied Market Research, The Insight Partners, Grand View Research, and IMARC Group."
+    description: "— built on my research background in primary and secondary research, market estimation, and industry analysis."
   },
   {
     icon: "join",
@@ -1016,7 +1016,7 @@ export const CERTIFICATIONS = [
     date: "Completed: September 28, 2026",
     score: "Coursera · GEO & AI Search",
     description:
-      "Completed professional development and training on Coursera focused on Generative Engine Optimization (GEO), generative search, and structuring content for AI-powered search and answer engines—complementing 10+ years of experience in market research, B2B content, and SEO.",
+      "I completed professional development and training on Coursera focused on Generative Engine Optimization (GEO), generative search, and structuring content for AI-powered search and answer engines—complementing my experience in market research, B2B content, and SEO.",
     icon: "travel_explore"
   },
   {

@@ -98,7 +98,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
               SEO, Content Strategy &amp; B2B Research Case Studies
             </h2>
             <p className="text-base text-[#55433c] mt-3 leading-relaxed">
-              Structured breakdowns of real projects across Quora content strategy, B2B content workflows, website conversion copywriting, AI concept translation, and competitive intelligence.
+              Structured breakdowns of real projects I led and executed across Quora content strategy, B2B content workflows, website conversion copywriting, AI concept translation, and competitive intelligence.
             </p>
             <div className="pt-3 flex flex-wrap items-center gap-3 text-xs font-semibold">
               <a

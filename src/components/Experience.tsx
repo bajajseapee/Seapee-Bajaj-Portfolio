@@ -28,7 +28,7 @@ export const Experience: React.FC<ExperienceProps> = ({ onNavigate }) => {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-2xl">
             <span className="text-xs uppercase tracking-widest text-[#994524] font-semibold">
-              Career Progression • 10+ Years of Experience
+              Career Progression • My Professional Journey
             </span>
             <h2
               id="experience-heading"

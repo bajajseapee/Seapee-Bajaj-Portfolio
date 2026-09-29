@@ -198,7 +198,7 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({
               Resume &amp; Professional Dossier
             </h2>
             <p className="text-base text-[#55433c] mt-3 leading-relaxed">
-              A complete view of my 10+ years of experience across B2B SEO content strategy, GEO/AEO optimization, editorial workflows, and market research—formatted for quick scanning on screen or fullscreen viewing.
+              A complete view of my experience across B2B SEO content strategy, GEO/AEO optimization, editorial workflows, and market research—formatted for quick scanning on screen or fullscreen viewing.
             </p>
           </div>
 

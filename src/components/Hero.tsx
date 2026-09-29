@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { PROFILE_INFO } from '../data/portfolioData';
 
 interface HeroProps {
@@ -18,6 +19,8 @@ export const Hero: React.FC<HeroProps> = ({
   onFilterTopic,
   isHomeRoute = true,
 }) => {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section
       id="hero"
@@ -43,13 +46,12 @@ export const Hero: React.FC<HeroProps> = ({
 
           {/* Main H1 Headline on Homepage, Styled Paragraph on Sub-Routes (ensuring exactly one H1 per page) */}
           {isHomeRoute ? (
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-[44px] lg:text-[52px] text-[#1b1c1a] tracking-tight leading-[1.14] mt-1 font-medium">
-              <span className="sr-only">Seapee Bajaj — SEO Content Strategist, B2B Content &amp; GEO Specialist: </span>
-              Strategy, <span className="italic font-normal text-[#994524]">Storytelling</span> &amp; Search — Thoughtfully Combined.
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-[44px] lg:text-[50px] text-[#1b1c1a] tracking-tight leading-[1.15] mt-1 font-medium">
+              B2B SEO Content Strategist, Research-Led and Reader-Focused
             </h1>
           ) : (
-            <p className="font-serif text-3xl sm:text-4xl md:text-[44px] lg:text-[52px] text-[#1b1c1a] tracking-tight leading-[1.14] mt-1 font-medium">
-              Strategy, <span className="italic font-normal text-[#994524]">Storytelling</span> &amp; Search — Thoughtfully Combined.
+            <p className="font-serif text-3xl sm:text-4xl md:text-[44px] lg:text-[50px] text-[#1b1c1a] tracking-tight leading-[1.15] mt-1 font-medium">
+              B2B SEO Content Strategist, Research-Led and Reader-Focused
             </p>
           )}
 
@@ -182,6 +184,36 @@ export const Hero: React.FC<HeroProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Compact Testimonial Strip Directly Under the Hero */}
+      <motion.div
+        className="max-w-[1280px] mx-auto mt-8 lg:mt-10 relative z-10"
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+        whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1, margin: '80px 0px 0px 0px' }}
+        transition={{
+          duration: 0.45,
+          delay: 0.12,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+      >
+        <figure className="bg-white/90 rounded-xl px-5 py-4 sm:px-6 sm:py-4 border border-[#e4e2df] shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-6">
+          <div className="flex items-start sm:items-center gap-3">
+            <span
+              aria-hidden="true"
+              className="font-serif text-3xl sm:text-4xl leading-none text-[#994524]/40 select-none shrink-0 mt-0.5 sm:mt-0"
+            >
+              &ldquo;
+            </span>
+            <blockquote className="font-serif italic text-sm sm:text-base text-[#1b1c1a] leading-relaxed">
+              &ldquo;Seapee raised the bar for our whole team. Her content structure and creative approach caught the eye before the first line was even read.&rdquo;
+            </blockquote>
+          </div>
+          <figcaption className="text-xs text-[#546252] font-medium sm:whitespace-nowrap pl-6 sm:pl-0 shrink-0">
+            <cite className="not-italic font-semibold text-[#1b1c1a]">Supradip Baul</cite>, Manager, Allied Analytics
+          </figcaption>
+        </figure>
+      </motion.div>
     </section>
   );
 };
