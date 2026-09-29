@@ -6,8 +6,8 @@ export const Process: React.FC = () => {
   const [activeStep, setActiveStep] = useState<ProcessStep | null>(null);
 
   return (
-    <section className="w-full px-5 md:px-10 lg:px-16 py-20 lg:py-28 bg-[#fbf9f6]" id="process">
-      <div className="max-w-[1280px] mx-auto flex flex-col gap-12 lg:gap-16">
+    <section className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#fbf9f6]" id="process">
+      <div className="max-w-[1280px] mx-auto flex flex-col gap-8 lg:gap-10">
         {/* Header */}
         <div className="flex flex-col gap-2 max-w-xl">
           <span className="text-xs uppercase tracking-widest text-[#546252] font-semibold">

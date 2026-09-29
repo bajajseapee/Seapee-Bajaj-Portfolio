@@ -7,7 +7,7 @@ export const PublishedBook: React.FC = () => {
 
   return (
     <section
-      className="w-full px-5 md:px-10 lg:px-16 py-20 lg:py-28 bg-[#f5f3f0] border-t border-[#e4e2df] relative overflow-hidden"
+      className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#f5f3f0] border-t border-[#e4e2df] relative overflow-hidden"
       id="published-work"
       aria-labelledby="published-work-heading"
     >

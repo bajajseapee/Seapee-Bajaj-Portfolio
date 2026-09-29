@@ -19,7 +19,7 @@ export const Hero: React.FC<HeroProps> = ({
   return (
     <section
       id="hero"
-      className="relative w-full px-5 md:px-10 lg:px-16 py-12 lg:py-20 overflow-hidden"
+      className="relative w-full px-5 md:px-10 lg:px-16 py-10 lg:py-14 overflow-hidden"
       aria-label="Introduction — Seapee Bajaj"
     >
       {/* Atmospheric subtle decorative aura */}

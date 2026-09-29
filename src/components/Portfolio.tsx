@@ -75,8 +75,8 @@ export const Portfolio: React.FC<PortfolioProps> = ({
   }, [allProjects, activeCategory, searchQuery]);
 
   return (
-    <section className="w-full px-5 md:px-10 lg:px-16 py-20 lg:py-28 bg-[#f5f3f0]" id="selected-work">
-      <div className="max-w-[1280px] mx-auto flex flex-col gap-10">
+    <section className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#f5f3f0]" id="selected-work">
+      <div className="max-w-[1280px] mx-auto flex flex-col gap-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="flex flex-col gap-2 max-w-2xl">

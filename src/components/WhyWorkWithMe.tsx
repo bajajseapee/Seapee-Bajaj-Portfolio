@@ -4,7 +4,7 @@ import { PortfolioIcon } from './PortfolioIcon';
 
 export const WhyWorkWithMe: React.FC = () => {
   return (
-    <section className="w-full px-5 md:px-10 lg:px-16 py-20 lg:py-28 bg-[#f5f3f0]" id="value-proposition">
+    <section className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#f5f3f0]" id="value-proposition">
       <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
         {/* Left Anchor */}
         <div className="lg:col-span-5 flex flex-col gap-3">

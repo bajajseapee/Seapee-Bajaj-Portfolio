@@ -21,10 +21,10 @@ export const SeoGeoExpertise: React.FC<SeoGeoExpertiseProps> = ({ onNavigate }) 
   return (
     <section
       id="seo-geo-expertise"
-      className="w-full px-5 md:px-10 lg:px-16 py-20 lg:py-28 bg-[#f5f3f0] border-t border-[#e4e2df]"
+      className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#f5f3f0] border-t border-[#e4e2df]"
       aria-labelledby="seo-geo-heading"
     >
-      <div className="max-w-[1280px] mx-auto flex flex-col gap-12">
+      <div className="max-w-[1280px] mx-auto flex flex-col gap-8 lg:gap-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-2xl">
@@ -41,7 +41,7 @@ export const SeoGeoExpertise: React.FC<SeoGeoExpertiseProps> = ({ onNavigate }) 
               Search behaviour now spans traditional search engines, AI Overviews, and conversational AI platforms such as ChatGPT, Perplexity, and Gemini. My work focuses on the fundamentals that help content perform across all of them: credible research, clear search intent alignment, strong structure, and human-quality writing.
             </p>
             <p className="text-xs sm:text-sm text-[#546252] mt-2 leading-relaxed">
-              My approach combines 9+ years of professional experience in market research, B2B content, and on-page SEO with structured information architecture, direct answers, factual accuracy, contextual depth, and dedicated professional training in Generative Engine Optimization (<em>Introduction to Generative Engine Optimization</em>, Coursera, September 28, 2026).
+              My approach combines 10+ years of experience in market research, B2B content, and on-page SEO with structured information architecture, direct answers, factual accuracy, contextual depth, and dedicated professional training in Generative Engine Optimization (<em>Introduction to Generative Engine Optimization</em>, Coursera, September 28, 2026).
             </p>
           </div>
 

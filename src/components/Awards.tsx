@@ -46,7 +46,7 @@ export const Awards: React.FC = () => {
   return (
     <section
       id="awards"
-      className="w-full px-5 md:px-10 lg:px-16 py-20 lg:py-28 bg-[#f5f3f0] border-t border-[#e4e2df] relative overflow-hidden"
+      className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#f5f3f0] border-t border-[#e4e2df] relative overflow-hidden"
       aria-labelledby="awards-heading"
     >
       {/* Ambient background accent */}
@@ -54,7 +54,7 @@ export const Awards: React.FC = () => {
 
       <div className="max-w-[1280px] mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col gap-3 max-w-2xl mb-12 lg:mb-16">
+        <div className="flex flex-col gap-3 max-w-2xl mb-8 lg:mb-10">
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#994524]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#994524]" />
             <span>Achievements &amp; Credentials</span>

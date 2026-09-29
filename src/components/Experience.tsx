@@ -20,15 +20,15 @@ export const Experience: React.FC<ExperienceProps> = ({ onNavigate }) => {
   return (
     <section
       id="experience"
-      className="w-full px-5 md:px-10 lg:px-16 py-20 lg:py-28 bg-[#fbf9f6] border-t border-[#e4e2df]"
+      className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#fbf9f6] border-t border-[#e4e2df]"
       aria-labelledby="experience-heading"
     >
-      <div className="max-w-[1280px] mx-auto flex flex-col gap-12 lg:gap-16">
+      <div className="max-w-[1280px] mx-auto flex flex-col gap-8 lg:gap-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-2xl">
             <span className="text-xs uppercase tracking-widest text-[#994524] font-semibold">
-              Career Progression • 9+ Years
+              Career Progression • 10+ Years of Experience
             </span>
             <h2
               id="experience-heading"

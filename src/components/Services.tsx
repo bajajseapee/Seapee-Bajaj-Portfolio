@@ -53,11 +53,11 @@ interface ServicesProps {
 export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
   return (
     <section
-      className="w-full px-5 md:px-10 lg:px-16 py-20 lg:py-28 bg-[#fbf9f6]"
+      className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#fbf9f6]"
       id="services"
       aria-labelledby="services-heading"
     >
-      <div className="max-w-[1280px] mx-auto flex flex-col gap-12 lg:gap-16">
+      <div className="max-w-[1280px] mx-auto flex flex-col gap-8 lg:gap-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>

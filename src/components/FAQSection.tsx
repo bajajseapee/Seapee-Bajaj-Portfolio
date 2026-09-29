@@ -48,7 +48,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ onNavigate }) => {
     <section
       id="faq"
       aria-labelledby="faq-heading"
-      className="w-full px-5 md:px-10 lg:px-16 py-16 lg:py-24 bg-[#fbf9f6] border-t border-[#e4e2df]"
+      className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#fbf9f6] border-t border-[#e4e2df]"
     >
       <div className="max-w-[900px] mx-auto flex flex-col gap-10">
         {/* Section Header */}

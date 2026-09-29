@@ -126,7 +126,7 @@ export const Contact: React.FC<ContactProps> = ({
   );
 
   return (
-    <section className="w-full px-5 md:px-10 lg:px-16 py-20 lg:py-28 bg-[#fbf9f6] relative" id="contact">
+    <section className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#fbf9f6] relative" id="contact">
       <div className="max-w-[1080px] mx-auto bg-white p-8 sm:p-12 md:p-16 rounded-2xl shadow-xl border border-[#e4e2df] flex flex-col gap-10">
         {/* Header */}
         <div className="text-center flex flex-col items-center max-w-2xl mx-auto gap-2">

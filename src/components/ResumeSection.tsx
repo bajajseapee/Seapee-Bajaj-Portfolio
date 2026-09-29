@@ -172,7 +172,7 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({
   onOpenResumeModal,
   onContactClick,
 }) => {
-  const [activePageTab, setActivePageTab] = useState<'all' | 'page1' | 'page2'>('all');
+  const [activePageTab, setActivePageTab] = useState<'all' | 'page1' | 'page2'>('page1');
 
   const page1Experience = RESUME_DATA.experience.filter((item) => item.page === 1);
   const page2Experience = RESUME_DATA.experience.filter((item) => item.page === 2);
@@ -181,9 +181,9 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({
     <section
       id="resume"
       aria-labelledby="resume-section-heading"
-      className="w-full px-5 md:px-10 lg:px-16 py-20 lg:py-28 bg-[#f5f3f0] border-t border-[#e4e2df]"
+      className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#f5f3f0] border-t border-[#e4e2df]"
     >
-      <div className="max-w-[1280px] mx-auto flex flex-col gap-10 lg:gap-12">
+      <div className="max-w-[1280px] mx-auto flex flex-col gap-7 lg:gap-8">
         {/* Top Section Header & Strategic Action Bar */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <div className="max-w-2xl">
@@ -259,20 +259,7 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5" role="tablist" aria-label="Resume page view">
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activePageTab === 'all'}
-              onClick={() => setActivePageTab('all')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
-                activePageTab === 'all'
-                  ? 'bg-[#994524] text-white'
-                  : 'bg-[#fbf9f6] text-[#55433c] hover:bg-[#efeeeb]'
-              }`}
-            >
-              Full 2-Page View
-            </button>
+          <div className="flex flex-wrap items-center gap-1.5" role="tablist" aria-label="Resume page view">
             <button
               type="button"
               role="tab"
@@ -299,16 +286,29 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({
             >
               Page 2 (Research Roles, Education &amp; Awards)
             </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activePageTab === 'all'}
+              onClick={() => setActivePageTab('all')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+                activePageTab === 'all'
+                  ? 'bg-[#994524] text-white'
+                  : 'bg-[#fbf9f6] text-[#55433c] hover:bg-[#efeeeb]'
+              }`}
+            >
+              Both Pages
+            </button>
           </div>
         </div>
 
         {/* Authentic Paper Resume Container */}
-        <div className="grid grid-cols-1 gap-8 max-w-[980px] mx-auto w-full">
+        <div className="grid grid-cols-1 gap-6 max-w-[1280px] mx-auto w-full">
           {/* ==================== PAGE 1 ==================== */}
           {(activePageTab === 'all' || activePageTab === 'page1') && (
             <article
               aria-label="Resume Page 1"
-              className="bg-white rounded-2xl border border-[#dcd8d0] shadow-md p-6 sm:p-10 md:p-12 flex flex-col gap-7 relative"
+              className="bg-white rounded-2xl border border-[#dcd8d0] shadow-sm p-6 sm:p-8 flex flex-col gap-5 relative"
             >
               <div className="flex items-center justify-between text-[11px] uppercase tracking-widest text-[#88726b] font-semibold border-b border-[#efeeeb] pb-3">
                 <span>Curriculum Vitae · Page 1 of 2</span>
@@ -447,7 +447,7 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({
           {(activePageTab === 'all' || activePageTab === 'page2') && (
             <article
               aria-label="Resume Page 2"
-              className="bg-white rounded-2xl border border-[#dcd8d0] shadow-md p-6 sm:p-10 md:p-12 flex flex-col gap-7 relative"
+              className="bg-white rounded-2xl border border-[#dcd8d0] shadow-sm p-6 sm:p-8 flex flex-col gap-5 relative"
             >
               <div className="flex items-center justify-between text-[11px] uppercase tracking-widest text-[#88726b] font-semibold border-b border-[#efeeeb] pb-3">
                 <span>Curriculum Vitae · Page 2 of 2</span>

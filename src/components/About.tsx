@@ -45,7 +45,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
 
   return (
     <section
-      className="w-full px-5 md:px-10 lg:px-16 py-16 lg:py-24 bg-[#f5f3f0]"
+      className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#f5f3f0]"
       id="about"
       aria-labelledby="about-heading"
     >

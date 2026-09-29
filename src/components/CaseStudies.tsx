@@ -22,10 +22,10 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
   return (
     <section
       id="case-studies"
-      className="w-full px-5 md:px-10 lg:px-16 py-20 lg:py-28 bg-[#fbf9f6] border-t border-[#e4e2df]"
+      className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#fbf9f6] border-t border-[#e4e2df]"
       aria-labelledby="case-studies-heading"
     >
-      <div className="max-w-[1280px] mx-auto flex flex-col gap-12">
+      <div className="max-w-[1280px] mx-auto flex flex-col gap-8 lg:gap-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-2xl">
