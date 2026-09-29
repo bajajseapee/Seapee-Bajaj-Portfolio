@@ -57,22 +57,37 @@ export const Portfolio: React.FC<PortfolioProps> = ({
   }, [dynamicPortfolioItems]);
 
   const filteredProjects = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+
     return allProjects.filter((item) => {
       const matchesCategory =
         activeCategory === 'All' ||
         item.category === activeCategory ||
         item.categories.includes(activeCategory as any);
 
-      const matchesSearch =
-        searchQuery.trim() === '' ||
-        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.tag.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.type.toLowerCase().includes(searchQuery.toLowerCase());
+      if (!matchesCategory) return false;
+      if (!query) return true;
 
-      return matchesCategory && matchesSearch;
+      const searchableText = [
+        item.title,
+        item.tag,
+        item.description,
+        item.type,
+        item.platform || '',
+        item.year || '',
+        ...(item.deliverables || []),
+        item.challenge || '',
+        item.approach || '',
+        ...(item.keyInsights || []),
+      ]
+        .join(' ')
+        .toLowerCase();
+
+      return searchableText.includes(query);
     });
   }, [allProjects, activeCategory, searchQuery]);
+
+  const isFiltering = searchQuery.trim() !== '' || activeCategory !== 'All';
 
   return (
     <section className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#f5f3f0]" id="selected-work">
@@ -105,27 +120,55 @@ export const Portfolio: React.FC<PortfolioProps> = ({
           </div>
 
           {/* Search Box */}
-          <div className="relative w-full md:w-72">
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[18px]">
-              search
-            </span>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search published work..."
-              aria-label="Search published work"
-              className="w-full pl-9 pr-8 py-2 text-sm bg-white border border-[#e4e2df] rounded-lg focus:outline-none focus:border-[#994524] text-[#1b1c1a] placeholder:text-gray-400 transition-colors shadow-2xs"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs p-1"
-                aria-label="Clear search query"
+          <div className="flex flex-col gap-2 w-full md:w-80 shrink-0">
+            <div className="relative w-full">
+              <span
+                className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[#546252] text-[18px] pointer-events-none"
+                aria-hidden="true"
               >
-                ✕
-              </button>
-            )}
+                search
+              </span>
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Escape') {
+                    setSearchQuery('');
+                  }
+                }}
+                placeholder="Search portfolio by keyword..."
+                aria-label="Search published work by keyword"
+                className="w-full pl-10 pr-9 py-2.5 text-sm bg-white border border-[#e4e2df] rounded-lg focus:outline-none focus:border-[#994524] focus:ring-2 focus:ring-[#994524]/15 text-[#1b1c1a] placeholder:text-[#546252]/70 transition-all shadow-2xs"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#546252] hover:text-[#1b1c1a] text-xs p-1 rounded cursor-pointer"
+                  aria-label="Clear search query"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+            <div className="flex items-center justify-between text-xs text-[#546252] px-0.5">
+              <span aria-live="polite" className="tabular-nums">
+                Showing {filteredProjects.length} of {allProjects.length} projects
+              </span>
+              {isFiltering && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onSelectCategory('All');
+                    setSearchQuery('');
+                  }}
+                  className="text-[#994524] font-semibold hover:underline cursor-pointer"
+                >
+                  Reset
+                </button>
+              )}
+            </div>
           </div>
         </div>
 

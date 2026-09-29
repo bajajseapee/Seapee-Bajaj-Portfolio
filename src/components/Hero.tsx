@@ -113,7 +113,7 @@ export const Hero: React.FC<HeroProps> = ({
               )}
             </div>
 
-            {/* Right Column: 2 Buttons */}
+            {/* Right Column: 3 Buttons */}
             <div className="flex flex-col gap-2.5 sm:gap-3">
               <a
                 href="#resume"
@@ -134,6 +134,13 @@ export const Hero: React.FC<HeroProps> = ({
               >
                 <span>Read My Book</span>
                 <span className="material-symbols-outlined ml-1.5 text-[16px] sm:text-[18px]">menu_book</span>
+              </a>
+              <a
+                href="#testimonials"
+                className="w-full inline-flex items-center justify-center text-xs sm:text-sm font-semibold bg-white hover:bg-[#efeeeb] text-[#1b1c1a] hover:text-[#994524] transition-colors px-3 sm:px-5 py-3 rounded-lg border border-[#e4e2df] cursor-pointer whitespace-nowrap"
+              >
+                <span>Testimonials</span>
+                <span className="material-symbols-outlined ml-1.5 text-[16px] sm:text-[18px]">format_quote</span>
               </a>
             </div>
           </div>
