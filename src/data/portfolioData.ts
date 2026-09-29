@@ -1121,6 +1121,13 @@ export const FAQ_ITEMS: FaqItem[] = [
     relatedLink: { label: "Explore Published Book & Portfolio", path: "/book", sectionId: "published-work" }
   },
   {
+    id: "faq-not-unworthy-reviews",
+    question: "What do readers say about Not Unworthy?",
+    answer:
+      "Readers describe Not Unworthy as a very engaging, imaginative, and deep poetry collection that mirrors human nature through the elements of nature and reignites a love for poetry. Reviewers have called every poem a masterpiece in itself and described the book as an experience, not just a book—praising its relatable verses and the patience, courage, and dedication behind making its words come alive.",
+    relatedLink: { label: "Explore Not Unworthy & Reader Reflections", path: "/book", sectionId: "published-work" }
+  },
+  {
     id: "faq-contact",
     question: "How can I contact Seapee Bajaj?",
     answer:

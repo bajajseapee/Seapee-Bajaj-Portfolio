@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
   SITE_CONFIG,
   BOOK_TESTIMONIALS,
@@ -16,94 +16,136 @@ export const BookTestimonialCard: React.FC<BookTestimonialCardProps> = ({
   const starCount = Math.max(0, Math.min(testimonial.rating, testimonial.maxRating));
 
   return (
-    <div className="w-full flex flex-col items-center">
-      {/* Soft-background, rounded, subtly shadowed testimonial card */}
-      <figure className="w-full bg-[#fbf9f6] rounded-2xl p-6 sm:p-8 border border-[#e4e2df] shadow-xs flex flex-col items-center text-center gap-3.5 transition-shadow duration-200 hover:shadow-sm">
-        {/* Headline in bold */}
-        <h4 className="font-serif text-lg sm:text-xl font-bold text-[#1b1c1a] tracking-tight">
-          {testimonial.headline}
-        </h4>
+    <div className="w-full h-full flex flex-col items-center">
+      {/* Soft-background, rounded, subtly shadowed testimonial card with equal height */}
+      <figure className="w-full flex-1 bg-[#fbf9f6] rounded-2xl p-6 sm:p-8 border border-[#e4e2df] shadow-xs flex flex-col items-center justify-between text-center gap-3.5 transition-shadow duration-200 hover:shadow-sm">
+        <div className="flex flex-col items-center gap-3.5">
+          {/* Headline in bold */}
+          <h4 className="font-serif text-lg sm:text-xl font-bold text-[#1b1c1a] tracking-tight">
+            {testimonial.headline}
+          </h4>
 
-        {/* 5 Filled Gold Stars with accessible aria-label */}
-        <div
-          role="img"
-          aria-label={`${testimonial.rating} out of ${testimonial.maxRating} stars`}
-          className="inline-flex items-center gap-1 text-[#d49a2a]"
-        >
-          {Array.from({ length: testimonial.maxRating }).map((_, idx) => (
-            <svg
-              key={idx}
-               aria-hidden="true"
-               focusable="false"
-               className={`w-4 h-4 sm:w-5 sm:h-5 ${
-                 idx < starCount ? 'text-[#d49a2a] fill-current' : 'text-[#e4e2df] fill-current'
-               }`}
-              viewBox="0 0 20 20"
-            >
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.447a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.368-2.447a1 1 0 00-1.175 0l-3.368 2.447c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z" />
-            </svg>
-          ))}
+          {/* 5 Filled Gold Stars with accessible aria-label */}
+          <div
+            role="img"
+            aria-label={`${testimonial.rating} out of ${testimonial.maxRating} stars`}
+            className="inline-flex items-center gap-1 text-[#d49a2a]"
+          >
+            {Array.from({ length: testimonial.maxRating }).map((_, idx) => (
+              <svg
+                key={idx}
+                aria-hidden="true"
+                focusable="false"
+                className={`w-4 h-4 sm:w-5 sm:h-5 ${
+                  idx < starCount ? 'text-[#d49a2a] fill-current' : 'text-[#e4e2df] fill-current'
+                }`}
+                viewBox="0 0 20 20"
+              >
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.447a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.368-2.447a1 1 0 00-1.175 0l-3.368 2.447c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z" />
+              </svg>
+            ))}
+          </div>
+
+          {/* Quote in italics with quotation marks using semantic <blockquote> */}
+          <blockquote
+            cite={testimonial.reviewUrl}
+            className="font-serif italic text-base sm:text-lg text-[#1b1c1a] leading-relaxed max-w-xl"
+          >
+            <p>&ldquo;{testimonial.quote}&rdquo;</p>
+          </blockquote>
         </div>
-
-        {/* Quote in italics with quotation marks using semantic <blockquote> */}
-        <blockquote
-          cite={testimonial.reviewUrl}
-          className="font-serif italic text-base sm:text-lg text-[#1b1c1a] leading-relaxed max-w-xl"
-        >
-          <p>&ldquo;{testimonial.quote}&rdquo;</p>
-        </blockquote>
 
         {/* Attribution using semantic <figcaption> and <cite> */}
         <figcaption className="text-xs sm:text-sm text-[#546252] font-medium pt-0.5">
           <cite className="not-italic font-semibold text-[#1b1c1a]">
             {testimonial.author}
           </cite>
-          , {testimonial.sourceLabel}, {testimonial.dateLabel}
+          {testimonial.sourceLabel ? `, ${testimonial.sourceLabel}` : ''}, {testimonial.dateLabel}
         </figcaption>
       </figure>
 
-      {/* Small link button under the card */}
-      <a
-        href={testimonial.reviewUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-3 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-[#994524] bg-[#fbf9f6] hover:bg-[#efeeeb] border border-[#e4e2df] transition-colors shadow-2xs focus-visible:outline-2 focus-visible:outline-[#994524]"
-        aria-label={`${testimonial.reviewLinkLabel || 'Read the full review on Amazon'} by ${testimonial.author} (opens in a new tab)`}
-      >
-        <span>{testimonial.reviewLinkLabel || 'Read the full review on Amazon'}</span>
-        <span className="material-symbols-outlined text-[15px]" aria-hidden="true">
-          open_in_new
-        </span>
-      </a>
+      {/* Small link button under the card (shown only on Vinay's card) */}
+      <div className="min-h-[44px] flex items-center justify-center">
+        {testimonial.reviewUrl && (
+          <a
+            href={testimonial.reviewUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-[#994524] bg-[#fbf9f6] hover:bg-[#efeeeb] border border-[#e4e2df] transition-colors shadow-2xs focus-visible:outline-2 focus-visible:outline-[#994524]"
+            aria-label={`${testimonial.reviewLinkLabel || 'Read the full review on Amazon'} by ${testimonial.author} (opens in a new tab)`}
+          >
+            <span>{testimonial.reviewLinkLabel || 'Read the full review on Amazon'}</span>
+            <span className="material-symbols-outlined text-[15px]" aria-hidden="true">
+              open_in_new
+            </span>
+          </a>
+        )}
+      </div>
     </div>
   );
 };
 
 interface BookTestimonialsSectionProps {
   testimonials?: BookTestimonial[];
-  layout?: 'grid' | 'carousel';
 }
 
 export const BookTestimonialsSection: React.FC<BookTestimonialsSectionProps> = ({
   testimonials = BOOK_TESTIMONIALS,
-  layout = 'grid',
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const scrollToSlide = useCallback(
+    (index: number) => {
+      const total = testimonials.length;
+      if (total === 0) return;
+      const targetIndex = ((index % total) + total) % total;
+      const slideEl = slideRefs.current[targetIndex];
+      const trackEl = trackRef.current;
+      if (slideEl && trackEl) {
+        const slideLeft = slideEl.offsetLeft - trackEl.offsetLeft;
+        trackEl.scrollTo({
+          left: slideLeft,
+          behavior: 'smooth',
+        });
+      }
+      setActiveIndex(targetIndex);
+    },
+    [testimonials.length]
+  );
+
+  // Sync activeIndex when user swipes horizontally
+  useEffect(() => {
+    const trackEl = trackRef.current;
+    if (!trackEl) return;
+
+    const handleScroll = () => {
+      const scrollCenter = trackEl.scrollLeft + trackEl.clientWidth / 2;
+      let closestIdx = 0;
+      let minDistance = Infinity;
+
+      slideRefs.current.forEach((slideEl, idx) => {
+        if (!slideEl) return;
+        const slideCenter =
+          slideEl.offsetLeft - trackEl.offsetLeft + slideEl.clientWidth / 2;
+        const dist = Math.abs(scrollCenter - slideCenter);
+        if (dist < minDistance) {
+          minDistance = dist;
+          closestIdx = idx;
+        }
+      });
+
+      setActiveIndex(closestIdx);
+    };
+
+    trackEl.addEventListener('scroll', handleScroll, { passive: true });
+    return () => trackEl.removeEventListener('scroll', handleScroll);
+  }, [testimonials.length]);
 
   if (!testimonials || testimonials.length === 0) {
     return null;
   }
-
-  const isSingle = testimonials.length === 1;
-  const useCarousel = layout === 'carousel' && !isSingle;
-
-  const handlePrev = () => {
-    setActiveIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
-  };
-
-  const handleNext = () => {
-    setActiveIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
-  };
 
   return (
     <div
@@ -123,43 +165,82 @@ export const BookTestimonialsSection: React.FC<BookTestimonialsSectionProps> = (
         </h3>
       </div>
 
-      {/* Reusable Layout: Centred Single Card, Responsive Multi-Card Grid, or Carousel */}
-      {isSingle ? (
-        <div className="w-full max-w-2xl mx-auto">
-          <BookTestimonialCard testimonial={testimonials[0]} />
-        </div>
-      ) : useCarousel ? (
-        <div className="w-full max-w-2xl mx-auto flex flex-col items-center gap-4">
-          <BookTestimonialCard testimonial={testimonials[activeIndex]} />
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={handlePrev}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-[#55433c] bg-[#fbf9f6] hover:bg-[#efeeeb] border border-[#e4e2df] transition-colors cursor-pointer"
-              aria-label="Previous reader review"
+      {/* Horizontally Scrollable Carousel with Desktop Left/Right Arrows and Dots */}
+      <div className="w-full max-w-3xl mx-auto relative flex items-center gap-3">
+        {/* Desktop Left Arrow */}
+        <button
+          type="button"
+          onClick={() => scrollToSlide(activeIndex - 1)}
+          className="hidden md:inline-flex w-10 h-10 rounded-full bg-[#fbf9f6] hover:bg-[#efeeeb] border border-[#e4e2df] text-[#1b1c1a] hover:text-[#994524] items-center justify-center shrink-0 transition-colors shadow-2xs cursor-pointer focus-visible:outline-2 focus-visible:outline-[#994524]"
+          aria-label="Previous reader review"
+        >
+          <span className="material-symbols-outlined text-[20px]" aria-hidden="true">
+            chevron_left
+          </span>
+        </button>
+
+        {/* Scroll-Snap Track: One card per view on mobile with a small peek of the next card */}
+        <div
+          ref={trackRef}
+          className="w-full flex items-stretch gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar pb-1"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Reader reviews for Not Unworthy"
+        >
+          {testimonials.map((item, idx) => (
+            <div
+              key={item.id}
+              ref={(el) => {
+                slideRefs.current[idx] = el;
+              }}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${idx + 1} of ${testimonials.length}: ${item.headline} by ${item.author}`}
+              className="w-[88%] sm:w-[86%] md:w-full shrink-0 snap-start flex flex-col"
             >
-              Previous
-            </button>
-            <span className="text-xs text-[#546252] tabular-nums">
-              {activeIndex + 1} / {testimonials.length}
-            </span>
-            <button
-              type="button"
-              onClick={handleNext}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-[#55433c] bg-[#fbf9f6] hover:bg-[#efeeeb] border border-[#e4e2df] transition-colors cursor-pointer"
-              aria-label="Next reader review"
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-          {testimonials.map((item) => (
-            <BookTestimonialCard key={item.id} testimonial={item} />
+              <BookTestimonialCard testimonial={item} />
+            </div>
           ))}
         </div>
-      )}
+
+        {/* Desktop Right Arrow */}
+        <button
+          type="button"
+          onClick={() => scrollToSlide(activeIndex + 1)}
+          className="hidden md:inline-flex w-10 h-10 rounded-full bg-[#fbf9f6] hover:bg-[#efeeeb] border border-[#e4e2df] text-[#1b1c1a] hover:text-[#994524] items-center justify-center shrink-0 transition-colors shadow-2xs cursor-pointer focus-visible:outline-2 focus-visible:outline-[#994524]"
+          aria-label="Next reader review"
+        >
+          <span className="material-symbols-outlined text-[20px]" aria-hidden="true">
+            chevron_right
+          </span>
+        </button>
+      </div>
+
+      {/* Pagination Dots */}
+      <div
+        className="flex items-center justify-center gap-2 pt-1"
+        role="tablist"
+        aria-label="Choose reader review slide"
+      >
+        {testimonials.map((item, idx) => {
+          const isCurrent = idx === activeIndex;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              role="tab"
+              aria-selected={isCurrent}
+              aria-label={`Go to review ${idx + 1}: ${item.author}`}
+              onClick={() => scrollToSlide(idx)}
+              className={`h-2 rounded-full transition-all duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#994524] ${
+                isCurrent
+                  ? 'w-6 bg-[#994524]'
+                  : 'w-2 bg-[#d8d4ce] hover:bg-[#88726b]'
+              }`}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };

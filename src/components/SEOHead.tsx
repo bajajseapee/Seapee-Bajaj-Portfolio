@@ -205,7 +205,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
 
     upsertJsonLdScript('faq-jsonld', faqJsonLd);
 
-    // 4. Book + Review JSON-LD for "Not Unworthy"
+    // 4. Book + Review JSON-LD for "Not Unworthy" (reviews 1–6, each 5 out of 5, no aggregateRating)
     const bookReviewJsonLd = {
       '@context': 'https://schema.org',
       '@type': 'Book',
@@ -224,27 +224,27 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
       bookFormat: 'https://schema.org/Paperback',
       isbn: SITE_CONFIG.BOOK.ISBN,
       url: SITE_CONFIG.BOOK.AMAZON_URL,
-      review: BOOK_TESTIMONIALS.map((t) => ({
-        '@type': 'Review',
-        name: t.headline,
-        reviewBody: t.quote,
-        datePublished: t.isoDate,
-        url: t.reviewUrl,
-        author: {
-          '@type': 'Person',
-          name: t.author,
-        },
-        publisher: {
-          '@type': 'Organization',
-          name: 'Amazon India',
-        },
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: String(t.rating),
-          bestRating: String(t.maxRating),
-          worstRating: '1',
-        },
-      })),
+      review: BOOK_TESTIMONIALS.map((t) => {
+        const reviewItem: Record<string, unknown> = {
+          '@type': 'Review',
+          name: t.headline,
+          reviewBody: t.quote,
+          datePublished: t.isoDate,
+          author: {
+            '@type': 'Person',
+            name: t.author,
+          },
+          reviewRating: {
+            '@type': 'Rating',
+            ratingValue: '5',
+            bestRating: '5',
+          },
+        };
+        if (t.reviewUrl) {
+          reviewItem.url = t.reviewUrl;
+        }
+        return reviewItem;
+      }),
     };
 
     upsertJsonLdScript('book-review-jsonld', bookReviewJsonLd);

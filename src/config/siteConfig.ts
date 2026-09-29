@@ -84,9 +84,9 @@ export const SITE_CONFIG = {
   SEO: {
     TITLE: "Seapee Bajaj | B2B SEO Content & GEO Strategist",
     DESCRIPTION:
-      "Portfolio of Seapee Bajaj, a B2B SEO content strategist with 10+ years of experience in market research content, GEO, AI search, and editorial strategy.",
+      "Portfolio of Seapee Bajaj, a B2B SEO content strategist with 10+ years of experience in market research content, GEO, AI search, editorial strategy, and Not Unworthy reader reviews.",
     OG_DESCRIPTION:
-      "Portfolio of Seapee Bajaj, a B2B SEO content strategist with 10+ years of experience in market research content, GEO, AI search, and editorial strategy.",
+      "Portfolio of Seapee Bajaj, a B2B SEO content strategist with 10+ years of experience in market research content, GEO, AI search, editorial strategy, and Not Unworthy reader reviews.",
     CANONICAL: SITE_URL,
     OG_SHORT_TAGLINE: "Seapee Bajaj · B2B SEO, Content & GEO"
   }
@@ -99,26 +99,76 @@ export interface BookTestimonial {
   maxRating: number;
   quote: string;
   author: string;
-  sourceLabel: string;
+  sourceLabel?: string;
   dateLabel: string;
   isoDate: string;
-  reviewUrl: string;
+  reviewUrl?: string;
   reviewLinkLabel?: string;
 }
 
 export const BOOK_TESTIMONIALS: BookTestimonial[] = [
   {
-    id: "vinay-deep-bajaj-amazon-2021",
+    id: "vinay-amazon-2021",
     headline: "A worthy read!!!",
     rating: 5,
     maxRating: 5,
     quote: "Very engaging, imaginative and deep. My love for poetry is re-ignited after reading this book.",
-    author: "Vinay Deep Bajaj",
+    author: "Vinay",
     sourceLabel: "Verified Amazon India review",
     dateLabel: "July 2021",
     isoDate: "2021-07",
     reviewUrl: "https://amzn.in/d/05ozMTHZ",
     reviewLinkLabel: "Read the full review on Amazon",
+  },
+  {
+    id: "daksh-2021-02",
+    headline: "Nature, mirrored in poetry",
+    rating: 5,
+    maxRating: 5,
+    quote: "Seapee's poetries are metaphorical to the elements of nature. She correlates human nature with nature itself. Lockdown gave her a chance and the perfect time to explore imagination onto a book.",
+    author: "Daksh",
+    dateLabel: "February 2021",
+    isoDate: "2021-02",
+  },
+  {
+    id: "nikhil-dutt-2023-03",
+    headline: "Every poem is a masterpiece",
+    rating: 5,
+    maxRating: 5,
+    quote: "Such a lovely book. Loved reading every line and page. Every poem is truly a masterpiece in itself. I related with each of them in one way or another and felt it deep within.",
+    author: "Nikhil Dutt",
+    dateLabel: "March 2023",
+    isoDate: "2023-03",
+  },
+  {
+    id: "pooja-maurya-2021-01",
+    headline: "A poem for everyone",
+    rating: 5,
+    maxRating: 5,
+    quote: "There is always a poem one can relate to... in this book I can find many.",
+    author: "Pooja Maurya",
+    dateLabel: "January 2021",
+    isoDate: "2021-01",
+  },
+  {
+    id: "suraj-gudde-2025-04",
+    headline: "Not just a book, an experience",
+    rating: 5,
+    maxRating: 5,
+    quote: "I started reading your book, and even in the first few chapters, I can feel the deep meaning in your words. It's really special. It's not just a book, it's an experience. Proud of you!",
+    author: "Suraj Gudde",
+    dateLabel: "April 2025",
+    isoDate: "2025-04",
+  },
+  {
+    id: "ranchi-reader-2021-01",
+    headline: "Words made alive",
+    rating: 5,
+    maxRating: 5,
+    quote: "It needs a lot of courage when you take a decision to divert from an easy going daily life. The time you spent in thinking and making your words alive really requires a lot of patience and dedication.",
+    author: "A reader from Ranchi",
+    dateLabel: "January 2021",
+    isoDate: "2021-01",
   },
 ];
 
@@ -139,7 +189,7 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
     path: "/",
     title: "Seapee Bajaj | B2B SEO Content & GEO Strategist",
     description:
-      "Portfolio of Seapee Bajaj, a B2B SEO content strategist with 10+ years of experience in market research content, GEO, AI search, and editorial strategy.",
+      "Portfolio of Seapee Bajaj, a B2B SEO content strategist with 10+ years of experience in market research content, GEO, AI search, editorial strategy, and Not Unworthy reader reviews.",
     h1: "B2B SEO Content Strategist, Research-Led and Reader-Focused",
     kicker: "Seapee Bajaj · B2B SEO, Content & GEO",
     subtitle: "Market research · B2B content · SEO · GEO & AI search",
@@ -295,7 +345,7 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
     path: "/book",
     title: "Not Unworthy — Published Book by Seapee Bajaj",
     description:
-      "Discover Not Unworthy, a published poetry and prose collection by Seapee Bajaj (Notion Press, ISBN 979-8889356134), exploring resilience and worth.",
+      "Discover Not Unworthy, a published poetry and prose collection by Seapee Bajaj (Notion Press, ISBN 979-8889356134), featuring Not Unworthy reader reviews.",
     h1: "Seapee Bajaj — Published Author & Editorial Strategist",
     kicker: "Published Author • Notion Press",
     subtitle: "Exploring resilience, consistency, everyday courage, and the quiet worth of ordinary lives.",
