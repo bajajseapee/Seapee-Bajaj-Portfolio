@@ -77,7 +77,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
       url: `${SITE_URL_ORIGIN}/`,
       image: SITE_CONFIG.HERO_IMAGE,
       description:
-        'Seapee Bajaj is a B2B SEO content strategist with 9+ years of experience in market research content, GEO, AI search optimization, and editorial strategy.',
+        'Seapee Bajaj is a B2B SEO content strategist with 10+ years of experience in market research content, GEO, AI search optimization, and editorial strategy.',
       email: SITE_CONFIG.EMAIL,
       sameAs: [
         SOCIAL_PROFILE_PLACEHOLDERS.LINKEDIN_URL,
