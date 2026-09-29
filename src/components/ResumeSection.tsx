@@ -19,7 +19,7 @@ export const RESUME_DATA = {
   portfolioUrl: 'https://seapee-bajaj-portfolio-3a8w-omega.vercel.app/',
   googleCallout: 'Google "Seapee Bajaj" to see my published work',
   summary:
-    'B2B SEO Content & Editorial Strategist with 10+ years of experience across market research and content marketing. Leads content calendars, editorial workflows, and writer mentoring for B2B clients. Skilled in keyword research, on-page SEO, E-E-A-T, and GEO/AEO content built for AI-driven search. Grew a Quora research page from ~700 to 1,100+ followers at Grand View Research. Works independently from brief to delivery and turns complex research into clear, reader-friendly content.',
+    'B2B SEO Content & Editorial Strategist with 9+ years of experience across market research and content marketing. Leads content calendars, editorial workflows, and writer mentoring for B2B clients. Skilled in keyword research, on-page SEO, E-E-A-T, and GEO/AEO content built for AI-driven search. Grew a Quora research page from ~700 to 1,100+ followers at Grand View Research. Works independently from brief to delivery and turns complex research into clear, reader-friendly content.',
   coreSkills: [
     'Content Strategy',
     'Editorial Calendar Management',
@@ -157,7 +157,7 @@ export const RESUME_DATA = {
     '"A Study of Consumer Behavior and its Impact on Marketing" and "A Study of E-business Threats," ASM INCON XIII, International Conference on Ongoing Research in Management and IT (E-ISSN: 2320-0065).',
   ],
   keyMetrics: [
-    { value: '10+ Yrs', label: 'Market Research & B2B SEO' },
+    { value: '9+ Yrs', label: 'Market Research & B2B SEO' },
     { value: '250+', label: 'Blogs, Articles & FAQs Created' },
     { value: '100+', label: 'B2B Content Pieces Audited' },
     { value: '1,100+', label: 'Quora Research Followers' },

@@ -37,10 +37,7 @@ export const Hero: React.FC<HeroProps> = ({
           {/* Primary Identity & Positioning */}
           <div className="flex flex-col gap-1.5">
             <span className="text-xs sm:text-sm uppercase tracking-widest text-[#994524] font-semibold">
-              {PROFILE_INFO.name} — {PROFILE_INFO.title}
-            </span>
-            <span className="text-xs text-[#546252] font-semibold tracking-wide">
-              {PROFILE_INFO.corePositioning} · {PROFILE_INFO.badge}
+              Seapee Bajaj · B2B SEO, Content &amp; GEO
             </span>
           </div>
 
@@ -57,7 +54,7 @@ export const Hero: React.FC<HeroProps> = ({
 
           {/* Supporting Positioning Line */}
           <p className="font-serif text-lg sm:text-xl text-[#994524] font-medium">
-            {PROFILE_INFO.corePositioning}
+            Market research · B2B content · SEO · GEO &amp; AI search
           </p>
 
           {/* Subheadline */}
@@ -174,7 +171,7 @@ export const Hero: React.FC<HeroProps> = ({
               <div className="flex items-center gap-1.5 text-[#994524] mb-0.5">
                 <span className="material-symbols-outlined text-[17px]">verified</span>
                 <span className="text-[10px] tracking-wider uppercase font-semibold text-[#994524]">
-                  Research-Led. Reader-Focused.
+                  B2B SEO, Content &amp; GEO
                 </span>
               </div>
               <p className="font-serif text-base text-[#1b1c1a] italic leading-snug">
@@ -210,7 +207,7 @@ export const Hero: React.FC<HeroProps> = ({
             </blockquote>
           </div>
           <figcaption className="text-xs text-[#546252] font-medium sm:whitespace-nowrap pl-6 sm:pl-0 shrink-0">
-            <cite className="not-italic font-semibold text-[#1b1c1a]">Supradip Baul</cite>, Manager, Allied Analytics
+            <cite className="not-italic font-semibold text-[#1b1c1a]">Supradip Baul</cite>, Former Manager, Allied Analytics
           </figcaption>
         </figure>
       </motion.div>

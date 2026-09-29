@@ -44,7 +44,7 @@ export const TESTIMONIALS_DATA: TestimonialItem[] = [
     shortQuote:
       "Seapee did a commendable job on our AI Chip thought leadership article... She raised the bar for the entire team.",
     name: 'Supradip Baul',
-    title: 'Manager, Allied Analytics',
+    title: 'Former Manager, Allied Analytics',
     initials: 'SB',
     avatarBg: 'bg-[#546252]',
     avatarText: 'text-white',

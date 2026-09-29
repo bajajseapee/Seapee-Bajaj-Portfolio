@@ -60,7 +60,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
               id="about-heading"
               className="font-serif text-3xl md:text-4xl text-[#1b1c1a] font-medium tracking-tight"
             >
-              More Than a Writer — Research-Led. Reader-Focused.
+              About Me
             </h2>
             <div className="w-12 h-[2px] bg-[#994524] my-1" />
             <p className="text-lg md:text-xl text-[#1b1c1a] leading-relaxed font-normal">

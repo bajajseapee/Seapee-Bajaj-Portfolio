@@ -1062,7 +1062,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "faq-specialization",
     question: "What does Seapee Bajaj specialize in?",
     answer:
-      "Seapee Bajaj is a content and SEO professional with 10+ years of experience specializing in research-led content, content strategy, SEO optimization, editorial workflows, B2B content writing, competitive intelligence, and AI-assisted content creation.",
+      "Seapee Bajaj is a content and SEO professional with 9+ years of experience specializing in research-led content, content strategy, SEO optimization, editorial workflows, B2B content writing, competitive intelligence, and AI-assisted content creation.",
     relatedLink: { label: "Explore Core Services & Practice", path: "/services", sectionId: "services" }
   },
   {
@@ -1076,7 +1076,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "faq-b2b-experience",
     question: "Does Seapee Bajaj have experience with B2B content?",
     answer:
-      "Yes. Seapee has 10+ years of experience across Allied Market Research, The Insight Partners, Grand View Research, IMARC Group, and Perfect Clicks—creating and managing research-led content for B2B and knowledge-intensive industries including ICT, semiconductors, automotive, and enterprise technology.",
+      "Yes. Seapee has 9+ years of experience across Allied Market Research, The Insight Partners, Grand View Research, IMARC Group, and Perfect Clicks—creating and managing research-led content for B2B and knowledge-intensive industries including ICT, semiconductors, automotive, and enterprise technology.",
     relatedLink: { label: "View Professional Experience Timeline", path: "/experience", sectionId: "experience" }
   },
   {
