@@ -19,6 +19,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
   const [expandedId, setExpandedId] = useState<string | null>(CASE_STUDIES[0].id);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState<string>('All');
+  const [showAllCaseStudies, setShowAllCaseStudies] = useState(false);
 
   const handleInternalLink = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -78,6 +79,10 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
   }, [searchQuery, activeFilter]);
 
   const isFiltering = searchQuery.trim() !== '' || activeFilter !== 'All';
+  const visibleCaseStudies =
+    showAllCaseStudies || isFiltering
+      ? filteredCaseStudies
+      : filteredCaseStudies.slice(0, 1);
 
   return (
     <section
@@ -154,7 +159,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
             </div>
             <div className="flex items-center justify-between text-xs text-[#546252] px-0.5">
               <span aria-live="polite" className="tabular-nums">
-                Showing {filteredCaseStudies.length} of {CASE_STUDIES.length} case studies
+                Showing {visibleCaseStudies.length} of {CASE_STUDIES.length} case studies
               </span>
               {isFiltering && (
                 <button
@@ -200,8 +205,8 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
 
         {/* Case Studies List */}
         {filteredCaseStudies.length > 0 ? (
-          <div className="flex flex-col gap-6">
-            {filteredCaseStudies.map((cs) => {
+          <div id="case-studies-list" className="flex flex-col gap-6">
+            {visibleCaseStudies.map((cs) => {
               const originalIndex = CASE_STUDIES.findIndex((item) => item.id === cs.id);
               const isExpanded =
                 expandedId === cs.id || (searchQuery.trim().length > 1 && filteredCaseStudies.length <= 2);
@@ -340,6 +345,25 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
                 </article>
               );
             })}
+
+            {!isFiltering && filteredCaseStudies.length > 1 && (
+              <div className="flex justify-center pt-1">
+                <button
+                  type="button"
+                  onClick={() => setShowAllCaseStudies((prev) => !prev)}
+                  aria-expanded={showAllCaseStudies}
+                  aria-controls="case-studies-list"
+                  className="px-6 py-3 rounded-xl bg-white hover:bg-[#efeeeb] text-[#994524] border border-[#dbc1b8] text-xs sm:text-sm font-semibold transition-all shadow-2xs inline-flex items-center gap-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#994524]"
+                >
+                  <span>
+                    {showAllCaseStudies ? 'Show Less Case Studies' : 'View More Case Studies'}
+                  </span>
+                  <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                    {showAllCaseStudies ? 'expand_less' : 'expand_more'}
+                  </span>
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           /* Empty State when no case studies match search/filter */

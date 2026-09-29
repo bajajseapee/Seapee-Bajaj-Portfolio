@@ -142,7 +142,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
           </div>
 
           {/* 4 Stats Cards Grid */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 pt-1">
+          <div className="lg:col-span-6 grid grid-cols-2 gap-3 sm:gap-4 pt-1">
             {STATS.map((stat) => {
               const logo = STAT_LOGOS[stat.id];
               return (
@@ -150,18 +150,18 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
                   key={stat.id}
                   type="button"
                   onClick={() => setSelectedStat(selectedStat === stat.id ? null : stat.id)}
-                  className={`text-left bg-white p-6 rounded-xl shadow-xs hover:shadow-md transition-all flex flex-col justify-between min-h-[210px] border ${
+                  className={`text-left bg-white p-3.5 sm:p-5 rounded-xl shadow-xs hover:shadow-md transition-all flex flex-col justify-between border ${
                     selectedStat === stat.id ? 'border-[#994524] ring-1 ring-[#994524]' : 'border-[#e4e2df]'
                   } group cursor-pointer`}
                 >
-                  <div className="flex items-start justify-between w-full mb-4">
+                  <div className="flex items-start justify-between w-full mb-2.5 sm:mb-3">
                     {logo ? (
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#fbf9f6] border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-[#fbf9f6] border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0">
                         <Image
                           src={logo.src}
                           alt={logo.alt}
-                          width={78}
-                          height={78}
+                          width={44}
+                          height={44}
                           loading="lazy"
                           decoding="async"
                           referrerPolicy="no-referrer"
@@ -169,20 +169,20 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
                         />
                       </div>
                     ) : (
-                      <span className="material-symbols-outlined text-[#994524] text-3xl group-hover:scale-110 transition-transform">
+                      <span className="material-symbols-outlined text-[#994524] text-2xl group-hover:scale-110 transition-transform">
                         {stat.icon}
                       </span>
                     )}
-                    <span className="material-symbols-outlined text-[18px] text-[#88726b] opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="material-symbols-outlined text-[16px] text-[#88726b] opacity-0 group-hover:opacity-100 transition-opacity">
                       {selectedStat === stat.id ? 'expand_less' : 'info'}
                     </span>
                   </div>
 
                   <div>
-                    <span className="font-serif text-2xl sm:text-3xl text-[#1b1c1a] font-medium block leading-none mb-1.5">
+                    <span className="font-serif text-lg sm:text-2xl text-[#1b1c1a] font-medium block leading-tight mb-1">
                       {stat.value}
                     </span>
-                    <span className="text-xs uppercase tracking-wider text-[#546252] font-semibold block">
+                    <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#546252] font-semibold block leading-snug">
                       {stat.label}
                     </span>
                     <p

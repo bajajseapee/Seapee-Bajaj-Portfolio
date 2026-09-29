@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { EXPERIENCE_ITEMS } from '../data/portfolioData';
 
 interface ExperienceProps {
@@ -6,6 +6,12 @@ interface ExperienceProps {
 }
 
 export const Experience: React.FC<ExperienceProps> = ({ onNavigate }) => {
+  const [showMoreExperiences, setShowMoreExperiences] = useState(false);
+
+  const visibleExperiences = showMoreExperiences
+    ? EXPERIENCE_ITEMS
+    : EXPERIENCE_ITEMS.slice(0, 1);
+
   const handleInternalLink = (
     e: React.MouseEvent<HTMLAnchorElement>,
     path: string,
@@ -77,8 +83,11 @@ export const Experience: React.FC<ExperienceProps> = ({ onNavigate }) => {
         </div>
 
         {/* Experience Timeline Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-          {EXPERIENCE_ITEMS.map((item, idx) => (
+        <div
+          id="experience-timeline-grid"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8"
+        >
+          {visibleExperiences.map((item, idx) => (
             <article
               key={item.id}
               className="bg-white rounded-2xl p-6 sm:p-8 border border-[#e4e2df] shadow-xs hover:shadow-md hover:border-[#dbc1b8] transition-all duration-300 flex flex-col justify-between"
@@ -133,6 +142,26 @@ export const Experience: React.FC<ExperienceProps> = ({ onNavigate }) => {
             </article>
           ))}
         </div>
+
+        {/* View More Experiences Toggle Button */}
+        {EXPERIENCE_ITEMS.length > 1 && (
+          <div className="flex justify-center pt-1">
+            <button
+              type="button"
+              onClick={() => setShowMoreExperiences((prev) => !prev)}
+              aria-expanded={showMoreExperiences}
+              aria-controls="experience-timeline-grid"
+              className="px-6 py-3 rounded-xl bg-white hover:bg-[#efeeeb] text-[#994524] border border-[#dbc1b8] text-xs sm:text-sm font-semibold transition-all shadow-2xs inline-flex items-center gap-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#994524]"
+            >
+              <span>
+                {showMoreExperiences ? 'Show Less Experiences' : 'View More Experiences'}
+              </span>
+              <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                {showMoreExperiences ? 'expand_less' : 'expand_more'}
+              </span>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
