@@ -27,6 +27,11 @@ export async function generateAskSeapeeResponse(
 
   const fallback = buildGroundedFallbackReply(trimmed, history);
 
+  // If visitor asks directly for Seapee's resume / CV, return the structured 2-page resume overview and action buttons immediately
+  if (/\b(resume|cv|curriculum vitae|biodata|dossier)\b/i.test(trimmed)) {
+    return fallback;
+  }
+
   // If deterministic guardrail already identified an unverified/out-of-scope query (pricing, availability, unlisted company/tool, private info), return it immediately without risking LLM speculation
   if (fallback.sourceNote === 'Direct Inquiry Recommended') {
     return fallback;

@@ -1,9 +1,11 @@
-import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { Experience } from './components/Experience';
+import { ResumeSection } from './components/ResumeSection';
 import { Services } from './components/Services';
 import { CaseStudies } from './components/CaseStudies';
 import { Portfolio } from './components/Portfolio';
@@ -46,6 +48,35 @@ function normalizePathname(pathname: string): string {
   if (!pathname || pathname === '/') return '/';
   const cleaned = pathname.replace(/\/$/, '');
   return SEO_ROUTES[cleaned] ? cleaned : '/';
+}
+
+interface ScrollRevealSectionProps {
+  children: React.ReactNode;
+  delay?: number;
+}
+
+function ScrollRevealSection({ children, delay = 0 }: ScrollRevealSectionProps) {
+  const prefersReducedMotion = useReducedMotion();
+
+  if (prefersReducedMotion) {
+    return <div className="w-full">{children}</div>;
+  }
+
+  return (
+    <motion.div
+      className="w-full"
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.12, margin: '0px 0px -60px 0px' }}
+      transition={{
+        duration: 0.65,
+        delay,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+    >
+      {children}
+    </motion.div>
+  );
 }
 
 export default function App() {
@@ -110,40 +141,83 @@ export default function App() {
     }
   }, []);
 
-  // Track active section for navigation highlighting
+  // Track active section for navigation highlighting using IntersectionObserver
   useEffect(() => {
-    const sectionIds = [
-      'about',
-      'experience',
-      'services',
-      'case-studies',
-      'selected-work',
-      'seo-geo-expertise',
-      'writing',
-      'process',
-      'awards',
-      'published-work',
-      'faq',
-      'contact',
-    ];
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 220;
-
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(id);
-            break;
-          }
-        }
-      }
+    const sectionToNavId: Record<string, string> = {
+      hero: 'about',
+      about: 'about',
+      experience: 'experience',
+      resume: 'resume',
+      services: 'services',
+      'case-studies': 'case-studies',
+      'selected-work': 'selected-work',
+      'seo-geo-expertise': 'seo-geo-expertise',
+      writing: 'writing',
+      'creative-work': 'writing',
+      process: 'services',
+      awards: 'experience',
+      'published-work': 'published-work',
+      faq: 'faq',
+      contact: 'contact',
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const observedIds = Object.keys(sectionToNavId);
+    const intersectingMap = new Map<string, number>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.id;
+          if (!id) return;
+          if (entry.isIntersecting) {
+            intersectingMap.set(id, entry.intersectionRatio);
+          } else {
+            intersectingMap.delete(id);
+          }
+        });
+
+        if (intersectingMap.size > 0) {
+          // Pick the section in the active viewport zone with the highest visibility / earliest position in the reading zone
+          let bestSectionId = '';
+          let bestScore = -1;
+
+          intersectingMap.forEach((ratio, id) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const rect = el.getBoundingClientRect();
+            // Favor sections whose top is near or just above the reading line (120px from top)
+            const distanceFromReadingLine = Math.abs(rect.top - 120);
+            const proximityBonus = Math.max(0, 1 - distanceFromReadingLine / window.innerHeight);
+            const score = ratio * 0.6 + proximityBonus * 0.4;
+            if (score > bestScore) {
+              bestScore = score;
+              bestSectionId = id;
+            }
+          });
+
+          if (bestSectionId && sectionToNavId[bestSectionId]) {
+            setActiveSection(sectionToNavId[bestSectionId]);
+          }
+        }
+      },
+      {
+        // Trigger when section crosses the upper-middle reading zone of the viewport (accounting for the 80px fixed navbar)
+        root: null,
+        rootMargin: '-88px 0px -52% 0px',
+        threshold: [0, 0.1, 0.25, 0.4, 0.6, 0.8, 1],
+      }
+    );
+
+    observedIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        observer.observe(el);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   const handleWorkTogether = () => {
@@ -246,68 +320,108 @@ export default function App() {
           )}
 
           {/* Hero Section */}
-          <Hero
-            onWorkWithMe={handleWorkTogether}
-            onViewWork={handleViewWork}
-            onViewCaseStudies={handleViewCaseStudies}
-            onFilterTopic={handleFilterTopic}
-            isHomeRoute={isHomeRoute}
-          />
+          <ScrollRevealSection>
+            <Hero
+              onWorkWithMe={handleWorkTogether}
+              onViewWork={handleViewWork}
+              onViewCaseStudies={handleViewCaseStudies}
+              onFilterTopic={handleFilterTopic}
+              isHomeRoute={isHomeRoute}
+            />
+          </ScrollRevealSection>
 
           {/* Perspective / About Section */}
-          <About onNavigate={handleNavigate} />
+          <ScrollRevealSection>
+            <About onNavigate={handleNavigate} />
+          </ScrollRevealSection>
 
           {/* Professional Experience Timeline Section */}
-          <Experience onNavigate={handleNavigate} />
+          <ScrollRevealSection>
+            <Experience onNavigate={handleNavigate} />
+          </ScrollRevealSection>
+
+          {/* Official 2-Page Resume & Professional Dossier Section */}
+          <ScrollRevealSection>
+            <ResumeSection
+              onOpenResumeModal={() => setIsResumeOpen(true)}
+              onContactClick={handleWorkTogether}
+            />
+          </ScrollRevealSection>
 
           {/* Core Practice / Services Section */}
-          <Services
-            onSelectService={(service) => setSelectedService(service)}
-          />
+          <ScrollRevealSection>
+            <Services
+              onSelectService={(service) => setSelectedService(service)}
+            />
+          </ScrollRevealSection>
 
           {/* Real-World Case Studies Section */}
-          <CaseStudies onNavigate={handleNavigate} />
+          <ScrollRevealSection>
+            <CaseStudies onNavigate={handleNavigate} />
+          </ScrollRevealSection>
 
           {/* Folio Index / Selected Work Section */}
-          <Portfolio
-            onSelectProject={(project) => setSelectedProject(project)}
-            activeCategory={activeCategory}
-            onSelectCategory={(category) => setActiveCategory(category)}
-          />
+          <ScrollRevealSection>
+            <Portfolio
+              onSelectProject={(project) => setSelectedProject(project)}
+              activeCategory={activeCategory}
+              onSelectCategory={(category) => setActiveCategory(category)}
+            />
+          </ScrollRevealSection>
 
           {/* Dedicated SEO / GEO / AEO Expertise Section */}
-          <SeoGeoExpertise onNavigate={handleNavigate} />
+          <ScrollRevealSection>
+            <SeoGeoExpertise onNavigate={handleNavigate} />
+          </ScrollRevealSection>
 
           {/* Scalable Writing & Editorial Perspectives Section */}
-          <WritingSection onNavigate={handleNavigate} />
+          <ScrollRevealSection>
+            <WritingSection onNavigate={handleNavigate} />
+          </ScrollRevealSection>
 
           {/* Beyond Business Content Section */}
-          <CreativeWork />
+          <ScrollRevealSection>
+            <CreativeWork />
+          </ScrollRevealSection>
 
           {/* Editorial Philosophy Quote Banner */}
-          <PhilosophyBanner />
+          <ScrollRevealSection>
+            <PhilosophyBanner />
+          </ScrollRevealSection>
 
           {/* How I Work / Methodical Timeline Process */}
-          <Process />
+          <ScrollRevealSection>
+            <Process />
+          </ScrollRevealSection>
 
           {/* Why Work With Me / Value Proposition */}
-          <WhyWorkWithMe />
+          <ScrollRevealSection>
+            <WhyWorkWithMe />
+          </ScrollRevealSection>
 
           {/* Strategic Awards & Industry Recognition Section */}
-          <Awards />
+          <ScrollRevealSection>
+            <Awards />
+          </ScrollRevealSection>
 
           {/* Beyond Brand Content / Published Book Feature */}
-          <PublishedBook />
+          <ScrollRevealSection>
+            <PublishedBook />
+          </ScrollRevealSection>
 
           {/* Frequently Asked Questions Section */}
-          <FAQSection onNavigate={handleNavigate} />
+          <ScrollRevealSection>
+            <FAQSection onNavigate={handleNavigate} />
+          </ScrollRevealSection>
 
           {/* Contact & Inquiries Section */}
-          <Contact
-            initialService={inquiryService}
-            onOpenResume={() => setIsResumeOpen(true)}
-            onOpenWorkspace={() => setIsWorkspaceOpen(true)}
-          />
+          <ScrollRevealSection>
+            <Contact
+              initialService={inquiryService}
+              onOpenResume={() => setIsResumeOpen(true)}
+              onOpenWorkspace={() => setIsWorkspaceOpen(true)}
+            />
+          </ScrollRevealSection>
         </main>
 
         {/* Site Footer */}
@@ -318,7 +432,10 @@ export default function App() {
 
         {/* Interactive Modals & "Talk to Seapee" Voice AI Assistant (Lazy-loaded) */}
         <Suspense fallback={null}>
-          <AskSeapeeChatbot onNavigate={handleNavigate} />
+          <AskSeapeeChatbot
+            onNavigate={handleNavigate}
+            onOpenResumeModal={() => setIsResumeOpen(true)}
+          />
           {selectedProject && (
             <CaseStudyModal
               project={selectedProject}

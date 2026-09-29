@@ -19,7 +19,7 @@ export const PROFILE_INFO = {
   title: SITE_CONFIG.TITLE,
   corePositioning: SITE_CONFIG.CORE_POSITIONING,
   supportingPositioning: SITE_CONFIG.SUPPORTING_POSITIONING,
-  badge: "9+ years in market research • B2B content • SEO • GEO & AI search",
+  badge: "10+ years of experience in market research • B2B content • SEO • GEO & AI search",
   email: SITE_CONFIG.EMAIL,
   location: SITE_CONFIG.LOCATION,
   heroImage: SITE_CONFIG.HERO_IMAGE,
@@ -28,7 +28,7 @@ export const PROFILE_INFO = {
   subheadline:
     "I combine research, strategy, storytelling and search to create content that is useful to readers, valuable to businesses, and discoverable across traditional and AI-driven search.",
   aboutIntro:
-    "I’m Seapee Bajaj, a research-driven content strategist and SEO professional with 9+ years of experience across market research, B2B content, SEO and digital content strategy.",
+    "I’m Seapee Bajaj, a research-driven content strategist and SEO professional with 10+ years of experience across market research, B2B content, SEO and digital content strategy.",
   topics: ["SEO Content", "B2B", "Research", "GEO & AI Search", "Content Strategy"] as const,
 };
 
@@ -543,7 +543,7 @@ export const WRITING_TOPICS: WritingTopicItem[] = [
   {
     id: "nine-years-market-research-content-seo",
     slug: "what-9-years-across-market-research-and-content-taught-me-about-seo",
-    title: "What 9+ Years Across Market Research and Content Taught Me About SEO",
+    title: "What 10+ Years of Experience Across Market Research and Content Taught Me About SEO",
     category: "SEO Strategy",
     summary:
       "Reflections on evolving from market estimation and industry reports to B2B content strategy, SEO optimization, and AI-search readiness.",
@@ -843,11 +843,11 @@ export const CREATIVE_WORKS: CreativeItem[] = [
 export const STATS: StatItem[] = [
   {
     id: "experience",
-    value: "9+",
-    label: "Years Experience",
+    value: "10+",
+    label: "Years of Experience",
     icon: "history_edu",
     subtext: "Market Research, B2B Content & SEO",
-    detail: "Over 9 years of hands-on practice across Allied Market Research, The Insight Partners, Grand View Research, and IMARC Group spanning market research, B2B content, SEO, and digital content strategy."
+    detail: "10+ years of experience across Allied Market Research, The Insight Partners, Grand View Research, and IMARC Group spanning market research, B2B content, SEO, and digital content strategy."
   },
   {
     id: "rank-reach",
@@ -1016,7 +1016,7 @@ export const CERTIFICATIONS = [
     date: "Completed: September 28, 2026",
     score: "Coursera · GEO & AI Search",
     description:
-      "Completed professional development and training on Coursera focused on Generative Engine Optimization (GEO), generative search, and structuring content for AI-powered search and answer engines—complementing 9+ years of hands-on experience in market research, B2B content, and SEO.",
+      "Completed professional development and training on Coursera focused on Generative Engine Optimization (GEO), generative search, and structuring content for AI-powered search and answer engines—complementing 10+ years of experience in market research, B2B content, and SEO.",
     icon: "travel_explore"
   },
   {
@@ -1062,7 +1062,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "faq-specialization",
     question: "What does Seapee Bajaj specialize in?",
     answer:
-      "Seapee Bajaj is a content and SEO professional with 9+ years of experience specializing in research-led content, content strategy, SEO optimization, editorial workflows, B2B content writing, competitive intelligence, and AI-assisted content creation.",
+      "Seapee Bajaj is a content and SEO professional with 10+ years of experience specializing in research-led content, content strategy, SEO optimization, editorial workflows, B2B content writing, competitive intelligence, and AI-assisted content creation.",
     relatedLink: { label: "Explore Core Services & Practice", path: "/services", sectionId: "services" }
   },
   {
@@ -1076,7 +1076,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "faq-b2b-experience",
     question: "Does Seapee Bajaj have experience with B2B content?",
     answer:
-      "Yes. Seapee has 9+ years of professional experience across Allied Market Research, The Insight Partners, Grand View Research, IMARC Group, and Perfect Clicks—creating and managing research-led content for B2B and knowledge-intensive industries including ICT, semiconductors, automotive, and enterprise technology.",
+      "Yes. Seapee has 10+ years of experience across Allied Market Research, The Insight Partners, Grand View Research, IMARC Group, and Perfect Clicks—creating and managing research-led content for B2B and knowledge-intensive industries including ICT, semiconductors, automotive, and enterprise technology.",
     relatedLink: { label: "View Professional Experience Timeline", path: "/experience", sectionId: "experience" }
   },
   {

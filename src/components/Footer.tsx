@@ -44,7 +44,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               {SITE_CONFIG.CORE_POSITIONING} · {SITE_CONFIG.SUPPORTING_POSITIONING}
             </span>
             <p className="text-sm text-[#55433c] max-w-sm leading-relaxed mt-1">
-              Research-driven SEO content strategist with 9+ years of experience across market research, B2B content, SEO, content strategy, GEO, and AI search optimization.
+              Research-driven SEO content strategist with 10+ years of experience across market research, B2B content, SEO, content strategy, GEO, and AI search optimization.
             </p>
           </div>
 

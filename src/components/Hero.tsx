@@ -107,6 +107,13 @@ export const Hero: React.FC<HeroProps> = ({
                 View Case Studies
               </button>
             )}
+            <a
+              href="#resume"
+              className="inline-flex items-center justify-center text-sm font-semibold bg-white hover:bg-[#efeeeb] text-[#994524] transition-colors px-5 py-3 rounded-lg border border-[#dbc1b8] cursor-pointer"
+            >
+              View Resume
+              <span className="material-symbols-outlined ml-1.5 text-[18px]">description</span>
+            </a>
           </div>
         </div>
 

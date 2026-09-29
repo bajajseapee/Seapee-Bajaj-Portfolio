@@ -119,10 +119,10 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
     path: "/about",
     title: "About Seapee Bajaj | B2B SEO Content Strategist",
     description:
-      "Seapee Bajaj is a B2B SEO content strategist with 9+ years of experience at IMARC Group, Grand View Research and Allied Market Research.",
+      "Seapee Bajaj is a B2B SEO content strategist with 10+ years of experience at IMARC Group, Grand View Research and Allied Market Research.",
     h1: "Seapee Bajaj — B2B SEO Content & Editorial Strategist",
     kicker: "Professional Background & Career Progression",
-    subtitle: "9+ years across market research, B2B content, SEO, editorial workflows, and AI-search optimization.",
+    subtitle: "10+ years of experience across market research, B2B content, SEO, editorial workflows, and AI-search optimization.",
     sectionId: "about",
     pageType: "ProfilePage",
     breadcrumbLabel: "About"
@@ -131,10 +131,10 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
     path: "/experience",
     title: "Experience & Career | Seapee Bajaj — B2B & SEO",
     description:
-      "Explore Seapee Bajaj's 9+ years of experience across Perfect Clicks, IMARC Group, Grand View Research, The Insight Partners and Allied Market Research.",
+      "Explore Seapee Bajaj's 10+ years of experience across Perfect Clicks, IMARC Group, Grand View Research, The Insight Partners and Allied Market Research.",
     h1: "Seapee Bajaj — B2B Content & SEO Strategist Experience",
     kicker: "Career Chronology & Professional Journey",
-    subtitle: "9+ years of progression across market research, B2B content strategy, and SEO execution.",
+    subtitle: "10+ years of experience across market research, B2B content strategy, and SEO execution.",
     sectionId: "experience",
     pageType: "ProfilePage",
     breadcrumbLabel: "Experience"
@@ -227,7 +227,7 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
     path: "/b2b-content",
     title: "B2B Content Writing Services | Seapee Bajaj",
     description:
-      "Authoritative B2B content writing across technology, manufacturing, semiconductors, and SaaS—grounded in 9+ years of industry research experience.",
+      "Authoritative B2B content writing across technology, manufacturing, semiconductors, and SaaS—grounded in 10+ years of industry research experience.",
     h1: "Seapee Bajaj — B2B Content Writer & Editorial Strategist",
     kicker: "B2B Content Specialist",
     subtitle: "Translating complex technical specifications and market data into clear, decision-ready B2B narratives.",

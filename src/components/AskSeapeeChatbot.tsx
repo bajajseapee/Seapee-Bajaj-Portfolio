@@ -10,6 +10,7 @@ import {
   type ChatActionLink,
   type ConversationTurn,
 } from '../services/askSeapeeKnowledge';
+import { triggerResumePrint } from './ResumeSection';
 
 export type InteractionMode = 'chat' | 'voice';
 
@@ -32,9 +33,10 @@ interface ChatMessage {
 
 interface AskSeapeeChatbotProps {
   onNavigate?: (path: string, sectionId?: string) => void;
+  onOpenResumeModal?: () => void;
 }
 
-const SESSION_STORAGE_KEY = 'seapee_ai_assistant_session_v4';
+const SESSION_STORAGE_KEY = 'seapee_ai_assistant_session_v5';
 
 const INITIAL_MESSAGES: ChatMessage[] = [
   {
@@ -44,6 +46,7 @@ const INITIAL_MESSAGES: ChatMessage[] = [
     spokenText: TALK_TO_SEAPEE_OPENING_MESSAGE,
     sourceNote: 'Portfolio Verified',
     actions: [
+      { label: "View Seapee's Resume", href: '#resume', sectionId: 'resume' },
       { label: 'View Portfolio', href: '/work', sectionId: 'selected-work' },
       { label: 'Contact Seapee', href: '/contact', sectionId: 'contact' },
     ],
@@ -448,7 +451,10 @@ function FormattedMessageContent({ content }: { content: string }) {
   );
 }
 
-export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }) => {
+export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({
+  onNavigate,
+  onOpenResumeModal,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   // Default mode is strictly "chat" (Text Chat Mode)
   const [mode, setMode] = useState<InteractionMode>('chat');
@@ -960,7 +966,27 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
       return;
     }
     e.preventDefault();
-    if (onNavigate) {
+    if (action.printResume) {
+      triggerResumePrint();
+      return;
+    }
+    if (action.openResumeModal && onOpenResumeModal) {
+      onOpenResumeModal();
+      if (window.innerWidth < 640) {
+        stopRecognition();
+        stopSpeechOutput();
+        setIsOpen(false);
+      }
+      return;
+    }
+    if (action.sectionId === 'resume') {
+      const resumeEl = document.getElementById('resume');
+      if (resumeEl) {
+        resumeEl.scrollIntoView({ behavior: 'smooth' });
+      } else if (onNavigate) {
+        onNavigate('/', 'resume');
+      }
+    } else if (onNavigate) {
       onNavigate(action.href, action.sectionId);
     } else if (action.sectionId) {
       const el = document.getElementById(action.sectionId);
@@ -1221,7 +1247,9 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({ onNavigate }
                     onClick={() => setShowAllSuggestions((prev) => !prev)}
                     className="text-[11px] font-semibold text-[#994524] hover:underline cursor-pointer"
                   >
-                    {showAllSuggestions ? 'Show fewer' : 'View all 11'}
+                    {showAllSuggestions
+                      ? 'Show fewer'
+                      : `View all ${ASK_SEAPEE_SUGGESTED_QUESTIONS.length}`}
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-1.5">

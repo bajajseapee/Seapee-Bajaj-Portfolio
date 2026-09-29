@@ -43,6 +43,14 @@ export const Experience: React.FC<ExperienceProps> = ({ onNavigate }) => {
 
           <div className="flex flex-wrap items-center gap-3 text-xs font-semibold">
             <a
+              href="#resume"
+              onClick={(e) => handleInternalLink(e, '/', 'resume')}
+              className="px-4 py-2.5 rounded-lg bg-white hover:bg-[#efeeeb] text-[#994524] border border-[#dbc1b8] transition-colors inline-flex items-center gap-1.5"
+            >
+              <span className="material-symbols-outlined text-[16px]">description</span>
+              <span>View Full Resume</span>
+            </a>
+            <a
               href="/case-studies"
               onClick={(e) => handleInternalLink(e, '/case-studies', 'case-studies')}
               className="px-4 py-2.5 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] border border-[#e4e2df] transition-colors inline-flex items-center gap-1.5"
