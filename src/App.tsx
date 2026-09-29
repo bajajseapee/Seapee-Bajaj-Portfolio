@@ -15,6 +15,7 @@ import { CreativeWork } from './components/CreativeWork';
 import { PhilosophyBanner } from './components/PhilosophyBanner';
 import { Process } from './components/Process';
 import { WhyWorkWithMe } from './components/WhyWorkWithMe';
+import { Testimonials } from './components/Testimonials';
 import { Awards } from './components/Awards';
 import { PublishedBook } from './components/PublishedBook';
 import { FAQSection } from './components/FAQSection';
@@ -402,6 +403,11 @@ export default function App() {
           {/* Why Work With Me / Value Proposition */}
           <ScrollRevealSection>
             <WhyWorkWithMe />
+          </ScrollRevealSection>
+
+          {/* What People Say / Client, Manager & Leadership Testimonials */}
+          <ScrollRevealSection>
+            <Testimonials />
           </ScrollRevealSection>
 
           {/* Strategic Awards & Industry Recognition Section */}

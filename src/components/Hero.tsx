@@ -82,53 +82,60 @@ export const Hero: React.FC<HeroProps> = ({
             ))}
           </div>
 
-          {/* Conversion CTAs */}
-          <div className="flex flex-wrap items-center gap-3.5 pt-2">
-            <button
-              type="button"
-              onClick={onWorkWithMe}
-              className="inline-flex items-center justify-center text-sm font-semibold bg-[#b85d3a] hover:bg-[#994524] text-white transition-all px-6 py-3 rounded-lg shadow-sm hover:shadow active:scale-[0.98] cursor-pointer"
-            >
-              Work With Me
-              <span className="material-symbols-outlined ml-2 text-[18px]">north_east</span>
-            </button>
-            <button
-              type="button"
-              onClick={onViewWork}
-              className="inline-flex items-center justify-center text-sm font-semibold bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] transition-colors px-5 py-3 rounded-lg border border-[#e4e2df] cursor-pointer"
-            >
-              View My Work
-              <span className="material-symbols-outlined ml-2 text-[18px]">arrow_downward</span>
-            </button>
-            {onViewCaseStudies && (
+          {/* Conversion CTAs: 3 on the left side, 2 on the right side */}
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-3.5 pt-2 max-w-[440px] items-start">
+            {/* Left Column: 3 Buttons */}
+            <div className="flex flex-col gap-2.5 sm:gap-3">
               <button
                 type="button"
-                onClick={onViewCaseStudies}
-                className="inline-flex items-center justify-center text-sm font-semibold bg-white hover:bg-[#efeeeb] text-[#1b1c1a] transition-colors px-5 py-3 rounded-lg border border-[#e4e2df] cursor-pointer"
+                onClick={onWorkWithMe}
+                className="w-full inline-flex items-center justify-center text-xs sm:text-sm font-semibold bg-[#b85d3a] hover:bg-[#994524] text-white transition-all px-3 sm:px-5 py-3 rounded-lg shadow-sm hover:shadow active:scale-[0.98] cursor-pointer whitespace-nowrap"
               >
-                View Case Studies
+                <span>Work With Me</span>
+                <span className="material-symbols-outlined ml-1.5 text-[16px] sm:text-[18px]">north_east</span>
               </button>
-            )}
-            <a
-              href="#resume"
-              className="inline-flex items-center justify-center text-sm font-semibold bg-white hover:bg-[#efeeeb] text-[#994524] transition-colors px-5 py-3 rounded-lg border border-[#dbc1b8] cursor-pointer"
-            >
-              View Resume
-              <span className="material-symbols-outlined ml-1.5 text-[18px]">description</span>
-            </a>
-            <a
-              href="#published-work"
-              onClick={(e) => {
-                if (onReadBook) {
-                  e.preventDefault();
-                  onReadBook();
-                }
-              }}
-              className="inline-flex items-center justify-center text-sm font-semibold bg-white hover:bg-[#efeeeb] text-[#1b1c1a] hover:text-[#994524] transition-colors px-5 py-3 rounded-lg border border-[#e4e2df] cursor-pointer"
-            >
-              Read My Book
-              <span className="material-symbols-outlined ml-1.5 text-[18px]">menu_book</span>
-            </a>
+              <button
+                type="button"
+                onClick={onViewWork}
+                className="w-full inline-flex items-center justify-center text-xs sm:text-sm font-semibold bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] transition-colors px-3 sm:px-5 py-3 rounded-lg border border-[#e4e2df] cursor-pointer whitespace-nowrap"
+              >
+                <span>View My Work</span>
+                <span className="material-symbols-outlined ml-1.5 text-[16px] sm:text-[18px]">arrow_downward</span>
+              </button>
+              {onViewCaseStudies && (
+                <button
+                  type="button"
+                  onClick={onViewCaseStudies}
+                  className="w-full inline-flex items-center justify-center text-xs sm:text-sm font-semibold bg-white hover:bg-[#efeeeb] text-[#1b1c1a] transition-colors px-3 sm:px-5 py-3 rounded-lg border border-[#e4e2df] cursor-pointer whitespace-nowrap"
+                >
+                  <span>View Case Studies</span>
+                </button>
+              )}
+            </div>
+
+            {/* Right Column: 2 Buttons */}
+            <div className="flex flex-col gap-2.5 sm:gap-3">
+              <a
+                href="#resume"
+                className="w-full inline-flex items-center justify-center text-xs sm:text-sm font-semibold bg-white hover:bg-[#efeeeb] text-[#994524] transition-colors px-3 sm:px-5 py-3 rounded-lg border border-[#dbc1b8] cursor-pointer whitespace-nowrap"
+              >
+                <span>View Resume</span>
+                <span className="material-symbols-outlined ml-1.5 text-[16px] sm:text-[18px]">description</span>
+              </a>
+              <a
+                href="#published-work"
+                onClick={(e) => {
+                  if (onReadBook) {
+                    e.preventDefault();
+                    onReadBook();
+                  }
+                }}
+                className="w-full inline-flex items-center justify-center text-xs sm:text-sm font-semibold bg-white hover:bg-[#efeeeb] text-[#1b1c1a] hover:text-[#994524] transition-colors px-3 sm:px-5 py-3 rounded-lg border border-[#e4e2df] cursor-pointer whitespace-nowrap"
+              >
+                <span>Read My Book</span>
+                <span className="material-symbols-outlined ml-1.5 text-[16px] sm:text-[18px]">menu_book</span>
+              </a>
+            </div>
           </div>
         </div>
 

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What People Say — Seapee Bajaj Testimonials</title>
+
+  <!-- Google Fonts: Playfair Display (Serif for Quotes) & Inter (Clean Sans-Serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & THEME TOKENS
+       ========================================================================== */
+    :root {
+      --bg-section: #0f172a;          /* Deep Navy Background */
+      --bg-card: #1e293b;             /* Elevated Slate Card Surface */
+      --bg-card-featured: #1e293b;    /* Featured Card Surface */
+      --bg-ticker: #162033;           /* Ticker Strip Surface */
+      --text-primary: #f8fafc;        /* High-Contrast Off-White */
+      --text-secondary: #cbd5e1;      /* Soft Slate Body Text */
+      --text-muted: #94a3b8;          /* Muted Attribution Text */
+      --accent: #f59e0b;              /* Warm Amber Highlight */
+      --accent-soft: rgba(245, 158, 11, 0.14);
+      --border-subtle: rgba(148, 163, 184, 0.18);
+      --border-featured: rgba(245, 158, 11, 0.45);
+      --shadow-card: 0 12px 32px -8px rgba(2, 6, 23, 0.45);
+      --shadow-hover: 0 20px 40px -12px rgba(2, 6, 23, 0.65);
+      --radius-card: 18px;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-section);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ==========================================================================
+       SECTION CONTAINER
+       ========================================================================== */
+    .sb-testimonials-section {
+      position: relative;
+      padding: 4.5rem 1.25rem;
+      background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.08), transparent 45%),
+                  radial-gradient(circle at bottom left, rgba(20, 184, 166, 0.06), transparent 45%),
+                  var(--bg-section);
+      overflow: hidden;
+    }
+
+    .sb-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2.25rem;
+    }
+
+    /* ==========================================================================
+       HEADER
+       ========================================================================== */
+    .sb-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .sb-eyebrow {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .sb-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 2.85rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1.18;
+      margin-bottom: 0.65rem;
+    }
+
+    .sb-subheading {
+      font-size: clamp(1rem, 1.8vw, 1.125rem);
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    /* ==========================================================================
+       TESTIMONIAL CARDS (FEATURED + SECONDARY GRID)
+       ========================================================================== */
+    .sb-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 0.28s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sb-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(245, 158, 11, 0.38);
+    }
+
+    /* Featured Client Card */
+    .sb-card--featured {
+      background: linear-gradient(145deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.96));
+      border: 1px solid var(--border-featured);
+      padding: 2rem 1.75rem;
+    }
+
+    .sb-card--featured::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), #fbbf24);
+    }
+
+    .sb-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .sb-quote-mark {
+      font-family: var(--font-serif);
+      font-size: 3.5rem;
+      line-height: 0.75;
+      color: var(--accent);
+      opacity: 0.35;
+      user-select: none;
+    }
+
+    .sb-card--featured .sb-quote-mark {
+      font-size: 4.75rem;
+      opacity: 0.45;
+    }
+
+    .sb-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background-color: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .sb-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--accent);
+    }
+
+    .sb-blockquote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.08rem;
+      line-height: 1.7;
+      color: var(--text-primary);
+    }
+
+    .sb-card--featured .sb-blockquote {
+      font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+      line-height: 1.62;
+    }
+
+    .sb-attribution {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding-top: 1.1rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .sb-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      color: #0f172a;
+      background-color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .sb-card--featured .sb-avatar {
+      width: 52px;
+      height: 52px;
+      font-size: 1rem;
+    }
+
+    .sb-author-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sb-author-name {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 0.98rem;
+      color: var(--text-primary);
+    }
+
+    .sb-author-title {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Secondary 2-Column Grid */
+    .sb-secondary-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    /* ==========================================================================
+       ONE-LINE HIGHLIGHT STRIP & SHORT QUOTE TICKER
+       ========================================================================== */
+    .sb-highlight-strip {
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      padding: 0.25rem 0;
+    }
+
+    .sb-ticker {
+      background-color: var(--bg-ticker);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+    }
+
+    .sb-ticker-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .sb-ticker-quote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--text-primary);
+    }
+
+    .sb-ticker-author {
+      font-family: var(--font-sans);
+      font-style: normal;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .sb-ticker-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .sb-ticker-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      border: none;
+      background-color: rgba(148, 163, 184, 0.35);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .sb-ticker-dot[aria-pressed="true"] {
+      width: 22px;
+      background-color: var(--accent);
+    }
+
+    /* ==========================================================================
+       SCROLL REVEAL ANIMATION
+       ========================================================================== */
+    .sb-reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+    }
+
+    .sb-reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sb-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (min-width: 768px) {
+      .sb-testimonials-section {
+        padding: 6rem 2.5rem;
+      }
+
+      .sb-card {
+        padding: 2.25rem;
+      }
+
+      .sb-card--featured {
+        padding: 2.75rem 3rem;
+      }
+
+      .sb-secondary-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.75rem;
+      }
+
+      .sb-ticker {
+        flex-direction: row;
+        padding: 1rem 1.5rem;
+      }
+
+      .sb-ticker-content {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       TESTIMONIALS SECTION
+       ========================================================================== -->
+  <section class="sb-testimonials-section" aria-labelledby="sb-testimonials-title">
+    <div class="sb-container">
+
+      <!-- Heading & Subheading -->
+      <header class="sb-header sb-reveal">
+        <span class="sb-eyebrow">Endorsements &amp; Impact</span>
+        <h2 id="sb-testimonials-title" class="sb-heading">What People Say</h2>
+        <p class="sb-subheading">Feedback from managers, leadership and clients.</p>
+      </header>
+
+      <!-- Dynamic Testimonials Mount Container -->
+      <div id="sb-testimonials-mount"></div>
+
+      <!-- One-Line Highlight Strip -->
+      <p class="sb-highlight-strip sb-reveal">
+        Trusted by clients, recognised by leadership.
+      </p>
+
+      <!-- Short Quote Carousel / Ticker -->
+      <div class="sb-ticker sb-reveal" aria-label="Short quote highlights">
+        <div class="sb-ticker-content" aria-live="polite">
+          <p id="sb-ticker-text">
+            <span class="sb-ticker-quote">&ldquo;Impressed with the speed and quality of work on a challenging, niche market. Responsive, knowledgeable, and we'd enthusiastically use them again.&rdquo;</span>
+            <span class="sb-ticker-author"> (Maximillian Sloan, PwC)</span>
+          </p>
+        </div>
+        <div id="sb-ticker-dots" class="sb-ticker-controls" role="group" aria-label="Select short quote"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    /**
+     * ==========================================================================
+     * 1. EDITABLE TESTIMONIALS DATA ARRAY
+     * Edit or add testimonials directly in this single array.
+     * ==========================================================================
+     */
+    const TESTIMONIALS = [
+      {
+        featured: true,
+        badge: "Client Feedback",
+        quote: "I was very impressed with the speed and quality of information the team put together in a very short period, on a challenging and niche market. The personalised report was of fundamental importance to our work, and the team proved responsive and knowledgeable. I would enthusiastically use their services again for a similar piece of work.",
+        shortQuote: "Impressed with the speed and quality of work on a challenging, niche market. Responsive, knowledgeable, and we'd enthusiastically use them again.",
+        name: "Maximillian Sloan",
+        title: "Strategy, PwC",
+        shortAttribution: "Maximillian Sloan, PwC",
+        initials: "MS",
+        avatarBg: "#f59e0b",
+        avatarColor: "#0f172a"
+      },
+      {
+        featured: false,
+        badge: "Manager",
+        quote: "Seapee did a commendable job on our AI Chip thought leadership article. The content structure and the creative way she put it together caught the reader's eye even before they got to the full text. She raised the bar for the entire team.",
+        shortQuote: "Seapee did a commendable job on our AI Chip thought leadership article... She raised the bar for the entire team.",
+        name: "Supradip Baul",
+        title: "Manager, Allied Analytics",
+        shortAttribution: "Supradip Baul, Allied Analytics",
+        initials: "SB",
+        avatarBg: "#14b8a6",
+        avatarColor: "#0f172a"
+      },
+      {
+        featured: false,
+        badge: "Leadership",
+        quote: "Seapee was part of a team that displayed a wonderful team effort in terms of quality, accuracy and timely response. Their hard work and positive attitude impressed a client from PwC, and this is the kind of involvement in which everyone is a winner.",
+        shortQuote: "Displayed a wonderful team effort in terms of quality, accuracy and timely response — the kind of involvement in which everyone is a winner.",
+        name: "Pawan Kumar",
+        title: "CEO, Origius",
+        shortAttribution: "Pawan Kumar, Origius",
+        initials: "PK",
+        avatarBg: "#38bdf8",
+        avatarColor: "#0f172a"
+      }
+    ];
+
+    /**
+     * ==========================================================================
+     * 2. RENDER CARDS INTO THE DOM
+     * ==========================================================================
+     */
+    function createCardHTML(item, isFeatured) {
+      const cardClass = isFeatured ? "sb-card sb-card--featured sb-reveal" : "sb-card sb-reveal";
+      return `
+        <figure class="${cardClass}">
+          <div>
+            <div class="sb-card-top">
+              <span class="sb-quote-mark" aria-hidden="true">&ldquo;</span>
+              <span class="sb-badge">
+                <span class="sb-badge-dot" aria-hidden="true"></span>
+                ${item.badge}
+              </span>
+            </div>
+            <blockquote class="sb-blockquote">
+              <p>&ldquo;${item.quote}&rdquo;</p>
+            </blockquote>
+          </div>
+          <figcaption class="sb-attribution">
+            <div
+              class="sb-avatar"
+              style="background-color: ${item.avatarBg}; color: ${item.avatarColor};"
+              aria-hidden="true"
+            >
+              ${item.initials}
+            </div>
+            <div class="sb-author-meta">
+              <cite class="sb-author-name">${item.name}</cite>
+              <span class="sb-author-title">${item.title}</span>
+            </div>
+          </figcaption>
+        </figure>
+      `;
+    }
+
+    function renderTestimonials() {
+      const mount = document.getElementById("sb-testimonials-mount");
+      if (!mount) return;
+
+      const featured = TESTIMONIALS.find((t) => t.featured) || TESTIMONIALS[0];
+      const others = TESTIMONIALS.filter((t) => t !== featured);
+
+      const featuredHTML = featured ? createCardHTML(featured, true) : "";
+      const secondaryHTML = others.length
+        ? `<div class="sb-secondary-grid" style="margin-top: 1.5rem;">
+            ${others.map((item) => createCardHTML(item, false)).join("")}
+           </div>`
+        : "";
+
+      mount.innerHTML = featuredHTML + secondaryHTML;
+    }
+
+    /**
+     * ==========================================================================
+     * 3. SHORT QUOTE TICKER / CAROUSEL
+     * ==========================================================================
+     */
+    let activeTickerIdx = 0;
+
+    function updateTicker(index) {
+      activeTickerIdx = index;
+      const item = TESTIMONIALS[index];
+      const textEl = document.getElementById("sb-ticker-text");
+      const dotsContainer = document.getElementById("sb-ticker-dots");
+
+      if (textEl && item) {
+        textEl.innerHTML = `
+          <span class="sb-ticker-quote">&ldquo;${item.shortQuote}&rdquo;</span>
+          <span class="sb-ticker-author"> (${item.shortAttribution})</span>
+        `;
+      }
+
+      if (dotsContainer) {
+        Array.from(dotsContainer.children).forEach((btn, i) => {
+          btn.setAttribute("aria-pressed", String(i === index));
+        });
+      }
+    }
+
+    function initTicker() {
+      const dotsContainer = document.getElementById("sb-ticker-dots");
+      if (!dotsContainer) return;
+
+      dotsContainer.innerHTML = TESTIMONIALS.map(
+        (item, idx) => `
+          <button
+            type="button"
+            class="sb-ticker-dot"
+            aria-label="Show short quote from ${item.name}"
+            aria-pressed="${idx === 0}"
+            data-index="${idx}"
+          ></button>
+        `
+      ).join("");
+
+      dotsContainer.addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-index]");
+        if (!btn) return;
+        updateTicker(Number(btn.getAttribute("data-index")));
+      });
+
+      setInterval(() => {
+        updateTicker((activeTickerIdx + 1) % TESTIMONIALS.length);
+      }, 6500);
+    }
+
+    /**
+     * ==========================================================================
+     * 4. INTERSECTION OBSERVER FOR SCROLL FADE-IN
+     * ==========================================================================
+     */
+    function initScrollReveal() {
+      const elements = document.querySelectorAll(".sb-reveal");
+      if (!("IntersectionObserver" in window)) {
+        elements.forEach((el) => el.classList.add("is-visible"));
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
+
+      elements.forEach((el) => observer.observe(el));
+    }
+
+    // Initialize on DOMContentLoaded
+    document.addEventListener("DOMContentLoaded", () => {
+      renderTestimonials();
+      initTicker();
+      initScrollReveal();
+    });
+  </script>
+</body>
+</html>
