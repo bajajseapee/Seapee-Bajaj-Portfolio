@@ -5,6 +5,7 @@ interface HeroProps {
   onWorkWithMe: () => void;
   onViewWork: () => void;
   onViewCaseStudies?: () => void;
+  onReadBook?: () => void;
   onFilterTopic: (topic: string) => void;
   isHomeRoute?: boolean;
 }
@@ -13,6 +14,7 @@ export const Hero: React.FC<HeroProps> = ({
   onWorkWithMe,
   onViewWork,
   onViewCaseStudies,
+  onReadBook,
   onFilterTopic,
   isHomeRoute = true,
 }) => {
@@ -113,6 +115,19 @@ export const Hero: React.FC<HeroProps> = ({
             >
               View Resume
               <span className="material-symbols-outlined ml-1.5 text-[18px]">description</span>
+            </a>
+            <a
+              href="#published-work"
+              onClick={(e) => {
+                if (onReadBook) {
+                  e.preventDefault();
+                  onReadBook();
+                }
+              }}
+              className="inline-flex items-center justify-center text-sm font-semibold bg-white hover:bg-[#efeeeb] text-[#1b1c1a] hover:text-[#994524] transition-colors px-5 py-3 rounded-lg border border-[#e4e2df] cursor-pointer"
+            >
+              Read My Book
+              <span className="material-symbols-outlined ml-1.5 text-[18px]">menu_book</span>
             </a>
           </div>
         </div>

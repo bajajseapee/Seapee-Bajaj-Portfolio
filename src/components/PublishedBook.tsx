@@ -1,6 +1,168 @@
-import React from 'react';
-import { SITE_CONFIG } from '../config/siteConfig';
+import React, { useState } from 'react';
+import {
+  SITE_CONFIG,
+  BOOK_TESTIMONIALS,
+  type BookTestimonial,
+} from '../config/siteConfig';
 import notUnworthyCover from '../assets/images/not_unworthy_book_cover_1790402940878.jpg';
+
+interface BookTestimonialCardProps {
+  testimonial: BookTestimonial;
+}
+
+export const BookTestimonialCard: React.FC<BookTestimonialCardProps> = ({
+  testimonial,
+}) => {
+  const starCount = Math.max(0, Math.min(testimonial.rating, testimonial.maxRating));
+
+  return (
+    <div className="w-full flex flex-col items-center">
+      {/* Soft-background, rounded, subtly shadowed testimonial card */}
+      <figure className="w-full bg-[#fbf9f6] rounded-2xl p-6 sm:p-8 border border-[#e4e2df] shadow-xs flex flex-col items-center text-center gap-3.5 transition-shadow duration-200 hover:shadow-sm">
+        {/* Headline in bold */}
+        <h4 className="font-serif text-lg sm:text-xl font-bold text-[#1b1c1a] tracking-tight">
+          {testimonial.headline}
+        </h4>
+
+        {/* 5 Filled Gold Stars with accessible aria-label */}
+        <div
+          role="img"
+          aria-label={`${testimonial.rating} out of ${testimonial.maxRating} stars`}
+          className="inline-flex items-center gap-1 text-[#d49a2a]"
+        >
+          {Array.from({ length: testimonial.maxRating }).map((_, idx) => (
+            <svg
+              key={idx}
+               aria-hidden="true"
+               focusable="false"
+               className={`w-4 h-4 sm:w-5 sm:h-5 ${
+                 idx < starCount ? 'text-[#d49a2a] fill-current' : 'text-[#e4e2df] fill-current'
+               }`}
+              viewBox="0 0 20 20"
+            >
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.447a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.368-2.447a1 1 0 00-1.175 0l-3.368 2.447c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z" />
+            </svg>
+          ))}
+        </div>
+
+        {/* Quote in italics with quotation marks using semantic <blockquote> */}
+        <blockquote
+          cite={testimonial.reviewUrl}
+          className="font-serif italic text-base sm:text-lg text-[#1b1c1a] leading-relaxed max-w-xl"
+        >
+          <p>&ldquo;{testimonial.quote}&rdquo;</p>
+        </blockquote>
+
+        {/* Attribution using semantic <figcaption> and <cite> */}
+        <figcaption className="text-xs sm:text-sm text-[#546252] font-medium pt-0.5">
+          <cite className="not-italic font-semibold text-[#1b1c1a]">
+            {testimonial.author}
+          </cite>
+          , {testimonial.sourceLabel}, {testimonial.dateLabel}
+        </figcaption>
+      </figure>
+
+      {/* Small link button under the card */}
+      <a
+        href={testimonial.reviewUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-3 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-[#994524] bg-[#fbf9f6] hover:bg-[#efeeeb] border border-[#e4e2df] transition-colors shadow-2xs focus-visible:outline-2 focus-visible:outline-[#994524]"
+        aria-label={`${testimonial.reviewLinkLabel || 'Read the full review on Amazon'} by ${testimonial.author} (opens in a new tab)`}
+      >
+        <span>{testimonial.reviewLinkLabel || 'Read the full review on Amazon'}</span>
+        <span className="material-symbols-outlined text-[15px]" aria-hidden="true">
+          open_in_new
+        </span>
+      </a>
+    </div>
+  );
+};
+
+interface BookTestimonialsSectionProps {
+  testimonials?: BookTestimonial[];
+  layout?: 'grid' | 'carousel';
+}
+
+export const BookTestimonialsSection: React.FC<BookTestimonialsSectionProps> = ({
+  testimonials = BOOK_TESTIMONIALS,
+  layout = 'grid',
+}) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  if (!testimonials || testimonials.length === 0) {
+    return null;
+  }
+
+  const isSingle = testimonials.length === 1;
+  const useCarousel = layout === 'carousel' && !isSingle;
+
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+  };
+
+  return (
+    <div
+      className="pt-4 border-t border-[#efeeeb] flex flex-col items-center gap-5"
+      aria-labelledby="what-readers-say-heading"
+    >
+      {/* Section Header */}
+      <div className="text-center flex flex-col items-center gap-1">
+        <span className="text-[11px] uppercase tracking-widest text-[#994524] font-semibold">
+          Reader Reflections
+        </span>
+        <h3
+          id="what-readers-say-heading"
+          className="font-serif text-xl sm:text-2xl text-[#1b1c1a] font-medium tracking-tight"
+        >
+          What Readers Say
+        </h3>
+      </div>
+
+      {/* Reusable Layout: Centred Single Card, Responsive Multi-Card Grid, or Carousel */}
+      {isSingle ? (
+        <div className="w-full max-w-2xl mx-auto">
+          <BookTestimonialCard testimonial={testimonials[0]} />
+        </div>
+      ) : useCarousel ? (
+        <div className="w-full max-w-2xl mx-auto flex flex-col items-center gap-4">
+          <BookTestimonialCard testimonial={testimonials[activeIndex]} />
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={handlePrev}
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-[#55433c] bg-[#fbf9f6] hover:bg-[#efeeeb] border border-[#e4e2df] transition-colors cursor-pointer"
+              aria-label="Previous reader review"
+            >
+              Previous
+            </button>
+            <span className="text-xs text-[#546252] tabular-nums">
+              {activeIndex + 1} / {testimonials.length}
+            </span>
+            <button
+              type="button"
+              onClick={handleNext}
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-[#55433c] bg-[#fbf9f6] hover:bg-[#efeeeb] border border-[#e4e2df] transition-colors cursor-pointer"
+              aria-label="Next reader review"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+          {testimonials.map((item) => (
+            <BookTestimonialCard key={item.id} testimonial={item} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 export const PublishedBook: React.FC = () => {
   const { BOOK } = SITE_CONFIG;
@@ -102,8 +264,11 @@ export const PublishedBook: React.FC = () => {
             </div>
           </div>
 
+          {/* What Readers Say Testimonial Section */}
+          <BookTestimonialsSection testimonials={BOOK_TESTIMONIALS} />
+
           {/* Understated Editorial CTA */}
-          <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-[#efeeeb]">
+          <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-[#efeeeb]">
             <a
               href={BOOK.AMAZON_URL}
               target="_blank"

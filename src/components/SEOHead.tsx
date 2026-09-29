@@ -1,5 +1,11 @@
 import React, { useEffect } from 'react';
-import { SITE_CONFIG, SITE_URL_ORIGIN, SEO_ROUTES, getCanonicalUrl } from '../config/siteConfig';
+import {
+  SITE_CONFIG,
+  SITE_URL_ORIGIN,
+  SEO_ROUTES,
+  BOOK_TESTIMONIALS,
+  getCanonicalUrl,
+} from '../config/siteConfig';
 import { FAQ_ITEMS } from '../data/portfolioData';
 
 interface SEOHeadProps {
@@ -198,6 +204,50 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
     };
 
     upsertJsonLdScript('faq-jsonld', faqJsonLd);
+
+    // 4. Book + Review JSON-LD for "Not Unworthy"
+    const bookReviewJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Book',
+      '@id': `${SITE_URL_ORIGIN}/#not-unworthy-book`,
+      name: SITE_CONFIG.BOOK.TITLE,
+      author: {
+        '@type': 'Person',
+        '@id': `${SITE_URL_ORIGIN}/#person`,
+        name: SITE_CONFIG.BOOK.AUTHOR,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: SITE_CONFIG.BOOK.PUBLISHER,
+      },
+      datePublished: '2020-12-18',
+      bookFormat: 'https://schema.org/Paperback',
+      isbn: SITE_CONFIG.BOOK.ISBN,
+      url: SITE_CONFIG.BOOK.AMAZON_URL,
+      review: BOOK_TESTIMONIALS.map((t) => ({
+        '@type': 'Review',
+        name: t.headline,
+        reviewBody: t.quote,
+        datePublished: t.isoDate,
+        url: t.reviewUrl,
+        author: {
+          '@type': 'Person',
+          name: t.author,
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'Amazon India',
+        },
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: String(t.rating),
+          bestRating: String(t.maxRating),
+          worstRating: '1',
+        },
+      })),
+    };
+
+    upsertJsonLdScript('book-review-jsonld', bookReviewJsonLd);
   }, [cleanPath, routeConfig, canonicalUrl]);
 
   return null;

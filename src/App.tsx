@@ -232,6 +232,10 @@ export default function App() {
     handleNavigate('/case-studies', 'case-studies');
   };
 
+  const handleReadBook = () => {
+    handleNavigate('/book', 'published-work');
+  };
+
   const handleFilterTopic = (topic: string) => {
     if (topic === 'SEO Content') {
       setActiveCategory('SEO & Content');
@@ -325,6 +329,7 @@ export default function App() {
               onWorkWithMe={handleWorkTogether}
               onViewWork={handleViewWork}
               onViewCaseStudies={handleViewCaseStudies}
+              onReadBook={handleReadBook}
               onFilterTopic={handleFilterTopic}
               isHomeRoute={isHomeRoute}
             />

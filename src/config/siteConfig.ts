@@ -66,6 +66,7 @@ export const SITE_CONFIG = {
     GENRE: "Poetry Collection (Paperback)",
     PUBLISHER: "Notion Press",
     PUBLICATION_DATE: "December 18, 2020",
+    ISBN: "979-8889356134",
     AMAZON_URL: "https://www.amazon.in/Not-Unworthy-Seapee-Bajaj/dp/1637457618",
     DESCRIPTION: "Not Unworthy is my published poetry collection exploring resilience, consistency, everyday courage, and the quiet worth of ordinary lives. It reflects another side of my writing — more personal, imaginative, and introspective.",
     CREDIBILITY_TAG: "Published author • Poetry • Original creative work",
@@ -89,6 +90,36 @@ export const SITE_CONFIG = {
     OG_SHORT_TAGLINE: "Seapee Bajaj — SEO • Content Strategy • GEO | Research-Led. Reader-Focused."
   }
 } as const;
+
+export interface BookTestimonial {
+  id: string;
+  headline: string;
+  rating: number;
+  maxRating: number;
+  quote: string;
+  author: string;
+  sourceLabel: string;
+  dateLabel: string;
+  isoDate: string;
+  reviewUrl: string;
+  reviewLinkLabel?: string;
+}
+
+export const BOOK_TESTIMONIALS: BookTestimonial[] = [
+  {
+    id: "vinay-deep-bajaj-amazon-2021",
+    headline: "A worthy read!!!",
+    rating: 5,
+    maxRating: 5,
+    quote: "Very engaging, imaginative and deep. My love for poetry is re-ignited after reading this book.",
+    author: "Vinay Deep Bajaj",
+    sourceLabel: "Verified Amazon India review",
+    dateLabel: "July 2021",
+    isoDate: "2021-07",
+    reviewUrl: "https://amzn.in/d/05ozMTHZ",
+    reviewLinkLabel: "Read the full review on Amazon",
+  },
+];
 
 export interface RouteSEOConfig {
   path: string;
