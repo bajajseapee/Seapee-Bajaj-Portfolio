@@ -105,6 +105,7 @@ function syncSeoAssetsPlugin(): Plugin {
         } else {
           const cleanSlug = route.path.replace(/^\/+|\/+$/g, '');
           const htmlFilePath = path.join(distDir, `${cleanSlug}.html`);
+          fs.mkdirSync(path.dirname(htmlFilePath), {recursive: true});
           fs.writeFileSync(htmlFilePath, routeHtml, 'utf-8');
         }
       });

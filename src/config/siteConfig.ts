@@ -34,7 +34,7 @@ export const SITE_CONFIG = {
   WHATSAPP_DIGITS: "918888010822",
   // Social & Profile URLs used in Person JSON-LD sameAs (replace placeholders if updating profile URLs)
   LINKEDIN_URL: "https://www.linkedin.com/in/seapeebajaj", // PLACEHOLDER: Replace with your exact LinkedIn profile URL if different
-  QUORA_PROFILE_URL: "https://wellofinsights.quora.com/", // PLACEHOLDER: Replace with your personal Quora profile URL
+  QUORA_PROFILE_URL: "https://wellofinsights.quora.com/", // PLACEHOLDER: Replace with your exact Quora profile/space URL if different
   TOPMATE_URL: "https://topmate.io/seapee_bajaj",
   RESUME_URL: "/resume-seapee-bajaj.pdf",
   SUBSTACK_URL: "https://seapeebajaj.substack.com",
@@ -105,9 +105,9 @@ export interface RouteSEOConfig {
 export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
   "/": {
     path: "/",
-    title: "Seapee Bajaj | B2B SEO Content & Editorial Strategist",
+    title: "Seapee Bajaj | B2B SEO Content & GEO Strategist",
     description:
-      "B2B SEO content & editorial strategist with 9+ years of experience in market research, search-aligned storytelling, and GEO/AEO optimization.",
+      "Portfolio of Seapee Bajaj, a B2B SEO content strategist specializing in market research content, GEO, AI search optimization, and editorial strategy.",
     h1: "Seapee Bajaj — B2B SEO Content & Editorial Strategist",
     kicker: "SEO Content Strategist | B2B Content | GEO & AI Search",
     subtitle: "Research-Led. Reader-Focused. Strategy, Storytelling & Search — Thoughtfully Combined.",

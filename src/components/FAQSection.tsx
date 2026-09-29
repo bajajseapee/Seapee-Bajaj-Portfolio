@@ -6,7 +6,7 @@ interface FAQSectionProps {
 }
 
 export const FAQSection: React.FC<FAQSectionProps> = ({ onNavigate }) => {
-  // All answers are collapsed by default until the visitor clicks a question
+  // All answers are hidden by default until the visitor clicks a question
   const [openId, setOpenId] = useState<string | null>(null);
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -33,17 +33,28 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ onNavigate }) => {
     }
   };
 
+  const handleInternalLink = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    path: string,
+    sectionId: string
+  ) => {
+    if (onNavigate) {
+      e.preventDefault();
+      onNavigate(path, sectionId);
+    }
+  };
+
   return (
     <section
       id="faq"
       aria-labelledby="faq-heading"
       className="w-full px-5 md:px-10 lg:px-16 py-16 lg:py-24 bg-[#fbf9f6] border-t border-[#e4e2df]"
     >
-      <div className="max-w-[920px] mx-auto">
+      <div className="max-w-[900px] mx-auto flex flex-col gap-10">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+        <div className="text-center max-w-2xl mx-auto">
           <span className="text-xs uppercase tracking-widest text-[#994524] font-semibold block mb-2">
-            Common Questions
+            Quick Answers
           </span>
           <h2
             id="faq-heading"
@@ -52,7 +63,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ onNavigate }) => {
             Frequently Asked Questions
           </h2>
           <p className="text-sm sm:text-base text-[#55433c] mt-3 leading-relaxed">
-            Quick answers about Seapee Bajaj&apos;s background in research-led content, B2B writing, SEO strategy, and editorial workflows.
+            Common questions about Seapee Bajaj&apos;s background in research-led content, SEO, B2B writing, editorial workflows, and availability.
           </p>
         </div>
 
@@ -121,18 +132,19 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ onNavigate }) => {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="px-5 sm:px-7 pb-5 pt-0.5 text-sm sm:text-base text-[#55433c] leading-relaxed border-t border-transparent">
+                    <div className="px-5 sm:px-7 pb-5 pt-0.5 text-sm sm:text-base text-[#55433c] leading-relaxed border-t border-transparent flex flex-col gap-2">
                       <p>{item.answer}</p>
                       {item.relatedLink && (
-                        <div className="mt-2.5">
+                        <div>
                           <a
                             href={item.relatedLink.path}
-                            onClick={(e) => {
-                              if (onNavigate) {
-                                e.preventDefault();
-                                onNavigate(item.relatedLink!.path, item.relatedLink!.sectionId);
-                              }
-                            }}
+                            onClick={(e) =>
+                              handleInternalLink(
+                                e,
+                                item.relatedLink!.path,
+                                item.relatedLink!.sectionId
+                              )
+                            }
                             className="inline-flex items-center gap-1 text-xs font-semibold text-[#994524] hover:underline"
                           >
                             <span>{item.relatedLink.label}</span>

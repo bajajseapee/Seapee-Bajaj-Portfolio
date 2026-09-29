@@ -45,13 +45,6 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
 
           <div className="flex flex-wrap items-center gap-3 text-xs font-semibold">
             <a
-              href="/seo-content"
-              onClick={(e) => handleInternalLink(e, '/seo-content', 'seo-geo-expertise')}
-              className="px-3.5 py-2 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] border border-[#e4e2df] transition-colors"
-            >
-              SEO &amp; GEO Approach
-            </a>
-            <a
               href="/services"
               onClick={(e) => handleInternalLink(e, '/services', 'services')}
               className="px-3.5 py-2 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] border border-[#e4e2df] transition-colors"
@@ -59,11 +52,11 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
               Explore Services
             </a>
             <a
-              href="/contact"
-              onClick={(e) => handleInternalLink(e, '/contact', 'contact')}
-              className="px-4 py-2 rounded-lg bg-[#b85d3a] hover:bg-[#994524] text-white transition-colors"
+              href="/work"
+              onClick={(e) => handleInternalLink(e, '/work', 'selected-work')}
+              className="px-3.5 py-2 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] border border-[#e4e2df] transition-colors"
             >
-              Let's Talk
+              Browse Selected Work
             </a>
           </div>
         </div>
@@ -121,9 +114,9 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
                       type="button"
                       onClick={() => setExpandedId(isExpanded ? null : cs.id)}
                       aria-expanded={isExpanded}
-                      className="px-4 py-2 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] text-xs font-semibold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+                      className="px-3.5 py-2 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] text-xs font-semibold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
-                      <span>{isExpanded ? 'Hide Breakdown' : 'Read Full Case Study'}</span>
+                      <span>{isExpanded ? 'Hide Details' : 'Read Breakdown'}</span>
                       <span className="material-symbols-outlined text-[18px]">
                         {isExpanded ? 'expand_less' : 'expand_more'}
                       </span>

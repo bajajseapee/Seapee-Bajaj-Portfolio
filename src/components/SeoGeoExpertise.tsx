@@ -51,14 +51,7 @@ export const SeoGeoExpertise: React.FC<SeoGeoExpertiseProps> = ({ onNavigate }) 
               onClick={(e) => handleInternalLink(e, '/case-studies', 'case-studies')}
               className="px-3.5 py-2 rounded-lg bg-white hover:bg-[#efeeeb] text-[#1b1c1a] border border-[#e4e2df] transition-colors"
             >
-              SEO Case Studies
-            </a>
-            <a
-              href="/b2b-content"
-              onClick={(e) => handleInternalLink(e, '/b2b-content', 'services')}
-              className="px-3.5 py-2 rounded-lg bg-white hover:bg-[#efeeeb] text-[#1b1c1a] border border-[#e4e2df] transition-colors"
-            >
-              B2B Content
+              View SEO Case Studies
             </a>
             <a
               href="/contact"
