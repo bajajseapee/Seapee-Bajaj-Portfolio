@@ -541,8 +541,8 @@ export const WRITING_TOPICS: WritingTopicItem[] = [
     status: "Topic Brief & Framework"
   },
   {
-    id: "nine-years-market-research-content-seo",
-    slug: "what-9-years-across-market-research-and-content-taught-me-about-seo",
+    id: "ten-years-market-research-content-seo",
+    slug: "what-10-years-of-experience-across-market-research-and-content-taught-me-about-seo",
     title: "What 10+ Years of Experience Across Market Research and Content Taught Me About SEO",
     category: "SEO Strategy",
     summary:
