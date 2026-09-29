@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { FAQ_ITEMS } from '../data/portfolioData';
+import { SECTION_BODY_COPY_CLASS } from './About';
 
 interface FAQSectionProps {
   onNavigate?: (path: string, sectionId?: string) => void;
@@ -62,7 +63,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ onNavigate }) => {
           >
             Frequently Asked Questions
           </h2>
-          <p className="text-sm sm:text-base text-[#55433c] mt-3 leading-relaxed">
+          <p className={`${SECTION_BODY_COPY_CLASS} mt-3`}>
             Common questions about Seapee Bajaj&apos;s background in research-led content, SEO, B2B writing, editorial workflows, and availability.
           </p>
         </div>
@@ -132,8 +133,8 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ onNavigate }) => {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="px-5 sm:px-7 pb-5 pt-0.5 text-sm sm:text-base text-[#55433c] leading-relaxed border-t border-transparent flex flex-col gap-2">
-                      <p>{item.answer}</p>
+                    <div className="px-5 sm:px-7 pb-5 pt-0.5 border-t border-transparent flex flex-col gap-2">
+                      <p className={SECTION_BODY_COPY_CLASS}>{item.answer}</p>
                       {item.relatedLink && (
                         <div>
                           <a

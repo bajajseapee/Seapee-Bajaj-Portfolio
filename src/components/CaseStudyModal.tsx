@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ProjectItem } from '../types';
 import { PROJECT_LOGOS } from './PortfolioCard';
+import { SECTION_BODY_COPY_CLASS } from './About';
 
 interface CaseStudyModalProps {
   project: ProjectItem | null;
@@ -94,7 +95,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
           <h2 id="case-study-title" className="font-serif text-2xl sm:text-3xl text-[#1b1c1a] font-medium leading-tight">
             {project.title}
           </h2>
-          <p className="text-base text-[#55433c] mt-3 leading-relaxed">
+          <p className={`${SECTION_BODY_COPY_CLASS} mt-3`}>
             {project.description}
           </p>
         </div>
@@ -113,19 +114,19 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
 
         {/* Editorial Challenge & Approach */}
         {project.challenge && (
-          <div className="flex flex-col gap-4 text-sm text-[#55433c] leading-relaxed border-t border-[#efeeeb] pt-4">
+          <div className="flex flex-col gap-4 border-t border-[#efeeeb] pt-4">
             <div>
               <h3 className="font-semibold text-[#1b1c1a] text-xs uppercase tracking-wider mb-1">
                 Context &amp; Editorial Challenge
               </h3>
-              <p>{project.challenge}</p>
+              <p className={SECTION_BODY_COPY_CLASS}>{project.challenge}</p>
             </div>
             {project.approach && (
               <div>
                 <h3 className="font-semibold text-[#1b1c1a] text-xs uppercase tracking-wider mb-1">
                   Strategic Editorial Approach
                 </h3>
-                <p>{project.approach}</p>
+                <p className={SECTION_BODY_COPY_CLASS}>{project.approach}</p>
               </div>
             )}
           </div>

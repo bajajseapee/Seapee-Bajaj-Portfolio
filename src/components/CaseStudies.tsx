@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { CASE_STUDIES } from '../data/portfolioData';
+import { SECTION_BODY_COPY_CLASS } from './About';
 
 interface CaseStudiesProps {
   onNavigate?: (path: string, sectionId?: string) => void;
@@ -97,7 +98,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
             >
               SEO, Content Strategy &amp; B2B Research Case Studies
             </h2>
-            <p className="text-base text-[#55433c] mt-3 leading-relaxed">
+            <p className={`${SECTION_BODY_COPY_CLASS} mt-3`}>
               Structured breakdowns of real projects I led and executed across Quora content strategy, B2B content workflows, website conversion copywriting, AI concept translation, and competitive intelligence.
             </p>
             <div className="pt-3 flex flex-wrap items-center gap-3 text-xs font-semibold">
@@ -277,7 +278,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
                         <p className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
                           1. Challenge
                         </p>
-                        <p className="text-sm text-[#55433c] leading-relaxed">
+                        <p className={SECTION_BODY_COPY_CLASS}>
                           {cs.problem}
                         </p>
                       </div>
@@ -286,7 +287,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
                         <p className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
                           2. Approach &amp; Research
                         </p>
-                        <p className="text-sm text-[#55433c] leading-relaxed">
+                        <p className={SECTION_BODY_COPY_CLASS}>
                           {cs.research}
                         </p>
                       </div>
@@ -295,7 +296,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
                         <p className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
                           3. SEO / Content Strategy
                         </p>
-                        <p className="text-sm text-[#55433c] leading-relaxed">
+                        <p className={SECTION_BODY_COPY_CLASS}>
                           {cs.strategy}
                         </p>
                       </div>
@@ -304,7 +305,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
                         <p className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
                           4. Execution
                         </p>
-                        <p className="text-sm text-[#55433c] leading-relaxed">
+                        <p className={SECTION_BODY_COPY_CLASS}>
                           {cs.execution}
                         </p>
                       </div>
@@ -313,7 +314,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
                         <p className="text-xs uppercase tracking-wider font-bold text-[#994524] mb-2">
                           5. Outcome
                         </p>
-                        <p className="text-sm text-[#1b1c1a] font-medium leading-relaxed">
+                        <p className={SECTION_BODY_COPY_CLASS}>
                           {cs.outcome}
                         </p>
                       </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { SERVICES } from '../data/portfolioData';
 import { ServiceItem } from '../types';
+import { SECTION_BODY_COPY_CLASS } from './About';
 import seoContentLogo from '../assets/images/service_logo_seo_content_1790405462914.webp';
 import b2bResearchLogo from '../assets/images/service_logo_b2b_research_1790405473123.webp';
 import websiteConversionLogo from '../assets/images/service_logo_website_conversion_1790405483488.jpg';
@@ -71,7 +72,7 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
               What I Can Help You With
             </h2>
           </div>
-          <p className="text-sm md:text-base text-[#55433c] max-w-md leading-relaxed">
+          <p className={`${SECTION_BODY_COPY_CLASS} max-w-md`}>
             I help B2B brands, research teams, and professionals with hands-on SEO content strategy, B2B writing, market research translation, GEO/AEO optimization, and conversion-focused portfolio websites.
           </p>
         </div>
@@ -122,7 +123,7 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
                   <p className="font-serif text-xl sm:text-2xl text-[#1b1c1a] mb-2.5 group-hover:text-[#994524] transition-colors font-medium leading-snug">
                     {service.title}
                   </p>
-                  <p className="text-sm text-[#55433c] leading-relaxed">
+                  <p className={SECTION_BODY_COPY_CLASS}>
                     {service.description}
                   </p>
                 </div>

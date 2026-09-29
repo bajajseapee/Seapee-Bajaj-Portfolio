@@ -29,6 +29,9 @@ interface AboutProps {
   onNavigate?: (path: string, sectionId?: string) => void;
 }
 
+export const SECTION_BODY_COPY_CLASS =
+  'section-body-copy text-[17px] leading-[1.7] md:text-[18px] md:leading-[1.75] text-[#55433c] font-normal';
+
 export const About: React.FC<AboutProps> = ({ onNavigate }) => {
   const [selectedStat, setSelectedStat] = useState<string | null>(null);
 
@@ -63,14 +66,14 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
               About Me
             </h2>
             <div className="w-12 h-[2px] bg-[#994524] my-1" />
-            <p className="text-lg md:text-xl text-[#1b1c1a] leading-relaxed font-normal">
+            <p className={SECTION_BODY_COPY_CLASS}>
               {PROFILE_INFO.aboutIntro}
             </p>
-            <p className="text-base text-[#55433c] leading-relaxed">
-              My career started in primary and secondary market research at <strong className="text-[#1b1c1a] font-semibold">Allied Market Research</strong> and <strong className="text-[#1b1c1a] font-semibold">The Insight Partners</strong>, where I worked on market estimation, data analysis, and industry reports across ICT, Semiconductor, and Automotive domains. That foundation shaped how I approach content and SEO across <strong className="text-[#1b1c1a] font-semibold">Perfect Clicks</strong>, <strong className="text-[#1b1c1a] font-semibold">Grand View Research</strong>, and <strong className="text-[#1b1c1a] font-semibold">IMARC Group</strong>—translating complex research into clear, reader-focused B2B and SEO content.
+            <p className={SECTION_BODY_COPY_CLASS}>
+              My career started in primary and secondary market research at <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Allied Market Research</strong> and <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">The Insight Partners</strong>, where I worked on market estimation, data analysis, and industry reports across ICT, Semiconductor, and Automotive domains. That foundation shaped how I approach content and SEO across <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Perfect Clicks</strong>, <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Grand View Research</strong>, and <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">IMARC Group</strong>—translating complex research into clear, reader-focused B2B and SEO content.
             </p>
-            <p className="text-sm text-[#55433c] leading-relaxed">
-              I specialize in <strong className="text-[#1b1c1a] font-semibold">content strategy, SEO optimization, research-led content, editorial workflows, and content production</strong>. My work spans keyword research, on-page SEO, competitive intelligence, and structuring clear, factual content for traditional search and AI-powered answer engines (<strong className="text-[#1b1c1a] font-semibold">GEO &amp; AEO</strong>). Alongside my industry experience, I hold an <strong className="text-[#1b1c1a] font-semibold">MBA in Systems</strong>, completed professional training in <strong className="text-[#1b1c1a] font-semibold">Introduction to Generative Engine Optimization</strong> (Coursera), <strong className="text-[#1b1c1a] font-semibold">HubSpot Content Marketing Certification</strong>, <strong className="text-[#1b1c1a] font-semibold">Google Prompting Essentials</strong>, and the <strong className="text-[#1b1c1a] font-semibold">Be10x AI tools program</strong>, and authored my published poetry book <em>Not Unworthy</em>.
+            <p className={SECTION_BODY_COPY_CLASS}>
+              I specialize in <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">content strategy, SEO optimization, research-led content, editorial workflows, and content production</strong>. My work spans keyword research, on-page SEO, competitive intelligence, and structuring clear, factual content for traditional search and AI-powered answer engines (<strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">GEO &amp; AEO</strong>). Alongside my industry experience, I hold an <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">MBA in Systems</strong>, completed professional training in <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Introduction to Generative Engine Optimization</strong> (Coursera), <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">HubSpot Content Marketing Certification</strong>, <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Google Prompting Essentials</strong>, and the <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Be10x AI tools program</strong>, and authored my published poetry book <em>Not Unworthy</em>.
             </p>
 
             {/* Quick Progression Summary */}

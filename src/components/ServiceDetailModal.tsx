@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { ServiceItem } from '../types';
 import { SERVICE_LOGOS } from './Services';
+import { SECTION_BODY_COPY_CLASS } from './About';
 
 interface ServiceDetailModalProps {
   service: ServiceItem | null;
@@ -79,7 +80,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
           </div>
         </div>
 
-        <p className="text-base text-[#55433c] leading-relaxed">
+        <p className={SECTION_BODY_COPY_CLASS}>
           {service.description}
         </p>
 
@@ -101,14 +102,14 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
         </div>
 
         {/* Ideal For & Expected Outcome */}
-        <div className="bg-[#fbf9f6] p-4 rounded-xl border border-[#e4e2df] flex flex-col gap-3 text-sm">
+        <div className="bg-[#fbf9f6] p-4 rounded-xl border border-[#e4e2df] flex flex-col gap-3">
           <div>
             <span className="text-xs font-semibold text-[#1b1c1a] block">Ideal For:</span>
-            <p className="text-[#55433c] mt-0.5">{service.idealFor}</p>
+            <p className={`${SECTION_BODY_COPY_CLASS} mt-0.5`}>{service.idealFor}</p>
           </div>
           <div>
             <span className="text-xs font-semibold text-[#1b1c1a] block">Expected Impact:</span>
-            <p className="text-[#55433c] mt-0.5">{service.outcome}</p>
+            <p className={`${SECTION_BODY_COPY_CLASS} mt-0.5`}>{service.outcome}</p>
           </div>
         </div>
 

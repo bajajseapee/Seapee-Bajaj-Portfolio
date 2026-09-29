@@ -87,6 +87,39 @@
     margin: 0;
     padding: 0;
   }
+
+  strong,
+  b {
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: 600;
+    font-family: inherit;
+  }
+}
+
+/* Shared body paragraph typography across sections (Mobile: 17px / 1.7, Desktop: 18px / 1.75) */
+.section-body-copy {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.7;
+  font-weight: 400;
+  color: #55433c;
+}
+
+@media (min-width: 768px) {
+  .section-body-copy {
+    font-size: 18px;
+    line-height: 1.75;
+  }
+}
+
+.section-body-copy strong,
+.section-body-copy b {
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: 600;
+  font-family: inherit;
+  color: inherit;
 }
 
 /* Material Symbols configuration: fixed size, line-height: 1, overflow: hidden */
