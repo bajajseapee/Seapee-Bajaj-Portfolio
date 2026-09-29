@@ -13,13 +13,33 @@ interface BookTestimonialCardProps {
 export const BookTestimonialCard: React.FC<BookTestimonialCardProps> = ({
   testimonial,
 }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+  const quoteRef = useRef<HTMLQuoteElement | null>(null);
+
   const starCount = Math.max(0, Math.min(testimonial.rating, testimonial.maxRating));
+  const paragraphs = testimonial.quote.split(/\n\n+/).filter(Boolean);
+
+  useEffect(() => {
+    const el = quoteRef.current;
+    if (!el) return;
+
+    const checkOverflow = () => {
+      if (!isExpanded && el) {
+        setIsOverflowing(el.scrollHeight > el.clientHeight + 2);
+      }
+    };
+
+    checkOverflow();
+    window.addEventListener('resize', checkOverflow);
+    return () => window.removeEventListener('resize', checkOverflow);
+  }, [testimonial.quote, isExpanded]);
 
   return (
     <div className="w-full h-full flex flex-col items-center">
       {/* Soft-background, rounded, subtly shadowed testimonial card with equal height */}
       <figure className="w-full flex-1 bg-[#fbf9f6] rounded-2xl p-6 sm:p-8 border border-[#e4e2df] shadow-xs flex flex-col items-center justify-between text-center gap-3.5 transition-shadow duration-200 hover:shadow-sm">
-        <div className="flex flex-col items-center gap-3.5">
+        <div className="flex flex-col items-center gap-3.5 w-full">
           {/* Headline in bold */}
           <h4 className="font-serif text-lg sm:text-xl font-bold text-[#1b1c1a] tracking-tight">
             {testimonial.headline}
@@ -48,11 +68,28 @@ export const BookTestimonialCard: React.FC<BookTestimonialCardProps> = ({
 
           {/* Quote in italics with quotation marks using semantic <blockquote> */}
           <blockquote
+            ref={quoteRef}
             cite={testimonial.reviewUrl}
-            className="font-serif italic text-base sm:text-lg text-[#1b1c1a] leading-relaxed max-w-xl"
+            className={`font-serif italic text-base sm:text-lg text-[#1b1c1a] leading-relaxed max-w-xl space-y-3 ${
+              !isExpanded ? 'line-clamp-5 overflow-hidden' : ''
+            }`}
           >
-            <p>&ldquo;{testimonial.quote}&rdquo;</p>
+            {paragraphs.map((para, idx) => (
+              <p key={idx}>&ldquo;{para}&rdquo;</p>
+            ))}
           </blockquote>
+
+          {/* Read more / Show less toggle (only appears when quote exceeds 5 lines) */}
+          {(isOverflowing || isExpanded) && (
+            <button
+              type="button"
+              onClick={() => setIsExpanded((prev) => !prev)}
+              aria-expanded={isExpanded}
+              className="text-xs sm:text-sm font-semibold text-[#994524] hover:underline cursor-pointer focus-visible:outline-2 focus-visible:outline-[#994524]"
+            >
+              {isExpanded ? 'Show less' : 'Read more'}
+            </button>
+          )}
         </div>
 
         {/* Attribution using semantic <figcaption> and <cite> */}
