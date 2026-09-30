@@ -74,9 +74,70 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
             <p className={SECTION_BODY_COPY_CLASS}>
               I specialize in <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">content strategy, SEO optimization, research-led content, editorial workflows, and content production</strong>. My work spans keyword research, on-page SEO, competitive intelligence, and structuring clear, factual content for traditional search and AI-powered answer engines (<strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">GEO &amp; AEO</strong>). Alongside my 10+ years of industry experience, I hold an <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">MBA in Systems</strong>, completed professional training in <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Introduction to Generative Engine Optimization</strong> (Coursera), <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">HubSpot Content Marketing Certification</strong>, <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Google Prompting Essentials</strong>, and the <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Be10x AI tools program</strong>, and authored my published poetry book <em>Not Unworthy</em>.
             </p>
+          </div>
+
+          {/* Right Column: 4 Stats Cards Grid + Quick Progression Summary & Internal Links */}
+          <div className="lg:col-span-6 flex flex-col gap-4 pt-1">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              {STATS.map((stat) => {
+                const logo = STAT_LOGOS[stat.id];
+                return (
+                  <button
+                    key={stat.id}
+                    type="button"
+                    onClick={() => setSelectedStat(selectedStat === stat.id ? null : stat.id)}
+                    className={`text-left bg-white p-3.5 sm:p-5 rounded-xl shadow-xs hover:shadow-md transition-all flex flex-col justify-between border ${
+                      selectedStat === stat.id ? 'border-[#994524] ring-1 ring-[#994524]' : 'border-[#e4e2df]'
+                    } group cursor-pointer`}
+                  >
+                    <div className="flex items-start justify-between w-full mb-2.5 sm:mb-3">
+                      {logo ? (
+                        <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-[#fbf9f6] border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0">
+                          <Image
+                            src={logo.src}
+                            alt={logo.alt}
+                            width={44}
+                            height={44}
+                            loading="lazy"
+                            decoding="async"
+                            referrerPolicy="no-referrer"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                      ) : (
+                        <span className="material-symbols-outlined text-[#994524] text-2xl group-hover:scale-110 transition-transform">
+                          {stat.icon}
+                        </span>
+                      )}
+                      <span className="material-symbols-outlined text-[16px] text-[#88726b] opacity-0 group-hover:opacity-100 transition-opacity">
+                        {selectedStat === stat.id ? 'expand_less' : 'info'}
+                      </span>
+                    </div>
+
+                    <div>
+                      <span className="font-serif text-lg sm:text-2xl text-[#1b1c1a] font-medium block leading-tight mb-1">
+                        {stat.value}
+                      </span>
+                      <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#546252] font-semibold block leading-snug">
+                        {stat.label}
+                      </span>
+                      <p
+                        className={
+                          selectedStat === stat.id
+                            ? 'mt-2 text-xs text-[#55433c] leading-relaxed pt-2 border-t border-[#efeeeb] animate-in fade-in duration-200'
+                            : 'sr-only'
+                        }
+                      >
+                        {stat.detail}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
 
             {/* Quick Progression Summary */}
-            <div className="mt-1 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#55433c]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#55433c]">
               <div className="bg-white p-3.5 rounded-xl border border-[#e4e2df]">
                 <span className="font-semibold text-[#994524] block mb-0.5">
                   Market Research Foundation
@@ -96,7 +157,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
             </div>
 
             {/* Internal Links Row */}
-            <div className="pt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-[#994524]">
+            <div className="pt-1 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-[#994524]">
               <a
                 href="/experience"
                 onClick={(e) => handleInternalLink(e, '/experience', 'experience')}
@@ -138,65 +199,6 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
                 <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
               </a>
             </div>
-          </div>
-
-          {/* 4 Stats Cards Grid */}
-          <div className="lg:col-span-6 grid grid-cols-2 gap-3 sm:gap-4 pt-1">
-            {STATS.map((stat) => {
-              const logo = STAT_LOGOS[stat.id];
-              return (
-                <button
-                  key={stat.id}
-                  type="button"
-                  onClick={() => setSelectedStat(selectedStat === stat.id ? null : stat.id)}
-                  className={`text-left bg-white p-3.5 sm:p-5 rounded-xl shadow-xs hover:shadow-md transition-all flex flex-col justify-between border ${
-                    selectedStat === stat.id ? 'border-[#994524] ring-1 ring-[#994524]' : 'border-[#e4e2df]'
-                  } group cursor-pointer`}
-                >
-                  <div className="flex items-start justify-between w-full mb-2.5 sm:mb-3">
-                    {logo ? (
-                      <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-[#fbf9f6] border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0">
-                        <Image
-                          src={logo.src}
-                          alt={logo.alt}
-                          width={44}
-                          height={44}
-                          loading="lazy"
-                          decoding="async"
-                          referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                    ) : (
-                      <span className="material-symbols-outlined text-[#994524] text-2xl group-hover:scale-110 transition-transform">
-                        {stat.icon}
-                      </span>
-                    )}
-                    <span className="material-symbols-outlined text-[16px] text-[#88726b] opacity-0 group-hover:opacity-100 transition-opacity">
-                      {selectedStat === stat.id ? 'expand_less' : 'info'}
-                    </span>
-                  </div>
-
-                  <div>
-                    <span className="font-serif text-lg sm:text-2xl text-[#1b1c1a] font-medium block leading-tight mb-1">
-                      {stat.value}
-                    </span>
-                    <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#546252] font-semibold block leading-snug">
-                      {stat.label}
-                    </span>
-                    <p
-                      className={
-                        selectedStat === stat.id
-                          ? 'mt-2 text-xs text-[#55433c] leading-relaxed pt-2 border-t border-[#efeeeb] animate-in fade-in duration-200'
-                          : 'sr-only'
-                      }
-                    >
-                      {stat.detail}
-                    </p>
-                  </div>
-                </button>
-              );
-            })}
           </div>
         </div>
       </div>

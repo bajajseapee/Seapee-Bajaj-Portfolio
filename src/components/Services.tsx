@@ -71,7 +71,7 @@ export const Services: React.FC<ServicesProps> = ({
     <section className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#fbf9f6]" id="services">
       <div className="max-w-[1280px] mx-auto flex flex-col gap-10 lg:gap-12">
         {/* Section Header */}
-        <div className="flex flex-col max-w-3xl">
+        <div className="flex flex-col w-full">
           <span className="text-xs uppercase tracking-widest text-[#546252] font-semibold">
             Core Practice &amp; Capabilities
           </span>

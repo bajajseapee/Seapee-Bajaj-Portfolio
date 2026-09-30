@@ -22,6 +22,7 @@ import { FAQSection } from './components/FAQSection';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/WhatsAppIcon';
+import { AutoScrollReader } from './components/AutoScrollReader';
 import { SEOHead } from './components/SEOHead';
 import { FirebaseProvider } from './context/FirebaseContext';
 import { SEO_ROUTES } from './config/siteConfig';
@@ -447,6 +448,9 @@ export default function App() {
 
         {/* Floating WhatsApp Quick-Chat Button */}
         <FloatingWhatsApp />
+
+        {/* Smart Auto-Scroll Reader, Top Progress Bar, Back-to-Top & Desktop Mini TOC */}
+        <AutoScrollReader />
 
         {/* Interactive Modals & "Talk to Seapee" Voice AI Assistant (Lazy-loaded) */}
         <Suspense fallback={null}>

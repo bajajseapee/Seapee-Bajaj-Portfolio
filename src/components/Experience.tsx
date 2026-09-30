@@ -10,7 +10,7 @@ export const Experience: React.FC<ExperienceProps> = ({ onNavigate }) => {
 
   const visibleExperiences = showMoreExperiences
     ? EXPERIENCE_ITEMS
-    : EXPERIENCE_ITEMS.slice(0, 1);
+    : EXPERIENCE_ITEMS.slice(0, 2);
 
   const handleInternalLink = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -90,7 +90,9 @@ export const Experience: React.FC<ExperienceProps> = ({ onNavigate }) => {
           {visibleExperiences.map((item, idx) => (
             <article
               key={item.id}
-              className="bg-white rounded-2xl p-6 sm:p-8 border border-[#e4e2df] shadow-xs hover:shadow-md hover:border-[#dbc1b8] transition-all duration-300 flex flex-col justify-between"
+              className={`bg-white rounded-2xl p-6 sm:p-8 border border-[#e4e2df] shadow-xs hover:shadow-md hover:border-[#dbc1b8] transition-all duration-300 flex-col justify-between ${
+                !showMoreExperiences && idx === 1 ? 'hidden md:flex' : 'flex'
+              }`}
             >
               <div>
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1.5 sm:gap-4 pb-4 border-b border-[#efeeeb]">
