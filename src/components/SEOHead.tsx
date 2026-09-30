@@ -46,11 +46,15 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
     upsertMeta('property', 'og:url', canonicalUrl);
     upsertMeta('property', 'og:type', 'profile');
     upsertMeta('property', 'og:image', SITE_CONFIG.OG_IMAGE);
+    upsertMeta('property', 'og:image:width', '1200');
+    upsertMeta('property', 'og:image:height', '630');
+    upsertMeta('property', 'og:image:alt', 'Seapee Bajaj — B2B SEO Content & GEO Strategist');
     upsertMeta('name', 'twitter:card', 'summary_large_image');
     upsertMeta('name', 'twitter:url', canonicalUrl);
     upsertMeta('name', 'twitter:title', routeConfig.title);
     upsertMeta('name', 'twitter:description', routeConfig.description);
     upsertMeta('name', 'twitter:image', SITE_CONFIG.OG_IMAGE);
+    upsertMeta('name', 'twitter:image:alt', 'Seapee Bajaj — B2B SEO Content & GEO Strategist');
 
     // Remove keywords meta tag if present
     const keywordsMeta = document.querySelector('meta[name="keywords"]');
@@ -74,7 +78,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
       name: 'Seapee Bajaj',
       jobTitle: 'B2B SEO Content & Editorial Strategist',
       url: `${SITE_URL_ORIGIN}/`,
-      image: SITE_CONFIG.HERO_IMAGE,
+      image: SITE_CONFIG.OG_IMAGE,
       description:
         'Seapee Bajaj is a B2B SEO content strategist with 10+ years of experience in market research content, GEO, AI search optimization, and editorial strategy.',
       email: SITE_CONFIG.EMAIL,
