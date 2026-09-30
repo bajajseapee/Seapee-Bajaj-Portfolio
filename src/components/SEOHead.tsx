@@ -4,7 +4,6 @@ import {
   SITE_URL_ORIGIN,
   SEO_ROUTES,
   BOOK_TESTIMONIALS,
-  BOOK_AGGREGATE_RATING,
   getCanonicalUrl,
 } from '../config/siteConfig';
 import { FAQ_ITEMS } from '../data/portfolioData';
@@ -206,7 +205,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
 
     upsertJsonLdScript('faq-jsonld', faqJsonLd);
 
-    // 4. Book + AggregateRating + Review JSON-LD for "Not Unworthy"
+    // 4. Book + Review JSON-LD for "Not Unworthy" (reviews 1–6, each 5 out of 5, no aggregateRating)
     const bookReviewJsonLd = {
       '@context': 'https://schema.org',
       '@type': 'Book',
@@ -225,18 +224,11 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
       bookFormat: 'https://schema.org/Paperback',
       isbn: SITE_CONFIG.BOOK.ISBN,
       url: SITE_CONFIG.BOOK.AMAZON_URL,
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: BOOK_AGGREGATE_RATING.ratingValue,
-        reviewCount: BOOK_AGGREGATE_RATING.reviewCount,
-        bestRating: BOOK_AGGREGATE_RATING.bestRating,
-        worstRating: BOOK_AGGREGATE_RATING.worstRating,
-      },
       review: BOOK_TESTIMONIALS.map((t) => {
         const reviewItem: Record<string, unknown> = {
           '@type': 'Review',
           name: t.headline,
-          reviewBody: t.quote.replace(/\s+/g, ' ').trim(),
+          reviewBody: t.quote,
           datePublished: t.isoDate,
           author: {
             '@type': 'Person',
@@ -244,9 +236,8 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
           },
           reviewRating: {
             '@type': 'Rating',
-            ratingValue: t.rating,
-            bestRating: t.maxRating,
-            worstRating: 1,
+            ratingValue: '5',
+            bestRating: '5',
           },
         };
         if (t.reviewUrl) {

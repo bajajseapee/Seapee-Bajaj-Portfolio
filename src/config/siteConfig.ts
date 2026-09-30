@@ -116,7 +116,7 @@ export const BOOK_TESTIMONIALS: BookTestimonial[] = [
     author: "Vinay",
     sourceLabel: "Verified Amazon India review",
     dateLabel: "July 2021",
-    isoDate: "2021-07-01",
+    isoDate: "2021-07",
     reviewUrl: "https://amzn.in/d/05ozMTHZ",
     reviewLinkLabel: "Read the full review on Amazon",
   },
@@ -129,7 +129,7 @@ export const BOOK_TESTIMONIALS: BookTestimonial[] = [
       "Seapee's poetries are metaphorical to the elements of nature. She correlates human nature with nature itself. Lockdown gave her a chance and the perfect time to explore imagination onto a book.\n\nI would read this author again and hope they continue writing in this genre. Great effort. Would read this book again.\n\nAll the way through just can't wait to read some more. Read the book... excellent! Highly recommendable!",
     author: "Daksh",
     dateLabel: "February 2021",
-    isoDate: "2021-02-01",
+    isoDate: "2021-02",
   },
   {
     id: "nikhil-dutt-2023-03",
@@ -139,7 +139,7 @@ export const BOOK_TESTIMONIALS: BookTestimonial[] = [
     quote: "Such a lovely book. Loved reading every line and page. Every poem is truly a masterpiece in itself. I related with each of them in one way or another and felt it deep within.",
     author: "Nikhil Dutt",
     dateLabel: "March 2023",
-    isoDate: "2023-03-01",
+    isoDate: "2023-03",
   },
   {
     id: "puja-mourya-2021-01",
@@ -149,7 +149,7 @@ export const BOOK_TESTIMONIALS: BookTestimonial[] = [
     quote: "There is always a poem one can relate to... in this book I can find many.",
     author: "Puja Mourya",
     dateLabel: "January 2021",
-    isoDate: "2021-01-01",
+    isoDate: "2021-01",
   },
   {
     id: "suraj-gudde-2025-04",
@@ -159,7 +159,7 @@ export const BOOK_TESTIMONIALS: BookTestimonial[] = [
     quote: "I started reading your book, and even in the first few chapters, I can feel the deep meaning in your words. It's really special. It's not just a book, it's an experience. Proud of you!",
     author: "Suraj Gudde",
     dateLabel: "April 2025",
-    isoDate: "2025-04-01",
+    isoDate: "2025-04",
   },
   {
     id: "rahul-kumar-2021-01",
@@ -169,19 +169,9 @@ export const BOOK_TESTIMONIALS: BookTestimonial[] = [
     quote: "It needs a lot of courage when you take a decision to divert from an easy going daily life. The time you spent in thinking and making your words alive really requires a lot of patience and dedication.",
     author: "Rahul Kumar",
     dateLabel: "January 2021",
-    isoDate: "2021-01-01",
+    isoDate: "2021-01",
   },
 ];
-
-export const BOOK_AGGREGATE_RATING = {
-  ratingValue: (
-    BOOK_TESTIMONIALS.reduce((sum, item) => sum + item.rating, 0) /
-    BOOK_TESTIMONIALS.length
-  ).toFixed(1),
-  reviewCount: BOOK_TESTIMONIALS.length,
-  bestRating: 5,
-  worstRating: 1,
-} as const;
 
 export interface RouteSEOConfig {
   path: string;
