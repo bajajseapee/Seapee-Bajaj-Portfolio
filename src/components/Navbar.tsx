@@ -46,12 +46,6 @@ export const Navbar: React.FC<NavbarProps> = ({
       },
       { name: 'Work', href: '/work', id: 'selected-work', matchIds: ['selected-work'] },
       {
-        name: 'Warehouse Management Systems',
-        href: '/warehouse-management-systems',
-        id: 'warehouse-management-systems',
-        matchIds: ['warehouse-management-systems'],
-      },
-      {
         name: 'SEO & GEO',
         href: '/geo-aeo',
         id: 'seo-geo-expertise',

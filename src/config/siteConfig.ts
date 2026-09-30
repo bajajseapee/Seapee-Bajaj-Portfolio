@@ -338,7 +338,7 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
     h1: "Global Warehouse Management Systems (WMS) — Market Research & Industry Analysis",
     kicker: "Supply Chain & Logistics Market Intelligence",
     subtitle: "Comprehensive analysis of global WMS adoption, market growth, cloud migration, industry segmentation, and leading supply-chain software providers.",
-    sectionId: "warehouse-management-systems",
+    sectionId: "selected-work",
     pageType: "WebPage",
     breadcrumbLabel: "Warehouse Management Systems"
   },

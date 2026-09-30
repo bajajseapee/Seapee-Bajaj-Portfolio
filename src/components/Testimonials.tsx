@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 
 /**
  * ============================================================================
@@ -65,32 +66,51 @@ export const TESTIMONIALS_DATA: TestimonialItem[] = [
   },
 ];
 
-export const Testimonials: React.FC = () => {
-  const featuredItem =
-    TESTIMONIALS_DATA.find((item) => item.featured) || TESTIMONIALS_DATA[0];
-  const secondaryItems = TESTIMONIALS_DATA.filter(
-    (item) => item.id !== featuredItem.id
-  );
+const AUTO_ADVANCE_MS = 5500;
 
-  // State for the "Short quote" ticker / carousel
+export const Testimonials: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
+  const secondaryItems = TESTIMONIALS_DATA.filter((item) => !item.featured);
+
+  // State for the auto-cycling fade-in-out spotlight & ticker
   const [activeTickerIndex, setActiveTickerIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const secondaryScrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (isPaused || TESTIMONIALS_DATA.length <= 1) return;
     const timer = window.setInterval(() => {
       setActiveTickerIndex((prev) => (prev + 1) % TESTIMONIALS_DATA.length);
-    }, 6500);
+    }, AUTO_ADVANCE_MS);
     return () => window.clearInterval(timer);
   }, [isPaused]);
 
-  const currentTicker = TESTIMONIALS_DATA[activeTickerIndex];
+  // Subtle horizontal auto-scroll on mobile when active index advances to a secondary card
+  useEffect(() => {
+    const container = secondaryScrollRef.current;
+    if (!container || prefersReducedMotion) return;
+    if (window.innerWidth >= 768) return; // Desktop uses 2-column grid
+
+    const activeItem = TESTIMONIALS_DATA[activeTickerIndex];
+    const secIdx = secondaryItems.findIndex((item) => item.id === activeItem?.id);
+    if (secIdx >= 0 && container.children[secIdx]) {
+      const targetEl = container.children[secIdx] as HTMLElement;
+      const scrollLeft = targetEl.offsetLeft - container.offsetLeft;
+      container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+    }
+  }, [activeTickerIndex, prefersReducedMotion, secondaryItems]);
+
+  const currentItem = TESTIMONIALS_DATA[activeTickerIndex] || TESTIMONIALS_DATA[0];
 
   return (
     <section
       id="testimonials"
       className="w-full px-5 md:px-10 lg:px-16 py-14 lg:py-20 bg-[#fbf9f6] border-t border-[#e4e2df] relative overflow-hidden"
       aria-labelledby="testimonials-heading"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocusCapture={() => setIsPaused(true)}
+      onBlurCapture={() => setIsPaused(false)}
     >
       {/* Subtle ambient highlight glow */}
       <div
@@ -119,109 +139,192 @@ export const Testimonials: React.FC = () => {
           </p>
         </div>
 
-        {/* 1. FEATURED CLIENT TESTIMONIAL CARD */}
-        {featuredItem && (
-          <figure className="relative bg-white rounded-2xl p-7 sm:p-10 lg:p-12 border border-[#dbc1b8] shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 overflow-hidden">
-            {/* Top Accent Bar */}
+        {/* 1. AUTO-CYCLING FEATURED SPOTLIGHT CARD WITH FADE-IN-OUT TRANSITION */}
+        {currentItem && (
+          <figure className="relative bg-white rounded-2xl p-7 sm:p-10 lg:p-12 border border-[#dbc1b8] shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden min-h-[280px] sm:min-h-[260px] flex flex-col justify-between">
+            {/* Top Accent Bar with Subtle Animated Progress Overlay */}
             <div
-              className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#994524] via-[#b85d3a] to-[#546252]"
+              className="absolute top-0 left-0 right-0 h-1.5 bg-[#efeeeb] overflow-hidden"
               aria-hidden="true"
-            />
-
-            <div className="flex flex-col gap-6 relative z-10">
-              {/* Top Row: Decorative Quotation Mark + Client Feedback Label */}
-              <div className="flex items-center justify-between gap-4 flex-wrap">
-                <span
-                  aria-hidden="true"
-                  className="font-serif text-5xl sm:text-6xl leading-none text-[#994524]/25 select-none"
-                >
-                  &ldquo;
-                </span>
-                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#ffdbcf]/55 text-[#994524] text-xs font-bold uppercase tracking-wider">
-                  <span
-                    className="w-1.5 h-1.5 rounded-full bg-[#994524]"
-                    aria-hidden="true"
-                  />
-                  {featuredItem.badge}
-                </span>
-              </div>
-
-              {/* Featured Quote Text */}
-              <blockquote className="font-serif italic text-xl sm:text-2xl lg:text-[26px] text-[#1b1c1a] leading-relaxed">
-                <p>&ldquo;{featuredItem.quote}&rdquo;</p>
-              </blockquote>
-
-              {/* Attribution with Initials Circle Avatar */}
-              <figcaption className="flex items-center gap-4 pt-4 border-t border-[#efeeeb]">
-                <div
-                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full ${featuredItem.avatarBg} ${featuredItem.avatarText} flex items-center justify-center font-semibold text-sm sm:text-base tracking-wider shrink-0 shadow-xs`}
-                  aria-hidden="true"
-                >
-                  {featuredItem.initials}
-                </div>
-                <div className="flex flex-col">
-                  <cite className="not-italic font-bold text-base sm:text-lg text-[#1b1c1a]">
-                    {featuredItem.name}
-                  </cite>
-                  <span className="text-xs sm:text-sm text-[#546252] font-medium">
-                    {featuredItem.title}
-                  </span>
-                </div>
-              </figcaption>
-            </div>
-          </figure>
-        )}
-
-        {/* 2. SECONDARY TESTIMONIALS (Manager & CEO Side by Side on Desktop, Stacked on Mobile) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-          {secondaryItems.map((item) => (
-            <figure
-              key={item.id}
-              className="bg-white rounded-2xl p-6 sm:p-8 border border-[#e4e2df] shadow-xs hover:shadow-md hover:border-[#dbc1b8] transition-all duration-300 hover:-translate-y-0.5 flex flex-col justify-between gap-6"
             >
-              <div className="flex flex-col gap-4">
-                {/* Top Row: Subtle Quote Mark + Role Badge */}
-                <div className="flex items-center justify-between gap-3">
+              <motion.div
+                key={`${currentItem.id}-${isPaused ? 'paused' : 'playing'}`}
+                className="h-full bg-gradient-to-r from-[#994524] via-[#b85d3a] to-[#546252]"
+                initial={{ width: prefersReducedMotion ? '100%' : '0%' }}
+                animate={{ width: '100%' }}
+                transition={{
+                  duration: prefersReducedMotion || isPaused ? 0.2 : AUTO_ADVANCE_MS / 1000,
+                  ease: 'linear',
+                }}
+              />
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentItem.id}
+                initial={
+                  prefersReducedMotion
+                    ? { opacity: 1 }
+                    : { opacity: 0, x: 16, filter: 'blur(2px)' }
+                }
+                animate={
+                  prefersReducedMotion
+                    ? { opacity: 1 }
+                    : { opacity: 1, x: 0, filter: 'blur(0px)' }
+                }
+                exit={
+                  prefersReducedMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, x: -16, filter: 'blur(2px)' }
+                }
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="flex flex-col gap-6 relative z-10 flex-1 justify-between"
+              >
+                {/* Top Row: Decorative Quotation Mark + Role Badge */}
+                <div className="flex items-center justify-between gap-4 flex-wrap">
                   <span
                     aria-hidden="true"
-                    className="font-serif text-4xl leading-none text-[#994524]/25 select-none"
+                    className="font-serif text-5xl sm:text-6xl leading-none text-[#994524]/25 select-none"
                   >
                     &ldquo;
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#f5f3f0] text-[#546252] text-[11px] font-bold uppercase tracking-wider">
-                    <span
-                      className="w-1.5 h-1.5 rounded-full bg-[#994524]"
-                      aria-hidden="true"
-                    />
-                    {item.badge}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#ffdbcf]/55 text-[#994524] text-xs font-bold uppercase tracking-wider">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full bg-[#994524]"
+                        aria-hidden="true"
+                      />
+                      {currentItem.badge}
+                    </span>
+                  </div>
                 </div>
 
-                {/* Quote */}
-                <blockquote className="font-serif italic text-base sm:text-lg text-[#1b1c1a] leading-relaxed">
-                  <p>&ldquo;{item.quote}&rdquo;</p>
+                {/* Featured Quote Text */}
+                <blockquote className="font-serif italic text-xl sm:text-2xl lg:text-[26px] text-[#1b1c1a] leading-relaxed">
+                  <p>&ldquo;{currentItem.quote}&rdquo;</p>
                 </blockquote>
-              </div>
 
-              {/* Attribution with Initials Circle Avatar */}
-              <figcaption className="flex items-center gap-3.5 pt-4 border-t border-[#efeeeb]">
-                <div
-                  className={`w-11 h-11 rounded-full ${item.avatarBg} ${item.avatarText} flex items-center justify-center font-semibold text-xs sm:text-sm tracking-wider shrink-0 shadow-2xs`}
-                  aria-hidden="true"
-                >
-                  {item.initials}
+                {/* Attribution with Initials Circle Avatar + Slide Indicators */}
+                <figcaption className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-[#efeeeb]">
+                  <div className="flex items-center gap-4">
+                    <div
+                      className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full ${currentItem.avatarBg} ${currentItem.avatarText} flex items-center justify-center font-semibold text-sm sm:text-base tracking-wider shrink-0 shadow-xs`}
+                      aria-hidden="true"
+                    >
+                      {currentItem.initials}
+                    </div>
+                    <div className="flex flex-col">
+                      <cite className="not-italic font-bold text-base sm:text-lg text-[#1b1c1a]">
+                        {currentItem.name}
+                      </cite>
+                      <span className="text-xs sm:text-sm text-[#546252] font-medium">
+                        {currentItem.title}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Subtle Reviewer Pill Selector */}
+                  <div
+                    className="flex items-center gap-1.5 self-start sm:self-center"
+                    role="tablist"
+                    aria-label="Select endorsement"
+                  >
+                    {TESTIMONIALS_DATA.map((item, idx) => {
+                      const isActive = idx === activeTickerIndex;
+                      return (
+                        <button
+                          key={item.id}
+                          type="button"
+                          role="tab"
+                          aria-selected={isActive}
+                          onClick={() => setActiveTickerIndex(idx)}
+                          className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all cursor-pointer ${
+                            isActive
+                              ? 'bg-[#994524] text-white shadow-2xs'
+                              : 'bg-[#fbf9f6] text-[#55433c] hover:bg-[#efeeeb] border border-[#e4e2df]'
+                          }`}
+                        >
+                          {item.name.split(' ')[0]}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </figcaption>
+              </motion.div>
+            </AnimatePresence>
+          </figure>
+        )}
+
+        {/* 2. SECONDARY TESTIMONIALS (Horizontally Auto-Scrolling Snap Carousel on Mobile, 2-Column Grid on Desktop) */}
+        <div
+          ref={secondaryScrollRef}
+          className="flex md:grid md:grid-cols-2 gap-5 lg:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory scroll-smooth no-scrollbar pb-1"
+        >
+          {secondaryItems.map((item) => {
+            const isCurrentlyHighlighted = currentItem.id === item.id;
+            const itemIndex = TESTIMONIALS_DATA.findIndex((t) => t.id === item.id);
+            return (
+              <figure
+                key={item.id}
+                onClick={() => {
+                  if (itemIndex >= 0) setActiveTickerIndex(itemIndex);
+                }}
+                className={`w-[86%] sm:w-[82%] md:w-full shrink-0 snap-start bg-white rounded-2xl p-6 sm:p-8 border shadow-xs hover:shadow-md transition-all duration-500 hover:-translate-y-0.5 flex flex-col justify-between gap-6 cursor-pointer ${
+                  isCurrentlyHighlighted
+                    ? 'border-[#994524] ring-1 ring-[#994524]/25 bg-[#fffdfb]'
+                    : 'border-[#e4e2df] hover:border-[#dbc1b8]'
+                }`}
+              >
+                <div className="flex flex-col gap-4">
+                  {/* Top Row: Subtle Quote Mark + Role Badge */}
+                  <div className="flex items-center justify-between gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="font-serif text-4xl leading-none text-[#994524]/25 select-none"
+                    >
+                      &ldquo;
+                    </span>
+                    <span
+                      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider transition-colors duration-300 ${
+                        isCurrentlyHighlighted
+                          ? 'bg-[#ffdbcf]/60 text-[#994524]'
+                          : 'bg-[#f5f3f0] text-[#546252]'
+                      }`}
+                    >
+                      <span
+                        className="w-1.5 h-1.5 rounded-full bg-[#994524]"
+                        aria-hidden="true"
+                      />
+                      {item.badge}
+                    </span>
+                  </div>
+
+                  {/* Quote */}
+                  <blockquote className="font-serif italic text-base sm:text-lg text-[#1b1c1a] leading-relaxed">
+                    <p>&ldquo;{item.quote}&rdquo;</p>
+                  </blockquote>
                 </div>
-                <div className="flex flex-col">
-                  <cite className="not-italic font-bold text-sm sm:text-base text-[#1b1c1a]">
-                    {item.name}
-                  </cite>
-                  <span className="text-xs text-[#546252] font-medium">
-                    {item.title}
-                  </span>
-                </div>
-              </figcaption>
-            </figure>
-          ))}
+
+                {/* Attribution with Initials Circle Avatar */}
+                <figcaption className="flex items-center gap-3.5 pt-4 border-t border-[#efeeeb]">
+                  <div
+                    className={`w-11 h-11 rounded-full ${item.avatarBg} ${item.avatarText} flex items-center justify-center font-semibold text-xs sm:text-sm tracking-wider shrink-0 shadow-2xs`}
+                    aria-hidden="true"
+                  >
+                    {item.initials}
+                  </div>
+                  <div className="flex flex-col">
+                    <cite className="not-italic font-bold text-sm sm:text-base text-[#1b1c1a]">
+                      {item.name}
+                    </cite>
+                    <span className="text-xs text-[#546252] font-medium">
+                      {item.title}
+                    </span>
+                  </div>
+                </figcaption>
+              </figure>
+            );
+          })}
         </div>
 
         {/* 3. ONE-LINE HIGHLIGHT STRIP */}
@@ -231,23 +334,31 @@ export const Testimonials: React.FC = () => {
           </p>
         </div>
 
-        {/* 4. SHORT QUOTE CAROUSEL / TICKER */}
+        {/* 4. SHORT QUOTE CAROUSEL / TICKER WITH FADE-IN-OUT TRANSITION */}
         <div
-          className="bg-[#f5f3f0] rounded-xl px-5 py-4 sm:px-6 sm:py-4 border border-[#e4e2df] flex flex-col sm:flex-row items-center justify-between gap-4"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
+          className="bg-[#f5f3f0] rounded-xl px-5 py-4 sm:px-6 sm:py-4 border border-[#e4e2df] flex flex-col sm:flex-row items-center justify-between gap-4 overflow-hidden"
           aria-label="Short quote highlight ticker"
+          aria-live="polite"
         >
-          <div className="flex items-start sm:items-center gap-3 text-center sm:text-left">
+          <div className="flex items-start sm:items-center gap-3 text-center sm:text-left min-h-[40px] sm:min-h-[28px] flex-1">
             <span className="text-[11px] font-bold uppercase tracking-wider text-[#994524] shrink-0 hidden sm:inline-block">
               Quick Highlight ·
             </span>
-            <p className="text-xs sm:text-sm text-[#1b1c1a] italic font-serif">
-              &ldquo;{currentTicker.shortQuote}&rdquo;{' '}
-              <span className="not-italic font-sans font-semibold text-[#546252]">
-                ({currentTicker.name}, {currentTicker.title.split(',')[1]?.trim() || currentTicker.title})
-              </span>
-            </p>
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={currentItem.id}
+                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 8 }}
+                animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                className="text-xs sm:text-sm text-[#1b1c1a] italic font-serif"
+              >
+                &ldquo;{currentItem.shortQuote}&rdquo;{' '}
+                <span className="not-italic font-sans font-semibold text-[#546252]">
+                  ({currentItem.name}, {currentItem.title.split(',')[1]?.trim() || currentItem.title})
+                </span>
+              </motion.p>
+            </AnimatePresence>
           </div>
 
           {/* Carousel Controls */}
@@ -259,7 +370,7 @@ export const Testimonials: React.FC = () => {
                 onClick={() => setActiveTickerIndex(idx)}
                 aria-label={`Show short quote from ${item.name}`}
                 aria-pressed={activeTickerIndex === idx}
-                className={`h-2 rounded-full transition-all cursor-pointer ${
+                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                   activeTickerIndex === idx
                     ? 'w-6 bg-[#994524]'
                     : 'w-2 bg-[#dbc1b8] hover:bg-[#994524]/60'
