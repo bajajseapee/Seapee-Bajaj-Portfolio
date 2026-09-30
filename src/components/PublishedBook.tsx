@@ -282,102 +282,19 @@ export const BookTestimonialsSection: React.FC<BookTestimonialsSectionProps> = (
   );
 };
 
-interface PublishedBookProps {
-  isHomeRoute?: boolean;
-  onNavigate?: (path: string, sectionId?: string) => void;
-}
-
-export const PublishedBook: React.FC<PublishedBookProps> = ({
-  isHomeRoute = true,
-  onNavigate,
-}) => {
+export const PublishedBook: React.FC = () => {
   const { BOOK } = SITE_CONFIG;
-
-  const handleBookRouteClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (onNavigate) {
-      e.preventDefault();
-      onNavigate('/book', 'published-work');
-    }
-  };
 
   return (
     <section
-      className={`w-full px-5 md:px-10 lg:px-16 ${
-        isHomeRoute ? 'py-6 sm:py-8' : 'py-8 sm:py-10 lg:py-12'
-      } bg-[#f5f3f0] border-t border-[#e4e2df] relative overflow-hidden`}
+      className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#f5f3f0] border-t border-[#e4e2df] relative overflow-hidden"
       id="published-work"
       aria-labelledby="published-work-heading"
     >
-      {/* Slim Banner on Homepage */}
-      {isHomeRoute && (
-        <div className="max-w-[1280px] mx-auto bg-white px-5 py-4 sm:px-7 sm:py-5 rounded-xl shadow-2xs border border-[#e4e2df] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-4 min-w-0">
-            <img
-              src={notUnworthyCover}
-              alt="Not Unworthy paperback poetry book cover by Seapee Bajaj"
-              width={44}
-              height={66}
-              loading="lazy"
-              decoding="async"
-              referrerPolicy="no-referrer"
-              className="w-11 h-16 rounded object-cover border border-[#e4e2df] shrink-0"
-            />
-            <div className="min-w-0">
-              <div className="flex items-center gap-2 flex-wrap">
-                <h2
-                  id="published-work-heading"
-                  className="font-serif text-lg sm:text-xl text-[#1b1c1a] font-medium tracking-tight"
-                >
-                  {BOOK.TITLE}
-                </h2>
-                <span aria-hidden="true" className="text-xs text-[#88726b]">
-                  ·
-                </span>
-                <span className="text-xs text-[#994524] font-semibold">
-                  Published Poetry Book
-                </span>
-              </div>
-              <p className="text-xs sm:text-sm text-[#55433c] mt-0.5 line-clamp-1">
-                My published poetry collection exploring resilience, consistency, everyday courage, and the quiet worth of ordinary lives.
-              </p>
-            </div>
-          </div>
+      {/* Subtle atmospheric ambient glow */}
+      <div className="absolute top-1/2 -right-20 w-80 h-80 rounded-full bg-[#994524]/5 blur-3xl pointer-events-none" />
 
-          <div className="flex items-center gap-4 shrink-0">
-            <a
-              href="/book"
-              onClick={handleBookRouteClick}
-              className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#994524] hover:underline whitespace-nowrap"
-            >
-              <span>Explore book &amp; reviews</span>
-              <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
-                arrow_forward
-              </span>
-            </a>
-            <a
-              href={BOOK.AMAZON_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-3.5 py-2 rounded-lg bg-[#994524] hover:bg-[#7b2f0f] text-white text-xs font-semibold transition-colors whitespace-nowrap"
-              aria-label="Buy Not Unworthy by Seapee Bajaj on Amazon (opens in a new tab)"
-            >
-              <span>Amazon</span>
-              <span className="material-symbols-outlined text-[14px]" aria-hidden="true">
-                open_in_new
-              </span>
-            </a>
-          </div>
-        </div>
-      )}
-
-      {/* Full Book Showcase & Reader Reviews (Visible on /book, kept in DOM via sr-only on homepage) */}
-      <div
-        className={
-          isHomeRoute
-            ? 'sr-only'
-            : 'max-w-[1080px] mx-auto bg-white p-6 sm:p-10 md:p-12 rounded-2xl shadow-sm border border-[#e4e2df] relative'
-        }
-      >
+      <div className="max-w-[1080px] mx-auto bg-white p-8 sm:p-12 md:p-16 rounded-2xl shadow-sm border border-[#e4e2df] relative">
         <div className="flex flex-col gap-6">
           {/* Top Row: Left Editorial Intro + Right Compact Book Cover */}
           <div className="flex flex-col-reverse md:flex-row md:items-center justify-between gap-6 md:gap-10">
@@ -390,18 +307,12 @@ export const PublishedBook: React.FC<PublishedBookProps> = ({
 
               {/* Headline & Subheadline */}
               <div className="flex flex-col gap-2">
-                {!isHomeRoute ? (
-                  <h2
-                    id="published-work-heading"
-                    className="font-serif text-3xl sm:text-4xl text-[#1b1c1a] font-medium tracking-tight leading-snug"
-                  >
-                    {BOOK.TITLE} — My Published Poetry Collection
-                  </h2>
-                ) : (
-                  <p className="font-serif text-3xl sm:text-4xl text-[#1b1c1a] font-medium tracking-tight leading-snug">
-                    {BOOK.TITLE} — My Published Poetry Collection
-                  </p>
-                )}
+                <h2
+                  id="published-work-heading"
+                  className="font-serif text-3xl sm:text-4xl text-[#1b1c1a] font-medium tracking-tight leading-snug"
+                >
+                  {BOOK.TITLE} — My Published Poetry Collection
+                </h2>
                 <p className="text-lg sm:text-xl text-[#546252] font-medium leading-relaxed">
                   {BOOK.HEADLINE} {BOOK.SUBHEADLINE}
                 </p>

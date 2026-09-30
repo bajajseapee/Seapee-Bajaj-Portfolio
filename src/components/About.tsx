@@ -27,13 +27,12 @@ const STAT_LOGOS: Record<string, { src: string; alt: string }> = {
 
 interface AboutProps {
   onNavigate?: (path: string, sectionId?: string) => void;
-  isHomeRoute?: boolean;
 }
 
 export const SECTION_BODY_COPY_CLASS =
   'section-body-copy text-[16px] leading-[1.65] md:text-[17px] md:leading-[1.7] text-[#55433c] font-normal';
 
-export const About: React.FC<AboutProps> = ({ onNavigate, isHomeRoute = true }) => {
+export const About: React.FC<AboutProps> = ({ onNavigate }) => {
   const [selectedStat, setSelectedStat] = useState<string | null>(null);
 
   const handleInternalLink = (
@@ -49,114 +48,95 @@ export const About: React.FC<AboutProps> = ({ onNavigate, isHomeRoute = true }) 
 
   return (
     <section
-      className="w-full px-5 md:px-10 lg:px-16 py-8 sm:py-10 lg:py-12 bg-[#f5f3f0]"
+      className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#f5f3f0]"
       id="about"
       aria-labelledby="about-heading"
     >
       <div className="max-w-[1280px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Text Narrative */}
-          <div className="lg:col-span-6 flex flex-col gap-3">
+          <div className="lg:col-span-6 flex flex-col gap-3.5">
             <span className="text-xs uppercase tracking-widest text-[#546252] font-semibold">
               About Me • Perspective
             </span>
             <h2
               id="about-heading"
-              className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1b1c1a] font-medium tracking-tight"
+              className="font-serif text-3xl md:text-4xl text-[#1b1c1a] font-medium tracking-tight"
             >
               About Me
             </h2>
-            <div className="w-12 h-[2px] bg-[#994524] my-0.5" />
+            <div className="w-12 h-[2px] bg-[#994524] my-1" />
 
-            {/* 2-Sentence Concise Summary on Homepage */}
-            <p className={`${SECTION_BODY_COPY_CLASS} max-w-2xl`}>
+            <p className={SECTION_BODY_COPY_CLASS}>
               {PROFILE_INFO.aboutIntro} My career started in primary and secondary market research at <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Allied Market Research</strong> and <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">The Insight Partners</strong>, and shaped how I approach content and SEO across <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Perfect Clicks</strong>, <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Grand View Research</strong>, and <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">IMARC Group</strong>—translating complex research into clear, reader-focused B2B and SEO content.
             </p>
 
-            {isHomeRoute ? (
-              <div className="pt-1">
-                <a
-                  href="/about"
-                  onClick={(e) => handleInternalLink(e, '/about', 'about')}
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#994524] hover:underline"
-                >
-                  <span>Read more</span>
-                  <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
-                    arrow_forward
-                  </span>
-                </a>
-              </div>
-            ) : null}
+            <p className={SECTION_BODY_COPY_CLASS}>
+              I specialize in <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">content strategy, SEO optimization, research-led content, editorial workflows, and content production</strong>. My work spans keyword research, on-page SEO, competitive intelligence, and structuring clear, factual content for traditional search and AI-powered answer engines (<strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">GEO &amp; AEO</strong>). Alongside my 10+ years of industry experience, I hold an <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">MBA in Systems</strong>, completed professional training in <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Introduction to Generative Engine Optimization</strong> (Coursera), <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">HubSpot Content Marketing Certification</strong>, <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Google Prompting Essentials</strong>, and the <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Be10x AI tools program</strong>, and authored my published poetry book <em>Not Unworthy</em>.
+            </p>
 
-            {/* Full Extended Bio (Visible on /about, kept in DOM via sr-only on homepage for SEO) */}
-            <div className={isHomeRoute ? 'sr-only' : 'flex flex-col gap-3.5'}>
-              <p className={SECTION_BODY_COPY_CLASS}>
-                I specialize in <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">content strategy, SEO optimization, research-led content, editorial workflows, and content production</strong>. My work spans keyword research, on-page SEO, competitive intelligence, and structuring clear, factual content for traditional search and AI-powered answer engines (<strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">GEO &amp; AEO</strong>). Alongside my 10+ years of industry experience, I hold an <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">MBA in Systems</strong>, completed professional training in <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Introduction to Generative Engine Optimization</strong> (Coursera), <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">HubSpot Content Marketing Certification</strong>, <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Google Prompting Essentials</strong>, and the <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Be10x AI tools program</strong>, and authored my published poetry book <em>Not Unworthy</em>.
-              </p>
-
-              {/* Quick Progression Summary */}
-              <div className="mt-1 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#55433c]">
-                <div className="bg-white p-3.5 rounded-xl border border-[#e4e2df]">
-                  <span className="font-semibold text-[#994524] block mb-0.5">
-                    Market Research Foundation
-                  </span>
-                  <span>
-                    I conducted primary &amp; secondary research, market estimation, ICT/Semiconductor/Automotive reports, and client pre-sales &amp; post-sales solutions.
-                  </span>
-                </div>
-                <div className="bg-white p-3.5 rounded-xl border border-[#e4e2df]">
-                  <span className="font-semibold text-[#994524] block mb-0.5">
-                    B2B Content, SEO &amp; Editorial Operations
-                  </span>
-                  <span>
-                    I created SEO blogs, articles, listicles, and FAQs; led Semrush keyword research, on-page SEO, Well of Insights Quora strategy (60–70 to 250+ avg views), content workflows &amp; SEO quality checks.
-                  </span>
-                </div>
+            {/* Quick Progression Summary */}
+            <div className="mt-1 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#55433c]">
+              <div className="bg-white p-3.5 rounded-xl border border-[#e4e2df]">
+                <span className="font-semibold text-[#994524] block mb-0.5">
+                  Market Research Foundation
+                </span>
+                <span>
+                  I conducted primary &amp; secondary research, market estimation, ICT/Semiconductor/Automotive reports, and client pre-sales &amp; post-sales solutions.
+                </span>
               </div>
-
-              {/* Internal Links Row */}
-              <div className="pt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-[#994524]">
-                <a
-                  href="/experience"
-                  onClick={(e) => handleInternalLink(e, '/experience', 'experience')}
-                  className="hover:underline inline-flex items-center gap-1"
-                >
-                  <span>Career Experience</span>
-                  <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-                </a>
-                <a
-                  href="/services"
-                  onClick={(e) => handleInternalLink(e, '/services', 'services')}
-                  className="hover:underline inline-flex items-center gap-1"
-                >
-                  <span>SEO &amp; Content Strategy</span>
-                  <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-                </a>
-                <a
-                  href="/b2b-content"
-                  onClick={(e) => handleInternalLink(e, '/b2b-content', 'services')}
-                  className="hover:underline inline-flex items-center gap-1"
-                >
-                  <span>B2B Content</span>
-                  <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-                </a>
-                <a
-                  href="/geo-aeo"
-                  onClick={(e) => handleInternalLink(e, '/geo-aeo', 'seo-geo-expertise')}
-                  className="hover:underline inline-flex items-center gap-1"
-                >
-                  <span>GEO &amp; AI Search</span>
-                  <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-                </a>
-                <a
-                  href="/case-studies"
-                  onClick={(e) => handleInternalLink(e, '/case-studies', 'case-studies')}
-                  className="hover:underline inline-flex items-center gap-1"
-                >
-                  <span>Case Studies</span>
-                  <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-                </a>
+              <div className="bg-white p-3.5 rounded-xl border border-[#e4e2df]">
+                <span className="font-semibold text-[#994524] block mb-0.5">
+                  B2B Content, SEO &amp; Editorial Operations
+                </span>
+                <span>
+                  I created SEO blogs, articles, listicles, and FAQs; led Semrush keyword research, on-page SEO, Well of Insights Quora strategy (60–70 to 250+ avg views), content workflows &amp; SEO quality checks.
+                </span>
               </div>
+            </div>
+
+            {/* Internal Links Row */}
+            <div className="pt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-[#994524]">
+              <a
+                href="/experience"
+                onClick={(e) => handleInternalLink(e, '/experience', 'experience')}
+                className="hover:underline inline-flex items-center gap-1"
+              >
+                <span>Career Experience</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+              <a
+                href="/services"
+                onClick={(e) => handleInternalLink(e, '/services', 'services')}
+                className="hover:underline inline-flex items-center gap-1"
+              >
+                <span>SEO &amp; Content Strategy</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+              <a
+                href="/b2b-content"
+                onClick={(e) => handleInternalLink(e, '/b2b-content', 'services')}
+                className="hover:underline inline-flex items-center gap-1"
+              >
+                <span>B2B Content</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+              <a
+                href="/geo-aeo"
+                onClick={(e) => handleInternalLink(e, '/geo-aeo', 'seo-geo-expertise')}
+                className="hover:underline inline-flex items-center gap-1"
+              >
+                <span>GEO &amp; AI Search</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+              <a
+                href="/case-studies"
+                onClick={(e) => handleInternalLink(e, '/case-studies', 'case-studies')}
+                className="hover:underline inline-flex items-center gap-1"
+              >
+                <span>Case Studies</span>
+                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
             </div>
           </div>
 

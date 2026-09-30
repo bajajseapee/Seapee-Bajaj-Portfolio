@@ -12,8 +12,6 @@ interface ContactProps {
   initialService?: string;
   onOpenResume: () => void;
   onOpenWorkspace?: () => void;
-  isHomeRoute?: boolean;
-  onNavigate?: (path: string, sectionId?: string) => void;
 }
 
 interface FormErrors {
@@ -23,12 +21,7 @@ interface FormErrors {
   submit?: string;
 }
 
-export const Contact: React.FC<ContactProps> = ({
-  initialService,
-  onOpenResume,
-  isHomeRoute = true,
-  onNavigate,
-}) => {
+export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }) => {
   const { user, inquiries, submitInquiry } = useFirebase();
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');
@@ -129,68 +122,16 @@ export const Contact: React.FC<ContactProps> = ({
   );
 
   return (
-    <section
-      className="w-full px-5 md:px-10 lg:px-16 py-8 sm:py-10 lg:py-12 bg-[#fbf9f6] border-t border-[#e4e2df] relative"
-      id="contact"
-    >
-      {/* Compact Contact Strip on Homepage (when form is not expanded) */}
-      {isHomeRoute && !showForm && !submitted && (
-        <div className="max-w-[1280px] mx-auto bg-white px-6 py-7 sm:px-10 sm:py-8 rounded-2xl shadow-sm border border-[#e4e2df] flex flex-col md:flex-row md:items-center justify-between gap-5">
-          <div className="flex flex-col gap-1.5 max-w-2xl">
-            <span className="text-xs uppercase tracking-widest text-[#994524] font-semibold">
-              Initiate Collaboration
-            </span>
-            <h2 className="font-serif text-2xl sm:text-3xl text-[#1b1c1a] font-medium tracking-tight">
-              Let&apos;s Create Content That Does More Than Fill a Page
-            </h2>
-            <p className="text-sm sm:text-base text-[#55433c] leading-relaxed">
-              Have a content, SEO, research, or editorial project in mind? Let&apos;s discuss your goals.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3 shrink-0">
-            <a
-              href="/contact"
-              onClick={(e) => {
-                e.preventDefault();
-                if (onNavigate) {
-                  onNavigate('/contact', 'contact');
-                }
-                setShowForm(true);
-              }}
-              className="inline-flex items-center justify-center text-sm font-semibold bg-[#994524] hover:bg-[#7b2f0f] text-white transition-all px-6 py-3 rounded-lg shadow-sm hover:shadow active:scale-[0.98] cursor-pointer whitespace-nowrap"
-            >
-              <span>Get in touch</span>
-              <span className="material-symbols-outlined ml-1.5 text-[18px]" aria-hidden="true">
-                arrow_forward
-              </span>
-            </a>
-          </div>
-        </div>
-      )}
-
-      {/* Full Contact Card & Form (Visible on /contact or when form is opened; kept in DOM via sr-only on homepage strip state) */}
-      <div
-        className={
-          isHomeRoute && !showForm && !submitted
-            ? 'sr-only'
-            : 'max-w-[1080px] mx-auto bg-white p-6 sm:p-10 md:p-12 rounded-2xl shadow-xl border border-[#e4e2df] flex flex-col gap-8'
-        }
-      >
+    <section className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#fbf9f6] relative" id="contact">
+      <div className="max-w-[1080px] mx-auto bg-white p-8 sm:p-12 md:p-16 rounded-2xl shadow-xl border border-[#e4e2df] flex flex-col gap-10">
         {/* Header */}
         <div className="text-center flex flex-col items-center max-w-2xl mx-auto gap-2">
           <span className="text-xs uppercase tracking-widest text-[#994524] font-semibold">
             Initiate Collaboration
           </span>
-          {!isHomeRoute || showForm || submitted ? (
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#1b1c1a] font-medium tracking-tight">
-              Let&apos;s Create Content That Does More Than Fill a Page
-            </h2>
-          ) : (
-            <p className="font-serif text-3xl sm:text-4xl text-[#1b1c1a] font-medium tracking-tight">
-              Let&apos;s Create Content That Does More Than Fill a Page
-            </p>
-          )}
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1b1c1a] font-medium tracking-tight">
+            Let&apos;s Create Content That Does More Than Fill a Page
+          </h2>
           <p className="text-base text-[#55433c] mt-2 leading-relaxed">
             Have a content, SEO, research, or editorial project in mind? I&apos;d love to understand your goal and create content that is useful to your audience and valuable to your business.
           </p>

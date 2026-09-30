@@ -282,7 +282,7 @@ export default function App() {
         />
 
         {/* Main Content Area */}
-        <main className="w-full flex-1">
+        <main className="w-full pt-20 flex-1">
           {/* Contextual Route Header & Single H1 for Sub-Routes */}
           {!isHomeRoute && (
             <div className="w-full bg-[#f5f3f0] border-b border-[#e4e2df] px-5 md:px-10 lg:px-16 py-6">
@@ -325,7 +325,7 @@ export default function App() {
             </div>
           )}
 
-          {/* 1. Hero Section */}
+          {/* Hero Section */}
           <ScrollRevealSection>
             <Hero
               onWorkWithMe={handleWorkTogether}
@@ -337,100 +337,102 @@ export default function App() {
             />
           </ScrollRevealSection>
 
-          {/* 2. Perspective / About Section (2-sentence teaser on Homepage) */}
+          {/* Perspective / About Section */}
           <ScrollRevealSection>
-            <About onNavigate={handleNavigate} isHomeRoute={isHomeRoute} />
+            <About onNavigate={handleNavigate} />
           </ScrollRevealSection>
 
-          {/* Inner-Page Sections: Experience & Resume (Visible on inner routes, kept in DOM on Homepage) */}
-          <div className={isHomeRoute ? 'sr-only' : 'w-full'}>
-            <ScrollRevealSection>
-              <Experience onNavigate={handleNavigate} />
-            </ScrollRevealSection>
+          {/* Career Chronology / Experience Section */}
+          <ScrollRevealSection>
+            <Experience onNavigate={handleNavigate} />
+          </ScrollRevealSection>
 
-            <ScrollRevealSection>
-              <ResumeSection
-                onOpenResumeModal={() => setIsResumeOpen(true)}
-                onContactClick={handleWorkTogether}
-              />
-            </ScrollRevealSection>
-          </div>
+          {/* Dedicated Crawl-Friendly Resume & Career Summary Section */}
+          <ScrollRevealSection>
+            <ResumeSection
+              onOpenResumeModal={() => setIsResumeOpen(true)}
+              onContactClick={handleWorkTogether}
+            />
+          </ScrollRevealSection>
 
-          {/* 3. What I Can Help You With / Services Section (3 compact cards on Homepage) */}
+          {/* Core Practice / Services Section */}
           <ScrollRevealSection>
             <Services
               onSelectService={(service) => setSelectedService(service)}
               onNavigate={handleNavigate}
-              isHomeRoute={isHomeRoute}
             />
           </ScrollRevealSection>
 
-          {/* 4. Real-World Case Studies Section (2 compact teaser cards on Homepage) */}
+          {/* Real-World Case Studies Section */}
           <ScrollRevealSection>
-            <CaseStudies onNavigate={handleNavigate} isHomeRoute={isHomeRoute} />
+            <CaseStudies onNavigate={handleNavigate} />
           </ScrollRevealSection>
 
-          {/* Inner-Page Deep-Dive Sections (Visible on inner routes, kept in DOM on Homepage) */}
-          <div className={isHomeRoute ? 'sr-only' : 'w-full'}>
-            <ScrollRevealSection>
-              <Portfolio
-                onSelectProject={(project) => setSelectedProject(project)}
-                activeCategory={activeCategory}
-                onSelectCategory={(category) => setActiveCategory(category)}
-              />
-            </ScrollRevealSection>
-
-            <ScrollRevealSection>
-              <SeoGeoExpertise onNavigate={handleNavigate} />
-            </ScrollRevealSection>
-
-            <ScrollRevealSection>
-              <WritingSection onNavigate={handleNavigate} />
-            </ScrollRevealSection>
-
-            <ScrollRevealSection>
-              <CreativeWork />
-            </ScrollRevealSection>
-
-            <ScrollRevealSection>
-              <PhilosophyBanner />
-            </ScrollRevealSection>
-
-            <ScrollRevealSection>
-              <Process />
-            </ScrollRevealSection>
-
-            <ScrollRevealSection>
-              <WhyWorkWithMe />
-            </ScrollRevealSection>
-
-            <ScrollRevealSection>
-              <Testimonials />
-            </ScrollRevealSection>
-
-            <ScrollRevealSection>
-              <Awards />
-            </ScrollRevealSection>
-          </div>
-
-          {/* 5. Beyond Brand Content / Published Book Feature (Slim banner on Homepage) */}
+          {/* Selected Work / Portfolio Index */}
           <ScrollRevealSection>
-            <PublishedBook isHomeRoute={isHomeRoute} onNavigate={handleNavigate} />
+            <Portfolio
+              onSelectProject={(project) => setSelectedProject(project)}
+              activeCategory={activeCategory}
+              onSelectCategory={(category) => setActiveCategory(category)}
+            />
           </ScrollRevealSection>
 
-          {/* 6. Frequently Asked Questions Section (First 4 accordion questions + View all FAQs) */}
+          {/* Dedicated SEO, GEO & AI Search Expertise Section */}
+          <ScrollRevealSection>
+            <SeoGeoExpertise onNavigate={handleNavigate} />
+          </ScrollRevealSection>
+
+          {/* Dedicated Writing & Editorial Craft Section */}
+          <ScrollRevealSection>
+            <WritingSection onNavigate={handleNavigate} />
+          </ScrollRevealSection>
+
+          {/* Narrative & Culture / Creative Work */}
+          <ScrollRevealSection>
+            <CreativeWork />
+          </ScrollRevealSection>
+
+          {/* Editorial Philosophy Banner */}
+          <ScrollRevealSection>
+            <PhilosophyBanner />
+          </ScrollRevealSection>
+
+          {/* Working Method / Process */}
+          <ScrollRevealSection>
+            <Process />
+          </ScrollRevealSection>
+
+          {/* Value Proposition / Why Work With Me */}
+          <ScrollRevealSection>
+            <WhyWorkWithMe />
+          </ScrollRevealSection>
+
+          {/* What People Say / Client, Manager & Leadership Testimonials */}
+          <ScrollRevealSection>
+            <Testimonials />
+          </ScrollRevealSection>
+
+          {/* Strategic Awards & Industry Recognition Section */}
+          <ScrollRevealSection>
+            <Awards />
+          </ScrollRevealSection>
+
+          {/* Beyond Brand Content / Published Book Feature */}
+          <ScrollRevealSection>
+            <PublishedBook />
+          </ScrollRevealSection>
+
+          {/* Frequently Asked Questions Section */}
           <ScrollRevealSection>
             <FAQSection onNavigate={handleNavigate} />
           </ScrollRevealSection>
 
-          {/* 7. Contact & Inquiries Section (Short contact strip on Homepage) */}
+          {/* Contact & Inquiries Section */}
           <ScrollRevealSection>
             <Contact
               initialService={inquiryService}
               onOpenResume={() => setIsResumeOpen(true)}
               onOpenWorkspace={() => setIsWorkspaceOpen(true)}
-              isHomeRoute={isHomeRoute}
-              onNavigate={handleNavigate}
             />
           </ScrollRevealSection>
         </main>

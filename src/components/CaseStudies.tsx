@@ -4,25 +4,7 @@ import { SECTION_BODY_COPY_CLASS } from './About';
 
 interface CaseStudiesProps {
   onNavigate?: (path: string, sectionId?: string) => void;
-  isHomeRoute?: boolean;
 }
-
-const HOMEPAGE_CASE_STUDY_TEASERS = [
-  {
-    id: 'gvr-well-of-insights',
-    title: 'Well of Insights — Quora Content Strategy & Organic Reach',
-    metric: '60–70 → 250+ views per post',
-    summary:
-      'Repositioned Grand View Research’s Quora knowledge hub around curiosity-led headlines and scannable market-research answers.',
-  },
-  {
-    id: 'imarc-content-operations',
-    title: 'B2B Content Production, Curation & SEO Quality Workflows',
-    metric: '100+ B2B content pieces audited & optimized',
-    summary:
-      'Built repeatable editorial and on-page SEO workflows across research, marketing, and design teams at IMARC Group.',
-  },
-];
 
 const CASE_STUDY_QUICK_FILTERS = [
   'All',
@@ -33,10 +15,7 @@ const CASE_STUDY_QUICK_FILTERS = [
   'Market Research',
 ] as const;
 
-export const CaseStudies: React.FC<CaseStudiesProps> = ({
-  onNavigate,
-  isHomeRoute = true,
-}) => {
+export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
   const [expandedId, setExpandedId] = useState<string | null>(CASE_STUDIES[0].id);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState<string>('All');
@@ -108,95 +87,22 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({
   return (
     <section
       id="case-studies"
-      className={`w-full px-5 md:px-10 lg:px-16 py-8 sm:py-10 lg:py-12 ${
-        isHomeRoute ? 'bg-[#f5f3f0]' : 'bg-[#fbf9f6]'
-      } border-t border-[#e4e2df]`}
+      className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#fbf9f6] border-t border-[#e4e2df]"
       aria-labelledby="case-studies-heading"
     >
-      {isHomeRoute && (
-        <div className="max-w-[1280px] mx-auto flex flex-col gap-5">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2.5">
-            <div>
-              <span className="text-xs uppercase tracking-widest text-[#994524] font-semibold">
-                Real-World Execution &amp; Methodology
-              </span>
-              <h2
-                id="case-studies-heading"
-                className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1b1c1a] font-medium tracking-tight mt-1.5"
-              >
-                SEO, Content Strategy &amp; B2B Research Case Studies
-              </h2>
-            </div>
-            <a
-              href="/case-studies"
-              onClick={(e) => handleInternalLink(e, '/case-studies', 'case-studies')}
-              className="text-xs sm:text-sm font-semibold text-[#994524] hover:underline inline-flex items-center gap-1 shrink-0"
-            >
-              <span>See all case studies</span>
-              <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
-                arrow_forward
-              </span>
-            </a>
-          </div>
-
-          {/* 2 Compact Teaser Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-            {HOMEPAGE_CASE_STUDY_TEASERS.map((item) => (
-              <article
-                key={item.id}
-                className="bg-white rounded-xl p-5 sm:p-6 border border-[#e4e2df] shadow-xs hover:shadow-md hover:border-[#dbc1b8] transition-all flex flex-col justify-between gap-3.5"
-              >
-                <div className="flex flex-col gap-2">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#994524]">
-                    {item.metric}
-                  </span>
-                  <h3 className="font-serif text-lg sm:text-xl text-[#1b1c1a] font-medium leading-snug">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-[#55433c] leading-relaxed line-clamp-2">
-                    {item.summary}
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-[#efeeeb] flex items-center justify-between">
-                  <a
-                    href="/case-studies"
-                    onClick={(e) => handleInternalLink(e, '/case-studies', 'case-studies')}
-                    className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#994524] hover:underline"
-                  >
-                    <span>View case study</span>
-                    <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
-                      arrow_forward
-                    </span>
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      )}
-
-      <div
-        className={
-          isHomeRoute
-            ? 'sr-only'
-            : 'max-w-[1280px] mx-auto flex flex-col gap-7 lg:gap-9'
-        }
-      >
+      <div className="max-w-[1280px] mx-auto flex flex-col gap-8 lg:gap-10">
         {/* Section Header + Search Bar */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <div className="max-w-2xl">
             <span className="text-xs uppercase tracking-widest text-[#994524] font-semibold">
               Real-World Execution &amp; Methodology
             </span>
-            {!isHomeRoute && (
-              <h2
-                id="case-studies-heading"
-                className="font-serif text-3xl md:text-4xl text-[#1b1c1a] font-medium tracking-tight mt-2"
-              >
-                SEO, Content Strategy &amp; B2B Research Case Studies
-              </h2>
-            )}
+            <h2
+              id="case-studies-heading"
+              className="font-serif text-3xl md:text-4xl text-[#1b1c1a] font-medium tracking-tight mt-2"
+            >
+              SEO, Content Strategy &amp; B2B Research Case Studies
+            </h2>
             <p className={`${SECTION_BODY_COPY_CLASS} mt-3`}>
               Structured breakdowns of real projects I led and executed across Quora content strategy, B2B content workflows, website conversion copywriting, AI concept translation, and competitive intelligence.
             </p>
