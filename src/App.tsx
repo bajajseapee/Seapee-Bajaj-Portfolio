@@ -238,6 +238,10 @@ export default function App() {
     handleNavigate('/book', 'published-work');
   };
 
+  const handleViewTestimonials = () => {
+    scrollToSection('testimonials');
+  };
+
   const handleFilterTopic = (topic: string) => {
     if (topic === 'SEO Content') {
       setActiveCategory('SEO & Content');
@@ -332,6 +336,7 @@ export default function App() {
               onViewWork={handleViewWork}
               onViewCaseStudies={handleViewCaseStudies}
               onReadBook={handleReadBook}
+              onViewTestimonials={handleViewTestimonials}
               onFilterTopic={handleFilterTopic}
               isHomeRoute={isHomeRoute}
             />

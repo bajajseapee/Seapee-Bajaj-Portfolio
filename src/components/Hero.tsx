@@ -7,6 +7,7 @@ interface HeroProps {
   onViewWork: () => void;
   onViewCaseStudies?: () => void;
   onReadBook?: () => void;
+  onViewTestimonials?: () => void;
   onFilterTopic: (topic: string) => void;
   isHomeRoute?: boolean;
 }
@@ -16,10 +17,47 @@ export const Hero: React.FC<HeroProps> = ({
   onViewWork,
   onViewCaseStudies,
   onReadBook,
+  onViewTestimonials,
   onFilterTopic,
   isHomeRoute = true,
 }) => {
   const prefersReducedMotion = useReducedMotion();
+
+  const handleTestimonialsClick = () => {
+    if (onViewTestimonials) {
+      onViewTestimonials();
+      return;
+    }
+    const el = document.getElementById('testimonials');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleCaseStudiesClick = () => {
+    if (onViewCaseStudies) {
+      onViewCaseStudies();
+      return;
+    }
+    const el = document.getElementById('case-studies');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleBookClick = () => {
+    if (onReadBook) {
+      onReadBook();
+      return;
+    }
+    const el = document.getElementById('published-work');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const heroButtonClass =
+    'w-full inline-flex items-center gap-2.5 px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white hover:bg-[#ffdbcf]/40 text-[#1b1c1a] hover:text-[#994524] border border-[#dbc1b8] hover:border-[#994524] text-xs sm:text-sm font-semibold shadow-2xs hover:shadow-sm transition-all active:scale-[0.98] cursor-pointer text-left';
 
   return (
     <section
@@ -66,49 +104,83 @@ export const Hero: React.FC<HeroProps> = ({
             &ldquo;{PROFILE_INFO.supportingPositioning}&rdquo;
           </p>
 
-          {/* Primary & Secondary Action Buttons */}
-          <div className="pt-2 flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={onWorkWithMe}
-              className="inline-flex items-center justify-center text-sm font-semibold bg-[#b85d3a] hover:bg-[#994524] text-white transition-all px-6 py-3 rounded-lg shadow-sm hover:shadow active:scale-[0.98] cursor-pointer"
-            >
-              <span>Work With Me</span>
-              <span className="material-symbols-outlined ml-1.5 text-[18px]">
-                arrow_forward
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={onViewWork}
-              className="inline-flex items-center justify-center text-sm font-semibold bg-white hover:bg-[#efeeeb] text-[#1b1c1a] border border-[#e4e2df] transition-all px-5 py-3 rounded-lg shadow-2xs cursor-pointer"
-            >
-              <span>Explore Selected Work</span>
-            </button>
-
-            {onViewCaseStudies && (
+          {/* 5 Uniform Action Buttons with Icons: 3 on One Side, 2 on the Other */}
+          <div className="pt-2 grid grid-cols-2 gap-2.5 sm:gap-3 max-w-md items-start">
+            {/* Left Side: 3 Buttons */}
+            <div className="flex flex-col gap-2.5">
               <button
                 type="button"
-                onClick={onViewCaseStudies}
-                className="inline-flex items-center justify-center text-xs sm:text-sm font-semibold text-[#994524] hover:underline px-2 py-2 cursor-pointer"
+                onClick={onWorkWithMe}
+                className={heroButtonClass}
               >
-                <span>Case Studies</span>
-                <span className="material-symbols-outlined ml-1 text-[16px]">
-                  north_east
+                <span
+                  className="material-symbols-outlined text-[18px] sm:text-[20px] text-[#994524] shrink-0"
+                  aria-hidden="true"
+                >
+                  handshake
                 </span>
+                <span>Work with me</span>
               </button>
-            )}
 
-            {onReadBook && (
               <button
                 type="button"
-                onClick={onReadBook}
-                className="inline-flex items-center justify-center text-xs sm:text-sm font-semibold text-[#546252] hover:text-[#994524] hover:underline px-2 py-2 cursor-pointer"
+                onClick={onViewWork}
+                className={heroButtonClass}
               >
-                <span>My Book — Not Unworthy</span>
+                <span
+                  className="material-symbols-outlined text-[18px] sm:text-[20px] text-[#994524] shrink-0"
+                  aria-hidden="true"
+                >
+                  work
+                </span>
+                <span>See my work</span>
               </button>
-            )}
+
+              <button
+                type="button"
+                onClick={handleCaseStudiesClick}
+                className={heroButtonClass}
+              >
+                <span
+                  className="material-symbols-outlined text-[18px] sm:text-[20px] text-[#994524] shrink-0"
+                  aria-hidden="true"
+                >
+                  analytics
+                </span>
+                <span>Case studies</span>
+              </button>
+            </div>
+
+            {/* Right Side: 2 Buttons */}
+            <div className="flex flex-col gap-2.5">
+              <button
+                type="button"
+                onClick={handleBookClick}
+                className={heroButtonClass}
+              >
+                <span
+                  className="material-symbols-outlined text-[18px] sm:text-[20px] text-[#994524] shrink-0"
+                  aria-hidden="true"
+                >
+                  menu_book
+                </span>
+                <span>View My book</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleTestimonialsClick}
+                className={heroButtonClass}
+              >
+                <span
+                  className="material-symbols-outlined text-[18px] sm:text-[20px] text-[#994524] shrink-0"
+                  aria-hidden="true"
+                >
+                  format_quote
+                </span>
+                <span>Testimonials</span>
+              </button>
+            </div>
           </div>
 
           {/* Interactive Focus Area Filter Buttons */}
