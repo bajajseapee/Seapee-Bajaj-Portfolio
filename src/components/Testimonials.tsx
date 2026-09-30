@@ -171,15 +171,13 @@ export const Testimonials: React.FC = () => {
                   >
                     &ldquo;
                   </span>
-                  <div className="flex items-center gap-2">
-                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#ffdbcf]/55 text-[#994524] text-xs font-bold uppercase tracking-wider">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full bg-[#994524]"
-                        aria-hidden="true"
-                      />
-                      {currentItem.badge}
-                    </span>
-                  </div>
+                  <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#ffdbcf]/55 text-[#994524] text-xs font-bold uppercase tracking-wider">
+                    <span
+                      className="w-1.5 h-1.5 rounded-full bg-[#994524]"
+                      aria-hidden="true"
+                    />
+                    {currentItem.badge}
+                  </span>
                 </div>
 
                 {/* Featured Quote Text */}

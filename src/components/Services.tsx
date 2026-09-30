@@ -3,46 +3,62 @@ import Image from 'next/image';
 import { SERVICES } from '../data/portfolioData';
 import { ServiceItem } from '../types';
 import { SECTION_BODY_COPY_CLASS } from './About';
-import seoContentLogo from '../assets/images/service_logo_seo_content_1790405462914.webp';
-import b2bResearchLogo from '../assets/images/service_logo_b2b_research_1790405473123.webp';
-import websiteConversionLogo from '../assets/images/service_logo_website_conversion_1790405483488.jpg';
-import contentStrategyLogo from '../assets/images/service_logo_content_strategy_1790405496321.jpg';
-import thoughtLeadershipLogo from '../assets/images/service_logo_thought_leadership_1790405506344.jpg';
-import rankReachLogo from '../assets/images/about_logo_rank_reach_1790405429831.webp';
-import empiricalLogo from '../assets/images/about_logo_empirical_1790405440606.webp';
-import refinedLogo from '../assets/images/about_logo_refined_1790405450987.webp';
+import seoContentLogoWebp from '../assets/images/service_logo_seo_content_1790405462914.webp';
+import seoContentLogoJpg from '../assets/images/service_logo_seo_content_1790405462914.jpg';
+import b2bResearchLogoWebp from '../assets/images/service_logo_b2b_research_1790405473123.webp';
+import b2bResearchLogoJpg from '../assets/images/service_logo_b2b_research_1790405473123.jpg';
+import websiteConversionLogoJpg from '../assets/images/service_logo_website_conversion_1790405483488.jpg';
+import websiteConversionLogoWebp from '../assets/images/service_logo_website_conversion_1790405483488.webp';
+import contentStrategyLogoJpg from '../assets/images/service_logo_content_strategy_1790405496321.jpg';
+import contentStrategyLogoWebp from '../assets/images/service_logo_content_strategy_1790405496321.webp';
+import thoughtLeadershipLogoJpg from '../assets/images/service_logo_thought_leadership_1790405506344.jpg';
+import thoughtLeadershipLogoWebp from '../assets/images/service_logo_thought_leadership_1790405506344.webp';
+import rankReachLogoWebp from '../assets/images/about_logo_rank_reach_1790405429831.webp';
+import rankReachLogoJpg from '../assets/images/about_logo_rank_reach_1790405429831.jpg';
+import empiricalLogoWebp from '../assets/images/about_logo_empirical_1790405440606.webp';
+import empiricalLogoJpg from '../assets/images/about_logo_empirical_1790405440606.jpg';
+import refinedLogoWebp from '../assets/images/about_logo_refined_1790405450987.webp';
+import refinedLogoJpg from '../assets/images/about_logo_refined_1790405450987.jpg';
 
-export const SERVICE_LOGOS: Record<string, { src: string; alt: string }> = {
+export const SERVICE_LOGOS: Record<string, { src: string; webpSrc: string; alt: string }> = {
   'seo-content': {
-    src: seoContentLogo,
+    src: seoContentLogoJpg,
+    webpSrc: seoContentLogoWebp,
     alt: 'SEO Content Strategy service icon showing search bar and ranking growth',
   },
   'b2b-content-writing': {
-    src: refinedLogo,
+    src: refinedLogoJpg,
+    webpSrc: refinedLogoWebp,
     alt: 'B2B Content Writing service icon showing editorial book and pen',
   },
   'b2b-research': {
-    src: b2bResearchLogo,
+    src: b2bResearchLogoJpg,
+    webpSrc: b2bResearchLogoWebp,
     alt: 'Research-Driven Content service icon showing market intelligence report',
   },
   'geo-optimization': {
-    src: rankReachLogo,
+    src: rankReachLogoJpg,
+    webpSrc: rankReachLogoWebp,
     alt: 'GEO Generative Engine Optimization service icon showing connected topic nodes',
   },
   'aeo-optimization': {
-    src: thoughtLeadershipLogo,
+    src: thoughtLeadershipLogoJpg,
+    webpSrc: thoughtLeadershipLogoWebp,
     alt: 'AEO Answer Engine Optimization service icon showing direct answer badge',
   },
   'content-optimization': {
-    src: empiricalLogo,
+    src: empiricalLogoJpg,
+    webpSrc: empiricalLogoWebp,
     alt: 'Content Optimization service icon showing on-page audit and analytics',
   },
   'ai-assisted-strategy': {
-    src: contentStrategyLogo,
+    src: contentStrategyLogoJpg,
+    webpSrc: contentStrategyLogoWebp,
     alt: 'AI-Assisted Content Strategy service icon showing structured editorial workflow',
   },
   'website-conversion': {
-    src: websiteConversionLogo,
+    src: websiteConversionLogoJpg,
+    webpSrc: websiteConversionLogoWebp,
     alt: 'Portfolio Website Creation service icon showing conversion-focused web layout',
   },
 };
@@ -80,21 +96,15 @@ export const Services: React.FC<ServicesProps> = ({
           </h2>
           <div className="mt-3 flex flex-col gap-3">
             <p className={SECTION_BODY_COPY_CLASS}>
-              <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">
-                SEO Content Strategy:
-              </strong>{' '}
+              <strong>SEO Content Strategy:</strong>{' '}
               I build search-aligned content ecosystems around keyword research, search intent mapping, E-E-A-T alignment, on-page SEO, and internal linking—creating articles, blogs, listicles, and website copy designed for sustainable organic visibility.
             </p>
             <p className={SECTION_BODY_COPY_CLASS}>
-              <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">
-                B2B &amp; Research-Driven Content:
-              </strong>{' '}
+              <strong>B2B &amp; Research-Driven Content:</strong>{' '}
               I translate primary and secondary market research across technology, manufacturing, logistics, and enterprise sectors into clear B2B narratives, industry analysis, and competitive intelligence assets grounded in my research background at Allied Market Research, The Insight Partners, Grand View Research, and IMARC Group.
             </p>
             <p className={SECTION_BODY_COPY_CLASS}>
-              <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">
-                GEO &amp; AI Search Optimization:
-              </strong>{' '}
+              <strong>GEO &amp; AI Search Optimization:</strong>{' '}
               I structure factual, entity-clear content for AI Overviews, Answer Engine Optimization (AEO), and Generative Engine Optimization (GEO) across platforms like ChatGPT, Perplexity, Gemini, and Quora, backed by my professional training in{' '}
               <em>Introduction to Generative Engine Optimization</em> on Coursera (Completed: September 28, 2026).
             </p>
@@ -156,18 +166,18 @@ export const Services: React.FC<ServicesProps> = ({
                 <div>
                   <div className="flex items-start justify-between gap-3 mb-4">
                     {logo ? (
-                      <div className="w-12 h-12 rounded-xl bg-[#fbf9f6] border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0">
-                        <Image
-                          src={logo.src}
-                          alt={logo.alt}
-                          width={48}
-                          height={48}
-                          loading="lazy"
-                          decoding="async"
-                          referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
+                      <Image
+                        src={logo.src}
+                        webpSrc={logo.webpSrc}
+                        pictureClassName="w-12 h-12 rounded-xl bg-[#fbf9f6] border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0"
+                        sizes="48px"
+                        alt={logo.alt}
+                        width={48}
+                        height={48}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
                     ) : (
                       <div className="w-12 h-12 rounded-xl bg-[#efeeeb] flex items-center justify-center text-[#994524] group-hover:bg-[#ffdbcf] transition-colors">
                         <span className="material-symbols-outlined text-2xl">{service.icon}</span>
@@ -178,9 +188,9 @@ export const Services: React.FC<ServicesProps> = ({
                     </span>
                   </div>
 
-                  <p className="font-serif text-lg sm:text-xl text-[#1b1c1a] mb-2 group-hover:text-[#994524] transition-colors font-medium leading-snug">
+                  <h3 className="font-serif text-lg sm:text-xl text-[#1b1c1a] mb-2 group-hover:text-[#994524] transition-colors font-medium leading-snug">
                     {service.title}
-                  </p>
+                  </h3>
                   <p className="text-sm text-[#55433c] leading-relaxed">
                     {service.description}
                   </p>

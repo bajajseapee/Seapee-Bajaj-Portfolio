@@ -55,16 +55,16 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
 
         <div className="flex items-center gap-4">
           {logo ? (
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#fbf9f6] border border-[#e4e2df] overflow-hidden flex items-center justify-center shrink-0">
-              <Image
-                src={logo.src}
-                alt={logo.alt}
-                width={78}
-                height={78}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <Image
+              src={logo.src}
+              webpSrc={logo.webpSrc}
+              pictureClassName="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#fbf9f6] border border-[#e4e2df] overflow-hidden flex items-center justify-center shrink-0"
+              sizes="(max-width: 640px) 64px, 80px"
+              alt={logo.alt}
+              width={78}
+              height={78}
+              className="w-full h-full object-cover"
+            />
           ) : (
             <div className="w-14 h-14 rounded-lg bg-[#efeeeb] flex items-center justify-center text-[#994524]">
               <span className="material-symbols-outlined text-2xl">{service.icon}</span>

@@ -233,14 +233,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
                       </h3>
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[#55433c] pt-1">
                         <span className="font-semibold text-[#1b1c1a]">Focus:</span>
-                        {cs.focusAreas.map((focus, fIdx) => (
-                          <React.Fragment key={focus}>
-                            <span>{focus}</span>
-                            {fIdx < cs.focusAreas.length - 1 && (
-                              <span aria-hidden="true">·</span>
-                            )}
-                          </React.Fragment>
-                        ))}
+                        <span>{cs.focusAreas.join(' · ')}</span>
                       </div>
                     </div>
 

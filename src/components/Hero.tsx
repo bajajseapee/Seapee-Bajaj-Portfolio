@@ -208,9 +208,16 @@ export const Hero: React.FC<HeroProps> = ({
             <div className="absolute -inset-3 bg-[#eae8e5] rounded-xl -rotate-2 transition-transform duration-300 group-hover:-rotate-1 shadow-sm border border-[#e4e2df]" />
 
             {/* Authentic Photo */}
-            <div className="relative overflow-hidden rounded-xl shadow-lg bg-white border border-[#eae8e5]">
+            <picture className="relative block overflow-hidden rounded-xl shadow-lg bg-white border border-[#eae8e5]">
+              <source
+                type="image/webp"
+                srcSet="/seapee-bajaj-portrait-360w.webp 360w, /seapee-bajaj-portrait.webp 512w"
+                sizes="(max-width: 640px) 290px, (max-width: 768px) 330px, 360px"
+              />
               <img
                 src={PROFILE_INFO.heroImage}
+                srcSet="/seapee-bajaj-portrait-360w.jpg 360w, /seapee-bajaj-portrait.jpg 512w"
+                sizes="(max-width: 640px) 290px, (max-width: 768px) 330px, 360px"
                 alt="Seapee Bajaj — SEO Content Strategist, B2B Content & GEO Specialist"
                 width={360}
                 height={450}
@@ -218,9 +225,8 @@ export const Hero: React.FC<HeroProps> = ({
                 loading="eager"
                 decoding="async"
                 className="w-full aspect-[4/5] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                referrerPolicy="no-referrer"
               />
-            </div>
+            </picture>
           </div>
         </div>
       </div>

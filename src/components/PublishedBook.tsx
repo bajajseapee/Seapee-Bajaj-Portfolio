@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import {
   SITE_CONFIG,
   BOOK_TESTIMONIALS,
   type BookTestimonial,
 } from '../config/siteConfig';
-import notUnworthyCover from '../assets/images/not_unworthy_book_cover_1790402940878.jpg';
+import notUnworthyCoverJpg from '../assets/images/not_unworthy_book_cover_1790402940878.jpg';
+import notUnworthyCoverWebp from '../assets/images/not_unworthy_book_cover_1790402940878.webp';
 
 interface BookTestimonialCardProps {
   testimonial: BookTestimonial;
@@ -36,7 +38,7 @@ export const BookTestimonialCard: React.FC<BookTestimonialCardProps> = ({
   }, [testimonial.quote, isExpanded]);
 
   return (
-    <div className="w-full h-full flex flex-col items-center">
+    <div className={`w-full h-full flex flex-col items-center ${!testimonial.reviewUrl ? 'pb-11' : ''}`}>
       {/* Soft-background, rounded, subtly shadowed testimonial card with equal height */}
       <figure className="w-full flex-1 bg-[#fbf9f6] rounded-2xl p-6 sm:p-8 border border-[#e4e2df] shadow-xs flex flex-col items-center justify-between text-center gap-3.5 transition-shadow duration-200 hover:shadow-sm">
         <div className="flex flex-col items-center gap-3.5 w-full">
@@ -45,26 +47,37 @@ export const BookTestimonialCard: React.FC<BookTestimonialCardProps> = ({
             {testimonial.headline}
           </h4>
 
-          {/* 5 Filled Gold Stars with accessible aria-label */}
-          <div
-            role="img"
-            aria-label={`${testimonial.rating} out of ${testimonial.maxRating} stars`}
-            className="inline-flex items-center gap-1 text-[#d49a2a]"
-          >
-            {Array.from({ length: testimonial.maxRating }).map((_, idx) => (
-              <svg
-                key={idx}
-                aria-hidden="true"
-                focusable="false"
-                className={`w-4 h-4 sm:w-5 sm:h-5 ${
-                  idx < starCount ? 'text-[#d49a2a] fill-current' : 'text-[#e4e2df] fill-current'
-                }`}
-                viewBox="0 0 20 20"
-              >
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.447a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.368-2.447a1 1 0 00-1.175 0l-3.368 2.447c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z" />
-              </svg>
-            ))}
-          </div>
+          {/* 5 Filled Gold Stars using deduplicated <symbol> + <use> */}
+          {starCount === 5 && testimonial.maxRating === 5 ? (
+            <svg
+              role="img"
+              aria-label="5 out of 5 stars"
+              viewBox="0 0 116 20"
+              className="h-4 sm:h-5 w-24 sm:w-28 text-[#d49a2a] fill-current"
+            >
+              <use href="#icon-five-stars" />
+            </svg>
+          ) : (
+            <div
+              role="img"
+              aria-label={`${testimonial.rating} out of ${testimonial.maxRating} stars`}
+              className="inline-flex items-center gap-1 text-[#d49a2a]"
+            >
+              {Array.from({ length: testimonial.maxRating }).map((_, idx) => (
+                <svg
+                  key={idx}
+                  aria-hidden="true"
+                  focusable="false"
+                  className={`w-4 h-4 sm:w-5 sm:h-5 ${
+                    idx < starCount ? 'text-[#d49a2a] fill-current' : 'text-[#e4e2df] fill-current'
+                  }`}
+                  viewBox="0 0 20 20"
+                >
+                  <use href="#icon-star" />
+                </svg>
+              ))}
+            </div>
+          )}
 
           {/* Quote in italics with quotation marks using semantic <blockquote> */}
           <blockquote
@@ -102,8 +115,8 @@ export const BookTestimonialCard: React.FC<BookTestimonialCardProps> = ({
       </figure>
 
       {/* Small link button under the card (shown only on Vinay's card) */}
-      <div className="min-h-[44px] flex items-center justify-center">
-        {testimonial.reviewUrl && (
+      {testimonial.reviewUrl && (
+        <div className="min-h-[44px] flex items-center justify-center">
           <a
             href={testimonial.reviewUrl}
             target="_blank"
@@ -116,8 +129,8 @@ export const BookTestimonialCard: React.FC<BookTestimonialCardProps> = ({
               open_in_new
             </span>
           </a>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -334,14 +347,16 @@ export const PublishedBook: React.FC = () => {
                 aria-label="Buy Not Unworthy by Seapee Bajaj on Amazon"
               >
                 <div className="absolute inset-y-0 left-0 w-2 bg-gradient-to-r from-white/25 via-black/20 to-transparent z-10 pointer-events-none" />
-                <img
-                  src={notUnworthyCover}
+                <Image
+                  src={notUnworthyCoverJpg}
+                  webpSrc={notUnworthyCoverWebp}
+                  pictureClassName="contents"
+                  sizes="(max-width: 640px) 128px, (max-width: 768px) 144px, 160px"
                   alt="Not Unworthy paperback poetry book cover by Seapee Bajaj"
                   width={160}
                   height={240}
                   loading="lazy"
                   decoding="async"
-                  referrerPolicy="no-referrer"
                   className="w-full aspect-[2/3] object-cover block"
                 />
               </a>

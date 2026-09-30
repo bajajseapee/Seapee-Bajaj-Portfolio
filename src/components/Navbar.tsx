@@ -251,7 +251,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       className="w-1.5 h-1.5 rounded-full bg-[#994524] shrink-0"
                     />
                   )}
-                  <span>{link.name}</span>
+                  {link.name}
                 </span>
                 {isActive && (
                   <span
@@ -301,27 +301,24 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="relative block w-9 h-9 rounded-full overflow-hidden ring-1 ring-[#dbc1b8] hover:ring-2 hover:ring-[#994524] transition-all shrink-0 bg-[#eae8e5]"
             title="About Seapee Bajaj"
           >
-            <img
-              src={SITE_CONFIG.AVATAR_IMAGE}
-              alt="Seapee Bajaj — SEO Content Strategist"
-              width={36}
-              height={36}
-              loading="eager"
-              decoding="async"
-              className="w-full h-full rounded-full object-cover object-[center_22%]"
-              referrerPolicy="no-referrer"
-              onError={(e) => {
-                const target = e.currentTarget;
-                if (target.src !== SITE_CONFIG.HERO_IMAGE) {
-                  target.src = SITE_CONFIG.HERO_IMAGE;
-                  return;
-                }
-                target.style.display = 'none';
-                if (target.parentElement) {
-                  target.parentElement.innerHTML = `<div class="w-full h-full bg-[#b85d3a] text-white flex items-center justify-center text-xs font-bold font-serif">SB</div>`;
-                }
-              }}
-            />
+            <picture className="contents">
+              <source
+                type="image/webp"
+                srcSet="/seapee-header-avatar-72w.webp 72w, /seapee-header-avatar.webp 512w"
+                sizes="36px"
+              />
+              <img
+                src={SITE_CONFIG.AVATAR_IMAGE}
+                srcSet="/seapee-header-avatar-72w.jpg 72w, /seapee-header-avatar.jpg 512w"
+                sizes="36px"
+                alt="Seapee Bajaj — SEO Content Strategist"
+                width={36}
+                height={36}
+                loading="eager"
+                decoding="async"
+                className="w-full h-full rounded-full object-cover object-[center_22%]"
+              />
+            </picture>
           </a>
 
           {/* Mobile Menu Button */}

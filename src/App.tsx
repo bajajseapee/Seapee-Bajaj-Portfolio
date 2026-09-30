@@ -22,6 +22,7 @@ import { FAQSection } from './components/FAQSection';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/WhatsAppIcon';
+import { SvgSprite } from './components/PortfolioIcon';
 import { AutoScrollReader } from './components/AutoScrollReader';
 import { SEOHead } from './components/SEOHead';
 import { FirebaseProvider } from './context/FirebaseContext';
@@ -61,7 +62,7 @@ function ScrollRevealSection({ children, delay = 0 }: ScrollRevealSectionProps) 
   const prefersReducedMotion = useReducedMotion();
 
   if (prefersReducedMotion) {
-    return <div className="w-full">{children}</div>;
+    return <>{children}</>;
   }
 
   return (
@@ -274,6 +275,7 @@ export default function App() {
   return (
     <FirebaseProvider>
       <SEOHead currentPath={currentPath} />
+      <SvgSprite />
       <GoogleAnalytics gaId="G-6BMZ8XCK2T" />
 
       <div className="min-h-screen bg-[#fbf9f6] text-[#1b1c1a] flex flex-col antialiased selection:bg-[#ffdbcf] selection:text-[#994524]">

@@ -37,6 +37,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
       el.setAttribute('content', content);
     };
 
+    upsertMeta('name', 'robots', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
     upsertMeta('name', 'title', routeConfig.title);
     upsertMeta('name', 'description', routeConfig.description);
     upsertMeta('name', 'author', 'Seapee Bajaj');
@@ -79,8 +80,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
       jobTitle: 'B2B SEO Content & GEO Strategist',
       url: `${SITE_URL_ORIGIN}/`,
       image: SITE_CONFIG.OG_IMAGE,
-      description:
-        'Seapee Bajaj is a B2B SEO content strategist with 10+ years of experience in market research content, GEO, AI search optimization, and editorial strategy.',
+      description: SITE_CONFIG.SEO.DESCRIPTION,
       email: SITE_CONFIG.EMAIL,
       sameAs: [
         SOCIAL_PROFILE_PLACEHOLDERS.LINKEDIN_URL,

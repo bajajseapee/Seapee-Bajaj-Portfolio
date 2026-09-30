@@ -74,9 +74,9 @@ export const WritingSection: React.FC<WritingSectionProps> = ({ onNavigate }) =>
                   <span>{topic.status}</span>
                 </div>
 
-                <p className="font-serif text-xl text-[#1b1c1a] font-medium leading-snug mb-3">
+                <h3 className="font-serif text-xl text-[#1b1c1a] font-medium leading-snug mb-3">
                   {topic.title}
-                </p>
+                </h3>
 
                 <p className="text-sm text-[#55433c] leading-relaxed mb-4">
                   {topic.summary}
@@ -93,7 +93,7 @@ export const WritingSection: React.FC<WritingSectionProps> = ({ onNavigate }) =>
                           className="w-1 h-1 rounded-full bg-[#994524] shrink-0 mt-1.5"
                           aria-hidden="true"
                         />
-                        <span>{q}</span>
+                        {q}
                       </li>
                     ))}
                   </ul>

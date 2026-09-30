@@ -68,30 +68,26 @@ export const SeoGeoExpertise: React.FC<SeoGeoExpertiseProps> = ({ onNavigate }) 
           {SEO_GEO_PILLARS.map((pillar) => (
             <article
               key={pillar.id}
-              className="bg-white rounded-2xl p-6 sm:p-8 border border-[#e4e2df] shadow-xs flex flex-col justify-between"
+              className="bg-white rounded-2xl p-6 sm:p-8 border border-[#e4e2df] shadow-xs flex flex-col justify-start"
             >
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-2">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#994524]">
-                    {pillar.code}. {pillar.subtitle}
-                  </span>
-                </div>
-                <p className="font-serif text-xl sm:text-2xl text-[#1b1c1a] font-medium mb-3">
-                  {pillar.title}
-                </p>
-                <p className="text-sm text-[#55433c] leading-relaxed mb-5">
-                  {pillar.description}
-                </p>
+              <span className="text-xs font-bold uppercase tracking-wider text-[#994524] mb-2">
+                {pillar.code}. {pillar.subtitle}
+              </span>
+              <h3 className="font-serif text-xl sm:text-2xl text-[#1b1c1a] font-medium mb-3">
+                {pillar.title}
+              </h3>
+              <p className="text-sm text-[#55433c] leading-relaxed mb-5">
+                {pillar.description}
+              </p>
 
-                <ul className="space-y-2 border-t border-[#efeeeb] pt-4 text-xs sm:text-sm text-[#55433c]">
-                  {pillar.practices.map((practice, pIdx) => (
-                    <li key={pIdx} className="flex items-start gap-2.5 leading-relaxed">
-                      <PortfolioIcon name="check_circle" className="w-4 h-4 text-[#994524] shrink-0 mt-0.5" />
-                      <span>{practice}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <ul className="space-y-2 border-t border-[#efeeeb] pt-4 text-xs sm:text-sm text-[#55433c]">
+                {pillar.practices.map((practice, pIdx) => (
+                  <li key={pIdx} className="flex items-start gap-2.5 leading-relaxed">
+                    <PortfolioIcon name="check_circle" className="w-4 h-4 text-[#994524] shrink-0 mt-0.5" />
+                    {practice}
+                  </li>
+                ))}
+              </ul>
             </article>
           ))}
         </div>

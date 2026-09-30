@@ -1,16 +1,26 @@
 import React from 'react';
+import Image from 'next/image';
 import { AWARDS, CERTIFICATIONS } from '../data/portfolioData';
 import { PortfolioIcon } from './PortfolioIcon';
 import gvrTrophyImg from '../assets/images/gvr_star_award_trophy_1790403565114.jpg';
+import gvrTrophyWebp from '../assets/images/gvr_star_award_trophy_1790403565114.webp';
 import pwcLogoImg from '../assets/images/pwc_logo.svg';
 import myNeedToLiveBadgeImg from '../assets/images/my_need_to_live_award_badge_1790403584967.jpg';
+import myNeedToLiveBadgeWebp from '../assets/images/my_need_to_live_award_badge_1790403584967.webp';
 import asmLogoImg from '../assets/images/asm_group_logo_1790403595371.jpg';
+import asmLogoWebp from '../assets/images/asm_group_logo_1790403595371.webp';
 import googlePromptingBadgeImg from '../assets/images/google_prompting_essentials_badge_1790403691771.jpg';
+import googlePromptingBadgeWebp from '../assets/images/google_prompting_essentials_badge_1790403691771.webp';
 import hubspotBadgeImg from '../assets/images/hubspot_content_marketing_badge_1790403703530.jpg';
+import hubspotBadgeWebp from '../assets/images/hubspot_content_marketing_badge_1790403703530.webp';
 
-const AWARD_LOGOS: Record<string, { src: string; alt: string; fit: 'cover' | 'contain' }> = {
+const AWARD_LOGOS: Record<
+  string,
+  { src: string; webpSrc?: string; alt: string; fit: 'cover' | 'contain' }
+> = {
   'best-content-writer': {
     src: gvrTrophyImg,
+    webpSrc: gvrTrophyWebp,
     alt: 'Grand View Research STAR Awards trophy — Seapee Bajaj, Best Content Writer',
     fit: 'cover',
   },
@@ -21,23 +31,27 @@ const AWARD_LOGOS: Record<string, { src: string; alt: string; fit: 'cover' | 'co
   },
   'my-need-to-live-reward': {
     src: myNeedToLiveBadgeImg,
+    webpSrc: myNeedToLiveBadgeWebp,
     alt: 'My Need To Live UK — Get Involved Award recognition badge',
     fit: 'contain',
   },
   'academic-publications': {
     src: asmLogoImg,
+    webpSrc: asmLogoWebp,
     alt: 'ASM (Audyogik Shikshan Mandal) INCON XIII conference logo',
     fit: 'contain',
   },
 };
 
-const CERTIFICATION_LOGOS: Record<string, { src: string; alt: string }> = {
+const CERTIFICATION_LOGOS: Record<string, { src: string; webpSrc: string; alt: string }> = {
   'google-prompting': {
     src: googlePromptingBadgeImg,
+    webpSrc: googlePromptingBadgeWebp,
     alt: 'Google Prompting Essentials Certificate of Completion badge',
   },
   'hubspot-content-marketing': {
     src: hubspotBadgeImg,
+    webpSrc: hubspotBadgeWebp,
     alt: 'HubSpot Academy Content Marketing Certification badge',
   },
 };
@@ -84,22 +98,22 @@ export const Awards: React.FC = () => {
                   <div className="flex items-start justify-between gap-4 mb-5">
                     <div className="flex items-center gap-4">
                       {logo ? (
-                        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-white border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0 p-1.5">
-                          <img
-                            src={logo.src}
-                            alt={logo.alt}
-                            width={80}
-                            height={80}
-                            loading="lazy"
-                            decoding="async"
-                            referrerPolicy="no-referrer"
-                            className={`w-full h-full ${
-                              logo.fit === 'cover'
-                                ? 'object-cover rounded-lg'
-                                : 'object-contain'
-                            }`}
-                          />
-                        </div>
+                        <Image
+                          src={logo.src}
+                          webpSrc={logo.webpSrc}
+                          pictureClassName="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-white border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0 p-1.5"
+                          sizes="(max-width: 640px) 64px, 80px"
+                          alt={logo.alt}
+                          width={80}
+                          height={80}
+                          loading="lazy"
+                          decoding="async"
+                          className={`w-full h-full ${
+                            logo.fit === 'cover'
+                              ? 'object-cover rounded-lg'
+                              : 'object-contain'
+                          }`}
+                        />
                       ) : (
                         <div className="w-14 h-14 rounded-xl bg-[#f5f3f0] text-[#994524] flex items-center justify-center shrink-0 overflow-hidden">
                           <PortfolioIcon name={item.icon} className="w-6 h-6" />
@@ -179,18 +193,18 @@ export const Awards: React.FC = () => {
                   }`}
                 >
                   {certLogo ? (
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-white border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0 p-1.5">
-                      <img
-                        src={certLogo.src}
-                        alt={certLogo.alt}
-                        width={80}
-                        height={80}
-                        loading="lazy"
-                        decoding="async"
-                        referrerPolicy="no-referrer"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
+                    <Image
+                      src={certLogo.src}
+                      webpSrc={certLogo.webpSrc}
+                      pictureClassName="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-white border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0 p-1.5"
+                      sizes="(max-width: 640px) 64px, 80px"
+                      alt={certLogo.alt}
+                      width={80}
+                      height={80}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-contain"
+                    />
                   ) : (
                     <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-white border border-[#e4e2df] text-[#994524] flex flex-col items-center justify-center shrink-0 overflow-hidden">
                       <PortfolioIcon name={cert.icon} className="w-6 h-6" />

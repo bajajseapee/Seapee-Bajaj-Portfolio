@@ -1,26 +1,34 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { STATS, PROFILE_INFO } from '../data/portfolioData';
-import experienceLogo from '../assets/images/about_logo_experience_1790405416482.webp';
-import rankReachLogo from '../assets/images/about_logo_rank_reach_1790405429831.webp';
-import empiricalLogo from '../assets/images/about_logo_empirical_1790405440606.webp';
-import refinedLogo from '../assets/images/about_logo_refined_1790405450987.webp';
+import experienceLogoWebp from '../assets/images/about_logo_experience_1790405416482.webp';
+import experienceLogoJpg from '../assets/images/about_logo_experience_1790405416482.jpg';
+import rankReachLogoWebp from '../assets/images/about_logo_rank_reach_1790405429831.webp';
+import rankReachLogoJpg from '../assets/images/about_logo_rank_reach_1790405429831.jpg';
+import empiricalLogoWebp from '../assets/images/about_logo_empirical_1790405440606.webp';
+import empiricalLogoJpg from '../assets/images/about_logo_empirical_1790405440606.jpg';
+import refinedLogoWebp from '../assets/images/about_logo_refined_1790405450987.webp';
+import refinedLogoJpg from '../assets/images/about_logo_refined_1790405450987.jpg';
 
-const STAT_LOGOS: Record<string, { src: string; alt: string }> = {
+const STAT_LOGOS: Record<string, { src: string; webpSrc: string; alt: string }> = {
   experience: {
-    src: experienceLogo,
+    src: experienceLogoJpg,
+    webpSrc: experienceLogoWebp,
     alt: 'Market research, B2B content, and SEO career background illustration',
   },
   'rank-reach': {
-    src: rankReachLogo,
+    src: rankReachLogoJpg,
+    webpSrc: rankReachLogoWebp,
     alt: 'SEO, GEO and AI search visibility strategy illustration',
   },
   empirical: {
-    src: empiricalLogo,
+    src: empiricalLogoJpg,
+    webpSrc: empiricalLogoWebp,
     alt: 'Research-led B2B and market intelligence dossier illustration',
   },
   refined: {
-    src: refinedLogo,
+    src: refinedLogoJpg,
+    webpSrc: refinedLogoWebp,
     alt: 'Reader-first editorial storytelling and book authorship illustration',
   },
 };
@@ -68,11 +76,11 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
             <div className="w-12 h-[2px] bg-[#994524] my-1" />
 
             <p className={SECTION_BODY_COPY_CLASS}>
-              {PROFILE_INFO.aboutIntro} My career started in primary and secondary market research at <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Allied Market Research</strong> and <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">The Insight Partners</strong>, and shaped how I approach content and SEO across <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Perfect Clicks</strong>, <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Grand View Research</strong>, and <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">IMARC Group</strong>—translating complex research into clear, reader-focused B2B and SEO content.
+              {PROFILE_INFO.aboutIntro} My career started in primary and secondary market research at <strong>Allied Market Research</strong> and <strong>The Insight Partners</strong>, and shaped how I approach content and SEO across <strong>Perfect Clicks</strong>, <strong>Grand View Research</strong>, and <strong>IMARC Group</strong>—translating complex research into clear, reader-focused B2B and SEO content.
             </p>
 
             <p className={SECTION_BODY_COPY_CLASS}>
-              I specialize in <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">content strategy, SEO optimization, research-led content, editorial workflows, and content production</strong>. My work spans keyword research, on-page SEO, competitive intelligence, and structuring clear, factual content for traditional search and AI-powered answer engines (<strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">GEO &amp; AEO</strong>). Alongside my 10+ years of industry experience, I hold an <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">MBA in Systems</strong>, completed professional training in <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Introduction to Generative Engine Optimization</strong> (Coursera), <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">HubSpot Content Marketing Certification</strong>, <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Google Prompting Essentials</strong>, and the <strong className="font-semibold text-[length:inherit] leading-[inherit] font-sans">Be10x AI tools program</strong>, and authored my published poetry book <em>Not Unworthy</em>.
+              I specialize in <strong>content strategy, SEO optimization, research-led content, editorial workflows, and content production</strong>. My work spans keyword research, on-page SEO, competitive intelligence, and structuring clear, factual content for traditional search and AI-powered answer engines (<strong>GEO &amp; AEO</strong>). Alongside my 10+ years of industry experience, I hold an <strong>MBA in Systems</strong>, completed professional training in <strong>Introduction to Generative Engine Optimization</strong> (Coursera), <strong>HubSpot Content Marketing Certification</strong>, <strong>Google Prompting Essentials</strong>, and the <strong>Be10x AI tools program</strong>, and authored my published poetry book <em>Not Unworthy</em>.
             </p>
           </div>
 
@@ -92,18 +100,18 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
                   >
                     <div className="flex items-start justify-between w-full mb-2.5 sm:mb-3">
                       {logo ? (
-                        <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-[#fbf9f6] border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0">
-                          <Image
-                            src={logo.src}
-                            alt={logo.alt}
-                            width={44}
-                            height={44}
-                            loading="lazy"
-                            decoding="async"
-                            referrerPolicy="no-referrer"
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
-                        </div>
+                        <Image
+                          src={logo.src}
+                          webpSrc={logo.webpSrc}
+                          pictureClassName="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-[#fbf9f6] border border-[#e4e2df] shadow-2xs overflow-hidden flex items-center justify-center shrink-0"
+                          sizes="(max-width: 640px) 36px, 44px"
+                          alt={logo.alt}
+                          width={44}
+                          height={44}
+                          loading="eager"
+                          decoding="async"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
                       ) : (
                         <span className="material-symbols-outlined text-[#994524] text-2xl group-hover:scale-110 transition-transform">
                           {stat.icon}

@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { CREATIVE_WORKS } from '../data/portfolioData';
 import { CreativeItem } from '../types';
-import startupIndiaLogo from '../assets/images/startup_india_magazine_logo_1790403917955.jpg';
-import wordyWorthyLogo from '../assets/images/wordy_worthy_logo_1790403930143.jpg';
+import startupIndiaLogoJpg from '../assets/images/startup_india_magazine_logo_1790403917955.jpg';
+import startupIndiaLogoWebp from '../assets/images/startup_india_magazine_logo_1790403917955.webp';
+import wordyWorthyLogoJpg from '../assets/images/wordy_worthy_logo_1790403930143.jpg';
+import wordyWorthyLogoWebp from '../assets/images/wordy_worthy_logo_1790403930143.webp';
 
-const CREATIVE_LOGOS: Record<string, { src: string; alt: string }> = {
+const CREATIVE_LOGOS: Record<string, { src: string; webpSrc: string; alt: string }> = {
   'startup-india-magazine': {
-    src: startupIndiaLogo,
+    src: startupIndiaLogoJpg,
+    webpSrc: startupIndiaLogoWebp,
     alt: 'Startup India Magazine — features and founder stories by Seapee Bajaj logo',
   },
   'instagram-wordy-worthy': {
-    src: wordyWorthyLogo,
+    src: wordyWorthyLogoJpg,
+    webpSrc: wordyWorthyLogoWebp,
     alt: 'Wordy Worthy — curated prose and creative micro-essays by Seapee Bajaj logo',
   },
 };
@@ -30,7 +35,7 @@ export const CreativeWork: React.FC = () => {
             Beyond Business Content
           </h2>
           <p className="text-base text-[#55433c] mt-2 leading-relaxed">
-            Writing isn't only my profession. It's also how I explore ideas, people, culture, and creativity.
+            Writing isn&apos;t only my profession. It&apos;s also how I explore ideas, people, culture, and creativity.
           </p>
         </div>
 
@@ -51,18 +56,18 @@ export const CreativeWork: React.FC = () => {
                   <div className="flex items-start justify-between gap-4 mb-5">
                     <div className="flex items-center gap-4">
                       {logo ? (
-                        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-white border border-[#e4e2df] shadow-xs overflow-hidden flex items-center justify-center shrink-0">
-                          <img
-                            src={logo.src}
-                            alt={logo.alt}
-                            width={80}
-                            height={80}
-                            loading="lazy"
-                            decoding="async"
-                            referrerPolicy="no-referrer"
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
+                        <Image
+                          src={logo.src}
+                          webpSrc={logo.webpSrc}
+                          pictureClassName="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-white border border-[#e4e2df] shadow-xs overflow-hidden flex items-center justify-center shrink-0"
+                          sizes="(max-width: 640px) 64px, 80px"
+                          alt={logo.alt}
+                          width={80}
+                          height={80}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-cover"
+                        />
                       ) : (
                         <span className="material-symbols-outlined text-[#994524] text-2xl block group-hover:scale-110 transition-transform">
                           {work.icon}
@@ -136,18 +141,18 @@ export const CreativeWork: React.FC = () => {
 
             <div className="flex items-center gap-4">
               {CREATIVE_LOGOS[selectedPiece.id] ? (
-                <div className="w-14 h-14 rounded-xl bg-white border border-[#e4e2df] overflow-hidden shrink-0">
-                  <img
-                    src={CREATIVE_LOGOS[selectedPiece.id].src}
-                    alt={CREATIVE_LOGOS[selectedPiece.id].alt}
-                    width={56}
-                    height={56}
-                    loading="lazy"
-                    decoding="async"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                <Image
+                  src={CREATIVE_LOGOS[selectedPiece.id].src}
+                  webpSrc={CREATIVE_LOGOS[selectedPiece.id].webpSrc}
+                  pictureClassName="w-14 h-14 rounded-xl bg-white border border-[#e4e2df] overflow-hidden shrink-0"
+                  sizes="56px"
+                  alt={CREATIVE_LOGOS[selectedPiece.id].alt}
+                  width={56}
+                  height={56}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover"
+                />
               ) : (
                 <span className="material-symbols-outlined text-[#994524] text-3xl">
                   {selectedPiece.icon}
@@ -169,7 +174,7 @@ export const CreativeWork: React.FC = () => {
 
             {selectedPiece.sampleQuote && (
               <blockquote className="bg-[#fbf9f6] border-l-2 border-[#994524] p-4 rounded-r-lg font-serif italic text-sm text-[#1b1c1a] leading-relaxed">
-                "{selectedPiece.sampleQuote}"
+                &ldquo;{selectedPiece.sampleQuote}&rdquo;
               </blockquote>
             )}
 

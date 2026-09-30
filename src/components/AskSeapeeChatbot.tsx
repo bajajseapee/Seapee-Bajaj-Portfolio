@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { SITE_CONFIG } from '../config/siteConfig';
 import aiAssistantIllustration from '../assets/images/seapee_ai_assistant_avatar_1790582552233.jpg';
+import aiAssistantIllustrationWebp from '../assets/images/seapee_ai_assistant_avatar_1790582552233.webp';
 import {
   ASK_SEAPEE_SUGGESTED_QUESTIONS,
   TALK_TO_SEAPEE_OPENING_MESSAGE,
@@ -162,8 +163,11 @@ function AiAssistantAvatar({
 }) {
   const [srcIndex, setSrcIndex] = useState(0);
   const [isBlinking, setIsBlinking] = useState(false);
-  const sources = [aiAssistantIllustration, SITE_CONFIG.AI_ASSISTANT_AVATAR];
-  const currentSrc = sources[srcIndex];
+  const sources = [
+    { jpg: aiAssistantIllustration, webp: aiAssistantIllustrationWebp },
+    { jpg: SITE_CONFIG.AI_ASSISTANT_AVATAR, webp: '/seapee-ai-assistant-avatar.webp' },
+  ];
+  const currentSource = sources[srcIndex];
 
   // Natural periodic eye blink
   useEffect(() => {
@@ -180,7 +184,7 @@ function AiAssistantAvatar({
         isSpeaking ? 'ring-[#994524] shadow-md' : 'ring-[#994524]/25 shadow-2xs'
       } shrink-0 bg-[#f5efe8] flex items-center justify-center transition-all duration-150`}
     >
-      {currentSrc ? (
+      {currentSource ? (
         <div
           className={`relative w-full h-full rounded-full overflow-hidden transition-transform duration-150 ${
             isSpeaking && viseme === 'open'
@@ -190,17 +194,21 @@ function AiAssistantAvatar({
               : 'scale-100'
           }`}
         >
-          <img
-            src={currentSrc}
-            alt="Seapee's AI Assistant — Illustrated Avatar"
-            width={88}
-            height={88}
-            loading="eager"
-            decoding="async"
-            referrerPolicy="no-referrer"
-            onError={() => setSrcIndex((prev) => prev + 1)}
-            className="w-full h-full rounded-full object-cover object-center block select-none"
-          />
+          <picture className="w-full h-full block">
+            <source srcSet={currentSource.webp} sizes="44px" type="image/webp" />
+            <img
+              src={currentSource.jpg}
+              sizes="44px"
+              alt="Seapee's AI Assistant — Illustrated Avatar"
+              width={88}
+              height={88}
+              loading="lazy"
+              decoding="async"
+              referrerPolicy="no-referrer"
+              onError={() => setSrcIndex((prev) => prev + 1)}
+              className="w-full h-full rounded-full object-cover object-center block select-none"
+            />
+          </picture>
 
           {/* Natural Eyelid Blink Overlay aligned to eye coordinates (y=36.5%..39.5%) */}
           {isBlinking && (

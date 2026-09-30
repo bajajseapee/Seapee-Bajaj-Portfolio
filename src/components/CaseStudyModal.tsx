@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Image from 'next/image';
 import { ProjectItem } from '../types';
 import { PROJECT_LOGOS } from './PortfolioCard';
 import { SECTION_BODY_COPY_CLASS } from './About';
@@ -56,20 +57,20 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
         {/* Header Tags */}
         <div className="flex flex-wrap items-center gap-3 pt-1 pr-8">
           {logo && (
-            <div
-              className={`w-16 h-12 rounded-lg border border-[#e4e2df] overflow-hidden flex items-center justify-center shrink-0 ${
+            <Image
+              src={logo.src}
+              webpSrc={logo.webpSrc}
+              pictureClassName={`w-16 h-12 rounded-lg border border-[#e4e2df] overflow-hidden flex items-center justify-center shrink-0 ${
                 logo.bg || 'bg-white'
               }`}
-            >
-              <img
-                src={logo.src}
-                alt={logo.alt}
-                referrerPolicy="no-referrer"
-                className={`w-full h-full ${
-                  logo.fit === 'contain' ? 'object-contain p-0.5' : 'object-cover'
-                }`}
-              />
-            </div>
+              sizes="64px"
+              alt={logo.alt}
+              width={64}
+              height={48}
+              className={`w-full h-full ${
+                logo.fit === 'contain' ? 'object-contain p-0.5' : 'object-cover'
+              }`}
+            />
           )}
           <span className="px-2.5 py-1 rounded bg-[#efeeeb] text-[#546252] text-xs font-semibold uppercase tracking-wider">
             {project.tag}

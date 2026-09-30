@@ -75,18 +75,25 @@ export const SITE_CONFIG = {
   },
 
   // Image URLs
-  HERO_IMAGE: "https://lh3.googleusercontent.com/aida-public/AB6AXuBLprfha2SI32O8n7gJDCRaEv8AvhIETinZCZp3HLXo8nr1KAK7XIPvBztAnnZAf-ywge1dUzKPYjH0rm-v5GSRJdSKkPUpADTNvDIvp7EMUfVtT8NP9JtCSO0F24a33bJ9cdJzX5HviwwKpKeUSAZpNO68DqqKgjO85-hwH4_Z-5ESP9Y6MdYZhCsuFj3rM-0Ne5xs2kgjy6SGL80daDr0_dbq1xLfV7MbxAnW4S4MWtuA8DSEFo_Ta0hM9MYUfCaXng",
+  HERO_IMAGE: "/seapee-bajaj-portrait.jpg",
+  HERO_IMAGE_WEBP: "/seapee-bajaj-portrait.webp",
+  HERO_IMAGE_WEBP_360W: "/seapee-bajaj-portrait-360w.webp",
+  HERO_IMAGE_JPG_360W: "/seapee-bajaj-portrait-360w.jpg",
   OG_IMAGE: "https://seapee-bajaj-portfolio-3a8w-omega.vercel.app/og-image-v3.jpg",
   AVATAR_IMAGE: "/seapee-header-avatar.jpg",
+  AVATAR_IMAGE_WEBP: "/seapee-header-avatar.webp",
+  AVATAR_IMAGE_WEBP_72W: "/seapee-header-avatar-72w.webp",
+  AVATAR_IMAGE_JPG_72W: "/seapee-header-avatar-72w.jpg",
   AI_ASSISTANT_AVATAR: "/seapee-ai-assistant-avatar.jpg",
+  AI_ASSISTANT_AVATAR_WEBP: "/seapee-ai-assistant-avatar.webp",
 
-  // Default SEO & Meta
+  // Default SEO & Meta (151 characters, core pitch in first 120 chars)
   SEO: {
     TITLE: "Seapee Bajaj — B2B SEO Content & GEO Strategist",
     DESCRIPTION:
-      "Portfolio of Seapee Bajaj, a B2B SEO content strategist with 10+ years of experience in market research content, GEO, AI search, editorial strategy, and Not Unworthy reader reviews.",
+      "Seapee Bajaj is a B2B SEO content strategist with 10+ years of experience in market research, GEO & AI search optimization, and B2B editorial strategy.",
     OG_DESCRIPTION:
-      "Portfolio of Seapee Bajaj, a B2B SEO content strategist with 10+ years of experience in market research content, GEO, AI search, editorial strategy, and Not Unworthy reader reviews.",
+      "Seapee Bajaj is a B2B SEO content strategist with 10+ years of experience in market research, GEO & AI search optimization, and B2B editorial strategy.",
     CANONICAL: SITE_URL,
     OG_SHORT_TAGLINE: "Seapee Bajaj · B2B SEO, Content & GEO"
   }
@@ -190,7 +197,7 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
     path: "/",
     title: "Seapee Bajaj — B2B SEO Content & GEO Strategist",
     description:
-      "Portfolio of Seapee Bajaj, a B2B SEO content strategist with 10+ years of experience in market research content, GEO, AI search, editorial strategy, and Not Unworthy reader reviews.",
+      "Seapee Bajaj is a B2B SEO content strategist with 10+ years of experience in market research, GEO & AI search optimization, and B2B editorial strategy.",
     h1: "B2B SEO Content Strategist, Research-Led and Reader-Focused",
     kicker: "Seapee Bajaj · B2B SEO, Content & GEO",
     subtitle: "Market research · B2B content · SEO · GEO & AI search",
