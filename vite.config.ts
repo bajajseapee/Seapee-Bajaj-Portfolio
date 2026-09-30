@@ -4,13 +4,19 @@ import fs from 'fs';
 import path from 'path';
 import {defineConfig, Plugin} from 'vite';
 import {SITE_CONFIG, SITE_URL_ORIGIN, SEO_ROUTES} from './src/config/siteConfig';
+import {OG_IMAGE_BASE64} from './src/config/ogImageBase64';
 
 function syncSeoAssetsPlugin(): Plugin {
+  const ogImageBuffer = Buffer.from(OG_IMAGE_BASE64, 'base64');
+
   const generateFiles = () => {
     const publicDir = path.resolve(__dirname, 'public');
     if (!fs.existsSync(publicDir)) {
       fs.mkdirSync(publicDir, {recursive: true});
     }
+
+    // Ensure public/og-image.jpg is always present and matches the 1200x630 hero OG card
+    fs.writeFileSync(path.join(publicDir, 'og-image.jpg'), ogImageBuffer);
 
     const today = new Date().toISOString().split('T')[0];
     const urlsXml = Object.keys(SEO_ROUTES)
@@ -47,6 +53,9 @@ function syncSeoAssetsPlugin(): Plugin {
     },
     closeBundle() {
       const distDir = path.resolve(__dirname, 'dist');
+      if (fs.existsSync(distDir)) {
+        fs.writeFileSync(path.join(distDir, 'og-image.jpg'), ogImageBuffer);
+      }
       const indexHtmlPath = path.join(distDir, 'index.html');
       if (!fs.existsSync(indexHtmlPath)) return;
 

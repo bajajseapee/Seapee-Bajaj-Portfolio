@@ -30,7 +30,7 @@
       ]
     },
     {
-      "source": "/og-image-v2.jpg",
+      "source": "/og-image.jpg",
       "headers": [
         {
           "key": "Content-Type",
@@ -54,6 +54,10 @@
   ],
   "rewrites": [
     {
+      "source": "/og-image.jpg",
+      "destination": "/og-image.jpg"
+    },
+    {
       "source": "/BingSiteAuth.xml",
       "destination": "/BingSiteAuth.xml"
     },
@@ -74,7 +78,7 @@
       "destination": "/favicon.svg"
     },
     {
-      "source": "/((?!api/|assets/|fonts/|favicon\\.svg|BingSiteAuth\\.xml|google7d582d90dd9539de\\.html|sitemap\\.xml|robots\\.txt|.*\\..*).*)",
+      "source": "/((?!api/|assets/|fonts/|og-image\\.jpg|favicon\\.svg|BingSiteAuth\\.xml|google7d582d90dd9539de\\.html|sitemap\\.xml|robots\\.txt|.*\\..*).*)",
       "destination": "/index.html"
     }
   ]
