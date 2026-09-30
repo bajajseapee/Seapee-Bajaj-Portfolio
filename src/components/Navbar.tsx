@@ -36,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         id: 'experience',
         matchIds: ['experience', 'awards'],
       },
-      { name: 'Resume', href: '#resume', id: 'resume', matchIds: ['resume'] },
+      { name: 'Resume', href: '/experience', id: 'resume', matchIds: ['resume'] },
       { name: 'Services', href: '/services', id: 'services', matchIds: ['services', 'process'] },
       {
         name: 'Case Studies',
@@ -174,16 +174,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     setMobileMenuOpen(false);
     setObservedSection(sectionId);
 
-    if (sectionId === 'resume') {
-      const resumeEl = document.getElementById('resume');
-      if (resumeEl) {
-        resumeEl.scrollIntoView({ behavior: 'smooth' });
-        return;
-      }
-    }
-
     if (onNavigate) {
-      onNavigate(href === '#resume' ? '/' : href, sectionId);
+      onNavigate(href, sectionId);
     } else {
       const element = document.getElementById(sectionId);
       if (element) {
@@ -205,13 +197,13 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-[#fbf9f6]/95 backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.06)]'
           : 'bg-[#fbf9f6]/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]'
       }`}
     >
-      <div className="h-20 max-w-[1280px] mx-auto px-5 md:px-10 lg:px-16 flex items-center justify-between gap-3">
+      <div className="h-16 sm:h-20 max-w-[1280px] mx-auto px-4 sm:px-5 md:px-10 lg:px-16 flex items-center justify-between gap-2.5">
         {/* Brand Zone */}
         <a
           href="/"
@@ -287,13 +279,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <WhatsAppIcon className="w-4 h-4" />
           </a>
-          <button
-            type="button"
-            onClick={onWorkTogether}
-            className="hidden sm:inline-flex items-center justify-center text-xs sm:text-sm font-semibold bg-[#b85d3a] hover:bg-[#994524] text-white transition-all px-4 py-2 rounded-lg shadow-sm hover:shadow active:scale-[0.98] cursor-pointer"
+          <a
+            href="/contact"
+            onClick={(e) => handleLinkClick(e, '/contact', 'contact')}
+            className="inline-flex items-center justify-center text-xs sm:text-sm font-semibold bg-[#b85d3a] hover:bg-[#994524] text-white transition-all px-3.5 sm:px-4 py-2 rounded-lg shadow-sm hover:shadow active:scale-[0.98] cursor-pointer whitespace-nowrap"
           >
-            Let's Talk
-          </button>
+            Contact
+          </a>
 
           <a
             href="/about"
