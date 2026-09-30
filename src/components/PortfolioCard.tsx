@@ -5,7 +5,6 @@ import imarcManufacturingImg from '../assets/images/selected_work_2_imarc_logo_v
 import holidaySuccessImg from '../assets/images/selected_work_3_holiday_gift_v2_1790405089509.jpg';
 import decodingGenZImg from '../assets/images/selected_work_4_gen_z_doodle_v2_1790405105736.jpg';
 import quoraLogoImg from '../assets/images/selected_work_5_quora_logo_1790404820379.jpg';
-import metaverseLogoImg from '../assets/images/selected_work_6_metaverse_logo_1790404830877.jpg';
 import aiChipImg from '../assets/images/selected_work_7_ai_chip_1790404851838.jpg';
 import wmsDiagramImg from '../assets/images/selected_work_8_wms_diagram_1790404865127.jpg';
 import socialMediaAnalyticsImg from '../assets/images/selected_work_9_social_media_analytics_1790404881780.jpg';
@@ -40,11 +39,11 @@ export const PROJECT_LOGOS: Record<
     alt: 'Quora — Well of Insights research communication page badge',
     fit: 'cover',
   },
-  'metaverse-content-creation': {
-    src: metaverseLogoImg,
-    alt: 'Metaverse content creation technology trend emblem',
-    fit: 'cover',
-    bg: 'bg-[#12073b]',
+  'global-warehouse-management-systems': {
+    src: wmsDiagramImg,
+    alt: 'Global Warehouse Management Systems (WMS) supply chain and inventory workflow diagram',
+    fit: 'contain',
+    bg: 'bg-white',
   },
   'ai-market-research-pr-newswire': {
     src: aiChipImg,
@@ -152,7 +151,7 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({ project, onOpenPro
           {project.type}
         </span>
         <span className="text-xs font-semibold text-[#994524] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-          View Work
+          {project.id === 'global-warehouse-management-systems' ? 'Read the Full Report' : 'View Work'}
           <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
         </span>
       </div>

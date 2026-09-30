@@ -152,6 +152,7 @@ export default function App() {
       services: 'services',
       'case-studies': 'case-studies',
       'selected-work': 'selected-work',
+      'warehouse-management-systems': 'warehouse-management-systems',
       'seo-geo-expertise': 'seo-geo-expertise',
       writing: 'writing',
       'creative-work': 'writing',

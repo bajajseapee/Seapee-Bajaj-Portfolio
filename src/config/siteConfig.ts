@@ -46,7 +46,7 @@ export const SITE_CONFIG = {
     HOLIDAY_SUCCESS: "https://www.linkedin.com/pulse/unwrapping-holiday-success-power-strategic-consumer-insights-odcoc?utm_source=share&utm_medium=member_android&utm_campaign=share_via",
     GEN_Z: "https://www.linkedin.com/pulse/decoding-gen-z-generation-shaping-future-imarc-group-lkzoc?utm_source=share&utm_medium=member_android&utm_campaign=share_via",
     QUORA_WELL_OF_INSIGHTS: "https://wellofinsights.quora.com/",
-    METAVERSE_CONTENT: "https://www.globalindustryherald.com/how-is-metaverse-impacting-the-universe-of-content-creation/",
+    GLOBAL_WMS_REPORT: "https://www.scribd.com/document/685355903/Sample-Global-Warehouse-Management-Systems-2014GCo-2022-V1-1",
     AI_MARKET_RESEARCH: "https://www.prnewswire.co.uk/news-releases/artificial-intelligence-market-to-garner-19478-million-by-2022-globally---allied-market-research-601286115.html",
     WMS_MARKET: "https://www.explorewms.com/wms-market-figures-2022.html",
     SOCIAL_MEDIA_ANALYTICS: "https://www.einnews.com/pr_news/528071240/social-media-analytics-market-is-expected-to-rise-at-a-cagr-of-29-2-and-to-reach-9-383-million-by-2022-says-amr",
@@ -329,6 +329,18 @@ export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
     sectionId: "experience",
     pageType: "WebPage",
     breadcrumbLabel: "Market Research Content"
+  },
+  "/warehouse-management-systems": {
+    path: "/warehouse-management-systems",
+    title: "Warehouse Management Systems (WMS) Market Analysis | Seapee Bajaj",
+    description:
+      "Global Warehouse Management Systems (WMS) market research analysis covering market size, growth trends, cloud vs. on-premise deployment segments, regions, leading vendors, and key drivers.",
+    h1: "Global Warehouse Management Systems (WMS) — Market Research & Industry Analysis",
+    kicker: "Supply Chain & Logistics Market Intelligence",
+    subtitle: "Comprehensive analysis of global WMS adoption, market growth, cloud migration, industry segmentation, and leading supply-chain software providers.",
+    sectionId: "warehouse-management-systems",
+    pageType: "WebPage",
+    breadcrumbLabel: "Warehouse Management Systems"
   },
   "/writing": {
     path: "/writing",

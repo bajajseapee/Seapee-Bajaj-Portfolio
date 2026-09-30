@@ -688,29 +688,34 @@ export const PROJECTS: ProjectItem[] = [
     ]
   },
   {
-    id: "metaverse-content-creation",
-    title: "How Is Metaverse Impacting the Universe of Content Creation?",
-    tag: "Technology / Content Trends",
-    description: "Technology and content-trend article connecting an emerging topic with the future of digital content.",
-    type: "Emerging Tech",
-    category: "Technology",
-    categories: ["Technology", "SEO & Content"],
-    url: SITE_CONFIG.PORTFOLIO_LINKS.METAVERSE_CONTENT,
-    platform: "Tech Trends Review",
-    year: "2022",
-    readTime: "6 min read",
+    id: "global-warehouse-management-systems",
+    title: "Global Warehouse Management Systems (WMS) — Market Analysis & Forecast",
+    tag: "Supply Chain / Market Research",
+    description:
+      "Comprehensive market research report analyzing Global Warehouse Management Systems (WMS) across software and services, cloud vs. on-premise deployment, industry verticals, and regional growth.",
+    type: "Market Research Report",
+    category: "Research",
+    categories: ["Research", "B2B", "Technology"],
+    url: SITE_CONFIG.PORTFOLIO_LINKS.GLOBAL_WMS_REPORT,
+    platform: "Global Market Intelligence Report",
+    year: "2014–2022",
+    readTime: "Full Sample Report",
     deliverables: [
-      "Spatial computing implications for writers",
-      "Virtual storytelling frameworks",
-      "Interactive media exploration"
+      "Global WMS market sizing & CAGR forecast (2014–2022)",
+      "Component & deployment segmentation (Cloud/SaaS vs. On-Premise)",
+      "End-use vertical & regional share analysis",
+      "Competitive landscape of leading global WMS vendors"
     ],
-    challenge: "Early coverage of Web3 and spatial computing was plagued by speculative hyperbole without pragmatic relevance for creators and brand publishers.",
-    approach: "Demystified spatial content creation, analyzing how narrative architecture evolves from linear two-dimensional screens into immersive environments.",
-    sampleExcerpt: "As interfaces shift from flat screens toward spatial ambient computing, content creators design context-triggered narrative journeys rather than isolated paragraphs.",
+    challenge:
+      "Rapid e-commerce expansion, omnichannel fulfillment demands, and multi-tier supply-chain complexity forced enterprises to replace manual inventory tracking with real-time warehouse orchestration—yet high upfront implementation costs and legacy ERP integration remained critical hurdles.",
+    approach:
+      "Synthesized historical and forecast market data (2014–2022) across software and service components, deployment models, regional markets (North America, Europe, Asia-Pacific, and LAMEA), and key supply-chain technology providers.",
+    sampleExcerpt:
+      "A Warehouse Management System (WMS) is no longer just a back-office inventory ledger—it is the operational nerve center that synchronizes receiving, put-away, picking, labor allocation, and last-mile shipping across modern global supply chains.",
     keyInsights: [
-      "Spatial media requires flexible narrative branches rather than strictly linear sequences.",
-      "Auditory identity and micro-interactions gain equal weight to visual branding.",
-      "Clear, accessible explanations allow mainstream audiences to appreciate new technology."
+      "Global WMS market expanded at ~15%+ CAGR through 2022, passing the $2.8B–$3.1B valuation threshold on surging e-commerce and 3PL demand.",
+      "Cloud-based (SaaS) WMS deployments recorded the fastest growth as small and mid-sized enterprises prioritized lower upfront CAPEX and rapid scalability.",
+      "North America held the largest revenue share due to mature logistics infrastructure, while Asia-Pacific emerged as the fastest-growing regional market."
     ]
   },
   {

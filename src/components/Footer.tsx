@@ -140,6 +140,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               >
                 Market Research Content
               </a>
+              <a
+                href="/warehouse-management-systems"
+                onClick={(e) => handleRouteClick(e, '/warehouse-management-systems', 'warehouse-management-systems')}
+                className="hover:text-[#994524] transition-colors w-fit"
+              >
+                Warehouse Management Systems
+              </a>
             </div>
           </nav>
 

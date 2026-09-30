@@ -173,7 +173,9 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#994524] hover:underline"
           >
-            Open Publication / Link
+            {project.id === 'global-warehouse-management-systems'
+              ? 'Read the Full Report'
+              : 'Open Publication / Link'}
             <span className="material-symbols-outlined text-[16px]">open_in_new</span>
           </a>
 
