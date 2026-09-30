@@ -76,7 +76,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath, pathname }) => {
       '@type': 'Person',
       '@id': `${SITE_URL_ORIGIN}/#person`,
       name: 'Seapee Bajaj',
-      jobTitle: 'B2B SEO Content & Editorial Strategist',
+      jobTitle: 'B2B SEO Content & GEO Strategist',
       url: `${SITE_URL_ORIGIN}/`,
       image: SITE_CONFIG.OG_IMAGE,
       description:

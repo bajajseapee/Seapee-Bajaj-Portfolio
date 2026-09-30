@@ -30,6 +30,19 @@
       ]
     },
     {
+      "source": "/og-image-v3.jpg",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/jpeg"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, must-revalidate"
+        }
+      ]
+    },
+    {
       "source": "/og-image.jpg",
       "headers": [
         {
@@ -53,6 +66,10 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/og-image-v3.jpg",
+      "destination": "/og-image-v3.jpg"
+    },
     {
       "source": "/og-image.jpg",
       "destination": "/og-image.jpg"
@@ -78,7 +95,7 @@
       "destination": "/favicon.svg"
     },
     {
-      "source": "/((?!api/|assets/|fonts/|og-image\\.jpg|favicon\\.svg|BingSiteAuth\\.xml|google7d582d90dd9539de\\.html|sitemap\\.xml|robots\\.txt|.*\\..*).*)",
+      "source": "/((?!api/|assets/|fonts/|og-image-v3\\.jpg|og-image\\.jpg|favicon\\.svg|BingSiteAuth\\.xml|google7d582d90dd9539de\\.html|sitemap\\.xml|robots\\.txt|.*\\..*).*)",
       "destination": "/index.html"
     }
   ]

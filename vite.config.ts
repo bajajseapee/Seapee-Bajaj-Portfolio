@@ -15,8 +15,9 @@ function syncSeoAssetsPlugin(): Plugin {
       fs.mkdirSync(publicDir, {recursive: true});
     }
 
-    // Ensure public/og-image.jpg is always present and matches the 1200x630 hero OG card
+    // Ensure both public/og-image.jpg and public/og-image-v3.jpg are present
     fs.writeFileSync(path.join(publicDir, 'og-image.jpg'), ogImageBuffer);
+    fs.writeFileSync(path.join(publicDir, 'og-image-v3.jpg'), ogImageBuffer);
 
     const today = new Date().toISOString().split('T')[0];
     const urlsXml = Object.keys(SEO_ROUTES)
@@ -55,11 +56,13 @@ function syncSeoAssetsPlugin(): Plugin {
       const distDir = path.resolve(__dirname, 'dist');
       if (fs.existsSync(distDir)) {
         fs.writeFileSync(path.join(distDir, 'og-image.jpg'), ogImageBuffer);
+        fs.writeFileSync(path.join(distDir, 'og-image-v3.jpg'), ogImageBuffer);
       }
       const indexHtmlPath = path.join(distDir, 'index.html');
       if (!fs.existsSync(indexHtmlPath)) return;
 
       const baseHtml = fs.readFileSync(indexHtmlPath, 'utf-8');
+      const standardAlt = 'Seapee Bajaj — B2B SEO Content &amp; GEO Strategist';
 
       Object.values(SEO_ROUTES).forEach((route) => {
         const canonicalUrl =
@@ -67,14 +70,16 @@ function syncSeoAssetsPlugin(): Plugin {
             ? `${SITE_URL_ORIGIN}/`
             : `${SITE_URL_ORIGIN}${route.path}`;
 
+        const escapedTitle = route.title.replace(/&/g, '&amp;');
+
         let routeHtml = baseHtml
           .replace(
             /<title>[\s\S]*?<\/title>/,
-            `<title>${route.title.replace(/&/g, '&amp;')}</title>`
+            `<title>${escapedTitle}</title>`
           )
           .replace(
             /<meta name="title" content="[^"]*" \/>/,
-            `<meta name="title" content="${route.title.replace(/&/g, '&amp;')}" />`
+            `<meta name="title" content="${escapedTitle}" />`
           )
           .replace(
             /<meta name="description" content="[^"]*" \/>/,
@@ -90,7 +95,7 @@ function syncSeoAssetsPlugin(): Plugin {
           )
           .replace(
             /<meta property="og:title" content="[^"]*" \/>/,
-            `<meta property="og:title" content="${route.title.replace(/&/g, '&amp;')}" />`
+            `<meta property="og:title" content="${escapedTitle}" />`
           )
           .replace(
             /<meta property="og:description" content="[^"]*" \/>/,
@@ -102,7 +107,7 @@ function syncSeoAssetsPlugin(): Plugin {
           )
           .replace(
             /<meta name="twitter:title" content="[^"]*" \/>/,
-            `<meta name="twitter:title" content="${route.title.replace(/&/g, '&amp;')}" />`
+            `<meta name="twitter:title" content="${escapedTitle}" />`
           )
           .replace(
             /<meta name="twitter:description" content="[^"]*" \/>/,
@@ -113,8 +118,16 @@ function syncSeoAssetsPlugin(): Plugin {
             `<meta property="og:image" content="${SITE_CONFIG.OG_IMAGE}" />`
           )
           .replace(
+            /<meta property="og:image:alt" content="[^"]*" \/>/,
+            `<meta property="og:image:alt" content="${standardAlt}" />`
+          )
+          .replace(
             /<meta name="twitter:image" content="[^"]*" \/>/,
             `<meta name="twitter:image" content="${SITE_CONFIG.OG_IMAGE}" />`
+          )
+          .replace(
+            /<meta name="twitter:image:alt" content="[^"]*" \/>/,
+            `<meta name="twitter:image:alt" content="${standardAlt}" />`
           );
 
         if (route.path === '/') {
