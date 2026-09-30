@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
 import {defineConfig, Plugin} from 'vite';
-import {SITE_URL_ORIGIN, SEO_ROUTES} from './src/config/siteConfig';
+import {SITE_CONFIG, SITE_URL_ORIGIN, SEO_ROUTES} from './src/config/siteConfig';
 
 function syncSeoAssetsPlugin(): Plugin {
   const generateFiles = () => {
@@ -98,6 +98,14 @@ function syncSeoAssetsPlugin(): Plugin {
           .replace(
             /<meta name="twitter:description" content="[^"]*" \/>/,
             `<meta name="twitter:description" content="${route.description.replace(/"/g, '&quot;')}" />`
+          )
+          .replace(
+            /<meta property="og:image" content="[^"]*" \/>/,
+            `<meta property="og:image" content="${SITE_CONFIG.OG_IMAGE}" />`
+          )
+          .replace(
+            /<meta name="twitter:image" content="[^"]*" \/>/,
+            `<meta name="twitter:image" content="${SITE_CONFIG.OG_IMAGE}" />`
           );
 
         if (route.path === '/') {
