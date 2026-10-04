@@ -94,52 +94,6 @@ export const Hero: React.FC<HeroProps> = ({
             </p>
           )}
 
-          {/* Quick Summary Highlights Block Directly Under the H1 */}
-          <div className="my-1.5 p-4 sm:p-5 rounded-2xl bg-[#f5f3f0]/90 border border-[#e4e2df] shadow-2xs">
-            <ul className="space-y-2.5 text-xs sm:text-[13.5px] text-[#55433c] leading-relaxed">
-              <li className="flex items-start gap-2.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#994524] shrink-0 mt-2" aria-hidden="true" />
-                <span>
-                  <strong className="text-[#1b1c1a] font-semibold">Who I am:</strong> B2B SEO content strategist and writer connecting analytical research depth with clear, reader-first storytelling.
-                </span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#994524] shrink-0 mt-2" aria-hidden="true" />
-                <span>
-                  <strong className="text-[#1b1c1a] font-semibold">10+ years of experience:</strong> Proven track record across market research, B2B content creation, editorial workflows, and search strategy (IMARC Group, Grand View Research, Allied Market Research, and independent execution).
-                </span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#994524] shrink-0 mt-2" aria-hidden="true" />
-                <span>
-                  <strong className="text-[#1b1c1a] font-semibold">Core services:</strong> B2B SEO content strategy, market research reports, search intent mapping, content refreshes, and Generative Engine Optimization (GEO &amp; AEO).
-                </span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#994524] shrink-0 mt-2" aria-hidden="true" />
-                <span>
-                  <strong className="text-[#1b1c1a] font-semibold">Author &amp; editorial craft:</strong> Published author of the poetry collection <em>Not Unworthy</em> (Notion Press) and creator of high-engagement Q&amp;A content on Quora.
-                </span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#994524] shrink-0 mt-2" aria-hidden="true" />
-                <span>
-                  <strong className="text-[#1b1c1a] font-semibold">Work with me:</strong> Open to select B2B content strategy, research-led writing, and SEO consulting projects —{' '}
-                  <a
-                    href="#contact"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onWorkWithMe();
-                    }}
-                    className="font-semibold text-[#994524] underline hover:text-[#7b2f0f] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#994524] rounded-xs"
-                  >
-                    Get in touch to discuss your content
-                  </a>.
-                </span>
-              </li>
-            </ul>
-          </div>
-
           {/* Subheadline */}
           <p className="text-base sm:text-lg md:text-xl text-[#55433c] max-w-xl leading-relaxed font-normal">
             {PROFILE_INFO.subheadline}
