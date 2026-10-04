@@ -145,7 +145,7 @@ export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }
               className="inline-flex items-center justify-center text-sm font-semibold bg-[#994524] hover:bg-[#7b2f0f] text-white transition-all px-8 py-4 rounded-lg shadow-md hover:shadow-lg active:scale-[0.98] cursor-pointer"
             >
               Start a Conversation
-              <span className="material-symbols-outlined ml-2 text-[20px]">send</span>
+              <span className="material-symbols-outlined ml-2 text-[20px]" aria-hidden="true">send</span>
             </button>
           )}
 
@@ -168,7 +168,7 @@ export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }
               className="px-4 py-2.5 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] text-xs font-semibold transition-colors flex items-center gap-2 border border-[#e4e2df]"
               title={`Compose email in Gmail to ${SITE_CONFIG.EMAIL}`}
             >
-              <span className="material-symbols-outlined text-[18px] text-[#994524]">mail</span>
+              <span className="material-symbols-outlined text-[18px] text-[#994524]" aria-hidden="true">mail</span>
               <span>{SITE_CONFIG.EMAIL}</span>
             </a>
 
@@ -189,7 +189,7 @@ export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }
               rel="noopener noreferrer"
               className="px-4 py-2.5 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] text-xs font-semibold transition-colors flex items-center gap-2 border border-[#e4e2df]"
             >
-              <span className="material-symbols-outlined text-[18px] text-[#994524]">work</span>
+              <span className="material-symbols-outlined text-[18px] text-[#994524]" aria-hidden="true">work</span>
               <span>LinkedIn Profile</span>
             </a>
 
@@ -197,7 +197,7 @@ export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }
               onClick={onOpenResume}
               className="px-4 py-2.5 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] text-xs font-semibold transition-colors flex items-center gap-2 border border-[#e4e2df] cursor-pointer"
             >
-              <span className="material-symbols-outlined text-[18px] text-[#994524]">description</span>
+              <span className="material-symbols-outlined text-[18px] text-[#994524]" aria-hidden="true">description</span>
               <span>Portfolio &amp; Resume</span>
             </button>
 
@@ -207,7 +207,7 @@ export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }
               rel="noopener noreferrer"
               className="px-4 py-2.5 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] text-xs font-semibold transition-colors flex items-center gap-2 border border-[#e4e2df]"
             >
-              <span className="material-symbols-outlined text-[18px] text-[#994524]">video_call</span>
+              <span className="material-symbols-outlined text-[18px] text-[#994524]" aria-hidden="true">video_call</span>
               <span>Book on Topmate</span>
             </a>
           </div>
@@ -350,7 +350,7 @@ export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }
         {submitted && (
           <div className="pt-6 border-t border-[#efeeeb] animate-in fade-in duration-300">
             <div className="max-w-xl mx-auto bg-[#fbf9f6] border border-[#dbc1b8] rounded-xl p-6 text-center flex flex-col items-center gap-3">
-              <span className="material-symbols-outlined text-[#994524] text-4xl">
+              <span className="material-symbols-outlined text-[#994524] text-4xl" aria-hidden="true">
                 check_circle
               </span>
               <h3 className="font-serif text-2xl text-[#1b1c1a] font-medium">
@@ -371,14 +371,14 @@ export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }
                   className="px-5 py-2.5 bg-[#994524] hover:bg-[#7b2f0f] text-white text-sm font-semibold rounded-lg shadow-sm transition-colors inline-flex items-center gap-2"
                 >
                   <span>Open in Gmail</span>
-                  <span className="material-symbols-outlined text-[18px]">outgoing_mail</span>
+                  <span className="material-symbols-outlined text-[18px]" aria-hidden="true">outgoing_mail</span>
                 </a>
                 <a
                   href={outlookComposeUrl}
                   className="px-5 py-2.5 bg-[#1b1c1a] hover:bg-[#333531] text-white text-sm font-semibold rounded-lg shadow-sm transition-colors inline-flex items-center gap-2"
                 >
                   <span>Open in Outlook</span>
-                  <span className="material-symbols-outlined text-[18px]">mail</span>
+                  <span className="material-symbols-outlined text-[18px]" aria-hidden="true">mail</span>
                 </a>
                 <a
                   href={whatsappInquiryUrl}
@@ -399,7 +399,7 @@ export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }
                     className="px-4 py-2 text-xs text-[#1b1c1a] font-semibold hover:bg-[#efeeeb] border border-[#e4e2df] rounded-lg bg-white inline-flex items-center gap-1.5 cursor-pointer"
                   >
                     <span>View in Client Workspace ({inquiries.length})</span>
-                    <span className="material-symbols-outlined text-[16px]">folder_shared</span>
+                    <span className="material-symbols-outlined text-[16px]" aria-hidden="true">folder_shared</span>
                   </button>
                 )}
                 <button

@@ -1135,7 +1135,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({
                 title="Close assistant"
                 aria-label="Close assistant"
               >
-                <span className="material-symbols-outlined text-[19px]">close</span>
+                <span className="material-symbols-outlined text-[19px]" aria-hidden="true">close</span>
               </button>
             </div>
           </div>
@@ -1189,7 +1189,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({
                             }
                           >
                             <span>{action.label}</span>
-                            <span className="material-symbols-outlined text-[12px]">
+                            <span className="material-symbols-outlined text-[12px]" aria-hidden="true">
                               {action.external ? 'open_in_new' : 'arrow_forward'}
                             </span>
                           </a>
@@ -1203,7 +1203,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({
                 {msg.role === 'assistant' && msg.sourceNote && (
                   <div className="mt-1 px-1 flex items-center gap-2 text-[10px] text-[#546252]">
                     <span className="flex items-center gap-1">
-                      <span className="material-symbols-outlined text-[12px] text-[#994524]">
+                      <span className="material-symbols-outlined text-[12px] text-[#994524]" aria-hidden="true">
                         verified
                       </span>
                       <span>{msg.sourceNote}</span>
@@ -1314,7 +1314,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({
                 aria-label="Send message"
                 className="px-3.5 py-2.5 rounded-xl bg-[#994524] hover:bg-[#7b2f0f] disabled:opacity-45 text-white text-xs font-semibold inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
               >
-                <span className="material-symbols-outlined text-[18px]">send</span>
+                <span className="material-symbols-outlined text-[18px]" aria-hidden="true">send</span>
               </button>
               <button
                 type="button"
@@ -1457,7 +1457,7 @@ export const AskSeapeeChatbot: React.FC<AskSeapeeChatbotProps> = ({
       >
         <span className="relative w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#994524] group-hover:bg-white/20 text-white flex items-center justify-center shrink-0 transition-colors">
           {isOpen ? (
-            <span className="material-symbols-outlined text-[15px] sm:text-[17px]">close</span>
+            <span className="material-symbols-outlined text-[15px] sm:text-[17px]" aria-hidden="true">close</span>
           ) : (
             <AiChatSvg className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           )}

@@ -120,7 +120,7 @@ export const WritingSection: React.FC<WritingSectionProps> = ({ onNavigate }) =>
                   className="text-[#994524] hover:underline inline-flex items-center gap-1"
                 >
                   <span>Explore Related Expertise</span>
-                  <span className="material-symbols-outlined text-[15px]">arrow_forward</span>
+                  <span className="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
                 </a>
                 <a
                   href="/contact"

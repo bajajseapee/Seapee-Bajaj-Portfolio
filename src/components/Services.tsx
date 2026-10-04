@@ -116,7 +116,7 @@ export const Services: React.FC<ServicesProps> = ({
               className="hover:underline inline-flex items-center gap-1"
             >
               <span>B2B &amp; Market Research Content</span>
-              <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              <span className="material-symbols-outlined text-[14px]" aria-hidden="true">arrow_forward</span>
             </a>
             <a
               href="/geo-aeo"
@@ -124,7 +124,7 @@ export const Services: React.FC<ServicesProps> = ({
               className="hover:underline inline-flex items-center gap-1"
             >
               <span>GEO &amp; AI Search Optimization</span>
-              <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              <span className="material-symbols-outlined text-[14px]" aria-hidden="true">arrow_forward</span>
             </a>
             <a
               href="/case-studies"
@@ -132,7 +132,7 @@ export const Services: React.FC<ServicesProps> = ({
               className="hover:underline inline-flex items-center gap-1"
             >
               <span>View Case Studies</span>
-              <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              <span className="material-symbols-outlined text-[14px]" aria-hidden="true">arrow_forward</span>
             </a>
             <a
               href="/work"
@@ -140,7 +140,7 @@ export const Services: React.FC<ServicesProps> = ({
               className="hover:underline inline-flex items-center gap-1"
             >
               <span>Browse Selected Work</span>
-              <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              <span className="material-symbols-outlined text-[14px]" aria-hidden="true">arrow_forward</span>
             </a>
           </div>
         </div>
@@ -180,7 +180,7 @@ export const Services: React.FC<ServicesProps> = ({
                       />
                     ) : (
                       <div className="w-12 h-12 rounded-xl bg-[#efeeeb] flex items-center justify-center text-[#994524] group-hover:bg-[#ffdbcf] transition-colors">
-                        <span className="material-symbols-outlined text-2xl">{service.icon}</span>
+                        <span className="material-symbols-outlined text-2xl" aria-hidden="true">{service.icon}</span>
                       </div>
                     )}
                     <span className="text-xs uppercase text-[#546252] font-semibold tracking-wider pt-1 text-right">
@@ -199,7 +199,7 @@ export const Services: React.FC<ServicesProps> = ({
                 <div className="pt-4 mt-4 border-t border-[#efeeeb]/70 flex items-center justify-between text-[#994524] text-xs font-semibold tracking-wide">
                   <span className="inline-flex items-center group-hover:translate-x-1 transition-transform">
                     View scope
-                    <span className="material-symbols-outlined text-[16px] ml-1">arrow_forward</span>
+                    <span className="material-symbols-outlined text-[16px] ml-1" aria-hidden="true">arrow_forward</span>
                   </span>
                   <span className="text-[11px] text-[#546252] font-normal">
                     {service.deliverables.length} Deliverables

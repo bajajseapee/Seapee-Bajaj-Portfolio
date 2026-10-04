@@ -51,7 +51,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
           className="absolute top-5 right-5 p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-[#efeeeb] transition-colors focus:outline-none"
           aria-label="Close dialog"
         >
-          <span className="material-symbols-outlined text-[20px]">close</span>
+          <span className="material-symbols-outlined text-[20px]" aria-hidden="true">close</span>
         </button>
 
         {/* Header Tags */}
@@ -177,7 +177,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
             {project.id === 'global-warehouse-management-systems'
               ? 'Read the Full Report'
               : 'Open Publication / Link'}
-            <span className="material-symbols-outlined text-[16px]">open_in_new</span>
+            <span className="material-symbols-outlined text-[16px]" aria-hidden="true">open_in_new</span>
           </a>
 
           <div className="flex items-center gap-3">

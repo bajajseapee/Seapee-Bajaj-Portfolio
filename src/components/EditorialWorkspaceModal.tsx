@@ -183,7 +183,7 @@ export const EditorialWorkspaceModal: React.FC<EditorialWorkspaceModalProps> = (
                 disabled={isBusy}
                 className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#f5f3f0] hover:bg-[#efeeeb] border border-[#e4e2df] text-xs font-semibold text-[#1b1c1a] transition-colors cursor-pointer disabled:opacity-50"
               >
-                <span className="material-symbols-outlined text-[16px] text-[#994524]">
+                <span className="material-symbols-outlined text-[16px] text-[#994524]" aria-hidden="true">
                   cloud_sync
                 </span>
                 <span>Connect Google Account</span>
@@ -194,7 +194,7 @@ export const EditorialWorkspaceModal: React.FC<EditorialWorkspaceModalProps> = (
               className="p-2 rounded-lg text-[#55433c] hover:text-[#1b1c1a] hover:bg-[#efeeeb] transition-colors cursor-pointer"
               aria-label="Close modal"
             >
-              <span className="material-symbols-outlined">close</span>
+              <span className="material-symbols-outlined" aria-hidden="true">close</span>
             </button>
           </div>
         </div>
@@ -205,7 +205,7 @@ export const EditorialWorkspaceModal: React.FC<EditorialWorkspaceModalProps> = (
             <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-[#1b1c1a] space-y-2.5">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-2 font-semibold text-amber-900">
-                  <span className="material-symbols-outlined text-[18px]">info</span>
+                  <span className="material-symbols-outlined text-[18px]" aria-hidden="true">info</span>
                   <span>Authorize Domain in Firebase for Google Sign-In</span>
                 </div>
                 <button
@@ -236,7 +236,7 @@ export const EditorialWorkspaceModal: React.FC<EditorialWorkspaceModalProps> = (
                   className="px-3 py-1.5 rounded-lg bg-[#994524] hover:bg-[#7b2f0f] text-white text-[11px] font-semibold inline-flex items-center gap-1"
                 >
                   <span>Open Firebase Auth Settings</span>
-                  <span className="material-symbols-outlined text-[14px]">open_in_new</span>
+                  <span className="material-symbols-outlined text-[14px]" aria-hidden="true">open_in_new</span>
                 </a>
               </div>
             </div>

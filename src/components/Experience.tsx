@@ -53,7 +53,7 @@ export const Experience: React.FC<ExperienceProps> = ({ onNavigate }) => {
               onClick={(e) => handleInternalLink(e, '/', 'resume')}
               className="px-4 py-2.5 rounded-lg bg-white hover:bg-[#efeeeb] text-[#994524] border border-[#dbc1b8] transition-colors inline-flex items-center gap-1.5"
             >
-              <span className="material-symbols-outlined text-[16px]">description</span>
+              <span className="material-symbols-outlined text-[16px]" aria-hidden="true">description</span>
               <span>View Full Resume</span>
             </a>
             <a
@@ -62,7 +62,7 @@ export const Experience: React.FC<ExperienceProps> = ({ onNavigate }) => {
               className="px-4 py-2.5 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] border border-[#e4e2df] transition-colors inline-flex items-center gap-1.5"
             >
               <span>View Case Studies</span>
-              <span className="material-symbols-outlined text-[16px] text-[#994524]">arrow_forward</span>
+              <span className="material-symbols-outlined text-[16px] text-[#994524]" aria-hidden="true">arrow_forward</span>
             </a>
             <a
               href="/work"
@@ -70,7 +70,7 @@ export const Experience: React.FC<ExperienceProps> = ({ onNavigate }) => {
               className="px-4 py-2.5 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] border border-[#e4e2df] transition-colors inline-flex items-center gap-1.5"
             >
               <span>Selected Portfolio</span>
-              <span className="material-symbols-outlined text-[16px] text-[#994524]">arrow_forward</span>
+              <span className="material-symbols-outlined text-[16px] text-[#994524]" aria-hidden="true">arrow_forward</span>
             </a>
             <a
               href="/contact"

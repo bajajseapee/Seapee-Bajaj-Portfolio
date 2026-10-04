@@ -60,7 +60,7 @@ export const FloatingWhatsApp: React.FC = () => {
               className="p-1 rounded-lg text-[#55433c] hover:text-[#1b1c1a] hover:bg-[#efeeeb] transition-colors cursor-pointer"
               aria-label="Close contact options"
             >
-              <span className="material-symbols-outlined text-[18px]">close</span>
+              <span className="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
             </button>
           </div>
 
@@ -84,7 +84,7 @@ export const FloatingWhatsApp: React.FC = () => {
                   Chat on WhatsApp
                 </span>
               </div>
-              <span className="material-symbols-outlined text-[16px] text-[#546252] group-hover:text-[#1b1c1a]">
+              <span className="material-symbols-outlined text-[16px] text-[#546252] group-hover:text-[#1b1c1a]" aria-hidden="true">
                 open_in_new
               </span>
             </a>
@@ -93,7 +93,7 @@ export const FloatingWhatsApp: React.FC = () => {
             <div className="p-3 rounded-xl bg-[#fbf9f6] border border-[#e4e2df] space-y-2.5">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-lg bg-[#ffdbcf]/60 text-[#994524] flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-[20px]">mail</span>
+                  <span className="material-symbols-outlined text-[20px]" aria-hidden="true">mail</span>
                 </div>
                 <div className="min-w-0 flex-1">
                   <span className="text-xs font-semibold text-[#1b1c1a] block">
@@ -136,7 +136,7 @@ export const FloatingWhatsApp: React.FC = () => {
         aria-label="Open Contact Options (WhatsApp & Email)"
         className="group flex items-center gap-1.5 sm:gap-2.5 bg-[#994524] hover:bg-[#7b2f0f] text-white px-3 py-2 sm:px-4 sm:py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
       >
-        <span className="material-symbols-outlined text-[17px] sm:text-[20px]">
+        <span className="material-symbols-outlined text-[17px] sm:text-[20px]" aria-hidden="true">
           {isOpen ? 'close' : 'chat'}
         </span>
         <span className="text-[11px] sm:text-xs font-semibold tracking-wide pr-0.5">

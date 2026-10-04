@@ -141,7 +141,7 @@ export const FaqList: React.FC<FaqListProps> = ({
           isOpen ? 'bg-[#fbf9f6]/60' : 'bg-white hover:bg-[#fbf9f6]/40'
         }`}
       >
-        <h3 className="m-0">
+        <div className="w-full">
           <button
             ref={(el) => {
               buttonRefs.current[index] = el;
@@ -155,15 +155,17 @@ export const FaqList: React.FC<FaqListProps> = ({
             onKeyDown={(e) => handleKeyDown(e, index)}
             className="w-full text-left px-5 sm:px-7 py-4 sm:py-5 flex items-center justify-between gap-4 cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#994524]"
           >
-            <span
-              className={`font-serif text-base sm:text-lg font-medium leading-snug transition-colors motion-reduce:transition-none ${
-                isOpen
-                  ? 'text-[#994524]'
-                  : 'text-[#1b1c1a] group-hover:text-[#994524]'
-              }`}
-            >
-              {item.question}
-            </span>
+            <h3 className="m-0 p-0 text-left font-normal flex-1">
+              <span
+                className={`font-serif text-base sm:text-lg font-medium leading-snug transition-colors motion-reduce:transition-none ${
+                  isOpen
+                    ? 'text-[#994524]'
+                    : 'text-[#1b1c1a] group-hover:text-[#994524]'
+                }`}
+              >
+                {item.question}
+              </span>
+            </h3>
 
             {/* Chevron icon that rotates on toggle */}
             <span
@@ -174,12 +176,16 @@ export const FaqList: React.FC<FaqListProps> = ({
                   : 'border-[#d8d4ce] bg-[#fbf9f6] text-[#55433c] group-hover:border-[#994524] group-hover:text-[#994524]'
               }`}
             >
-              <span className="material-symbols-outlined text-[18px] leading-none">
-                expand_more
-              </span>
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="w-4 h-4 fill-none stroke-current stroke-[2] stroke-linecap-round stroke-linejoin-round"
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
             </span>
           </button>
-        </h3>
+        </div>
 
         {/* Crawlable Answer Panel: Always in DOM, visually collapsed until toggled */}
         <div
@@ -211,9 +217,13 @@ export const FaqList: React.FC<FaqListProps> = ({
                     className="inline-flex items-center gap-1 text-xs font-semibold text-[#994524] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#994524] rounded-xs"
                   >
                     <span>{item.relatedLink.label}</span>
-                    <span className="material-symbols-outlined text-[14px]">
-                      arrow_forward
-                    </span>
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      className="w-3.5 h-3.5 fill-none stroke-current stroke-[2] stroke-linecap-round stroke-linejoin-round"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
                   </a>
                 </div>
               )}
@@ -268,14 +278,15 @@ export const FaqList: React.FC<FaqListProps> = ({
                 ? 'View less'
                 : `View ${remainingCount} more FAQ${remainingCount === 1 ? '' : 's'}`}
             </span>
-            <span
+            <svg
               aria-hidden="true"
-              className={`material-symbols-outlined text-[18px] leading-none transition-transform duration-300 motion-reduce:transition-none ${
+              viewBox="0 0 24 24"
+              className={`w-4 h-4 fill-none stroke-current stroke-[2] stroke-linecap-round stroke-linejoin-round transition-transform duration-300 motion-reduce:transition-none ${
                 isExpanded ? 'rotate-180' : ''
               }`}
             >
-              expand_more
-            </span>
+              <path d="M6 9l6 6 6-6" />
+            </svg>
           </button>
         </div>
       )}

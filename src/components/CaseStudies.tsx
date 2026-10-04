@@ -246,7 +246,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
                           className="px-3.5 py-2 rounded-lg bg-[#fbf9f6] hover:bg-[#efeeeb] text-[#994524] border border-[#e4e2df] text-xs font-semibold inline-flex items-center gap-1.5 transition-colors"
                         >
                           <span>View Live Work</span>
-                          <span className="material-symbols-outlined text-[15px]">open_in_new</span>
+                          <span className="material-symbols-outlined text-[15px]" aria-hidden="true">open_in_new</span>
                         </a>
                       )}
                       <button
@@ -256,7 +256,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
                         className="px-3.5 py-2 rounded-lg bg-[#efeeeb] hover:bg-[#eae8e5] text-[#1b1c1a] text-xs font-semibold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
                       >
                         <span>{isExpanded ? 'Hide Details' : 'Read Breakdown'}</span>
-                        <span className="material-symbols-outlined text-[18px]">
+                        <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
                           {isExpanded ? 'expand_less' : 'expand_more'}
                         </span>
                       </button>
@@ -361,7 +361,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
         ) : (
           /* Empty State when no case studies match search/filter */
           <div className="text-center py-14 bg-white rounded-2xl border border-dashed border-[#dbc1b8] p-8">
-            <span className="material-symbols-outlined text-4xl text-[#546252] mb-2">
+            <span className="material-symbols-outlined text-4xl text-[#546252] mb-2" aria-hidden="true">
               find_in_page
             </span>
             <p className="text-base text-[#1b1c1a] font-serif font-medium">

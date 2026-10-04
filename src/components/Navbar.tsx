@@ -329,7 +329,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={mobileMenuOpen}
           >
-            <span className="material-symbols-outlined text-[24px]">
+            <span className="material-symbols-outlined text-[24px]" aria-hidden="true">
               {mobileMenuOpen ? 'close' : 'menu'}
             </span>
           </button>

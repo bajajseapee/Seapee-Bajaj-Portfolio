@@ -143,7 +143,7 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({ project, onOpenPro
               className="text-gray-400 hover:text-[#994524] p-1 rounded-md transition-colors shrink-0"
               aria-label={`Inspect brief for ${project.title}`}
             >
-              <span className="material-symbols-outlined text-[18px]">info</span>
+              <span className="material-symbols-outlined text-[18px]" aria-hidden="true">info</span>
             </button>
           )}
         </div>
@@ -169,7 +169,7 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({ project, onOpenPro
         </span>
         <span className="text-xs font-semibold text-[#994524] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
           {project.id === 'global-warehouse-management-systems' ? 'Read the Full Report' : 'View Work'}
-          <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+          <span className="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
         </span>
       </div>
     </a>

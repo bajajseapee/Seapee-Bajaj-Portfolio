@@ -410,7 +410,7 @@ export const PublishedBook: React.FC = () => {
               aria-label="Buy My Book — Not Unworthy by Seapee Bajaj on Amazon (opens in a new tab)"
             >
               <span>Buy My Book</span>
-              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+              <span className="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span>
             </a>
 
             <span className="text-xs text-[#546252]">

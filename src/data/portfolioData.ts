@@ -39,7 +39,7 @@ export const SERVICES: ServiceItem[] = [
     phase: "Discovery & Intent",
     title: "SEO Content Strategy",
     description:
-      "I build search-aligned content ecosystems around real audience queries, keyword research, search intent mapping, and E-E-A-T principles—designed to improve organic discoverability while remaining genuinely helpful to human readers.",
+      "I build search-aligned content ecosystems around real audience queries, keyword research, search intent mapping, and E-E-A-T (Experience, Expertise, Authoritativeness, and Trustworthiness: Google's quality framework for credible, helpful content)—designed to improve organic discoverability while remaining genuinely helpful to human readers.",
     icon: "search",
     deliverables: [
       "Keyword research & search intent mapping across funnel stages",
@@ -412,7 +412,7 @@ export const SEO_GEO_PILLARS: SeoGeoPillarItem[] = [
     title: "Search Intent, On-Page SEO & E-E-A-T",
     subtitle: "Traditional Search Foundations",
     description:
-      "Effective SEO starts with understanding why someone is searching and what they need to make a decision. I build content around genuine search intent, clean on-page structure, and Experience, Expertise, Authoritativeness, and Trustworthiness (E-E-A-T).",
+      "Effective SEO starts with understanding why someone is searching and what they need to make a decision. I build content around genuine search intent, clean on-page structure, and Experience, Expertise, Authoritativeness, and Trustworthiness (E-E-A-T: Google's quality framework demonstrating first-hand experience and credible authority).",
     practices: [
       "Keyword research & search intent mapping (informational, commercial, transactional)",
       "Optimized title tags, meta descriptions, and logical H1/H2/H3 heading hierarchy",
@@ -426,7 +426,7 @@ export const SEO_GEO_PILLARS: SeoGeoPillarItem[] = [
     title: "GEO (Generative Engine Optimization)",
     subtitle: "AI Search Visibility Across ChatGPT, Perplexity & Gemini",
     description:
-      "As buyers increasingly use AI search tools like ChatGPT, Perplexity, and Gemini to research topics, content needs to be clear, factual, and well-structured so generative models can accurately interpret and reference it.",
+      "As buyers increasingly use AI search tools like ChatGPT, Perplexity, and Gemini to research topics, content needs to be clear, factual, and well-structured. Generative Engine Optimization (GEO) is the practice of structuring content with clear entity context and factual depth so AI answer engines can find, understand, and cite it.",
     practices: [
       "Clear entity definitions, consistent terminology, and unambiguous context",
       "Research-backed explanations with structured comparisons and factual depth",
@@ -440,7 +440,7 @@ export const SEO_GEO_PILLARS: SeoGeoPillarItem[] = [
     title: "AEO (Answer Engine Optimization) & AI Overviews",
     subtitle: "Direct, Scannable Answers for Modern Search",
     description:
-      "Answer engines and Google AI Overviews prioritize content that provides direct, well-organized answers to specific questions without burying the takeaway under paragraphs of filler.",
+      "Answer Engine Optimization (AEO) structures content to provide direct, scannable answers to specific questions for Google AI Overviews and answer engines without burying the takeaway under paragraphs of filler.",
     practices: [
       "Question-aligned subheadings paired with concise, direct summary answers",
       "Structured lists, step-by-step frameworks, and clear takeaway sections",

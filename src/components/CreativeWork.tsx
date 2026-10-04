@@ -69,7 +69,7 @@ export const CreativeWork: React.FC = () => {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <span className="material-symbols-outlined text-[#994524] text-2xl block group-hover:scale-110 transition-transform">
+                        <span className="material-symbols-outlined text-[#994524] text-2xl block group-hover:scale-110 transition-transform" aria-hidden="true">
                           {work.icon}
                         </span>
                       )}
@@ -95,7 +95,7 @@ export const CreativeWork: React.FC = () => {
                         title="Read excerpt"
                         aria-label="Read excerpt"
                       >
-                        <span className="material-symbols-outlined text-[18px]">format_quote</span>
+                        <span className="material-symbols-outlined text-[18px]" aria-hidden="true">format_quote</span>
                       </button>
                     )}
                   </div>
@@ -109,7 +109,7 @@ export const CreativeWork: React.FC = () => {
                   <span className="text-[11px] uppercase text-[#55433c] tracking-wider font-medium">
                     {work.tag}
                   </span>
-                  <span className="material-symbols-outlined text-[16px] text-[#994524] group-hover:translate-x-1 transition-transform">
+                  <span className="material-symbols-outlined text-[16px] text-[#994524] group-hover:translate-x-1 transition-transform" aria-hidden="true">
                     arrow_forward
                   </span>
                 </div>
@@ -136,7 +136,7 @@ export const CreativeWork: React.FC = () => {
               className="absolute top-5 right-5 p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-[#efeeeb] transition-colors"
               aria-label="Close dialog"
             >
-              <span className="material-symbols-outlined text-[20px]">close</span>
+              <span className="material-symbols-outlined text-[20px]" aria-hidden="true">close</span>
             </button>
 
             <div className="flex items-center gap-4">
@@ -154,7 +154,7 @@ export const CreativeWork: React.FC = () => {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <span className="material-symbols-outlined text-[#994524] text-3xl">
+                <span className="material-symbols-outlined text-[#994524] text-3xl" aria-hidden="true">
                   {selectedPiece.icon}
                 </span>
               )}
@@ -186,7 +186,7 @@ export const CreativeWork: React.FC = () => {
                 className="text-xs font-semibold text-[#994524] hover:underline inline-flex items-center gap-1"
               >
                 Visit Publication
-                <span className="material-symbols-outlined text-[14px]">open_in_new</span>
+                <span className="material-symbols-outlined text-[14px]" aria-hidden="true">open_in_new</span>
               </a>
               <button
                 onClick={() => setSelectedPiece(null)}

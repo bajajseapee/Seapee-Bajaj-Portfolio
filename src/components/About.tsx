@@ -80,7 +80,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
             </p>
 
             <p className={SECTION_BODY_COPY_CLASS}>
-              I specialize in <strong>content strategy, SEO optimization, research-led content, editorial workflows, and content production</strong>. My work spans keyword research, on-page SEO, competitive intelligence, and structuring clear, factual content for traditional search and AI-powered answer engines (<strong>GEO &amp; AEO</strong>). Alongside my 10+ years of industry experience, I hold an <strong>MBA in Systems</strong>, completed professional training in <strong>Introduction to Generative Engine Optimization</strong> (Coursera), <strong>HubSpot Content Marketing Certification</strong>, <strong>Google Prompting Essentials</strong>, and the <strong>Be10x AI tools program</strong>, and authored my published poetry book <em>Not Unworthy</em>.
+              I specialize in <strong>content strategy, SEO optimization, research-led content, editorial workflows, and content production</strong>. My work spans keyword research, on-page SEO, competitive intelligence, Google's <strong>E-E-A-T</strong> guidelines (Experience, Expertise, Authoritativeness, and Trustworthiness—demonstrating first-hand knowledge and credible sourcing), and structuring clear, factual content for modern AI-assisted search discovery: <strong>Generative Engine Optimization (GEO)</strong>—structuring content so AI answer engines like ChatGPT, Perplexity, and Gemini can find, understand, and cite it—and <strong>Answer Engine Optimization (AEO)</strong>—formatting direct, scannable answers for featured snippets and AI Overviews. Alongside my 10+ years of industry experience, I hold an <strong>MBA in Systems</strong>, completed professional training in <strong>Introduction to Generative Engine Optimization</strong> (Coursera), <strong>HubSpot Content Marketing Certification</strong>, <strong>Google Prompting Essentials</strong>, and the <strong>Be10x AI tools program</strong>, and authored my published poetry book <em>Not Unworthy</em>.
             </p>
           </div>
 
@@ -113,11 +113,11 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       ) : (
-                        <span className="material-symbols-outlined text-[#994524] text-2xl group-hover:scale-110 transition-transform">
+                        <span className="material-symbols-outlined text-[#994524] text-2xl group-hover:scale-110 transition-transform" aria-hidden="true">
                           {stat.icon}
                         </span>
                       )}
-                      <span className="material-symbols-outlined text-[16px] text-[#88726b] opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span className="material-symbols-outlined text-[16px] text-[#88726b] opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true">
                         {selectedStat === stat.id ? 'expand_less' : 'info'}
                       </span>
                     </div>
@@ -172,7 +172,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
                 className="hover:underline inline-flex items-center gap-1"
               >
                 <span>Career Experience</span>
-                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                <span className="material-symbols-outlined text-[14px]" aria-hidden="true">arrow_forward</span>
               </a>
               <a
                 href="/services"
@@ -180,7 +180,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
                 className="hover:underline inline-flex items-center gap-1"
               >
                 <span>SEO &amp; Content Strategy</span>
-                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                <span className="material-symbols-outlined text-[14px]" aria-hidden="true">arrow_forward</span>
               </a>
               <a
                 href="/b2b-content"
@@ -188,7 +188,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
                 className="hover:underline inline-flex items-center gap-1"
               >
                 <span>B2B Content</span>
-                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                <span className="material-symbols-outlined text-[14px]" aria-hidden="true">arrow_forward</span>
               </a>
               <a
                 href="/geo-aeo"
@@ -196,7 +196,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
                 className="hover:underline inline-flex items-center gap-1"
               >
                 <span>GEO &amp; AI Search</span>
-                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                <span className="material-symbols-outlined text-[14px]" aria-hidden="true">arrow_forward</span>
               </a>
               <a
                 href="/case-studies"
@@ -204,7 +204,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
                 className="hover:underline inline-flex items-center gap-1"
               >
                 <span>Case Studies</span>
-                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                <span className="material-symbols-outlined text-[14px]" aria-hidden="true">arrow_forward</span>
               </a>
             </div>
           </div>

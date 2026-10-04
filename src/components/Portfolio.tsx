@@ -110,7 +110,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({
                 className="hover:underline inline-flex items-center gap-1"
               >
                 <span>Explore SEO, GEO &amp; AEO Expertise</span>
-                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                <span className="material-symbols-outlined text-[14px]" aria-hidden="true">arrow_forward</span>
               </a>
               <span className="text-[#d8d4ce]" aria-hidden="true">·</span>
               <a href="#case-studies" className="hover:underline inline-flex items-center gap-1">
@@ -193,7 +193,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({
         {/* Empty State */}
         {filteredProjects.length === 0 && (
           <div className="text-center py-16 bg-white rounded-xl border border-dashed border-[#dbc1b8] p-8">
-            <span className="material-symbols-outlined text-4xl text-[#546252] mb-2">find_in_page</span>
+            <span className="material-symbols-outlined text-4xl text-[#546252] mb-2" aria-hidden="true">find_in_page</span>
             <p className="text-base text-[#1b1c1a] font-serif font-medium">No published work found</p>
             <p className="text-xs text-[#55433c] mt-1">Try resetting your filter or search query.</p>
             <button

@@ -18,7 +18,7 @@ export const RESUME_DATA = {
   portfolioUrl: 'https://seapee-bajaj-portfolio-3a8w-omega.vercel.app/',
   googleCallout: 'Google "Seapee Bajaj" to see my published work',
   summary:
-    'B2B SEO Content & Editorial Strategist with 10+ years of experience across market research and content marketing. Leads content calendars, editorial workflows, and writer mentoring for B2B clients. Skilled in keyword research, on-page SEO, E-E-A-T, and GEO/AEO content built for AI-driven search. Works independently from brief to delivery and turns complex research into clear, reader-friendly content.',
+    'B2B SEO Content & Editorial Strategist with 10+ years of experience across market research and content marketing. Leads content calendars, editorial workflows, and writer mentoring for B2B clients. Skilled in keyword research, on-page SEO, E-E-A-T (Experience, Expertise, Authoritativeness, and Trustworthiness), and Generative & Answer Engine Optimization (GEO/AEO) for modern AI-driven search. Works independently from brief to delivery and turns complex research into clear, reader-friendly content.',
   coreSkills: [
     'Content Strategy',
     'Editorial Calendar Management',
@@ -203,7 +203,7 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({
               onClick={onOpenResumeModal}
               className="px-5 py-2.5 rounded-lg bg-[#994524] hover:bg-[#7b2f0f] text-white text-xs sm:text-sm font-semibold transition-all shadow-xs inline-flex items-center gap-2 cursor-pointer"
             >
-              <span className="material-symbols-outlined text-[18px]">description</span>
+              <span className="material-symbols-outlined text-[18px]" aria-hidden="true">description</span>
               <span>View Resume</span>
             </button>
 
@@ -213,7 +213,7 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({
               rel="noopener noreferrer"
               className="px-4 py-2.5 rounded-lg bg-white hover:bg-[#efeeeb] text-[#1b1c1a] border border-[#e4e2df] text-xs sm:text-sm font-semibold transition-colors inline-flex items-center gap-2"
             >
-              <span className="material-symbols-outlined text-[18px] text-[#994524]">mail</span>
+              <span className="material-symbols-outlined text-[18px] text-[#994524]" aria-hidden="true">mail</span>
               <span>Request PDF Copy</span>
             </a>
 

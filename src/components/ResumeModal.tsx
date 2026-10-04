@@ -46,7 +46,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
           className="absolute top-5 right-5 p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-[#efeeeb] transition-colors cursor-pointer"
           aria-label="Close dialog"
         >
-          <span className="material-symbols-outlined text-[20px]">close</span>
+          <span className="material-symbols-outlined text-[20px]" aria-hidden="true">close</span>
         </button>
 
         {/* Header */}
@@ -200,7 +200,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
               onClick={triggerResumePrint}
               className="text-xs font-semibold text-[#1b1c1a] hover:text-[#994524] inline-flex items-center gap-1.5 cursor-pointer"
             >
-              <span className="material-symbols-outlined text-[16px] text-[#994524]">print</span>
+              <span className="material-symbols-outlined text-[16px] text-[#994524]" aria-hidden="true">print</span>
               <span>Print / Save as PDF</span>
             </button>
 
@@ -210,7 +210,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
               rel="noopener noreferrer"
               className="text-xs font-semibold text-[#994524] hover:underline inline-flex items-center gap-1.5"
             >
-              <span className="material-symbols-outlined text-[16px]">mail</span>
+              <span className="material-symbols-outlined text-[16px]" aria-hidden="true">mail</span>
               <span>Request PDF via Gmail</span>
             </a>
           </div>

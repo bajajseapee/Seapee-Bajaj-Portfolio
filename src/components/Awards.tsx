@@ -176,7 +176,7 @@ export const Awards: React.FC = () => {
                 className="text-xs font-semibold text-[#994524] hover:underline inline-flex items-center gap-1"
               >
                 <span>SEO &amp; GEO Practice</span>
-                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                <span className="material-symbols-outlined text-[14px]" aria-hidden="true">arrow_forward</span>
               </a>
             </div>
           </div>

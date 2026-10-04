@@ -50,7 +50,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
           className="absolute top-5 right-5 p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-[#efeeeb] transition-colors focus:outline-none"
           aria-label="Close dialog"
         >
-          <span className="material-symbols-outlined text-[20px]">close</span>
+          <span className="material-symbols-outlined text-[20px]" aria-hidden="true">close</span>
         </button>
 
         <div className="flex items-center gap-4">
@@ -67,7 +67,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
             />
           ) : (
             <div className="w-14 h-14 rounded-lg bg-[#efeeeb] flex items-center justify-center text-[#994524]">
-              <span className="material-symbols-outlined text-2xl">{service.icon}</span>
+              <span className="material-symbols-outlined text-2xl" aria-hidden="true">{service.icon}</span>
             </div>
           )}
           <div>
@@ -92,7 +92,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
           <ul className="space-y-2">
             {service.deliverables.map((item, idx) => (
               <li key={idx} className="flex items-start gap-2.5 text-sm text-[#55433c]">
-                <span className="material-symbols-outlined text-[#994524] text-[18px] shrink-0 mt-0.5">
+                <span className="material-symbols-outlined text-[#994524] text-[18px] shrink-0 mt-0.5" aria-hidden="true">
                   check_circle
                 </span>
                 <span>{item}</span>

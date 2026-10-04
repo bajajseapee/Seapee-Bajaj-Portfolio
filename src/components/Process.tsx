@@ -59,7 +59,7 @@ export const Process: React.FC = () => {
 
                 <div className="pt-4 mt-3 border-t border-[#e4e2df]/60 flex items-center justify-between text-[11px] text-[#994524] font-semibold">
                   <span>{isSelected ? 'Collapse' : 'Inspect phase'}</span>
-                  <span className="material-symbols-outlined text-[16px]">
+                  <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
                     {isSelected ? 'expand_less' : 'expand_more'}
                   </span>
                 </div>
@@ -96,7 +96,7 @@ export const Process: React.FC = () => {
                 <ul className="space-y-2">
                   {activeStep.activities.map((act, i) => (
                     <li key={i} className="flex items-start gap-2.5 text-sm text-[#55433c]">
-                      <span className="material-symbols-outlined text-[#994524] text-[18px] shrink-0 mt-0.5">
+                      <span className="material-symbols-outlined text-[#994524] text-[18px] shrink-0 mt-0.5" aria-hidden="true">
                         task_alt
                       </span>
                       <span>{act}</span>
