@@ -79,7 +79,7 @@ export const SITE_CONFIG = {
   HERO_IMAGE_WEBP: "/seapee-bajaj-portrait.webp",
   HERO_IMAGE_WEBP_360W: "/seapee-bajaj-portrait-360w.webp",
   HERO_IMAGE_JPG_360W: "/seapee-bajaj-portrait-360w.jpg",
-  OG_IMAGE: "https://seapee-bajaj-portfolio-3a8w-omega.vercel.app/og-image-v3.jpg",
+  OG_IMAGE: "https://seapee-bajaj-portfolio-3a8w-omega.vercel.app/hero-photo.jpg",
   AVATAR_IMAGE: "/seapee-header-avatar.jpg",
   AVATAR_IMAGE_WEBP: "/seapee-header-avatar.webp",
   AVATAR_IMAGE_WEBP_72W: "/seapee-header-avatar-72w.webp",
@@ -89,7 +89,7 @@ export const SITE_CONFIG = {
 
   // Default SEO & Meta (151 characters, core pitch in first 120 chars)
   SEO: {
-    TITLE: "Seapee Bajaj — B2B SEO Content & GEO Strategist",
+    TITLE: "Seapee Bajaj | B2B SEO Content & GEO Strategist",
     DESCRIPTION:
       "Seapee Bajaj is a B2B SEO content strategist with 10+ years of experience in market research, GEO & AI search optimization, and B2B editorial strategy.",
     OG_DESCRIPTION:
@@ -207,7 +207,7 @@ export interface RouteSEOConfig {
 export const SEO_ROUTES: Record<string, RouteSEOConfig> = {
   "/": {
     path: "/",
-    title: "Seapee Bajaj — B2B SEO Content & GEO Strategist",
+    title: "Seapee Bajaj | B2B SEO Content & GEO Strategist",
     description:
       "Seapee Bajaj is a B2B SEO content strategist with 10+ years of experience in market research, GEO & AI search optimization, and B2B editorial strategy.",
     h1: "B2B SEO Content Strategist, Research-Led and Reader-Focused",
