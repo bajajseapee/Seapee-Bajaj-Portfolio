@@ -115,6 +115,18 @@ export interface BookTestimonial {
 
 export const BOOK_TESTIMONIALS: BookTestimonial[] = [
   {
+    id: "avinash-kumar-amazon-2026",
+    headline: "A Beautiful Journey Through Words and Emotions",
+    rating: 5,
+    maxRating: 5,
+    quote:
+      "Not Unworthy is a beautifully written collection of poems that feels deeply personal and thought-provoking.\n\nThe words carry emotion, vulnerability, and quiet strength in a very unique way.\n\nThe writing is elegant, soulful, and leaves you thinking long after you finish reading.\n\nA beautiful book for anyone who finds comfort and meaning in poetry.",
+    author: "Avinash Kumar",
+    sourceLabel: "Amazon.in (Verified review)",
+    dateLabel: "Reviewed in India on 3 October 2026",
+    isoDate: "2026-10-03",
+  },
+  {
     id: "vinay-amazon-2021",
     headline: "A worthy read!!!",
     rating: 5,
