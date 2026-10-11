@@ -94,7 +94,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({
       <div className="max-w-[1280px] mx-auto flex flex-col gap-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="flex flex-col gap-2 max-w-2xl">
+          <div className="flex flex-col gap-2 max-w-4xl">
             <span className="text-xs uppercase tracking-widest text-[#546252] font-semibold">
               Folio Index
             </span>

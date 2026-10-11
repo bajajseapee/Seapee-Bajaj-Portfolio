@@ -9,7 +9,7 @@ export const Process: React.FC = () => {
     <section className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#fbf9f6]" id="process">
       <div className="max-w-[1280px] mx-auto flex flex-col gap-8 lg:gap-10">
         {/* Header */}
-        <div className="flex flex-col gap-2 max-w-xl">
+        <div className="flex flex-col gap-2 max-w-4xl">
           <span className="text-xs uppercase tracking-widest text-[#546252] font-semibold">
             System &amp; Craft
           </span>

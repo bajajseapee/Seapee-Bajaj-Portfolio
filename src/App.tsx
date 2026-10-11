@@ -451,7 +451,7 @@ export default function App() {
         {/* Floating WhatsApp Quick-Chat Button */}
         <FloatingWhatsApp />
 
-        {/* Smart Auto-Scroll Reader, Top Progress Bar, Back-to-Top & Desktop Mini TOC */}
+        {/* Top Reading Progress Bar & Floating Back-to-Top Button */}
         <AutoScrollReader />
 
         {/* Interactive Modals & "Talk to Seapee" Voice AI Assistant (Lazy-loaded) */}

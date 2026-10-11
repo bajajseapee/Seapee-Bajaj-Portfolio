@@ -27,7 +27,7 @@ export const SeoGeoExpertise: React.FC<SeoGeoExpertiseProps> = ({ onNavigate }) 
       <div className="max-w-[1280px] mx-auto flex flex-col gap-8 lg:gap-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="max-w-2xl">
+          <div className="max-w-4xl">
             <span className="text-xs uppercase tracking-widest text-[#994524] font-semibold">
               Traditional &amp; AI-Driven Search
             </span>
@@ -94,7 +94,7 @@ export const SeoGeoExpertise: React.FC<SeoGeoExpertiseProps> = ({ onNavigate }) 
 
         {/* Core Capabilities Summary Strip */}
         <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#e4e2df] flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="max-w-3xl">
+          <div className="max-w-4xl">
             <h3 className="font-serif text-xl text-[#1b1c1a] font-medium mb-2">
               Practical, Reader-First Search Optimization
             </h3>

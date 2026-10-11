@@ -26,7 +26,7 @@ export const WritingSection: React.FC<WritingSectionProps> = ({ onNavigate }) =>
       <div className="max-w-[1280px] mx-auto flex flex-col gap-8 lg:gap-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="max-w-2xl">
+          <div className="max-w-4xl">
             <span className="text-xs uppercase tracking-widest text-[#994524] font-semibold">
               Editorial Perspectives &amp; Knowledge Hub
             </span>

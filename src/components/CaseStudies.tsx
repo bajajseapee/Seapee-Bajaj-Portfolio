@@ -93,7 +93,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onNavigate }) => {
       <div className="max-w-[1280px] mx-auto flex flex-col gap-8 lg:gap-10">
         {/* Section Header + Search Bar */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-          <div className="max-w-2xl">
+          <div className="max-w-4xl">
             <span className="text-xs uppercase tracking-widest text-[#994524] font-semibold">
               Real-World Execution &amp; Methodology
             </span>

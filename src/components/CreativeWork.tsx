@@ -27,7 +27,7 @@ export const CreativeWork: React.FC = () => {
     <section className="w-full px-5 md:px-10 lg:px-16 py-12 lg:py-16 bg-[#fbf9f6] relative overflow-hidden" id="creative">
       <div className="max-w-[1280px] mx-auto flex flex-col gap-8 lg:gap-10">
         {/* Section Header */}
-        <div className="flex flex-col max-w-2xl">
+        <div className="flex flex-col max-w-4xl">
           <span className="text-xs uppercase tracking-widest text-[#994524] font-semibold">
             Narrative &amp; Culture
           </span>

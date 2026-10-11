@@ -63,7 +63,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
       <div className="max-w-[1280px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Text Narrative */}
-          <div className="lg:col-span-6 flex flex-col gap-3.5">
+          <div className="lg:col-span-7 flex flex-col gap-3.5">
             <span className="text-xs uppercase tracking-widest text-[#546252] font-semibold">
               About Me • Perspective
             </span>
@@ -85,7 +85,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
           </div>
 
           {/* Right Column: 4 Stats Cards Grid + Quick Progression Summary & Internal Links */}
-          <div className="lg:col-span-6 flex flex-col gap-4 pt-1">
+          <div className="lg:col-span-5 flex flex-col gap-4 pt-1">
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
               {STATS.map((stat) => {
                 const logo = STAT_LOGOS[stat.id];

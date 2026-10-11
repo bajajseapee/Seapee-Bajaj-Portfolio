@@ -8,7 +8,7 @@ export const PhilosophyBanner: React.FC = () => {
         <div className="w-10 h-10 flex items-center justify-center text-[#994524] mb-3 overflow-hidden" aria-hidden="true">
           <PortfolioIcon name="format_quote" className="w-8 h-8" />
         </div>
-        <blockquote className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#1b1c1a] italic max-w-3xl leading-snug font-normal">
+        <blockquote className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#1b1c1a] italic max-w-4xl leading-snug font-normal">
           “Useful content isn't just written. It's researched, structured, optimized, and refined.”
         </blockquote>
         <div className="w-16 h-[2px] bg-[#994524] mt-6" aria-hidden="true" />

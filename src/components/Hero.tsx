@@ -95,7 +95,7 @@ export const Hero: React.FC<HeroProps> = ({
           )}
 
           {/* Subheadline */}
-          <p className="text-base sm:text-lg md:text-xl text-[#55433c] max-w-xl leading-relaxed font-normal">
+          <p className="text-base sm:text-lg md:text-xl text-[#55433c] w-full leading-relaxed font-normal">
             {PROFILE_INFO.subheadline}
           </p>
 

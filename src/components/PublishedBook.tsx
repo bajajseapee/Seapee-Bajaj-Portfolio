@@ -332,7 +332,7 @@ export const PublishedBook: React.FC = () => {
               </div>
 
               {/* Concise Description */}
-              <p className="text-base text-[#55433c] leading-relaxed max-w-2xl">
+              <p className="text-base text-[#55433c] leading-relaxed w-full">
                 {BOOK.DESCRIPTION}
               </p>
             </div>

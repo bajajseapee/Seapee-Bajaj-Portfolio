@@ -180,7 +180,7 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({
       <div className="max-w-[1280px] mx-auto flex flex-col gap-7 lg:gap-8">
         {/* Top Section Header & Strategic Action Bar */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-          <div className="max-w-2xl">
+          <div className="max-w-4xl">
             <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#994524]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#994524]" />
               <span>Official Curriculum Vitae • Ready for Recruiters &amp; Clients</span>

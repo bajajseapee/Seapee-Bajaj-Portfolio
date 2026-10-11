@@ -68,7 +68,7 @@ export const Awards: React.FC = () => {
 
       <div className="max-w-[1280px] mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col gap-3 max-w-2xl mb-8 lg:mb-10">
+        <div className="flex flex-col gap-3 max-w-4xl mb-8 lg:mb-10">
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#994524]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#994524]" />
             <span>Achievements &amp; Credentials</span>
