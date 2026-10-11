@@ -104,10 +104,9 @@ export const Hero: React.FC<HeroProps> = ({
             &ldquo;{PROFILE_INFO.supportingPositioning}&rdquo;
           </p>
 
-          {/* 5 Uniform Action Buttons with Icons: 3 on One Side, 2 on the Other */}
-          <div className="pt-2 grid grid-cols-2 gap-2.5 sm:gap-3 max-w-md items-start">
-            {/* Left Side: 3 Buttons */}
-            <div className="flex flex-col gap-2.5">
+          {/* 5 Uniform Action Buttons with Icons: 1 row of 5 columns on desktop, 2 cols on mobile/tablet */}
+          <div className="pt-2 w-full">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-2.5 w-full items-stretch">
               <button
                 type="button"
                 onClick={onWorkWithMe}
@@ -122,7 +121,7 @@ export const Hero: React.FC<HeroProps> = ({
                   <path d="M18 10a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2a4 4 0 0 0 4 4h1" />
                   <path d="M14 6l4 4-4 4" />
                 </svg>
-                <span>Work with me</span>
+                <span className="truncate">Work with me</span>
               </button>
 
               <button
@@ -138,7 +137,7 @@ export const Hero: React.FC<HeroProps> = ({
                   <rect x="2" y="7" width="20" height="14" rx="2" />
                   <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
                 </svg>
-                <span>See my work</span>
+                <span className="truncate">See my work</span>
               </button>
 
               <button
@@ -155,12 +154,9 @@ export const Hero: React.FC<HeroProps> = ({
                   <line x1="12" y1="20" x2="12" y2="4" />
                   <line x1="6" y1="20" x2="6" y2="14" />
                 </svg>
-                <span>Case studies</span>
+                <span className="truncate">Case studies</span>
               </button>
-            </div>
 
-            {/* Right Side: 2 Buttons */}
-            <div className="flex flex-col gap-2.5">
               <button
                 type="button"
                 onClick={handleBookClick}
@@ -174,7 +170,7 @@ export const Hero: React.FC<HeroProps> = ({
                   <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
                   <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
                 </svg>
-                <span>View My book</span>
+                <span className="truncate">View My book</span>
               </button>
 
               <button
@@ -189,7 +185,7 @@ export const Hero: React.FC<HeroProps> = ({
                 >
                   <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4-1 6-1 8zm13 0c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4-1 6-1 8z" />
                 </svg>
-                <span>Testimonials</span>
+                <span className="truncate">Testimonials</span>
               </button>
             </div>
           </div>
