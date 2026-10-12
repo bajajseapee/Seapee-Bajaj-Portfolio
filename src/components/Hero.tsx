@@ -104,15 +104,21 @@ export const Hero: React.FC<HeroProps> = ({
             &ldquo;{PROFILE_INFO.supportingPositioning}&rdquo;
           </p>
 
-          {/* 5 Uniform Action Buttons: 3 on top, 2 below on desktop / larger screens */}
-          <div className="pt-2 w-full max-w-2xl">
+          {/* 5 Uniform Action Buttons: 3 on top, 2 below on desktop / larger screens with ValueMatrix-inspired cascading shimmer and micro-interactions */}
+          <motion.div
+            className="pt-2 w-full max-w-2xl"
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+            animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          >
             {/* Top row: 3 buttons */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 w-full items-stretch">
               <button
                 type="button"
                 onClick={onWorkWithMe}
-                className={heroButtonClass}
+                className={`${heroButtonClass} vm-btn-stagger-1`}
               >
+                <span className="vm-shimmer-sweep" aria-hidden="true" />
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
@@ -122,14 +128,15 @@ export const Hero: React.FC<HeroProps> = ({
                   <path d="M18 10a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2a4 4 0 0 0 4 4h1" />
                   <path d="M14 6l4 4-4 4" />
                 </svg>
-                <span className="whitespace-nowrap">Work with me</span>
+                <span className="whitespace-nowrap relative z-10">Work with me</span>
               </button>
 
               <button
                 type="button"
                 onClick={onViewWork}
-                className={heroButtonClass}
+                className={`${heroButtonClass} vm-btn-stagger-2`}
               >
+                <span className="vm-shimmer-sweep" aria-hidden="true" />
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
@@ -138,14 +145,15 @@ export const Hero: React.FC<HeroProps> = ({
                   <rect x="2" y="7" width="20" height="14" rx="2" />
                   <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
                 </svg>
-                <span className="whitespace-nowrap">See my work</span>
+                <span className="whitespace-nowrap relative z-10">See my work</span>
               </button>
 
               <button
                 type="button"
                 onClick={handleCaseStudiesClick}
-                className={heroButtonClass}
+                className={`${heroButtonClass} vm-btn-stagger-3`}
               >
+                <span className="vm-shimmer-sweep" aria-hidden="true" />
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
@@ -155,7 +163,7 @@ export const Hero: React.FC<HeroProps> = ({
                   <line x1="12" y1="20" x2="12" y2="4" />
                   <line x1="6" y1="20" x2="6" y2="14" />
                 </svg>
-                <span className="whitespace-nowrap">Case studies</span>
+                <span className="whitespace-nowrap relative z-10">Case studies</span>
               </button>
             </div>
 
@@ -164,8 +172,9 @@ export const Hero: React.FC<HeroProps> = ({
               <button
                 type="button"
                 onClick={handleBookClick}
-                className={heroButtonClass}
+                className={`${heroButtonClass} vm-btn-stagger-4`}
               >
+                <span className="vm-shimmer-sweep" aria-hidden="true" />
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
@@ -174,14 +183,15 @@ export const Hero: React.FC<HeroProps> = ({
                   <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
                   <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
                 </svg>
-                <span className="whitespace-nowrap">View My book</span>
+                <span className="whitespace-nowrap relative z-10">View My book</span>
               </button>
 
               <button
                 type="button"
                 onClick={handleTestimonialsClick}
-                className={heroButtonClass}
+                className={`${heroButtonClass} vm-btn-stagger-5`}
               >
+                <span className="vm-shimmer-sweep" aria-hidden="true" />
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
@@ -189,10 +199,10 @@ export const Hero: React.FC<HeroProps> = ({
                 >
                   <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4-1 6-1 8zm13 0c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4-1 6-1 8z" />
                 </svg>
-                <span className="whitespace-nowrap">Testimonials</span>
+                <span className="whitespace-nowrap relative z-10">Testimonials</span>
               </button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Interactive Focus Area Filter Buttons */}
           <div className="pt-2 flex flex-wrap items-center gap-2">

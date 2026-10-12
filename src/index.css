@@ -164,11 +164,54 @@
   background: #994524;
 }
 
-/* ValueMatrix inspired Interactive Button Animation */
+/* ValueMatrix inspired Interactive & Ambient Button Animations */
+@keyframes vm-shimmer {
+  0% {
+    transform: translateX(-160%) skewX(-20deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(260%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes vm-border-glow {
+  0%, 100% {
+    border-color: #dbc1b8;
+    box-shadow: 0 1px 3px 0 rgba(27, 28, 26, 0.05);
+  }
+  50% {
+    border-color: #b85d3a;
+    box-shadow: 0 4px 14px -2px rgba(153, 69, 36, 0.18), 0 0 0 1px rgba(153, 69, 36, 0.12);
+  }
+}
+
+@keyframes vm-icon-pulse {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(3deg);
+  }
+}
+
 .vm-animated-btn {
   position: relative;
   overflow: hidden;
   isolation: isolate;
+  background-color: #ffffff;
+  border: 1px solid #dbc1b8;
+  animation: vm-border-glow 4.5s ease-in-out infinite;
   transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
               box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.25s ease,
@@ -177,80 +220,106 @@
   will-change: transform;
 }
 
-/* Subtle continuous gentle ambient pulse border glow */
-.vm-animated-btn::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1.5px;
-  background: linear-gradient(
-    135deg,
-    rgba(153, 69, 36, 0.4) 0%,
-    rgba(255, 219, 207, 0.2) 50%,
-    rgba(84, 98, 82, 0.3) 100%
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0.4;
-  transition: opacity 0.3s ease;
-}
+/* Staggered border glow for buttons */
+.vm-btn-stagger-1 { animation-delay: 0s; }
+.vm-btn-stagger-2 { animation-delay: 0.7s; }
+.vm-btn-stagger-3 { animation-delay: 1.4s; }
+.vm-btn-stagger-4 { animation-delay: 2.1s; }
+.vm-btn-stagger-5 { animation-delay: 2.8s; }
 
-/* Shimmer beam moving across on hover */
-.vm-animated-btn::after {
-  content: '';
+/* Continuous & hover light sheen beam across button */
+.vm-animated-btn .vm-shimmer-sweep {
   position: absolute;
   top: 0;
-  left: -150%;
+  left: 0;
   width: 100%;
   height: 100%;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 219, 207, 0.15) 20%,
+    rgba(153, 69, 36, 0.22) 42%,
+    rgba(255, 245, 240, 0.95) 50%,
+    rgba(153, 69, 36, 0.22) 58%,
+    rgba(255, 219, 207, 0.15) 80%,
     transparent 100%
   );
-  transform: skewX(-25deg);
   pointer-events: none;
-  transition: none;
   z-index: 1;
+  animation: vm-shimmer 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transform: translateX(-160%) skewX(-20deg);
 }
 
-.vm-animated-btn:hover::after {
-  left: 200%;
-  transition: left 0.75s cubic-bezier(0.4, 0, 0.2, 1);
-}
+.vm-btn-stagger-1 .vm-shimmer-sweep { animation-delay: 0s; }
+.vm-btn-stagger-2 .vm-shimmer-sweep { animation-delay: 0.7s; }
+.vm-btn-stagger-3 .vm-shimmer-sweep { animation-delay: 1.4s; }
+.vm-btn-stagger-4 .vm-shimmer-sweep { animation-delay: 2.1s; }
+.vm-btn-stagger-5 .vm-shimmer-sweep { animation-delay: 2.8s; }
 
-.vm-animated-btn:hover {
-  transform: translateY(-2.5px) scale(1.02);
-  box-shadow: 0 10px 22px -6px rgba(153, 69, 36, 0.22),
-              0 4px 10px -2px rgba(153, 69, 36, 0.12);
-  border-color: #994524 !important;
-}
-
-.vm-animated-btn:hover::before {
-  opacity: 1;
-}
-
-/* Interactive click shrink feedback (like Elementor shrink animation) */
-.vm-animated-btn:active {
-  transform: translateY(0px) scale(0.97) !important;
-  box-shadow: 0 2px 6px -1px rgba(153, 69, 36, 0.2) !important;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
-}
-
-/* Icon micro-interaction inside the button */
+/* Continuous subtle icon breathing animation */
 .vm-animated-btn .vm-btn-icon {
+  position: relative;
+  z-index: 2;
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.25s ease;
+  animation: vm-icon-pulse 4.5s ease-in-out infinite;
+}
+
+.vm-btn-stagger-1 .vm-btn-icon { animation-delay: 0s; }
+.vm-btn-stagger-2 .vm-btn-icon { animation-delay: 0.7s; }
+.vm-btn-stagger-3 .vm-btn-icon { animation-delay: 1.4s; }
+.vm-btn-stagger-4 .vm-btn-icon { animation-delay: 2.1s; }
+.vm-btn-stagger-5 .vm-btn-icon { animation-delay: 2.8s; }
+
+/* Content wrapper above shimmer */
+.vm-animated-btn > span {
+  position: relative;
+  z-index: 2;
+}
+
+/* Hover state: heightened elevation, vibrant glow, terracotta border */
+.vm-animated-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: #994524 !important;
+  background-color: #fffbf9;
+  box-shadow: 0 12px 24px -5px rgba(153, 69, 36, 0.24),
+              0 4px 10px -2px rgba(153, 69, 36, 0.12) !important;
 }
 
 .vm-animated-btn:hover .vm-btn-icon {
-  transform: scale(1.15) rotate(3deg);
+  transform: scale(1.18) rotate(4deg) !important;
   color: #994524;
 }
 
+.vm-animated-btn:hover .vm-shimmer-sweep {
+  animation: vm-shimmer 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 219, 207, 0.3) 20%,
+    rgba(153, 69, 36, 0.35) 42%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(153, 69, 36, 0.35) 58%,
+    rgba(255, 219, 207, 0.3) 80%,
+    transparent 100%
+  );
+}
+
+/* Elementor shrink animation on click / active */
+.vm-animated-btn:active {
+  transform: translateY(0px) scale(0.96) !important;
+  box-shadow: 0 2px 6px -1px rgba(153, 69, 36, 0.28) !important;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
 .vm-animated-btn:active .vm-btn-icon {
-  transform: scale(0.95);
+  transform: scale(0.92) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vm-animated-btn,
+  .vm-animated-btn .vm-shimmer-sweep,
+  .vm-animated-btn .vm-btn-icon {
+    animation: none !important;
+    transition: none !important;
+  }
 }

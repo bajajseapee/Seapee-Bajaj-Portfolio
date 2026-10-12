@@ -21,7 +21,11 @@ interface FormErrors {
   submit?: string;
 }
 
-export const Contact: React.FC<ContactProps> = ({ initialService, onOpenResume }) => {
+export const Contact: React.FC<ContactProps> = ({
+  initialService,
+  onOpenResume,
+  onOpenWorkspace,
+}) => {
   const { user, inquiries, submitInquiry } = useFirebase();
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');
