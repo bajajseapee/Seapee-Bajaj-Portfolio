@@ -57,7 +57,7 @@ export const Hero: React.FC<HeroProps> = ({
   };
 
   const heroButtonClass =
-    'w-full inline-flex items-center gap-2.5 px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white hover:bg-[#ffdbcf]/40 text-[#1b1c1a] hover:text-[#994524] border border-[#dbc1b8] hover:border-[#994524] text-xs sm:text-sm font-semibold shadow-2xs hover:shadow-sm transition-all active:scale-[0.98] cursor-pointer text-left';
+    'vm-animated-btn w-full inline-flex items-center gap-2.5 px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white text-[#1b1c1a] hover:text-[#994524] border border-[#dbc1b8] text-xs sm:text-sm font-semibold shadow-2xs cursor-pointer text-left';
 
   return (
     <section
@@ -116,7 +116,7 @@ export const Hero: React.FC<HeroProps> = ({
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="w-4 h-4 sm:w-5 sm:h-5 text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
+                  className="vm-btn-icon w-4 h-4 sm:w-5 sm:h-5 text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
                 >
                   <path d="M11 17a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H11z" />
                   <path d="M18 10a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2a4 4 0 0 0 4 4h1" />
@@ -133,7 +133,7 @@ export const Hero: React.FC<HeroProps> = ({
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="w-4 h-4 sm:w-5 sm:h-5 text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
+                  className="vm-btn-icon w-4 h-4 sm:w-5 sm:h-5 text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
                 >
                   <rect x="2" y="7" width="20" height="14" rx="2" />
                   <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
@@ -149,7 +149,7 @@ export const Hero: React.FC<HeroProps> = ({
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="w-4 h-4 sm:w-5 sm:h-5 text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
+                  className="vm-btn-icon w-4 h-4 sm:w-5 sm:h-5 text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
                 >
                   <line x1="18" y1="20" x2="18" y2="10" />
                   <line x1="12" y1="20" x2="12" y2="4" />
@@ -169,7 +169,7 @@ export const Hero: React.FC<HeroProps> = ({
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="w-4 h-4 sm:w-5 sm:h-5 text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
+                  className="vm-btn-icon w-4 h-4 sm:w-5 sm:h-5 text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
                 >
                   <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
                   <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
@@ -185,7 +185,7 @@ export const Hero: React.FC<HeroProps> = ({
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="w-4 h-4 sm:w-5 sm:h-5 text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
+                  className="vm-btn-icon w-4 h-4 sm:w-5 sm:h-5 text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
                 >
                   <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4-1 6-1 8zm13 0c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4-1 6-1 8z" />
                 </svg>

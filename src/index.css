@@ -163,3 +163,94 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #994524;
 }
+
+/* ValueMatrix inspired Interactive Button Animation */
+.vm-animated-btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.25s ease,
+              background-color 0.25s ease,
+              color 0.25s ease;
+  will-change: transform;
+}
+
+/* Subtle continuous gentle ambient pulse border glow */
+.vm-animated-btn::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(
+    135deg,
+    rgba(153, 69, 36, 0.4) 0%,
+    rgba(255, 219, 207, 0.2) 50%,
+    rgba(84, 98, 82, 0.3) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+/* Shimmer beam moving across on hover */
+.vm-animated-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  transition: none;
+  z-index: 1;
+}
+
+.vm-animated-btn:hover::after {
+  left: 200%;
+  transition: left 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vm-animated-btn:hover {
+  transform: translateY(-2.5px) scale(1.02);
+  box-shadow: 0 10px 22px -6px rgba(153, 69, 36, 0.22),
+              0 4px 10px -2px rgba(153, 69, 36, 0.12);
+  border-color: #994524 !important;
+}
+
+.vm-animated-btn:hover::before {
+  opacity: 1;
+}
+
+/* Interactive click shrink feedback (like Elementor shrink animation) */
+.vm-animated-btn:active {
+  transform: translateY(0px) scale(0.97) !important;
+  box-shadow: 0 2px 6px -1px rgba(153, 69, 36, 0.2) !important;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+/* Icon micro-interaction inside the button */
+.vm-animated-btn .vm-btn-icon {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.25s ease;
+}
+
+.vm-animated-btn:hover .vm-btn-icon {
+  transform: scale(1.15) rotate(3deg);
+  color: #994524;
+}
+
+.vm-animated-btn:active .vm-btn-icon {
+  transform: scale(0.95);
+}
