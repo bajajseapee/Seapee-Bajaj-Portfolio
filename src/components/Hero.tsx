@@ -57,7 +57,105 @@ export const Hero: React.FC<HeroProps> = ({
   };
 
   const heroButtonClass =
-    'group vm-action-btn w-full inline-flex items-center gap-2.5 px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white text-[#1b1c1a] hover:text-[#994524] border border-[#dbc1b8] text-xs sm:text-sm font-semibold shadow-2xs cursor-pointer text-left';
+    'group vm-action-btn w-full inline-flex items-center gap-2 sm:gap-2.5 px-2.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white text-[#1b1c1a] hover:text-[#994524] border border-[#dbc1b8] text-xs sm:text-sm font-semibold shadow-2xs cursor-pointer text-left';
+
+  const actionButtons = [
+    {
+      id: 'work',
+      label: 'Work with me',
+      onClick: onWorkWithMe,
+      iconClass: 'vm-icon-anim-1',
+      iconSvg: (
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          className="vm-btn-icon vm-icon-anim-1 w-4 h-4 sm:w-[18px] sm:h-[18px] text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
+        >
+          <path d="M11 17a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H11z" />
+          <path d="M18 10a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2a4 4 0 0 0 4 4h1" />
+          <path d="M14 6l4 4-4 4" />
+        </svg>
+      ),
+    },
+    {
+      id: 'work-samples',
+      label: 'See my work',
+      onClick: onViewWork,
+      iconClass: 'vm-icon-anim-2',
+      iconSvg: (
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          className="vm-btn-icon vm-icon-anim-2 w-4 h-4 sm:w-[18px] sm:h-[18px] text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
+        >
+          <rect x="2" y="7" width="20" height="14" rx="2" />
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        </svg>
+      ),
+    },
+    {
+      id: 'case-studies',
+      label: 'Case studies',
+      onClick: handleCaseStudiesClick,
+      iconClass: 'vm-icon-anim-3',
+      iconSvg: (
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          className="vm-btn-icon vm-icon-anim-3 w-4 h-4 sm:w-[18px] sm:h-[18px] text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
+        >
+          <line x1="18" y1="20" x2="18" y2="10" />
+          <line x1="12" y1="20" x2="12" y2="4" />
+          <line x1="6" y1="20" x2="6" y2="14" />
+        </svg>
+      ),
+    },
+    {
+      id: 'book',
+      label: 'View My book',
+      onClick: handleBookClick,
+      iconClass: 'vm-icon-anim-4',
+      iconSvg: (
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          className="vm-btn-icon vm-icon-anim-4 w-4 h-4 sm:w-[18px] sm:h-[18px] text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
+        >
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+      ),
+    },
+    {
+      id: 'testimonials',
+      label: 'Testimonials',
+      onClick: handleTestimonialsClick,
+      iconClass: 'vm-icon-anim-5',
+      iconSvg: (
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          className="vm-btn-icon vm-icon-anim-5 w-4 h-4 sm:w-[18px] sm:h-[18px] text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
+        >
+          <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4-1 6-1 8zm13 0c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4-1 6-1 8z" />
+        </svg>
+      ),
+    },
+  ];
+
+  const renderActionButton = (btn: (typeof actionButtons)[number]) => (
+    <button
+      key={btn.id}
+      type="button"
+      onClick={btn.onClick}
+      className={heroButtonClass}
+    >
+      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#994524]/10 flex items-center justify-center shrink-0 group-hover:bg-[#994524]/15 transition-colors">
+        {btn.iconSvg}
+      </div>
+      <span className="truncate sm:whitespace-nowrap">{btn.label}</span>
+    </button>
+  );
 
   return (
     <section
@@ -104,108 +202,37 @@ export const Hero: React.FC<HeroProps> = ({
             &ldquo;{PROFILE_INFO.supportingPositioning}&rdquo;
           </p>
 
-          {/* 5 Uniform Action Buttons: 3 on top, 2 below on desktop / larger screens with ValueMatrix-inspired animated icons */}
+          {/* 5 Uniform Action Buttons: 3 on left & 2 on right for mobile, 3 on top & 2 below on desktop */}
           <motion.div
             className="pt-2 w-full max-w-2xl"
             initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
             animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* Top row: 3 buttons */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 w-full items-stretch">
-              <button
-                type="button"
-                onClick={onWorkWithMe}
-                className={heroButtonClass}
-              >
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#994524]/10 flex items-center justify-center shrink-0 group-hover:bg-[#994524]/15 transition-colors">
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    className="vm-btn-icon vm-icon-anim-1 w-4 h-4 sm:w-[18px] sm:h-[18px] text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
-                  >
-                    <path d="M11 17a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H11z" />
-                    <path d="M18 10a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2a4 4 0 0 0 4 4h1" />
-                    <path d="M14 6l4 4-4 4" />
-                  </svg>
-                </div>
-                <span className="whitespace-nowrap">Work with me</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={onViewWork}
-                className={heroButtonClass}
-              >
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#994524]/10 flex items-center justify-center shrink-0 group-hover:bg-[#994524]/15 transition-colors">
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    className="vm-btn-icon vm-icon-anim-2 w-4 h-4 sm:w-[18px] sm:h-[18px] text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
-                  >
-                    <rect x="2" y="7" width="20" height="14" rx="2" />
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                  </svg>
-                </div>
-                <span className="whitespace-nowrap">See my work</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={handleCaseStudiesClick}
-                className={heroButtonClass}
-              >
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#994524]/10 flex items-center justify-center shrink-0 group-hover:bg-[#994524]/15 transition-colors">
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    className="vm-btn-icon vm-icon-anim-3 w-4 h-4 sm:w-[18px] sm:h-[18px] text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
-                  >
-                    <line x1="18" y1="20" x2="18" y2="10" />
-                    <line x1="12" y1="20" x2="12" y2="4" />
-                    <line x1="6" y1="20" x2="6" y2="14" />
-                  </svg>
-                </div>
-                <span className="whitespace-nowrap">Case studies</span>
-              </button>
+            {/* Mobile layout: 3 buttons on left side, 2 buttons on right side */}
+            <div className="grid grid-cols-2 gap-2 sm:hidden w-full items-start">
+              <div className="flex flex-col gap-2">
+                {renderActionButton(actionButtons[0])}
+                {renderActionButton(actionButtons[1])}
+                {renderActionButton(actionButtons[2])}
+              </div>
+              <div className="flex flex-col gap-2">
+                {renderActionButton(actionButtons[3])}
+                {renderActionButton(actionButtons[4])}
+              </div>
             </div>
 
-            {/* Bottom row: 2 buttons */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 w-full sm:w-2/3 mt-2.5 sm:mt-3 items-stretch">
-              <button
-                type="button"
-                onClick={handleBookClick}
-                className={heroButtonClass}
-              >
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#994524]/10 flex items-center justify-center shrink-0 group-hover:bg-[#994524]/15 transition-colors">
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    className="vm-btn-icon vm-icon-anim-4 w-4 h-4 sm:w-[18px] sm:h-[18px] text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
-                  >
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                  </svg>
-                </div>
-                <span className="whitespace-nowrap">View My book</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={handleTestimonialsClick}
-                className={heroButtonClass}
-              >
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#994524]/10 flex items-center justify-center shrink-0 group-hover:bg-[#994524]/15 transition-colors">
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    className="vm-btn-icon vm-icon-anim-5 w-4 h-4 sm:w-[18px] sm:h-[18px] text-[#994524] shrink-0 fill-none stroke-current stroke-[1.8] stroke-linecap-round stroke-linejoin-round"
-                  >
-                    <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4-1 6-1 8zm13 0c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4-1 6-1 8z" />
-                  </svg>
-                </div>
-                <span className="whitespace-nowrap">Testimonials</span>
-              </button>
+            {/* Desktop / tablet layout: 3 on top row, 2 below */}
+            <div className="hidden sm:block w-full">
+              <div className="grid grid-cols-3 gap-3 w-full items-stretch">
+                {renderActionButton(actionButtons[0])}
+                {renderActionButton(actionButtons[1])}
+                {renderActionButton(actionButtons[2])}
+              </div>
+              <div className="grid grid-cols-2 gap-3 w-2/3 mt-3 items-stretch">
+                {renderActionButton(actionButtons[3])}
+                {renderActionButton(actionButtons[4])}
+              </div>
             </div>
           </motion.div>
 
